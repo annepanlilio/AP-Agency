@@ -6504,7 +6504,7 @@ function rb_get_customfields_search_ajax(){
 	}else{
 		$find_in_set = " FIND_IN_SET('".$_REQUEST['profile_types']."',b.ProfileCustomTypes)>0 ";
 	}
-	
+
 	
 
 	$sql = "SELECT a.*,b.ProfileCustomTypes FROM ".table_agency_customfields." a INNER JOIN ".table_agency_customfields_types." b ON a.ProfileCustomID = b.ProfileCustomID WHERE ".$find_in_set." ORDER BY a.ProfileCustomOrder ASC";
@@ -6519,7 +6519,7 @@ function rb_get_customfields_search_ajax(){
 				//if($data["ProfileCustomShowGender"] == $_REQUEST['gender']){
 				if(!empty($_REQUEST['gender'])){
 					$OptionGenders = get_option('ProfileCustomShowGenderArr_'.$data['ProfileCustomID']);
-					if(strpos($OptionGenders, rbGetDataTypeGenderTitleByID($_REQUEST['gender']))>-1){
+					if(strpos($OptionGenders, rbGetDataTypeGenderTitleByID($_REQUEST['gender']))>-1 || strpos($OptionGenders, 'All Gender')>-1 || $OptionsGender == 'All Gender' || $_REQUEST['gender'] == 'All Gender' ){
 						rb_load_customfields_search(1,$data);
 					}
 				}else{
@@ -6540,7 +6540,7 @@ function rb_get_gender_by_preselected_datatype(){
 	$profile_type = $_REQUEST['profile_type'];
 	$genders = get_option("DataTypeID_".$profile_type);
 	$gendersArr = explode(',',$genders);
-	echo "<option>". __("Any Gender", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+	echo "<option value=\"All Gender\">". __("Any Gender", RBAGENCY_TEXTDOMAIN) . "</option>\n";
 	foreach($gendersArr as $k=>$v){
 		$sql = "SELECT GenderID FROM ".table_agency_data_gender." WHERE GenderTitle = '".$v."'";
 		$ProfileGenders = $wpdb->get_results($sql,ARRAY_A);
@@ -6550,4 +6550,7 @@ function rb_get_gender_by_preselected_datatype(){
 }
 add_action('wp_ajax_rb_get_gender_by_preselected_datatype','rb_get_gender_by_preselected_datatype');
 add_action('wp_ajax_nopriv_rb_get_gender_by_preselected_datatype','rb_get_gender_by_preselected_datatype');
+
+
+
 ?>

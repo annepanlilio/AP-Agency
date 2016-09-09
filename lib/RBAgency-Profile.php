@@ -80,12 +80,15 @@ class RBAgency_Profile {
 						$search_layout = "admin";
 					}
 				}
-
+					
 				if($type == 0){
-					if($atts_arr['att_mode'] == 'ajax' || $atts_arr['att_type'] == 'basic'){
 
-					}else{
+					if($atts_arr['att_mode'] == 'ajax' && $atts_arr['att_type'] == 'basic'){
 						wp_enqueue_script( 'search_profile_js', RBAGENCY_PLUGIN_URL .'assets/js/search_profile_js.js', array( 'jquery' ) );
+					}elseif($atts_arr['att_mode'] == 'ajax' && $atts_arr['att_type'] == 'advanced'){
+						
+					}else{
+
 					}
 					
 				}else{
@@ -287,9 +290,10 @@ class RBAgency_Profile {
 									if($r['DataTypeTag'] == $profile_type){
 										echo "<div><label>";
 													$t = trim(str_replace(' ','_',$r['DataTypeTitle']));													
-														echo '<input type="checkbox" name="profiletype[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" profile_title="'.$r['DataTypeTitle'].'"  class="DataTypeIDClassCheckbox" checked/>&nbsp;'.
+														echo '<input type="checkbox" name="profiletype[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" profile_title="'.$r['DataTypeTitle'].'"  class="DataTypeIDClassCheckbox" checked disabled/>&nbsp;'.
 														trim($r['DataTypeTitle'])
 														.'&nbsp;';
+														echo '<input type="hidden" name="profiletype[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" profile_title="'.$r['DataTypeTitle'].'"  class="DataTypeIDClassCheckbox" checked/>';
 													
 													
 										echo "</label></div>"; 
@@ -363,27 +367,54 @@ class RBAgency_Profile {
 				
 
 						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
-							//echo get_option('DataTypeID_117');
+							
 
 							?>
 							<script type="text/javascript">
 								jQuery(document).ready(function($){
-									console.log($(".DataTypeIDClassCheckbox:checked").val());
-									$.ajax({
-										type: "POST",
-										url: "<?php echo admin_url('admin-ajax.php') ?>",
-										data: {
-											action: "rb_get_gender_by_preselected_datatype",
-											'profile_type': $(".DataTypeIDClassCheckbox:checked").val()
-										},
-										success: function (results) {
-											console.log(results);
-											$("#gender").empty();
-											$("#gender").html(results);
-										}
+									console.log($(".DataTypeIDClassCheckbox:checked").length);
+									if($(".DataTypeIDClassCheckbox:checked").length>0){
+										$.ajax({
+											type: "POST",
+											url: "<?php echo admin_url('admin-ajax.php') ?>",
+											data: {
+												action: "rb_get_gender_by_preselected_datatype",
+												'profile_type': $(".DataTypeIDClassCheckbox:checked").val()
+											},
+											success: function (results) {
+												console.log(results);
+												$("#gender").empty();
+												$("#gender").html(results);
+											}
+										});
+									}
+
+									jQuery("#gender").on("change",function(){
+
+										
+
+
+										jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_search_ajax",
+													'profile_types': $(".DataTypeIDClassCheckbox:checked").attr('profile_title'),
+													'gender': jQuery(this).val()
+												},
+												success: function (results) {
+													jQuery(".customfields-onload").html(results);
+													console.log(results);
+												}
+											});
+										
+											
+										
+										
 									});
 								});
 							</script>
+
 							<?php
 							$hide_gender = $atts_arr["att_show_gender"] == "false" ? "style='display:none;'" : "";
 							echo "				<div class=\"rbfield rbtext rbsingle rb_gender\" id=\"rb_gender\" ".$hide_gender.">\n";
@@ -392,7 +423,7 @@ class RBAgency_Profile {
 							$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
 							$results2 = $wpdb->get_results($query2,ARRAY_A);
 							echo "						<select name=\"gender\" id=\"gender\">\n";
-							echo "							<option value=\"\">". __("Any Gender", RBAGENCY_TEXTDOMAIN) . "</option>\n";
+							echo "							<option value=\"All Gender\">". __("Any Gender", RBAGENCY_TEXTDOMAIN) . "</option>\n";
 															// Pul Genders from Database
 															foreach ($results2 as $key) {
 																	if(isset($key["GenderID"]))
@@ -637,14 +668,15 @@ class RBAgency_Profile {
 				echo "<div class=\"customfields_search_form\" ></div>";
 
 				if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
-				?>
-				<script type="text/javascript">
-					jQuery(document).ready(function(){
-							
-						 	var ProfileTypeIDArr = []; 
+
+					if($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic'){
+
+						?>
+						<script type="text/javascript">
+						jQuery(document).ready(function(){
+							var ProfileTypeIDArr = []; 
 						 	ProfileTypeIDArr.push(jQuery(".DataTypeIDClassCheckbox:checked").attr("profile_title"));
-						 	console.log(ProfileTypeIDArr);
-						 	//console.log(Obj.val());
+						 	
 						 	jQuery.ajax({
 								type: "POST",
 								url: "<?php echo admin_url('admin-ajax.php') ?>",
@@ -657,9 +689,17 @@ class RBAgency_Profile {
 									jQuery(".customfields-onload").html(results);
 								}
 							});
+						});
+						</script>
+						<?php
 
-
-							jQuery(".DataTypeIDClassCheckbox").on('click',function(){
+					}else{
+						?>
+						<script type="text/javascript">
+						jQuery(document).ready(function(){
+							var ProfileTypeIDArr = []; 
+						 	ProfileTypeIDArr.push(jQuery(".DataTypeIDClassCheckbox:checked").attr("profile_title"));
+						 	jQuery(".DataTypeIDClassCheckbox").on('click',function(){
 								var profileTypeIDs = [];
 								var checkedProfileType = jQuery(this).attr('profile_title');
 								var checked = jQuery(this).is(':checked');
@@ -686,10 +726,12 @@ class RBAgency_Profile {
 									}
 								});	
 							});
-						
-					}); 
-
-				</script>
+						});
+						</script>
+						<?php
+					}
+				?>
+				
 				<?php
 				}
 			/*
@@ -1302,7 +1344,7 @@ class RBAgency_Profile {
 					}
 
 					// Gender
-					if (isset($_REQUEST['gender']) && !empty($_REQUEST['gender'])){
+					if (isset($_REQUEST['gender']) && !empty($_REQUEST['gender']) && $_REQUEST['gender'] != 'Any Gender' && $_REQUEST['gender'] != 'All Gender'){
 						$filterArray['gender'] = $_REQUEST['gender'];
 					}
 
@@ -2928,7 +2970,16 @@ class RBAgency_Profile {
 					$type = get_query_var("type");
 					// if(!in_array($type,array("favorite","castingjobs","casting","profilecastingcart"))){
 					if(in_array($type,array("search-basic","search-advanced","search-basic","search-result"))){
-						$all_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">".__("Go Back to Basic Search",RBAGENCY_TEXTDOMAIN)."</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">".__("Go Back to Advanced Search",RBAGENCY_TEXTDOMAIN)."</a></div>";
+						//$all_html .= "<div class=\"rb-search-result-links\"><a href=\"".get_bloginfo("url")."/search-basic/\">".__("Go Back to Basic Search",RBAGENCY_TEXTDOMAIN)."</a><span class=\"rb-search-link-sep\">|</span><a href=\"".get_bloginfo("url")."/search-advanced/\">".__("Go Back to Advanced Search",RBAGENCY_TEXTDOMAIN)."</a></div>";
+						?>
+							<script>
+							function goBackToPreviousPage() {
+							    window.history.back();
+							}
+							</script>
+							<?php
+
+							$all_html .= "<div class=\"rb-search-result-links\"><a href=\"javascript:goBackToPreviousPage();\">".__("Search Again",RBAGENCY_TEXTDOMAIN)."</a></div>";
 					}
 					if(self::$error_debug){
 						self::$error_checking[] = array('search_result_public',$all_html);
@@ -3676,7 +3727,9 @@ class RBAgency_Profile {
 						$images = '<a href="#slide-panel_'.$_panelID.'" class="slide-panel-link" profile_id="'.$dataList["ProfileID"].'">'.$images.'</a>';
 
 					}
-					$displayHTML .= "<div class=\"image image-broken\">".$images ."</div>\n";
+					// $displayHTML .= "<div class=\"image image-broken\">".$images ."</div>\n";
+					$displayHTML .= "<div class=\"image image-broken\">".$images;
+					$displayHTML .= "<strong class=\"name\"><a href=\"#slide-panel_".$_panelID."\" class=\"slide-panel-link\" profile_id=\"".$dataList["ProfileID"]."\">". stripslashes($ProfileContactDisplay) ."</a></strong></div>\n";
 				}
 
 				// Determine profile details

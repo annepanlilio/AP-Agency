@@ -5,13 +5,13 @@ jQuery(document).ready(function(){
     
     if (jQuery( "#profile-search-form-condensed" ).hasClass( "hide_custom_fields" )) {
         var fieldsObj = {
-        "rb_gender": jQuery('#rb_gender'),
-        "rb_datebirth": jQuery('#rb_datebirth'),
-        "rb_datebirth2": jQuery('#rb_datebirth2'),
-        "rb_city": jQuery('#rb_city'),
-        "rb_country": jQuery('#rb_country'),
-        "rb_state": jQuery('#rb_state'),
-        "rb_zip": jQuery('#rb_zip'),
+        //"rb_gender": jQuery('#rb_gender'),
+        //"rb_datebirth": jQuery('#rb_datebirth'),
+        //"rb_datebirth2": jQuery('#rb_datebirth2'),
+        //"rb_city": jQuery('#rb_city'),
+        //"rb_country": jQuery('#rb_country'),
+        //"rb_state": jQuery('#rb_state'),
+        //"rb_zip": jQuery('#rb_zip'),
         "profilecustomid_1": jQuery('#profilecustomid_1'),
         "profilecustomid_2": jQuery('#profilecustomid_2'),
         "profilecustomid_3": jQuery('#profilecustomid_3'),
@@ -44,8 +44,8 @@ jQuery(document).ready(function(){
       //      value.hide();
       //});
       
-      jQuery( ".show_fields_dynamiclly" ).hide();
-      jQuery( "#rb_gender" ).hide();
+      //jQuery( ".show_fields_dynamiclly" ).hide();
+      //jQuery( "#rb_gender" ).hide();
       
       
       jQuery( '#rb_profiletype #type' ).on('change', function() {        

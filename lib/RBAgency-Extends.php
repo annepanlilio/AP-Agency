@@ -25,6 +25,7 @@ class RBAgency_Extends {
 				function RBAgency_Extends_Widgets() {
 					register_widget( 'profile_search_widget' );
 					register_widget( 'profile_featured_widget' );
+
 				}
 
 		}
@@ -372,8 +373,12 @@ class RBAgency_Extends {
 			{
 				$mode = "normal";
 			}
-
-			$profile_type = !empty($atts['profile-type']) ? $atts['profile-type'] : "";
+			if(isset($atts['profile-type'])){
+				$profile_type = !empty($atts['profile-type']) ? $atts['profile-type'] : "";
+			}elseif(isset($atts['profile_type'])){
+				$profile_type = !empty($atts['profile_type']) ? $atts['profile_type'] : "";
+			}
+			
 			
 			
 
