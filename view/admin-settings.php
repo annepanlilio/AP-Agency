@@ -392,6 +392,14 @@ elseif ($ConfigID == 1) {
 		echo "   </td>\n";
 		echo " </tr>\n";
 		}
+
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Enable Agency email to receive notifications', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_agency_email_receive_notification]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_agency_email_receive_notification'])?$rb_agency_options_arr['rb_agency_option_agency_email_receive_notification']:0, 1,false)."/> ".__("If enabled, agency email can also receive emails from any users.",RBAGENCY_TEXTDOMAIN)."<br />\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
+		
 		if ( class_exists("RBAgencyCasting") ) {
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Send email to Models/Talents', RBAGENCY_TEXTDOMAIN) ."</th>\n";
