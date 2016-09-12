@@ -2695,24 +2695,24 @@ class RBAgency_Profile {
 					//$profile_list .= $rb_agency_option_layoutprofileviewmode.' - sssset'.$rb_agency_option_layoutprofilelistlayout;
 
 					if($rb_agency_option_layoutprofileviewmode == 2 && $rb_agency_option_layoutprofilelistlayout !=1){
-						if($profilesPerRow % $rb_agency_option_layoutprofilelist_perrow == 0) {
-							$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query,$slidePanelID );
+						//if($profilesPerRow % $rb_agency_option_layoutprofilelist_perrow == 0) {
+						//	$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query,$slidePanelID );
 
-							$profile_list .="	<div class=\"info-panel\" id='slide-panel_". $profilesPerRow ."'> \n";
-							$profile_list .="	</div> <!-- .info-panel --> \n";
-							$slidePanelID += $rb_agency_option_layoutprofilelist_perrow;
-							$profilesPerRow++;
-						}elseif($profilesPerRow % $rb_agency_option_layoutprofilelist_perrow > 0){
-							$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query,$slidePanelID );
+						//	$profile_list .="	<div class=\"info-panel\" id='slide-panel_".$profilesPerRow."'> \n";
+						//	$profile_list .="	</div> <!-- .info-panel --> \n";
+						//	$slidePanelID += $rb_agency_option_layoutprofilelist_perrow;
+						//	$profilesPerRow++;
+							
+						//}else{
+							//$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query,$slidePanelID);
+						//}
 
-							$profile_list .="	<div class=\"info-panel\" id='slide-panel_". ($profilesPerRow * 4)."'> \n";
-							$profile_list .="	</div> <!-- .info-panel --> \n";
-							$slidePanelID += $rb_agency_option_layoutprofilelist_perrow;
-							$profilesPerRow++;
-						}else{
-							$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query,$slidePanelID);
-							$profilesPerRow++;
-						}
+						$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query,$slidePanelID );
+
+						$profile_list .="	<div class=\"info-panel\" id='slide-panel_".($profilesPerRow*4 )."'> \n";
+						$profile_list .="	</div> <!-- .info-panel --> \n";
+						$slidePanelID += $rb_agency_option_layoutprofilelist_perrow;
+						$profilesPerRow++;
 						
 					}else{
 						$profile_list .= self::search_formatted($profile, $arr_favorites, $arr_castingcart, $availability, false, $arr_query );
