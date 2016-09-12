@@ -6500,6 +6500,7 @@ function rbGetOtherAccountProfileLinks($profileID = ""){
 	$userMetaValueArr = explode("|",$userMetaValue);
 	foreach($userMetaValueArr as $url){
 		if(!empty($url)){
+
 			$otherAccountURLsArr[] = $url;
 		}		
 	}
@@ -6513,9 +6514,17 @@ function rbGetOtherAccountProfileLinks($profileID = ""){
 			}
 			echo "</tbody></table>";
 		}else{
+			global $wpdb;
+			echo "<ul>";
 			foreach($otherAccountURLsArr as $url){
-				echo "<a href=\"".$url."\"> ".$url."</a>";
+				$url = substr($url, 0,-1);
+				$profileGalleryLocation = explode('/',$url);
+				$sql = "SELECT profile.ProfileContactDisplay,profile.ProfileGallery,media.ProfileMediaURL FROM ".table_agency_profile." profile INNER JOIN ".table_agency_profile_media." media ON media.ProfileID = profile.ProfileID WHERE profile.ProfileGallery = %s AND media.ProfileMediaPrimary = 1";
+				$otherProfiles = $wpdb->get_results($wpdb->prepare($sql,end($profileGalleryLocation)),ARRAY_A);
+				echo "<li style=\"float:left;max-width:20%;margin-right:15px;list-style:none;\"><a href=\"".$url."\"><img src=\"".RBAGENCY_UPLOADDIR.$otherProfiles[0]["ProfileGallery"]."/".$otherProfiles[0]["ProfileMediaURL"]."\" style=\"width:130px;\"></a><a href=\"".$url."\"><p>".$otherProfiles[0]["ProfileContactDisplay"]."</p></a></li>";
+				
 			}
+			echo "</ul>";
 		}
 		
 	}
