@@ -143,17 +143,23 @@ function get_profileInfo(){
 					profile.ProfileID,
 					profile.ProfileID as pID,
 					profile.ProfileGallery,
+					profile.ProfileContactNameFirst,
+					profile.ProfileContactNameLast,
 					profile.ProfileContactDisplay,
 										profile.ProfileGender,
 					profile.ProfileDateBirth,
 					profile.ProfileDateCreated,
 					profile.ProfileLocationState,
-					cmux.*
+					cmux.*,
+					cust.*
 				FROM ". table_agency_profile ." profile
 					LEFT JOIN
 					".table_agency_customfield_mux." cmux
 					ON
 					profile.ProfileID = cmux.ProfileID
+					LEFT JOIN 
+					".table_agency_customfields." cust
+					ON cust.ProfileCustomID = cmux.ProfileCustomID
 								WHERE profile.ProfileID = ".$ProfileID."
 				GROUP BY profile.ProfileID";
 $resultsModelList = $wpdb->get_row($ModelProfileQuery,ARRAY_A);
@@ -173,48 +179,278 @@ $PrevModelProfileName = $wpdb->get_row($PrevModelProfileQuery,ARRAY_A);
 $ProfileContactDisplay = $resultsModelList['ProfileContactDisplay'];
 $ProfileGallery = $resultsModelList['ProfileGallery'];
 
+$ProfileContactNameFirst = $resultsModelList['ProfileContactNameFirst'];
+$ProfileContactNameLast = $resultsModelList['ProfileContactNameLast'];
+$ProfileDateBirth = $resultsModelList['ProfileDateBirth'];
+
 ?>
 <div class="slider-container">
-	<div class="primary-photo">
-		<?
-		$queryImg = "SELECT ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
-		$primaryPhoto =  $wpdb->get_var($wpdb->prepare($queryImg, $ProfileID));
+	<div class="col-md-6">
+		<div class="primary-photo">
+			<?
+			$queryImg = "SELECT ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1";
+			$primaryPhoto =  $wpdb->get_var($wpdb->prepare($queryImg, $ProfileID));
 
-		$primarySize = array(300,420);//width - height
-		if(!empty($primaryPhoto)){
-			echo '<img src="'.RBAGENCY_UPLOADREL. $ProfileGallery.'/'. $primaryPhoto.'">';
-			//echo "<img src=\"". RBAGENCY_PLUGIN_URL."ext/timthumb.php?src=". RBAGENCY_PLUGIN_URL ."assets/demo-data/Placeholder.jpg&w=".$primarySize[0]."&h=".$primarySize[1]."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\">";
-		}else{
-			echo "<img src=\"". RBAGENCY_PLUGIN_URL."ext/timthumb.php?src=". RBAGENCY_PLUGIN_URL ."assets/demo-data/Placeholder.jpg&w=".$primarySize[0]."&h=".$primarySize[1]."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\">";
-		}
-		//RBAGENCY_UPLOADREL . $resultsModelList['ProfileGallery']
-		?>
-
-	</div>
+			$primarySize = array(300,420);//width - height
+			if(!empty($primaryPhoto)){
+				echo '<a href="'.RBAGENCY_UPLOADREL. $ProfileGallery.'/'. $primaryPhoto.'" rel="lightbox[rbagency]"><img src="'.RBAGENCY_UPLOADREL. $ProfileGallery.'/'. $primaryPhoto.'"></a>';
+				//echo "<img src=\"". RBAGENCY_PLUGIN_URL."ext/timthumb.php?src=". RBAGENCY_PLUGIN_URL ."assets/demo-data/Placeholder.jpg&w=".$primarySize[0]."&h=".$primarySize[1]."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\">";
+			}else{
+				echo "<img src=\"". RBAGENCY_PLUGIN_URL."ext/timthumb.php?src=". RBAGENCY_PLUGIN_URL ."assets/demo-data/Placeholder.jpg&w=".$primarySize[0]."&h=".$primarySize[1]."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\">";
+			}
+			//RBAGENCY_UPLOADREL . $resultsModelList['ProfileGallery']
+			?>
+		</div><!-- .primary-photo -->
+	</div><!-- .col-md-6 -->
 	<a href="#" class="close-btn"><img src="<?php echo RBAGENCY_PLUGIN_URL;?>assets/img/remove.png"/></a>
+	<div class="col-md-6">
 	<div class="model-info">
-		<b><?php echo $ProfileContactDisplay;?></b>
-		asdasdasdasda asd ad  sdf sdf sdf sdf sf
-		<ul class="model-details">
-			<li>details: <b>test</b></li>
-			<li>details: <b>test</b></li>
-			<li>details: <b>test</b></li>
-			<li>details: <b>test</b></li>
-			<li>details: <b>test</b></li>
+		<h2>
+			<?php echo $ProfileContactNameFirst.' '.$ProfileContactNameLast; ?>
+			<?php // echo $ProfileContactDisplay;?>
+		</h2>
+		<ul class="model-details">			
+			<li><span><?php echo __('Age'); ?>: </span>&nbsp;<?php echo rb_agency_get_age($ProfileDateBirth); ?></li>
+
+			<?php
+			#Get custom fields
+			$sql = "SELECT cmux.* , cust.* FROM ".table_agency_customfields." cust INNER JOIN ".table_agency_customfield_mux." cmux ON cmux.ProfileCustomID = cust.ProfileCustomID WHERE cmux.ProfileID = ".$resultsModelList["ProfileID"];
+			$customFields = $wpdb->get_results($sql,ARRAY_A);
+			foreach($customFields as $customfield){
+				$customfield_val = !empty($customfield["ProfileCustomDateValue"]) && $customfield["ProfileCustomDateValue"] != '0000-00-00' ? $customfield["ProfileCustomDateValue"] : $customfield["ProfileCustomValue"];
+
+				if(!empty($customfield_val)){
+					if(strpos($customfield_val, ",")){
+						// $cf_val = explode(", ", $customfield_val);
+						// $customfield_val = implode(", ", $cf_val);
+						$customfield_val=  str_replace(",", ", ", $customfield_val);
+					}
+					if($customfield["ProfileCustomType"]==11 ){
+						echo "<li><span>". $customfield["ProfileCustomTitle"]. ":</span>&nbsp;<a href=\"".$customfield_val."\" target=\"_blank\">".__('Click Here')."</a></li>";
+					}else{
+						echo "<li><span>". $customfield["ProfileCustomTitle"]. ":</span>&nbsp;".$customfield_val."</li>";
+					}
+					
+				}
+
+				
+			}
+
+			?>
+			<li><a href="<?php echo RBAGENCY_PROFILEDIR . $ProfileGallery; ?>" class="view-profile"><?php echo __('View Profile'); ?></a></li>
+
+			<?php
+			$arr_favorites = array();
+			$arr_castingcart = array();
+			$favIcon = "<i class=\"fa fa-heart\"></i>";
+			$cartIcon = "<i class=\"fa fa-star\"></i>";
+			# Favorites and casting cart button
+			$favorites_btn = "<div id=\"profile-favorite\" class=\"favorite\"><a href=\"javascript:;\" title=\""
+							.(in_array($resultsModelList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")
+							."\" attr-id=\"".$resultsModelList["ProfileID"]."\" class=\""
+							.(in_array($resultsModelList["ProfileID"], $arr_favorites)?"active":"inactive")
+							." favorite\">$favIcon <span>"
+							.(in_array($resultsModelList["ProfileID"], $arr_favorites)?"Remove from Favorites":"Add to Favorites")
+							."</span></a></div>";
+			$castingcart_btn =  "<div  id=\"profile-casting\"  class=\"casting\"><a href=\"javascript:;\" title=\""
+								.(in_array($resultsModelList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")
+								."\"  attr-id=\"".$resultsModelList["ProfileID"]."\"  class=\""
+								.(in_array($resultsModelList["ProfileID"], $arr_castingcart)?"active":"inactive")
+								." castingcart\">$cartIcon <span>"
+								.(in_array($resultsModelList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")
+								."</span></a></div>";
+			?>
 		</ul>
+
+		<footer><?php echo $favorites_btn; ?> <?php echo $castingcart_btn; ?></footer>
+		
 		<br class="clear"/>
-		<ul class="model-icons">
-			<li>details: <b>test</b></li>
-			<li>details: <b>test</b></li>
-			<li>details: <b>test</b></li>
-			<li>details: <b>test</b></li>
-			<li>details: <b>test</b></li>
-		</ul>
+		<script type="text/javascript" >
+				var layout_favorite = "02";
+				jQuery(document).ready(function () {
+					jQuery("a.favorite").click(function(){
+						var Obj = jQuery(this);
+						jQuery.ajax({
+							type: 'POST',
+							url: '<?php echo admin_url("admin-ajax.php"); ?>',
+							data: {
+								action: 'rb_agency_save_favorite',
+								talentID: Obj.attr("attr-id")
+							},
+							success: function (results) {
+															if(Obj.hasClass("inactive")){
+									Obj.attr("title","Remove from Favorites");
+									Obj.removeClass("inactive").addClass("active");
+									Obj.find("span").text("Remove from Favorites");
+								} else if(Obj.hasClass("active")){
+									Obj.attr("title","Add to Favorites");
+									Obj.removeClass("active").addClass("inactive");
+									Obj.find("span").text("Add to Favorites");
+								}
+														},
+							error: function(e){
+								console.log(e);
+							}
+						});
+					});
+					jQuery(".newfavorite a:first, .newfavorite a").click(function () {
+						var Obj = jQuery(this);
+						jQuery.ajax({
+							type: 'POST',
+							url: '<?php echo admin_url("admin-ajax.php"); ?>',
+							data: {
+								action: 'rb_agency_save_favorite',
+								talentID: jQuery(this).attr("id")
+							},
+							success: function (results) {
+
+								if (results == 'error') {
+									Obj.fadeOut().empty().html("Error in query. Try again").fadeIn();
+								} else if (results == -1) {
+									Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo site_url(); ?>/profile-member/\">Sign In</a>.").fadeIn();
+									setTimeout(function () {
+										if (Obj.attr("class") == "save_favorite") {
+											Obj.fadeOut().empty().html("").fadeIn();
+											Obj.attr('title', 'Save to Favorites');
+											Obj.find("span").text('Add to Favorites');
+										} else {
+											Obj.fadeOut().empty().html("Favorited").fadeIn();
+											//Obj.attr('title', 'Remove from Favorites');
+											Obj.find("span").text('Remove from Favorites');
+
+										}
+									}, 2000);
+								} else {
+																			if(layout_favorite == "00"){
+											if (Obj.hasClass("save_favorite") || (Obj.hasClass("favorited") && jQuery.trim(results)=="inserted") ) {
+												Obj.removeClass("save_favorite");
+												Obj.addClass("favorited");
+												Obj.attr('title', 'Remove from Favorites');
+												Obj.find("span").text('Remove from Favorites');
+											} else {
+												Obj.removeClass("favorited");
+												Obj.addClass("save_favorite");
+												Obj.attr('title', 'Add to Favorites');
+												Obj.find("span").text('Add to Favorites');
+											}
+										} else {
+											if (Obj.attr("class") == "save_favorite") {
+												Obj.empty().fadeOut().empty().html("").fadeIn();
+												Obj.attr("class", "favorited");
+												Obj.attr('title', 'Remove from Favorites');
+												Obj.text('REMOVE FROM FAVORITES')
+											} else {
+												Obj.empty().fadeOut().empty().html("").fadeIn();
+												Obj.attr('title', 'Save to Favorites');
+												jQuery(this).find("a[class=view_all_favorite]").remove();
+												Obj.attr("class", "save_favorite");
+												Obj.text('SAVE TO FAVORITES');
+											}
+										}
+																}
+							}
+						})
+					});
+				});
+				</script>
+
+				<script type="text/javascript" >
+				jQuery("a.castingcart").click(function(){
+					var Obj = jQuery(this);
+					jQuery.ajax({
+						type: 'POST',
+						url: '<?php echo admin_url("admin-ajax.php"); ?>',
+						data: {
+							action: 'rb_agency_save_castingcart',
+							'talentID': Obj.attr("attr-id")
+						},
+						success: function (results) {
+															if(Obj.hasClass("inactive")){
+									Obj.attr("title","Remove from Casting Cart");
+									Obj.removeClass("inactive").addClass("active");
+									Obj.find("span").text("Remove from Casting Cart");
+								} else if(Obj.hasClass("active")){
+									Obj.attr("title","Add to Casting Cart");
+									Obj.removeClass("active").addClass("inactive");
+									Obj.find("span").text("Add to Casting Cart");
+								}
+													}
+					});
+				});
+					var layout_casting = "02";
+					jQuery(document).ready(function ($) {
+						$(".newcastingcart a").click(function () {
+						var Obj = $(this);
+							jQuery.ajax({
+								type: 'POST',
+								url: '<?php echo admin_url("admin-ajax.php"); ?>',
+								data: {
+									action: 'rb_agency_save_castingcart',
+									'talentID': Obj.attr("attr-id")
+								},
+								success: function (results) {
+									console.log(results);
+									if (results == 'error') {
+										Obj.fadeOut().empty().html("Error in query. Try again").fadeIn();
+									} else if (results == -1) {
+										Obj.fadeOut().empty().html("<span style=\"color:red;font-size:11px;\">You're not signed in.</span><a href=\"<?php echo site_url(); ?>/profile-member/\">Sign In</a>.").fadeIn();
+										setTimeout(function () {
+											if (Obj.attr("class") == "save_castingcart") {
+												Obj.fadeOut().empty().html("").fadeIn();
+											} else {
+												Obj.fadeOut().empty().html("").fadeIn();
+											}
+										}, 2000);
+									} else {
+																					if(layout_casting == "00"){
+												if (Obj.hasClass("save_castingcart") || (Obj.hasClass("saved_castingcart") && jQuery.trim(results)=="inserted")) {
+													Obj.removeClass("save_castingcart");
+													Obj.addClass("saved_castingcart");
+													Obj.attr('title', 'Remove from Casting Cart');
+													Obj.find("span").text('Remove from Casting Cart');
+												} else {
+													Obj.removeClass("saved_castingcart");
+													Obj.addClass("save_castingcart");
+													Obj.attr('title', 'Add to Casting Cart');
+													Obj.find("span").text('Add to Casting Cart');
+												}
+											} else {
+												if (Obj.attr("class") == "save_castingcart") {
+													Obj.empty().fadeOut().html("").fadeIn();
+													Obj.attr("class", "saved_castingcart");
+													Obj.attr('title', 'Remove from Casting Cart');
+													//Obj.text("VIEW CASTING CART");
+													Obj.find("span").text("href","<?php echo site_url(); ?>/profile-casting/");
+												} else {
+													Obj.empty().fadeOut().html("").fadeIn();
+													Obj.attr("class", "save_castingcart");
+													Obj.attr('title', 'Add to Casting Cart');
+													//Obj.text("ADD TO CASTING CART");
+
+													$(this).find("a[class=view_all_castingcart]").remove();
+												}
+											}
+																			}
+								}
+							})
+						});
+				});
+			</script>
+
+
+		<!--<ul class="model-icons">
+			<li>details: <span>test</span></li>
+			<li>details: <span>test</span></li>
+			<li>details: <span>test</span></li>
+			<li>details: <span>test</span></li>
+			<li>details: <span>test</span></li>
+		</ul>-->
 		<br class="clear"/>
 
 
 
-	</div>
+		</div><!-- .model-info -->
+	</div><!-- .col-md-6 -->
 
 </div>
 
@@ -224,18 +460,6 @@ $ProfileGallery = $resultsModelList['ProfileGallery'];
 		return false;
 	});
 </script>
-<style>
-.slider-container{position:relative;padding:10px;background:#fff;}
-.close-btn{position:absolute; top: 10px; right:10px;}
-.primary-photo{width: 320px;border: 0px solid #bbb;float: left;}
-.model-info{border: 0px solid #bbb;display:inline-block;padding: 15px;}
-.model-info h1{padding: 0; margin: 15px 0;display:block;}
-.model-details{display:block;width:200px;}
-.model-details li{line-height:1.em;font-size:12px;}
-.model-icons{display:block;width:200px;}
-.model-icons li{line-height:1.em;font-size:12px;}
-br.clear{clear:both; margn: 5px;height:1px; display:block;}
-</style>
 
 
 
