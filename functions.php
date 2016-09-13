@@ -5753,8 +5753,7 @@ function rb_get_profile_type_childs_checkbox($parentID,$ConfigID){
 			echo "<div><label>";
 				$t = trim(str_replace(' ','_',$child['DataTypeTitle']));
 				$checked = 'checked="checked"';
-				echo $space.'<input type="checkbox" name="ProfileType'.$t.'" value="1" ' .
-				$checked . '  />&nbsp;'.
+				echo $space."<input type=\"checkbox\" class=\"customfields-child-profiletype_".$parentID."\" name=\"ProfileType".$t."\" value=\"1\"  />&nbsp;".
 				trim($child['DataTypeTitle'])
 				.'&nbsp;<br/>';
 			echo "</label></div>";

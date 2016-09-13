@@ -3486,8 +3486,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 								echo "<div><label>";
 											$t = trim(str_replace(' ','_',$typ['DataTypeTitle']));
 											//$checked = 'checked="checked"'; default is unchecked
-											echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' .
-												$checked . '  />&nbsp;'.
+											echo '<input type="checkbox" class="customfields-parent-profiletype" name="ProfileType'.$t.'" value="1" ' .
+												$checked . ' parent-id="'.$typ['DataTypeID'].'" />&nbsp;'.
 												trim($typ['DataTypeTitle'])
 												.'&nbsp;<br/>';
 								echo "</label></div>";
@@ -3506,6 +3506,20 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			echo "<div id=\"objtype_customize\">\n";
 		echo "</div>\n";
 
+		?>
+		<script type="text/javascript">
+			jQuery(document).ready(function($){
+				$(".customfields-parent-profiletype").click(function(){
+					var parentID = $(this).attr('parent-id');
+					if($(this).is(":checked")){
+						$(".customfields-child-profiletype_"+parentID).attr('checked',true);
+					}else{
+						$(".customfields-child-profiletype_"+parentID).attr('checked',false);
+					}
+				});
+			});
+		</script>
+		<?php
 		} else { //Edit/Update Field
 					$query1 = "SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = ".$_GET["ProfileCustomID"];
 					$results1 = $wpdb->get_results($query1,ARRAY_A);
