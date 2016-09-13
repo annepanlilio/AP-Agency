@@ -181,6 +181,10 @@ class RBAgency_Profile {
 				echo "			<input type=\"hidden\" name=\"form_action\" value=\"search_profiles\" />\n";
 				echo "			<input type=\"hidden\" name=\"form_mode\" value=\"". (isset($type)?$type:0) ."\" />\n";
 
+				$profile_cat_slug = $_SERVER["REQUEST_URI"];
+				$profile_cat_slug = str_replace("/", "", $profile_cat_slug);
+				echo "			<input type=\"hidden\" name=\"profile_cat\" value=\"". (isset($profile_cat_slug)?$profile_cat_slug:"") ."\" />\n";
+
 				// Show Profile Name
 				
 						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
@@ -1135,7 +1139,11 @@ class RBAgency_Profile {
 					echo "				<input type=\"submit\" name=\"search_profiles\" value=\"". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\"  />\n"; // onclick=\"this.form.action='". $rb_agency_searchurl ."'\"
 					echo "				<input type=\"button\" id=\"rst_btn\" value=\"". __("Empty Form", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"clearForm();\" />\n";
 					if($ptype == 0 && $user_role != 'administrator') {
-						echo "<a href=\"".get_bloginfo("url")."/casting-dashboard/\">".__("Go Back to My Dashboard",RBAGENCY_TEXTDOMAIN)."</a>\n";
+						$requestURI =  str_replace('/','',$_SERVER['REQUEST_URI']);
+						
+						if($requestURI != 'casting-dashboard'){
+							echo "<a href=\"".get_bloginfo("url")."/casting-dashboard/\">".__("Go Back to My Dashboard",RBAGENCY_TEXTDOMAIN)."</a>\n";
+						}
 					}
 					$is_casting_page = get_query_var("rbgroup");
 
