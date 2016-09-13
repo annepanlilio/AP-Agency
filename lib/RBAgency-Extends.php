@@ -382,36 +382,72 @@ class RBAgency_Extends {
 			
 			
 
-			if (  // Public
-				($rb_agency_option_privacy == 0) ||
-				//Admin users
-				(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
-				//  Must be logged as "Client" to view model list and profile information
-				($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()  )
-				) {
+			if ( class_exists("RBAgencyCasting") ) {
+				if (  // Public
+					($rb_agency_option_privacy == 0) ||
+					//Admin users
+					(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
+					//  Must be logged as "Client" to view model list and profile information
+					($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()  ) || rb_check_if_casting_agent()
+					) {
 
-				// Select Type
-				$isSearchPage = 1;
-				if(!isset($_POST['form_mode'])){
-					echo RBAgency_Profile::search_form('', '', $type, 0,$mode,$profile_type,$atts_arr);
-					
-				} elseif ($rb_agency_option_formhide_advancedsearch_button  == 0 ){
-					if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
-						echo "	<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
-					} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
-						echo "	<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Basic Search", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
+					// Select Type
+					$isSearchPage = 1;
+					if(!isset($_POST['form_mode'])){
+						echo RBAgency_Profile::search_form('', '', $type, 0,$mode,$profile_type,$atts_arr);
+						
+					} elseif ($rb_agency_option_formhide_advancedsearch_button  == 0 ){
+						if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
+							echo "	<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
+						} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
+							echo "	<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Basic Search", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
+						}
 					}
-				}
 
-			} else {
-
-				echo "	<div class='restricted'>\n";
-				if ( class_exists("RBAgencyCasting") ) {
-						echo "Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login</a> or <a href=\"".get_bloginfo("url")."/casting-register/\">register</a>.";
 				} else {
-						echo "Page restricted. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login</a> or <a href=\"".get_bloginfo("url")."/profile-register/\">register</a>.";
+
+					echo "	<div class='restricted'>\n";
+					if ( class_exists("RBAgencyCasting") ) {
+
+							echo "Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login</a> or <a href=\"".get_bloginfo("url")."/casting-register/\">register</a>.";
+					} else {
+							echo "Page restricted. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login</a> or <a href=\"".get_bloginfo("url")."/profile-register/\">register</a>.";
+					}
+					echo "  </div><!-- #content -->\n";
 				}
-				echo "  </div><!-- #content -->\n";
+			}else{
+				if (  // Public
+					($rb_agency_option_privacy == 0) ||
+					//Admin users
+					(is_user_logged_in() && current_user_can( 'edit_posts' )) ||
+					//  Must be logged as "Client" to view model list and profile information
+					($rb_agency_option_privacy == 3 && is_user_logged_in() && is_client_profiletype()  )
+					) {
+
+					// Select Type
+					$isSearchPage = 1;
+					if(!isset($_POST['form_mode'])){
+						echo RBAgency_Profile::search_form('', '', $type, 0,$mode,$profile_type,$atts_arr);
+						
+					} elseif ($rb_agency_option_formhide_advancedsearch_button  == 0 ){
+						if ( (isset($_POST['form_mode']) && $_POST['form_mode'] == "full" ) ){
+							echo "	<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Advanced Search", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javasctipt:window.location.href='".get_bloginfo("wpurl")."/search-advanced/'\"/>";
+						} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == "simple" ) ){
+							echo "	<input type=\"button\" name=\"back_search rb-s1\" value=\"". __("Go Back to Basic Search", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" onclick=\"javascript:window.location.href='".get_bloginfo("wpurl")."/search-basic/'\"/>";
+						}
+					}
+
+				} else {
+
+					echo "	<div class='restricted'>\n";
+					if ( class_exists("RBAgencyCasting") ) {
+
+							echo "Page restricted. Only Admin & Casting Agent can view this page. Please <a href=\"".get_bloginfo("url")."/casting-login/\">login</a> or <a href=\"".get_bloginfo("url")."/casting-register/\">register</a>.";
+					} else {
+							echo "Page restricted. Please <a href=\"".get_bloginfo("url")."/profile-login/\">login</a> or <a href=\"".get_bloginfo("url")."/profile-register/\">register</a>.";
+					}
+					echo "  </div><!-- #content -->\n";
+				}
 			}
 
 			$output_string=ob_get_contents();;

@@ -6595,6 +6595,20 @@ function rb_get_gender_by_preselected_datatype(){
 add_action('wp_ajax_rb_get_gender_by_preselected_datatype','rb_get_gender_by_preselected_datatype');
 add_action('wp_ajax_nopriv_rb_get_gender_by_preselected_datatype','rb_get_gender_by_preselected_datatype');
 
+if ( class_exists("RBAgencyCasting") ) {
 
+ function rb_check_if_casting_agent(){
+ 	global $current_user;
+	global $wpdb;
+
+	$query = "SELECT * FROM ". table_agency_casting ." WHERE CastingUserLinked = ". rb_agency_get_current_userid();
+	$results = $wpdb->get_results($query,ARRAY_A);
+	if(count($results)>0){
+		return true;
+	}else{
+		return false;
+	}
+ }
+}
 
 ?>
