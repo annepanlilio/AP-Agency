@@ -1390,11 +1390,21 @@
 
 				if($permit_type || $all_permit){
 					if($ProfileGenderShow ==true){
-						if($data3["ProfileCustomShowGender"] == $ProfileGender ){ // Depends on Current LoggedIn User's Gender
-							rb_custom_fields_template($visibility, $ProfileID, $data3);
-						} elseif(empty($data3["ProfileCustomShowGender"])) {
+						$genderTitle = rb_agency_getGenderTitle($ProfileGender);
+						$customFieldGenders = get_option("ProfileCustomShowGenderArr_".$data3['ProfileCustomID']);
+
+						if(isset($_GET['action']) && $_GET['action'] == 'editRecord'){
+							if(strpos($customFieldGenders, $genderTitle)>-1){
+								rb_custom_fields_template($visibility, $ProfileID, $data3);
+							}
+						}else{
 							rb_custom_fields_template($visibility, $ProfileID, $data3);
 						}
+						//if($data3["ProfileCustomShowGender"] == $ProfileGender ){ // Depends on Current LoggedIn User's Gender
+						//	rb_custom_fields_template($visibility, $ProfileID, $data3);
+						//} elseif(empty($data3["ProfileCustomShowGender"])) {
+						//	rb_custom_fields_template($visibility, $ProfileID, $data3);
+						//}
 					} else {
 							rb_custom_fields_template($visibility, $ProfileID, $data3);
 					}

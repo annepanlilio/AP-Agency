@@ -975,7 +975,7 @@ elseif ($ConfigID == 8) {
 							} elseif ($rb_agency_option_profilenaming == 1) {
 								$ProfileGalleryFixed = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
 							} elseif ($rb_agency_option_profilenaming == 2) {
-								$ProfileGalleryFixed = $ProfileContactNameFirst;
+								$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
 							} elseif ($rb_agency_option_profilenaming == 3) {
 								$ProfileGalleryFixed = "ID-". $ProfileID;
 							} elseif ($rb_agency_option_profilenaming == 4) {
@@ -1028,6 +1028,7 @@ elseif ($ConfigID == 8) {
 							rename(RBAGENCY_UPLOADPATH ."/". $ProfileGallery, RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed);
 
 							if (is_dir(RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed)) {
+
 								$rename = "UPDATE " . table_agency_profile . " SET ProfileGallery = '". $ProfileGalleryFixed ."' WHERE ProfileID = \"". $ProfileID ."\"";
 								$renamed = $wpdb->query($rename);
 								echo "  <div id=\"message\" class=\"updated highlight\">Folder <strong>/" . $ProfileGalleryFixed . "/</strong> has been renamed for <a href='admin.php?page=rb_agency_profiles&action=editRecord&ProfileID=" . $data1['ProfileID'] . "'>" . $data1['ProfileContactNameFirst'] . " " . $data1['ProfileContactNameLast'] . "</a></div>\n";
@@ -1112,7 +1113,7 @@ elseif ($ConfigID == 8) {
 							} elseif ($rb_agency_option_profilenaming == 1) {
 								$ProfileGalleryFixed = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
 							} elseif ($rb_agency_option_profilenaming == 2) {
-								$ProfileGalleryFixed = $ProfileContactNameFirst;
+								$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
 							} elseif ($rb_agency_option_profilenaming == 3) {
 								$ProfileGalleryFixed = "ID-". $ProfileID;
 							} elseif ($rb_agency_option_profilenaming == 4) {
@@ -1120,7 +1121,7 @@ elseif ($ConfigID == 8) {
 							} elseif ($rb_agency_option_profilenaming == 5) {
 								$ProfileGalleryFixed = $ProfileContactNameLast;
 							}
-
+							
 			$ProfileContactDisplay = $ProfileGalleryFixed;
 			$ProfileGalleryFixed = RBAgency_Common::format_stripchars($ProfileGalleryFixed);
 
