@@ -409,33 +409,40 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
 						}
 
-						#rename folder
-						$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
-							if ($rb_agency_option_profilenaming == 0) {
-								$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
-							} elseif ($rb_agency_option_profilenaming == 1) {
-								$ProfileGalleryFixed = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
-							} elseif ($rb_agency_option_profilenaming == 2) {
-								$displayName = str_replace(" ", "-", strtolower($ProfileContactDisplay));
-								//$ProfileGalleryFixed = $displayName;
-								$ProfileGalleryFixed = $ProfileContactDisplay;
-							} elseif ($rb_agency_option_profilenaming == 3) {
-								$ProfileGalleryFixed = "ID-". $ProfileID;
-							} elseif ($rb_agency_option_profilenaming == 4) {
-								$ProfileGalleryFixed = $ProfileContactNameFirst;
-							} elseif ($rb_agency_option_profilenaming == 5) {
-								$ProfileGalleryFixed = $ProfileContactNameLast;
+							# get current profile contact display
+							$ProfileData = $wpdb->get_row($wpdb->prepare("SELECT ProfileContactDisplay FROM ".table_agency_profile." WHERE ProfileID = %d",$ProfileID),ARRAY_A);
+							echo $ProfileData['ProfileContactDisplay']."=".$_POST['ProfileContactDisplay'];
+							# If there is change in profile contact display name
+							if($ProfileData['ProfileContactDisplay'] != $_POST['ProfileContactDisplay']){
+								#rename folder
+								$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+								if ($rb_agency_option_profilenaming == 0) {
+									$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+								} elseif ($rb_agency_option_profilenaming == 1) {
+									$ProfileGalleryFixed = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+								} elseif ($rb_agency_option_profilenaming == 2) {
+									$ProfileGalleryFixed = $ProfileContactDisplay;
+								} elseif ($rb_agency_option_profilenaming == 3) {
+									$ProfileGalleryFixed = "ID-". $ProfileID;
+								} elseif ($rb_agency_option_profilenaming == 4) {
+									$ProfileGalleryFixed = $ProfileContactNameFirst;
+								} elseif ($rb_agency_option_profilenaming == 5) {
+									$ProfileGalleryFixed = $ProfileContactNameLast;
+								}						
+								
+								$ProfileGalleryFixed = str_replace(' ', '-', strtolower($ProfileGalleryFixed));				
+								$oldDir =RBAGENCY_UPLOADPATH ."/". $ProfileGallery;
+								$newDir =RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed;
+								rename($oldDir,$newDir );
+								rmdir($oldDir);
+
+								$ProfileGallery = $ProfileGalleryFixed;
 							}
-							$ProfileGalleryFixed = str_replace(' ', '-', strtolower($ProfileGalleryFixed));				
-							$oldDir =RBAGENCY_UPLOADPATH ."/". $ProfileGallery;
-							$newDir =RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed;
-							rename($oldDir,$newDir );
-							rmdir($oldDir);
 							
 
 						// Update Record
 						$update = "UPDATE " . table_agency_profile . " SET
-							ProfileGallery='" . esc_attr($ProfileGalleryFixed) . "',
+							ProfileGallery='" . esc_attr($ProfileGallery) . "',
 							ProfileContactDisplay='" . esc_attr($ProfileContactDisplay) . "',
 							ProfileContactNameFirst='" . esc_attr($ProfileContactNameFirst) . "',
 							ProfileContactNameLast='" . esc_attr($ProfileContactNameLast) . "',
@@ -572,11 +579,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 						}
 
 						// Check Directory - create directory if does not exist
-						if(empty($ProfileGalleryFixed)){
-							$ProfileGallery = rb_agency_checkdir($ProfileGallery);
-						}else{
-							$ProfileGallery = $newDir;
-						}
+						$ProfileGallery = rb_agency_checkdir($ProfileGallery);
 
 						// Upload Image & Add to Database
 						$i = 1;
