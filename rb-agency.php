@@ -14,8 +14,8 @@ $RBAGENCY_CUSTOM = FALSE;
 /*
 License: CF Commercial-to-GPL License
 Copyright 2007-2014 Rob Bertholf
-This License is a legal agreement between You and the Developer for the use of the Software. 
-By installing, copying, or otherwise using the Software, You agree to be bound by the terms of this License. 
+This License is a legal agreement between You and the Developer for the use of the Software.
+By installing, copying, or otherwise using the Software, You agree to be bound by the terms of this License.
 If You do not agree to the terms of this License, do not install or use the Software.
 See license.txt for full details.
 */
@@ -61,15 +61,43 @@ See license.txt for full details.
 	if (!defined('RBAGENCY_THEME_DIR')) // httdocs/domain/wp-content/themes/twentythirteen
 		define('RBAGENCY_THEME_DIR', ABSPATH . 'wp-content/themes/' . get_template());
 
+	/* Paths */
+	if ( ! function_exists( 'is_ssl' ) ) {
+	  function is_ssl() {
+		if ( isset($_SERVER['HTTPS']) ) {
+		  if ( 'on' == strtolower($_SERVER['HTTPS']) )
+			 return true;
+		  if ( '1' == $_SERVER['HTTPS'] )
+			 return true;
+		} elseif ( isset($_SERVER['SERVER_PORT']) && ( '443' == $_SERVER['SERVER_PORT'] ) ) {
+		  return true;
+		}
+		return false;
+	  }
+	}
+
+	if ( is_ssl() ) {
+		$wp_content_url = str_replace( 'http://' , 'https://' , get_option( 'siteurl' ) );
+	} else {
+		$wp_content_url = get_option( 'siteurl' );
+	}
+	$wp_content_url .= '/wp-content';
+	$wp_content_dir = ABSPATH . 'wp-content';
+	$wp_plugin_url = $wp_content_url . '/plugins';
+	$wp_plugin_dir = $wp_content_dir . '/plugins';
+	$wpmu_plugin_url = $wp_content_url . '/mu-plugins';
+	$wpmu_plugin_dir = $wp_content_dir . '/mu-plugins';
+
+
 	// RB Agency Plugin Path
 	if (!defined('RBAGENCY_PLUGIN_NAME')) // rb-agency
 		define('RBAGENCY_PLUGIN_NAME', strtolower(trim(dirname(plugin_basename(__FILE__)), '/')));
 
 	if (!defined('RBAGENCY_PLUGIN_DIR')) // httdocs/domain/wp-content/plugins/rb-agency/
-		define('RBAGENCY_PLUGIN_DIR', WP_PLUGIN_DIR . '/' . RBAGENCY_PLUGIN_NAME . '/');
+		define('RBAGENCY_PLUGIN_DIR', $wp_plugin_dir . '/' . RBAGENCY_PLUGIN_NAME . '/');
 
 	if (!defined('RBAGENCY_PLUGIN_URL')) // http://localhost/wp-content/plugins/rb-agency/
-		define('RBAGENCY_PLUGIN_URL', WP_PLUGIN_URL . '/' . RBAGENCY_PLUGIN_NAME . '/');
+		define('RBAGENCY_PLUGIN_URL', $wp_plugin_dir . '/' . RBAGENCY_PLUGIN_NAME . '/');
 
 	// Upload Directory
 	$upload_dir = wp_upload_dir();
@@ -85,7 +113,7 @@ See license.txt for full details.
 
 	// Define Text Domain
 	if (!defined('RBAGENCY_TEXTDOMAIN')) // rb-agency
-		define('RBAGENCY_TEXTDOMAIN', RBAGENCY_PLUGIN_NAME ); // 
+		define('RBAGENCY_TEXTDOMAIN', RBAGENCY_PLUGIN_NAME ); //
 
 	if(!defined( 'RBAGENCY_SLUG'))
 		define( 'RBAGENCY_SLUG', plugin_basename(__FILE__) );
@@ -184,16 +212,16 @@ See license.txt for full details.
 
 	include_once(RBAGENCY_PLUGIN_DIR.'ext/BFI_Thumb.php');
 
-	
+
 	include_once(RBAGENCY_PLUGIN_DIR.'ext/upload-multi.php');
 	include_once(RBAGENCY_PLUGIN_DIR.'ext/ecard-create.php');
-	
+
 
 // *************************************************************************************************** //
 
 
 /*
- * Edit posts capabilities bypass for twentytwelve themes 
+ * Edit posts capabilities bypass for twentytwelve themes
  */
 	function twentyeleven_option_page_capability( $capability ) {
 		return 'edit_posts';
