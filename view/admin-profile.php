@@ -413,7 +413,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							$ProfileData = $wpdb->get_row($wpdb->prepare("SELECT ProfileContactDisplay FROM ".table_agency_profile." WHERE ProfileID = %d",$ProfileID),ARRAY_A);
 							echo $ProfileData['ProfileContactDisplay']."=".$_POST['ProfileContactDisplay'];
 							# If there is change in profile contact display name
-							if($ProfileData['ProfileContactDisplay'] != $_POST['ProfileContactDisplay']){
+							//if($ProfileData['ProfileContactDisplay'] != $_POST['ProfileContactDisplay']){
 								#rename folder
 								$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 								if ($rb_agency_option_profilenaming == 0) {
@@ -437,7 +437,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 								rmdir($oldDir);
 
 								$ProfileGallery = $ProfileGalleryFixed;
-							}
+							//}
 							
 
 						// Update Record
