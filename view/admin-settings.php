@@ -2037,7 +2037,6 @@ elseif ($ConfigID == 3) {
 			foreach ($results as $data) {
 				$DataTypeID		=$data['DataTypeID'];
 				$DataTypeTitle	=stripslashes($data['DataTypeTitle']);
-				$DataTypeTitle = str_replace(' ', '_', $DataTypeTitle);
 				$DataTypeTag	=$data['DataTypeTag'];
 				$DataTypeGenderID	=$data['DataTypeGenderID'];
 			}
@@ -2077,7 +2076,7 @@ elseif ($ConfigID == 3) {
 			$sql = "SELECT DataTypeParentID FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeID = %d";
 			$parent = $wpdb->get_row($wpdb->prepare($sql,$_GET["DataTypeID"]));
 			$selected = $parent->DataTypeParentID == $result->DataTypeID ? "selected" : "";	
-			echo "<option value=".$result->DataTypeID." $selected>".$result->DataTypeTitle. "</option>";
+			//echo "<option value=".$result->DataTypeID." $selected>".$result->DataTypeTitle. "</option>";
 			// -- disable to nested child to be the parent
 			//do_action('rb_get_profile_type_childs_dropdown_display',$result->DataTypeID,4);
 		}	
@@ -2089,13 +2088,13 @@ elseif ($ConfigID == 3) {
 		echo "    <tr valign=\"top\">\n";
 		echo "        <th scope=\"row\">". __("Gender", RBAGENCY_TEXTDOMAIN) .":</th>\n";
 		echo "        <td>";
-			
-		//echo 'xxx'.$DataTypeGenderID;
+		$DataTypeIdOption =	get_option("DataTypeID_". $DataTypeID, true );
+		//echo 'xxx'.$DataTypeIdOption;
 		$results_gender = $wpdb->get_results("SELECT * FROM ". table_agency_data_gender);
 		echo "<select name=\"DataTypeGenderID\">";
-		echo "<option value=\"0\">All</option> ";
+		echo "<option value=\"0\" ".($DataTypeIdOption == "All Gender" ? "selected" : "").">All</option> ";
 		foreach ($results_gender as $result) {
-			$selected = $DataTypeGenderID == $result->GenderID ? "selected" : "";	
+			$selected = strpos($DataTypeIdOption,$result->GenderTitle) >-1 ? "selected" : "";	
 			echo "<option value=".$result->GenderID." $selected>".$result->GenderTitle. "</option>";
 		}
 		echo "</select>";
@@ -2132,7 +2131,7 @@ elseif ($ConfigID == 3) {
 	echo "     <input type=\"hidden\" name=\"DataTypeID\" value=\"". $DataTypeID ."\" />\n";
 	echo "     <input type=\"hidden\" name=\"ConfigID\" value=\"". $ConfigID ."\" />\n";
 	echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
-	echo "     <input type=\"hidden\" name=\"oldTitle\" value=\"".$DataTypeTitle."\" />\n";
+	echo "     <input type=\"hidden\" name=\"oldTitle\" value=\"".str_replace(" ", "_",$DataTypeTitle )."\" />\n";
 	echo "     <input type=\"submit\" name=\"submit\" value=\"". __("Update Record", RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
 	echo "</p>\n";
 	} else {
@@ -4064,6 +4063,8 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		}
 		
 		echo "        <td class=\"column\">".$custom_views."</td>\n";
+
+
 		echo "        <td class=\"column\">".str_replace(",","<br/>",str_replace('_',' ',$data["ProfileCustomTypes"]))."</td>\n";
 
 		echo "    </tr>\n";
