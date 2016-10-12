@@ -2057,8 +2057,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									rb_custom_fields(0, $ProfileID, $ProfileGender, true);
 
 								}
-								$reflFunc = new ReflectionFunction('rb_custom_fields');
-print $reflFunc->getFileName() . ':' . $reflFunc->getStartLine();
+								//$reflFunc = new ReflectionFunction('rb_custom_fields');
+								//print $reflFunc->getFileName() . ':' . $reflFunc->getStartLine();
 								 
 
 								echo "  </tbody>\n";
