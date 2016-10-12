@@ -1971,7 +1971,7 @@ elseif ($ConfigID == 3) {
 				
 				//echo $wpdb->last_error;
 
-				$update_customfields = "SELECT * FROM ". table_agency_customfields_types ." WHERE FIND_IN_SET('".esc_sql($DataTypeOldTitle)."', ProfileCustomTypes) > 0;";
+				$update_customfields = "SELECT * FROM ". table_agency_customfields_types ." WHERE FIND_IN_SET('".esc_sql($DataTypeOldTitle)."', ProfileCustomTypes) > 0";
 				$result =  $wpdb->get_results($update_customfields,ARRAY_A);
 					$total = count($result);
 
@@ -2318,8 +2318,7 @@ elseif ($ConfigID == 3) {
 						FROM ". table_agency_customfields ." main
 						LEFT JOIN ". table_agency_customfields_types ." a
 						ON a.ProfileCustomID = main.ProfileCustomID
-						WHERE FIND_IN_SET('".$data['DataTypeTitle']."',ProfileCustomTypes)
-						";
+						WHERE FIND_IN_SET('".str_replace(" ", "_",$data['DataTypeTitle'])."',a.ProfileCustomTypes) > 0";
 						
 			$results_cus = $wpdb->get_results($query_cus,ARRAY_A);
 			$edit_userCustomFields = array();
@@ -3661,7 +3660,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											$result = $wpdb->get_results($get_types,ARRAY_A);
 
 											foreach( $result as $typ){
-												$t = trim(str_replace(' ','_',$typ['DataTypeTitle']));
+												$t = trim(str_replace('_',' ',$typ['DataTypeTitle']));
 												$checked = '';
 												if(is_array($rTypes)){
 													if(in_array($t,$rTypes)){
@@ -4065,7 +4064,16 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		echo "        <td class=\"column\">".$custom_views."</td>\n";
 
 
-		echo "        <td class=\"column\">".str_replace(",","<br/>",str_replace('_',' ',$data["ProfileCustomTypes"]))."</td>\n";
+		$ProfileCustomTypesArr = explode(',',$data["ProfileCustomTypes"]);
+		$ProfileCustomTypesArr = array_unique($ProfileCustomTypesArr);
+		$dataTypes = $wpdb->get_results("SELECT DataTypeTitle FROM ".$wpdb->prefix."agency_data_type",ARRAY_A);
+		$displayCustomTypesArr = [];
+		foreach($dataTypes as $dataType){
+			if(in_array($dataType["DataTypeTitle"], $ProfileCustomTypesArr)){
+				$displayCustomTypesArr[] = $dataType["DataTypeTitle"];
+			}
+		}
+		echo "        <td class=\"column\">".implode("<br/>", str_replace("_", " ",$displayCustomTypesArr ))."</td>\n";
 
 		echo "    </tr>\n";
 		}
