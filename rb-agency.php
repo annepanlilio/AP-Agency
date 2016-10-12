@@ -97,7 +97,7 @@ See license.txt for full details.
 		define('RBAGENCY_PLUGIN_DIR', $wp_plugin_dir . '/' . RBAGENCY_PLUGIN_NAME . '/');
 
 	if (!defined('RBAGENCY_PLUGIN_URL')) // http://localhost/wp-content/plugins/rb-agency/
-		define('RBAGENCY_PLUGIN_URL', $wp_plugin_dir . '/' . RBAGENCY_PLUGIN_NAME . '/');
+		define('RBAGENCY_PLUGIN_URL', $wp_plugin_url . '/' . RBAGENCY_PLUGIN_NAME . '/');
 
 	// Upload Directory
 	$upload_dir = wp_upload_dir();
