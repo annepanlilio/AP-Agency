@@ -4069,7 +4069,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		$dataTypes = $wpdb->get_results("SELECT DataTypeTitle FROM ".$wpdb->prefix."agency_data_type",ARRAY_A);
 		$displayCustomTypesArr = [];
 		foreach($dataTypes as $dataType){
-			if(in_array($dataType["DataTypeTitle"], $ProfileCustomTypesArr)){
+			if(in_array($dataType["DataTypeTitle"], $ProfileCustomTypesArr) || in_array(str_replace(" ", "_", $dataType["DataTypeTitle"]), $ProfileCustomTypesArr)){
 				$displayCustomTypesArr[] = $dataType["DataTypeTitle"];
 			}
 		}

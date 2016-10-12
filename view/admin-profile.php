@@ -1467,7 +1467,10 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										</script>";
 									}
 								} else {
-									rb_custom_fields(1, $ProfileID, $ProfileGender, true);
+									//rb_custom_fields(1, $ProfileID, $ProfileGender, true);
+									echo "  <tbody class=\"tbody-table-customfields-private\">\n";
+								
+									echo "  </tbody>\n";
 								}
 								echo " </table>\n";
 
@@ -1653,7 +1656,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											},
 											success: function (results) {
 												jQuery(".tbody-table-customfields").html(results);
-												console.log(results);
+												//console.log(results);
 											}
 										});	
 										jQuery.ajax({
@@ -1666,8 +1669,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 												'gender': $("#ProfileGender").val()
 											},
 											success: function (results) {
-												jQuery(".tbody-table-customfields-private").html(results);
-												console.log(results);
+												$(".tbody-table-customfields-private").html(results);
+												//console.log(results);
 											}
 										});
 									}
