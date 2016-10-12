@@ -1447,7 +1447,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								// ProfileCustomView = 1 , Private
 								if (isset($_GET["ProfileGender"])) {
 									$ProfileGender = $_GET["ProfileGender"];
-									rb_custom_fields(1, 0, $ProfileGender, true);
+									//$rbagencyCustomfieldsClass = new RBAgency_Customfields();
+									//$rbagencyCustomfieldsClass->getCustomFieldsProfileManagerPrivate($ProfileGender);
+									//rb_custom_fields(1, 0, $ProfileGender, true);
+
+									echo "  <tbody class=\"tbody-table-customfields-private\">\n";
+								
+									echo "  </tbody>\n";
 									if(!isset($_POST)){
 									echo"<script type=\"text/javascript\">
 										jQuery(document).ready(function(){
@@ -1650,10 +1656,25 @@ function rb_display_manage($ProfileID, $errorValidation) {
 												console.log(results);
 											}
 										});	
+										jQuery.ajax({
+											type: "POST",
+											url: "<?php echo admin_url('admin-ajax.php') ?>",
+											data: {
+												action: "rb_get_customfields_edit_profile_private",
+												'profile_types': profileTypeTitles,
+												'profileID': <?php echo $ProfileID ;?>,
+												'gender': $("#ProfileGender").val()
+											},
+											success: function (results) {
+												jQuery(".tbody-table-customfields-private").html(results);
+												console.log(results);
+											}
+										});
 									}
 
 									$(".userProfileType").click(function(){
 										$(".tbody-table-customfields").empty();
+										$(".tbody-table-customfields-private").empty();
 										var profileTypeTitles = $('.userProfileType:checkbox:checked').map(function() {
 											return $(this).attr('profile-type-title');
 										}).get();
@@ -1673,6 +1694,20 @@ function rb_display_manage($ProfileID, $errorValidation) {
 													console.log(results);
 												}
 											});	
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_edit_profile_onchanged_profiletype_private",
+													'profile_types': profileTypeTitles,
+													'profileID': <?php echo $ProfileID ;?>,
+													'gender': jQuery("#ProfileGender").val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields-private").html(results);
+													console.log(results);
+												}
+											});
 										}else{
 											jQuery.ajax({
 												type: "POST",
@@ -1687,6 +1722,19 @@ function rb_display_manage($ProfileID, $errorValidation) {
 													console.log(results);
 												}
 											});	
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_edit_profile_private",
+													'profileID': <?php echo $ProfileID ;?>,
+													'gender': jQuery("#ProfileGender").val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields-private").html(results);
+													console.log(results);
+												}
+											});
 										}
 
 									});
@@ -1711,6 +1759,19 @@ function rb_display_manage($ProfileID, $errorValidation) {
 													console.log(results);
 												}
 											});	
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_edit_profile_onchanged_profiletype_private",
+													'profile_types': profileTypeTitles,
+													'gender': $(this).val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields-private").html(results);
+													console.log(results);
+												}
+											});	
 										}else{
 											jQuery.ajax({
 												type: "POST",
@@ -1721,6 +1782,18 @@ function rb_display_manage($ProfileID, $errorValidation) {
 												},
 												success: function (results) {
 													jQuery(".tbody-table-customfields").html(results);
+													console.log(results);
+												}
+											});	
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_edit_profile_private",
+													'gender': $(this).val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields-private").html(results);
 													console.log(results);
 												}
 											});	
@@ -1738,6 +1811,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 									$(".userProfileType").click(function(){
 										$(".tbody-table-customfields").empty();
+										$(".tbody-table-customfields-private").empty();
 										var profileTypeTitles = $('.userProfileType:checkbox:checked').map(function() {
 											return $(this).attr('profile-type-title');
 										}).get();
@@ -1756,6 +1830,19 @@ function rb_display_manage($ProfileID, $errorValidation) {
 													console.log(results);
 												}
 											});	
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_add_profile_onchanged_profiletype_private",
+													'profile_types': profileTypeTitles,
+													'gender': jQuery("#ProfileGender").val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields-private").html(results);
+													console.log(results);
+												}
+											});	
 										}else{
 											jQuery.ajax({
 												type: "POST",
@@ -1769,12 +1856,25 @@ function rb_display_manage($ProfileID, $errorValidation) {
 													console.log(results);
 												}
 											});	
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_add_profile_private",
+													'gender': jQuery("#ProfileGender").val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields-private").html(results);
+													console.log(results);
+												}
+											});
 										}
 
 									});
 
 									$("#ProfileGender").on("change",function(){
 										$(".tbody-table-customfields").empty();
+										$(".tbody-table-customfields-private").empty();
 										var profileTypeTitles = $('.userProfileType:checkbox:checked').map(function() {
 											return $(this).attr('profile-type-title');
 										}).get();
@@ -1793,6 +1893,19 @@ function rb_display_manage($ProfileID, $errorValidation) {
 													console.log(results);
 												}
 											});	
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_add_profile_onchanged_profiletype_private",
+													'profile_types': profileTypeTitles,
+													'gender': $(this).val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields-private").html(results);
+													console.log(results);
+												}
+											});
 										}else{
 											jQuery.ajax({
 												type: "POST",
@@ -1806,6 +1919,18 @@ function rb_display_manage($ProfileID, $errorValidation) {
 													console.log(results);
 												}
 											});	
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_add_profile_private",
+													'gender': $(this).val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields-private").html(results);
+													console.log(results);
+												}
+											});
 										}
 									});
 								});
@@ -1934,6 +2059,19 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											},
 											success: function (results) {
 												jQuery(".tbody-table-customfields").html(results);
+												//console.log(results);
+											}
+										});
+
+										jQuery.ajax({
+											type: "POST",
+											url: "<?php echo admin_url('admin-ajax.php') ?>",
+											data: {
+												action: "rb_get_customfields_load_private",
+												'gender': "<?php echo $_GET["ProfileGender"]; ?>"
+											},
+											success: function (results) {
+												jQuery(".tbody-table-customfields-private").html(results);
 												console.log(results);
 											}
 										});
