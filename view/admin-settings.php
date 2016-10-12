@@ -3650,9 +3650,9 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											$x = $wpdb->get_row($_sql);// or die($wpdb->print_error());
 
 											if(strpos($x->ProfileCustomTypes,",") > -1){
-													$rTypes = explode(",",$x->ProfileCustomTypes);
+													$rTypes = explode(",",str_replace("_", " ", $x->ProfileCustomTypes));
 											} else {
-													$rTypes = $x->ProfileCustomTypes;
+													$rTypes = str_replace("_", " ", $x->ProfileCustomTypes);
 											}
 
 											$get_types = "SELECT * FROM ". table_agency_data_type." WHERE DataTypeParentID = 0";

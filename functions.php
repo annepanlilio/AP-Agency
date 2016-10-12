@@ -5807,13 +5807,13 @@ function rb_get_profile_type_childs_checkbox_edit($parentID,$ConfigID,$t){
 				$space .="&nbsp;&nbsp;";
 			}
 			$_childClean = trim(str_replace(' ','_',$child['DataTypeTitle']));
-
+			
 			$sql = "SELECT * FROM ".$wpdb->prefix."agency_customfields_types WHERE FIND_IN_SET('". $_childClean."',ProfileCustomTypes) > 0 "
 				. " AND ProfileCustomID = $ConfigID ";
 
 			$r = $wpdb->get_results($sql);
 			$checked = $wpdb->num_rows > 0 ? 'checked="checked"' : "";
-			$t = trim(str_replace(' ','_',$child['DataTypeTitle']));
+			$t = trim(str_replace('_',' ',$child['DataTypeTitle']));
 			echo $space.'<input type="checkbox" name="ProfileType'.$t.'" value="1" ' .
 														$checked . '  />&nbsp;'.
 														trim($child['DataTypeTitle'])
@@ -6672,7 +6672,7 @@ function save_data_custom_field()
 		$newDataArr = [];
 		$currentDataArr = explode(",",$currentData["ProfileCustomTypes"]);
 		foreach($currentDataArr as $k=>$v){
-			if($datatype["DataTypeTitle"] != $v){
+			if(str_replace("_", " ", $datatype["DataTypeTitle"]) != str_replace("_", " ", $v)){
 				$newDataArr[] = $v;
 			}
 		}
