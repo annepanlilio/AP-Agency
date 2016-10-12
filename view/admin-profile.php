@@ -4,6 +4,7 @@ global $wpdb;
 define("LabelPlural", "Profile");
 define("LabelSingular", "Profiles");
 
+
 /*
  * Pull Options
  */
@@ -411,7 +412,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 
 							# get current profile contact display
 							$ProfileData = $wpdb->get_row($wpdb->prepare("SELECT ProfileContactDisplay FROM ".table_agency_profile." WHERE ProfileID = %d",$ProfileID),ARRAY_A);
-							echo $ProfileData['ProfileContactDisplay']."=".$_POST['ProfileContactDisplay'];
+							//echo $ProfileData['ProfileContactDisplay']."=".$_POST['ProfileContactDisplay'];
 							# If there is change in profile contact display name
 							//if($ProfileData['ProfileContactDisplay'] != $_POST['ProfileContactDisplay']){
 								#rename folder
@@ -434,7 +435,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 								$oldDir =RBAGENCY_UPLOADPATH ."/". $ProfileGallery;
 								$newDir =RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed;
 								rename($oldDir,$newDir );
-								rmdir($oldDir);
+								@rmdir($oldDir);
 
 								$ProfileGallery = $ProfileGalleryFixed;
 							//}
@@ -1110,6 +1111,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 		$caption_header = __("Edit", RBAGENCY_TEXTDOMAIN) . " " . LabelSingular;
 		$caption_text = __("Make changes in the form below to edit a", RBAGENCY_TEXTDOMAIN) . " " . LabelSingular . ".";
+
+		
 	} else {
 
 		// Set default values for new records
@@ -1200,14 +1203,50 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						<div class="inside">
 							<div class="main">
 								<?php
+								
+								$fields = [
+								'updated_ProfileContactDisplay'=>'ProfileContactDisplay',
+								'updated_ProfileContactNameFirst'=>'ProfileContactNameFirst',
+								'updated_ProfileContactNameLast'=>'ProfileContactNameLast',
+								'updated_ProfileContactEmail'=>'ProfileContactEmail',
+								'updated_ProfileContactWebsite'=>'ProfileContactWebsite',
+								'updated_ProfileContactLinkFacebook'=>'ProfileContactLinkFacebook',
+								'updated_ProfileContactLinkTwitter'=>'ProfileContactLinkTwitter',
+								'updated_ProfileContactLinkYoutube'=>'ProfileContactLinkYoutube',
+								'updated_ProfileContactLinkFlickr'=>'ProfileContactLinkFlickr',
+								'updated_ProfileContactPhoneHome'=>'ProfileContactPhoneHome',
+								'updated_ProfileContactPhoneCell'=>'ProfileContactPhoneCell',
+								'updated_ProfileContactPhoneWork'=>'ProfileContactPhoneWork',
+								'updated_ProfileGender'=>'ProfileGender',
+								'updated_ProfileDateBirth'=>'ProfileDateBirth',
+								'updated_ProfileLocationStreet'=>'ProfileLocationStreet',
+								'updated_ProfileLocationCity'=>'ProfileLocationCity',
+								'updated_ProfileLocationState'=>'ProfileLocationState',
+								'updated_ProfileLocationZip'=>'ProfileLocationZip',
+								'updated_ProfileLocationCountry'=>'ProfileLocationCountry',
+								'updated_ProfileType'=>'ProfileType'
+								];
+								if($ProfileIsActive == 3){
+									foreach($fields as $k=>$v){
+										$fields[$k] = get_user_meta($ProfileUserLinked, "updated_".$v, true);
+									}
+								}elseif($ProfileIsActive == 1){
+									foreach($fields as $k=>$v){
+										unset($fields[$k]);
+										delete_user_meta($ProfileUserLinked, "updated_".$v, "");
 
+									}
+									$wpdb->query("DELETE FROM ".$wpdb->prefix."usermeta WHERE meta_key LIKE '%updated_ProfileCustomID%' OR meta_key LIKE '%MediaFileName%' OR meta_key LIKE '%VideoFileName%' AND user_id = ".$ProfileUserLinked);
+									
+								}
+								
 								echo " <table class=\"form-table\">\n";
 								echo "  <tbody>\n";
 								if ((!empty($ProfileID) && ($ProfileID > 0)) || ($rb_agency_option_profilenaming == 2)) { // Editing Record
 									echo "    <tr valign=\"top\">\n";
 									echo "      <th scope=\"row\">" . __("Display Name", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 									echo "      <td>\n";
-									echo "          <input type=\"text\" id=\"ProfileContactDisplay\" name=\"ProfileContactDisplay\" value=\"" . (isset($ProfileContactDisplay)?$ProfileContactDisplay:"") . "\" />\n";
+									echo "          <input type=\"text\" id=\"ProfileContactDisplay\" name=\"ProfileContactDisplay\" value=\"" . (isset($ProfileContactDisplay)?$ProfileContactDisplay:"") . "\" class=\"".(!empty($fields['updated_ProfileContactDisplay']) ? 'marked_changed' : "")."\"/>\n";
 									if(isset($errorValidation['rb_agency_option_profilenaming'])){echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['rb_agency_option_profilenaming']."</p>\n";}
 									echo "      </td>\n";
 									echo "    </tr>\n";
@@ -1231,14 +1270,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("First Name", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"" . (isset($ProfileContactNameFirst)?$ProfileContactNameFirst:"") . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"" . (isset($ProfileContactNameFirst)?$ProfileContactNameFirst:"") . "\" class=\"".(!empty($fields['updated_ProfileContactNameFirst']) ? 'marked_changed' : "")."\"/>\n";
 								if(isset($errorValidation['ProfileContactNameFirst'])){echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['ProfileContactNameFirst']."</p>\n";}
 								echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Last Name", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"" . (isset($ProfileContactNameLast)?$ProfileContactNameLast:"") . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"" . (isset($ProfileContactNameLast)?$ProfileContactNameLast:"") . "\" class=\"".(!empty($fields['updated_ProfileContactNameLast']) ? 'marked_changed' : "")."\"/>\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 
@@ -1280,7 +1319,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "      <td>\n";
 
 
-								echo "          <textarea type=\"text\" cols=\"220\" rows=\"5\" id=\"ProfileDescription\" name=\"ProfileDescription\">";
+								echo "          <textarea type=\"text\" cols=\"220\" rows=\"5\" id=\"ProfileDescription\" name=\"ProfileDescription\" ".(!empty($fields['updated_ProfileDescription']) ? "class=\"marked_changed\"" : "").">";
 
 								echo	esc_attr( $ProfileDescription );
 								echo "</textarea>";
@@ -1318,30 +1357,30 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "      <th scope=\"row\">" . __("Birthdate", RBAGENCY_TEXTDOMAIN) . " <em>YYYY-MM-DD</em></th>\n";
 								echo "      <td>\n";
 
-								echo "          <input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" class=\"datepicker-bd\" value=\"" . $ProfileDateBirth . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" class=\"datepicker-bd ".(!empty($fields['updated_ProfileDateBirth']) ? "marked_changed" : "")."\" value=\"" . $ProfileDateBirth . "\" value=\"" . (isset($ProfileContactEmail)?$ProfileContactEmail:"") . "\" />\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Email Address", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactEmail\" name=\"ProfileContactEmail\" value=\"" . (isset($ProfileContactEmail)?$ProfileContactEmail:"") . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileContactEmail\" name=\"ProfileContactEmail\" value=\"" . (isset($ProfileContactEmail)?$ProfileContactEmail:"") . "\" class=\"".(!empty($fields['updated_ProfileContactEmail']) ? 'marked_changed' : "")."\"/>\n";
 								if(isset($errorValidation['ProfileContactEmail'])){echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['ProfileContactEmail']."</p>\n";}
-									echo "          <input type=\"hidden\" id=\"ProfileContactEmail\" name=\"HiddenContactEmail\" value=\"" . (isset($ProfileContactEmail)?$ProfileContactEmail:"") . "\" />\n";
+									echo "          <input type=\"hidden\" id=\"ProfileContactEmail\" name=\"HiddenContactEmail\" value=\"" . (isset($ProfileContactEmail)?$ProfileContactEmail:"") . "\" class=\"".(!empty($fields['updated_ProfileContactEmail']) ? 'marked_changed' : "")."\"/>\n";
 									echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Website", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactWebsite\" name=\"ProfileContactWebsite\" value=\"" . (isset($ProfileContactWebsite)?$ProfileContactWebsite:"") . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileContactWebsite\" name=\"ProfileContactWebsite\" value=\"" . (isset($ProfileContactWebsite)?$ProfileContactWebsite:"") . "\"  class=\"".(!empty($fields['updated_ProfileContactWebsite']) ? 'marked_changed' : "")."\"/>\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Phone", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
 								echo "      <fieldset>\n";
-								echo "          <label>Home:</label><br /><input type=\"text\" id=\"ProfileContactPhoneHome\" name=\"ProfileContactPhoneHome\" value=\"" . (isset($ProfileContactPhoneHome)?$ProfileContactPhoneHome:"") . "\" /><br />\n";
-								echo "          <label>Cell:</label><br /><input type=\"text\" id=\"ProfileContactPhoneCell\" name=\"ProfileContactPhoneCell\" value=\"" . (isset($ProfileContactPhoneCell)?$ProfileContactPhoneCell:"") . "\" /><br />\n";
-								echo "          <label>Work:</label><br /><input type=\"text\" id=\"ProfileContactPhoneWork\" name=\"ProfileContactPhoneWork\" value=\"" . (isset($ProfileContactPhoneWork)?$ProfileContactPhoneWork:"") . "\" /><br />\n";
+								echo "          <label>Home:</label><br /><input type=\"text\" id=\"ProfileContactPhoneHome\" name=\"ProfileContactPhoneHome\" value=\"" . (isset($ProfileContactPhoneHome)?$ProfileContactPhoneHome:"") . "\" class=\"".(!empty($fields['updated_ProfileContactPhoneHome']) ? 'marked_changed' : "")."\"/><br />\n";
+								echo "          <label>Cell:</label><br /><input type=\"text\" id=\"ProfileContactPhoneCell\" name=\"ProfileContactPhoneCell\" value=\"" . (isset($ProfileContactPhoneCell)?$ProfileContactPhoneCell:"") . "\" class=\"".(!empty($fields['updated_ProfileContactPhoneCell']) ? 'marked_changed' : "")."\"/><br />\n";
+								echo "          <label>Work:</label><br /><input type=\"text\" id=\"ProfileContactPhoneWork\" name=\"ProfileContactPhoneWork\" value=\"" . (isset($ProfileContactPhoneWork)?$ProfileContactPhoneWork:"") . "\" class=\"".(!empty($fields['updated_ProfileContactPhoneWork']) ? 'marked_changed' : "")."\"/><br />\n";
 								echo "      </fieldset>\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
@@ -1355,7 +1394,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$location= site_url();
 
 								echo '<input type="hidden" id="url" value="'.$location.'">';
-								echo "<select name=\"ProfileLocationCountry\" id=\"ProfileLocationCountry\"  onchange='javascript:populateStates(\"ProfileLocationCountry\",\"ProfileLocationState\");'>";
+								echo "<select name=\"ProfileLocationCountry\" id=\"ProfileLocationCountry\"  onchange='javascript:populateStates(\"ProfileLocationCountry\",\"ProfileLocationState\");' class=\"".(!empty($fields['updated_ProfileLocationCountry']) ? 'marked_changed' : "")."\">";
 								echo '<option value="">'. __("Select country", RBAGENCY_TEXTDOMAIN) .'</option>';
 								foreach($result_query_get as $r){
 										$selected = isset($ProfileLocationCountry) && $ProfileLocationCountry==$r->CountryID?"selected=selected":"";
@@ -1371,7 +1410,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "      <td>\n";
 								$query_get ="SELECT * FROM `".table_agency_data_state."` WHERE CountryID='".(isset($ProfileLocationCountry)?$ProfileLocationCountry:"")."'" ;
 								$result_query_get = $wpdb->get_results($query_get);
-								echo '<select name="ProfileLocationState" id="ProfileLocationState">';
+								echo '<select name="ProfileLocationState" id="ProfileLocationState" class="'.(!empty($fields['updated_ProfileLocationState']) ? 'marked_changed' : "").'">';
 								echo '<option value="">'. __("Select state", RBAGENCY_TEXTDOMAIN) .'</option>';
 								foreach($result_query_get as $r){
 									$selected = isset($ProfileLocationState) && $ProfileLocationState==$r->StateID?"selected=selected":"";
@@ -1386,13 +1425,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Street", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileLocationStreet\" name=\"ProfileLocationStreet\" value=\"" . (isset($ProfileLocationStreet)?$ProfileLocationStreet:"") . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileLocationStreet\" name=\"ProfileLocationStreet\" value=\"" . (isset($ProfileLocationStreet)?$ProfileLocationStreet:"") . "\" class=\"".(!empty($fields['updated_ProfileLocationStreet']) ? 'marked_changed' : "")."\"/>\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("City", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileLocationCity\" name=\"ProfileLocationCity\" value=\"" . (isset($ProfileLocationCity)?$ProfileLocationCity:"") . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileLocationCity\" name=\"ProfileLocationCity\" value=\"" . (isset($ProfileLocationCity)?$ProfileLocationCity:"") . "\" class=\"".(!empty($fields['updated_ProfileLocationCity']) ? 'marked_changed' : "")."\"/>\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 
@@ -1400,7 +1439,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Zip", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileLocationZip\" name=\"ProfileLocationZip\" value=\"" . (isset($ProfileLocationZip)?$ProfileLocationZip:"") . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileLocationZip\" name=\"ProfileLocationZip\" value=\"" . (isset($ProfileLocationZip)?$ProfileLocationZip:"") . "\" class=\"".(!empty($fields['updated_ProfileLocationZip']) ? 'marked_changed' : "")."\"/>\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 
@@ -1581,76 +1620,52 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 							$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 ORDER BY DataTypeTitle";
 							$results3=  $wpdb->get_results($query3,ARRAY_A);
+
+							?>
+							<?php
+							if(isset($_GET['action']) && $_GET['action'] == "editRecord"){
 							
-							if(isset($_GET['action']) && $_GET['action'] == "add" && empty($_GET["ProfileID"])) { 
 							?>
 							<script type="text/javascript">
-								jQuery(document).ready(function(){
-									var profileTypeIDs = [];
-									jQuery(".userProfileType").click(function(){
-										jQuery(".tbody-table-customfields").empty();
-										//event.preventDefault();
-										var checkedProfileType = jQuery(this).attr('profile-type-title');
-										var checked = jQuery(this).is(':checked');
-										profileTypeIDs.push(checkedProfileType);
-										//remove if unchecked
-										if(checked!==true){
-											profileTypeIDs = jQuery.grep(profileTypeIDs, function(value) {
-												 return value != checkedProfileType;
-											});
-										}else{
-											jQuery(this).attr('checked','checked');
-										}												
+								jQuery(document).ready(function($){
 
-										console.log(profileTypeIDs);
-										
+									//onload
+									var profileTypeTitles = $('.userProfileType:checkbox:checked').map(function() {
+										return $(this).attr('profile-type-title');
+									}).get();
 
-										if(profileTypeIDs.length>0){
-											//here , make ajax call to get custom fields
+
+									if(profileTypeTitles.length>0){
+										jQuery.ajax({
+											type: "POST",
+											url: "<?php echo admin_url('admin-ajax.php') ?>",
+											data: {
+												action: "rb_get_customfields_edit_profile",
+												'profile_types': profileTypeTitles,
+												'profileID': <?php echo $ProfileID ;?>,
+												'gender': $("#ProfileGender").val()
+											},
+											success: function (results) {
+												jQuery(".tbody-table-customfields").html(results);
+												console.log(results);
+											}
+										});	
+									}
+
+									$(".userProfileType").click(function(){
+										$(".tbody-table-customfields").empty();
+										var profileTypeTitles = $('.userProfileType:checkbox:checked').map(function() {
+											return $(this).attr('profile-type-title');
+										}).get();
+
+										if(profileTypeTitles.length>0){
 											jQuery.ajax({
 												type: "POST",
 												url: "<?php echo admin_url('admin-ajax.php') ?>",
 												data: {
-													action: "rb_get_customfields",
-													'profile_types': profileTypeIDs,
-													'gender': jQuery("#ProfileGender").val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields").html(results);
-												}
-											});	
-										}else{
-											jQuery.ajax({
-													type: "POST",
-													url: "<?php echo admin_url('admin-ajax.php') ?>",
-													data: {
-														action: "generate_admin_cusfieldscheckbox",
-														'gender': jQuery("#ProfileGender").val()
-													},
-													success: function (results) {
-														jQuery(".tbody-table-customfields").html(results);
-														console.log(results);
-													}
-												});
-										}
-										
-																			
-									});
-
-								    // for gender dropdown
-								    jQuery("#ProfileGender").on("change",function(){
-
-										jQuery(".tbody-table-customfields").empty();
-
-
-										if(profileTypeIDs.length > 0){
-											//here , make ajax call to get custom fields
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields",
-													'profile_types': profileTypeIDs,
+													action: "rb_get_customfields_edit_profile_onchanged_profiletype",
+													'profile_types': profileTypeTitles,
+													'profileID': <?php echo $ProfileID ;?>,
 													'gender': jQuery("#ProfileGender").val()
 												},
 												success: function (results) {
@@ -1660,27 +1675,142 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											});	
 										}else{
 											jQuery.ajax({
-													type: "POST",
-													url: "<?php echo admin_url('admin-ajax.php') ?>",
-													data: {
-														action: "generate_admin_cusfieldscheckbox",
-														'gender': jQuery(this).val()
-													},
-													success: function (results) {
-														jQuery(".tbody-table-customfields").html(results);
-														console.log(results);
-													}
-												});
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_edit_profile",
+													'profileID': <?php echo $ProfileID ;?>,
+													'gender': jQuery("#ProfileGender").val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields").html(results);
+													console.log(results);
+												}
+											});	
 										}
-										
-											
-										
-										
+
 									});
 
-									
+									$("#ProfileGender").on("change",function(){
+										$(".tbody-table-customfields").empty();
+										var profileTypeTitles = $('.userProfileType:checkbox:checked').map(function() {
+											return $(this).attr('profile-type-title');
+										}).get();
+
+										if(profileTypeTitles.length>0){
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_edit_profile_onchanged_profiletype",
+													'profile_types': profileTypeTitles,
+													'gender': $(this).val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields").html(results);
+													console.log(results);
+												}
+											});	
+										}else{
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_edit_profile",
+													'gender': $(this).val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields").html(results);
+													console.log(results);
+												}
+											});	
+										}
+									});
 								});
 							</script>
+
+							<?php
+							}
+							if(isset($_GET['action']) && $_GET['action'] == "add") { 
+							?>
+							<script type="text/javascript">
+								jQuery(document).ready(function($){
+
+									$(".userProfileType").click(function(){
+										$(".tbody-table-customfields").empty();
+										var profileTypeTitles = $('.userProfileType:checkbox:checked').map(function() {
+											return $(this).attr('profile-type-title');
+										}).get();
+
+										if(profileTypeTitles.length>0){
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_add_profile_onchanged_profiletype",
+													'profile_types': profileTypeTitles,
+													'gender': jQuery("#ProfileGender").val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields").html(results);
+													console.log(results);
+												}
+											});	
+										}else{
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_add_profile",
+													'gender': jQuery("#ProfileGender").val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields").html(results);
+													console.log(results);
+												}
+											});	
+										}
+
+									});
+
+									$("#ProfileGender").on("change",function(){
+										$(".tbody-table-customfields").empty();
+										var profileTypeTitles = $('.userProfileType:checkbox:checked').map(function() {
+											return $(this).attr('profile-type-title');
+										}).get();
+
+										if(profileTypeTitles.length>0){
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_add_profile_onchanged_profiletype",
+													'profile_types': profileTypeTitles,
+													'gender': $(this).val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields").html(results);
+													console.log(results);
+												}
+											});	
+										}else{
+											jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_add_profile",
+													'gender': $(this).val()
+												},
+												success: function (results) {
+													jQuery(".tbody-table-customfields").html(results);
+													console.log(results);
+												}
+											});	
+										}
+									});
+								});
+							</script>
+							
 
 							<?php
 						}
@@ -1700,7 +1830,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							foreach($ExplodedProfileType as $p){
 								$ProfileTypeArr[] = $p;
 							}
-
+							$updated_ProfileTypesArr = explode(",",$fields['updated_ProfileType']);
+							
+							
 							foreach ($results3 as $data3) {
 								
 								#Get the gender id allowed for each datatype
@@ -1710,26 +1842,27 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										if ($action == "add") {
 
 											if(strpos($DataTypeOptionValue, $DataTypeGenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
+
 												echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"userProfileType\" >".$data3['DataTypeTitle']. "<br />\n";
 											}
 											
 										}
 										if ($action == "editRecord") {
 											
-											echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" class=\"userProfileType\"";
+											echo "<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" profile-type-title=\"".$data3['DataTypeTitle']."\"  class=\"userProfileType ".(in_array($data3['DataTypeID'], $updated_ProfileTypesArr) ? "marked_changed" : "" )."\"";
 											if(is_array($ProfileTypeArr)){
 													if (in_array($data3['DataTypeID'], $ProfileTypeArr)) {
 														echo " checked=\"checked\"";
-													}echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
+													}echo " /> " . $data3['DataTypeTitle'] . "<br />\n";
 											} else {
 													if ($data3['DataTypeID'] == $ProfileTypeArr) {
 														echo " checked=\"checked\"";
-													}echo "/> " . $data3['DataTypeTitle'] . "<br />\n";
+													}echo " /> " . $data3['DataTypeTitle'] . "<br />\n";
 											}
 										}
 
 										if(strpos($DataTypeOptionValue, $DataTypeGenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
-											do_action('rb_get_profile_type_childs_checkbox_display_profilemanage_display',$data3['DataTypeID'],$action,$ProfileType,$DataTypeGenderTitle);
+											do_action('rb_get_profile_type_childs_checkbox_display_profilemanage_display',$data3['DataTypeID'],$action,$ProfileType,$DataTypeGenderTitle,$fields);
 										}
 									
 								
@@ -1783,57 +1916,20 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							if(isset($_GET['action']) && !empty($_GET["ProfileID"]) && $_GET["action"] == 'editRecord') { 
 							?>
 							<script type="text/javascript">
-							jQuery(document).ready(function(){
-
-
-								jQuery("#ProfileGender").on("change",function(){
-										jQuery(".tbody-table-customfields").empty();
-
-										var checkedVals = jQuery('.userProfileType:checkbox:checked').map(function() {
-											return this.value;
-										}).get();
-										var userProfiles = checkedVals.join(",");
-
-										console.log('update the custom fields - ' + userProfiles);
-										if(checkedVals.length>0){
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "generate_admin_cusfieldscheckbox",
-													'profileID': <?php echo $ProfileID ;?>,
-													'profile_types': userProfiles,
-													'gender': jQuery("#ProfileGender").val()
-												},
-												success: function (results) {
-
-													jQuery(".tbody-table-customfields").html(results);
-													console.log(results);
-												}
-										});
-										}
-										
-									});
-
-									// User Profile checkbox selection update the custom fields
-									jQuery(".userProfileType").on("click",function(){
-										jQuery("#ProfileGender").change();
-										console.log('update profile type');
-									});
-								});	
+							
 							</script>
 							<?php
 						}
 							?>
 							
-							<?php if(empty($_GET['ProfileID'])) { ?>
+							<?php if($_GET['action'] == 'add') { ?>
 								<script type="text/javascript">
 									jQuery(document).ready(function(){
 										jQuery.ajax({
 											type: "POST",
 											url: "<?php echo admin_url('admin-ajax.php') ?>",
 											data: {
-												action: "generate_admin_cusfieldscheckbox",
+												action: "rb_get_customfields_load",
 												'gender': "<?php echo $_GET["ProfileGender"]; ?>"
 											},
 											success: function (results) {
@@ -2053,8 +2149,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									$ProfileGender = $_GET["ProfileGender"];
 									// -1 make sure that theres no exist profile in DB
 									rb_custom_fields(0, -1, $ProfileGender, true);
-								} else {
-									rb_custom_fields(0, $ProfileID, $ProfileGender, true);
+								} else { // onload for edit
+									$param = array();
+									$param['operation'] = "editProfile";
+									$param['ProfileID'] = $ProfileID;
+									//$rbagencyCustomfieldsClass = new RBAgency_Customfields();
+									//$rbagencyCustomfieldsClass->getCustomFieldsProfileManager($ProfileGender,$param);
+									//rb_custom_fields(0, $ProfileID, $ProfileGender, true);
 
 								}
 								//$reflFunc = new ReflectionFunction('rb_custom_fields');
@@ -2097,7 +2198,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						</div>
 					</div>
 
-
+					<?php 
+					$updated_ProfileImage = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."usermeta WHERE meta_key LIKE '%MediaFileName_Image%' AND user_id = ".$ProfileUserLinked,ARRAY_A);
+					$newlyUploadedImages = [];
+					foreach($updated_ProfileImage as $file){
+						$newlyUploadedImages[] = $file['meta_value'];
+					}
+					?>
 					<div id="dashboard_gallery" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span>Gallery</span></h3>
@@ -2106,6 +2213,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								<p>Please click the <b>Update Record</b> button to save the order</p></div>
 							<div class="main">
 							<?php
+								if(!empty($updated_ProfileImage)){
+									echo "<span class=\"marked_changed_txt\" >".__('New image/s has been uploaded!')."</span>";
+								}
 								echo "<script type='text/javascript'>\n";
 								echo "function confirmDelete(delMedia,mediaType) {\n";
 								echo "  if (confirm('Are you sure you want to delete this '+mediaType+'?')) {\n";
@@ -2203,7 +2313,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										$toDelete = "<a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\" title=\"Delete this Photo\" class=\"rbicon-del icon-small\"><span>Delete</span> &raquo;</a>\n";
 										$massDelete = '<input type="checkbox" name="massgaldel" value="' . $dataImg['ProfileMediaID'] . '"> Select';
 									}
-									echo "<div class=\"item gallery-item".$toggleClass."\">\n";
+									echo "<div class=\"item gallery-item".$toggleClass." ".(in_array($dataImg["ProfileMediaURL"], $newlyUploadedImages) ? "marked_changed" : "")."\">\n";
 
 									echo $toDelete;
 									// <img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&a=t&w=120&h=108\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
@@ -2212,8 +2322,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										'width' => 100,
 										'height' => 150
 									);
+
 									$profile_image_src = bfi_thumb( $image_path, $params );
-									echo "  <div class=\"photo\"><img src=\"" . $profile_image_src ."\"/></div>\n";
+									echo "  <div class=\"photo \" ><img src=\"" . $profile_image_src ."\"/></div>\n";
 									//echo "  <div class=\"photo\"><img src=\"" . get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataImg['ProfileMediaURL'] . "&a=t&w=100&h=150\"/></div>\n";
 									echo "		<div class=\"item-order\" style='display:none;'>Order: <input type=\"hidden\" name=\"ProfileMediaOrder_" . $dataImg['ProfileMediaID'] . "\" style=\"width: 25px\" value=\"" . $dataImg['ProfileMediaOrder'] . "\" /></div>";
 									echo "  	<div class=\"make-primary\"><input type=\"radio\" name=\"ProfileMediaPrimary\" value=\"" . $dataImg['ProfileMediaID'] . "\" " . $isChecked . " /> " . $isCheckedText . "</div>";
@@ -2291,7 +2402,57 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 			<div id="postbox-container-3" class="postbox-container">
 				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
+					<?php 
+					# headshots
+					$updated_ProfileHeadshot = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."usermeta WHERE meta_key LIKE '%MediaFileName_Headshot%' AND user_id = ".$ProfileUserLinked,ARRAY_A);
+					$newlyUploadedHeadshots = [];
+					foreach($updated_ProfileHeadshot as $file){
+						$newlyUploadedHeadshots[] = $file['meta_value'];
+					}
 
+					# images
+					$updated_ProfileImage = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."usermeta WHERE meta_key LIKE '%MediaFileName_Image%' AND user_id = ".$ProfileUserLinked,ARRAY_A);
+					$newlyUploadedImages = [];
+					foreach($updated_ProfileImage as $file){
+						$newlyUploadedImages[] = $file['meta_value'];
+					}
+
+					# compcard
+					$updated_CompCard = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."usermeta WHERE meta_key LIKE '%MediaFileName_ComCard%' AND user_id = ".$ProfileUserLinked,ARRAY_A);
+					$newlyUploadedCompCards = [];
+					foreach($updated_CompCard as $file){
+						$newlyUploadedCompCards[] = $file['meta_value'];
+					}
+
+					# resume
+					$updated_Resume = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."usermeta WHERE meta_key LIKE '%MediaFileName_Resume%' AND user_id = ".$ProfileUserLinked,ARRAY_A);
+					$newlyUploadedResumes = [];
+					foreach($updated_Resume as $file){
+						$newlyUploadedResumes[] = $file['meta_value'];
+					}
+
+					# voicedemo
+					$updated_VoiceDemo = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."usermeta WHERE meta_key LIKE '%MediaFileName_VoiceDemo%' AND user_id = ".$ProfileUserLinked,ARRAY_A);
+					$newlyUploadedVoiceDemos = [];
+					foreach($updated_VoiceDemo as $file){
+						$newlyUploadedVoiceDemos[] = $file['meta_value'];
+					}
+
+					# polariod
+					$updated_Polaroid = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."usermeta WHERE meta_key LIKE '%MediaFileName_Polaroid%' AND user_id = ".$ProfileUserLinked,ARRAY_A);
+					$newlyUploadedPolaroids = [];
+					foreach($updated_Polaroid as $file){
+						$newlyUploadedPolaroids[] = $file['meta_value'];
+					}
+
+					# Video Files
+					$updated_VideoFile = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."usermeta WHERE meta_key LIKE '%VideoFileName%' AND user_id = ".$ProfileUserLinked,ARRAY_A);
+					$updated_VideoFiles = [];
+					foreach($updated_VideoFile as $file){
+						$updated_VideoFiles[] = $file['meta_value'];
+					}
+
+					?>
 					<div id="dashboard_media" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span>Media &amp; Links</span></h3>
@@ -2299,6 +2460,10 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							<div class="main">
 
 							<?php
+
+							if(!empty($updated_VideoFiles)){
+								echo "<span class=\"marked_changed_txt\" >".__('New video/s has been uploaded!')."</span>";
+							}
 
 							if(isset($_GET['actionsub']) && $_GET['actionsub'] == 'del_media'){
 
@@ -2374,6 +2539,10 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							foreach ($resultsMedia  as $dataMedia) {
 								if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
 
+									$markedClass = "";
+									if(in_array($dataMedia["ProfileMediaURL"], $updated_VideoFiles)){
+										$markedClass = "marked_changed";
+									}
 									//this will determine the source of the video id if not full url
 									$CleanVideoID = str_replace(array("https://vimeo.com/","https://www.youtube.com/watch?v="),"",$dataMedia['ProfileMediaURL']);
 									$headers = @get_headers("https://vimeo.com/".$CleanVideoID);
@@ -2385,7 +2554,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 									$clean_title = stripslashes($dataMedia['ProfileMediaTitle']);
 									$vidTitleCaption = explode('<br>',$clean_title);
-									$outVideoMedia .= "<div class=\"media-file voice-demo\" video_place_id=\"" . $dataMedia['ProfileMediaID'] . "\"><span class=\"video-type\">" . $dataMedia['ProfileMediaType'] . "</span><br /><span class=\"video-thumb\">" . rb_agency_get_videothumbnail($FullVideoURL, $dataMedia['ProfileVideoType']) . "</span><br /><b><span class='video-title'>".ucfirst($vidTitleCaption[0])."</span></b><br><span class='video-caption'>".$vidTitleCaption[1]."</span><a href=\"" . $FullVideoURL . "\" title=\"".ucfirst($dataMedia['ProfileVideoType'])."\" target=\"_blank\"><br> Watch Video</a><br />
+									$outVideoMedia .= "<div class=\"media-file voice-demo ".$markedClass."\" video_place_id=\"" . $dataMedia['ProfileMediaID'] . "\"><span class=\"video-type\">" . $dataMedia['ProfileMediaType'] . "</span><br /><span class=\"video-thumb\">" . rb_agency_get_videothumbnail($FullVideoURL, $dataMedia['ProfileVideoType']) . "</span><br /><b><span class='video-title'>".ucfirst($vidTitleCaption[0])."</span></b><br><span class='video-caption'>".$vidTitleCaption[1]."</span><a href=\"" . $FullVideoURL . "\" title=\"".ucfirst($dataMedia['ProfileVideoType'])."\" target=\"_blank\"><br> Watch Video</a><br />
 									[<a href=\"#inline-edit-video\" title=\"Edit Video Information\" ".
 										"video_type=\"" . $dataMedia['ProfileMediaType'] .
 										"\" video_id=\"" . $dataMedia['ProfileMediaID'] .
@@ -2398,6 +2567,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 								}
 								 elseif ($dataMedia['ProfileMediaType'] == "VoiceDemo") {
+
+								 	$markedClass = "";
+								 	if(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedVoiceDemos)){
+										$markedClass = "marked_changed";
+									}
+									
+
 									 $voiceDemoProfileMediaID = get_option("voicedemo_".$dataMedia['ProfileMediaID']);
 								 	$voicedemo = empty($voiceDemoProfileMediaID) ? "TITLE" : $voiceDemoProfileMediaID;
 
@@ -2406,19 +2582,32 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									
 									$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
 									if($medialink_option == 2){
-										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br />
+										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo ".$markedClass."\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br />
 										<a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>
 										<span class='voicedemocaption_label'> ".$voicedemocaption."</span>
 										 <br> <a href=\"".RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL']."\" target=\"_blank\"><span class=\"voicedemo-caption\">".$voicedemo."</span></a><br><a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\"									voice_demo_caption_key=\"voicedemocaption_".$dataMedia['ProfileMediaID']."\" voice_demo_caption_val=\"".$voicedemocaption."\">&nbsp[EDIT]</a>&nbsp;[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 									}elseif($medialink_option == 3){
 										$force_download_url = wpfdl_dl($ProfileGallery . "/" . $dataMedia['ProfileMediaURL'],get_option('wpfdl_token'),'dl');
-										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a ".$force_download_url." title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a> <span class='voicedemocaption_label'>".$voicedemocaption."</span> <br><a ".$force_download_url."><span class=\"voicedemo-caption\">".$voicedemo."</span></a>&nbsp;<a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\" 
+										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo ".$markedClass."\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a ".$force_download_url." title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a> <span class='voicedemocaption_label'>".$voicedemocaption."</span> <br><a ".$force_download_url."><span class=\"voicedemo-caption\">".$voicedemo."</span></a>&nbsp;<a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\" 
 											voice_demo_caption_key=\"voicedemocaption_".$dataMedia['ProfileMediaID']."\" 
 											voice_demo_caption_val=\"".$voicedemocaption."\">&nbsp[EDIT]</a>&nbsp;[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 									}
 								} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
-									$outLinkResume .= "<div class=\"media-file resume\"><span>" .$dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
+
+									$markedClass = "";
+									if(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedResumes)){
+										$markedClass = "marked_changed";
+									}
+									
+									$outLinkResume .= "<div class=\"media-file resume ".$markedClass."\"><span>" .$dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
+
+									$markedClass = "";
+									if(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedHeadshots)){
+										$markedClass = "marked_changed";
+									}
+									
+
 									$headshot_image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'];
 									$headshot_params = array(
 										'crop'=>true,
@@ -2430,9 +2619,24 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										'crop_y'=>'0'
 									);
 									$headshot_image_src = bfi_thumb( $headshot_image_path, $headshot_params );
-									$outLinkHeadShot .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"".$headshot_image_src ."\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
+									$outLinkHeadShot .= "<div class=\"media-file ".$markedClass."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"".$headshot_image_src ."\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 									//$outLinkHeadShot .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&a=t&w=120&h=108\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "CardPhotos" || $dataMedia['ProfileMediaType'] == "Polaroid" || $dataMedia['ProfileMediaType'] == "CompCard" ) {
+
+									$markedClass = "";
+									if(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedHeadshots)){
+										$markedClass = "marked_changed";
+									}elseif(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedImages)){
+										$markedClass = "marked_changed";
+									}elseif(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedCompCards)){
+										$markedClass = "marked_changed";
+									}elseif(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedResumes)){
+										$markedClass = "marked_changed";
+									}elseif(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedVoiceDemos)){
+										$markedClass = "marked_changed";
+									}elseif(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedPolaroids)){
+										$markedClass = "marked_changed";
+									}
 									$polaroid_image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'];
 									$polariod_params = array(
 										'crop'=>true,
@@ -2444,7 +2648,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										'crop_y'=>'0'
 									);
 									$polariod_image_src = bfi_thumb( $polaroid_image_path, $polariod_params );
-									$outLinkPolaroid .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><img src=\"".$polariod_image_src."\" /><br/><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"></a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
+									$outLinkPolaroid .= "<div class=\"media-file ".$markedClass."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><img src=\"".$polariod_image_src."\" /><br/><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"></a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 								} else if (strpos($dataMedia['ProfileMediaType'] ,"rbcustommedia") !== false) {
 									$custom_media_info = explode("_",$dataMedia['ProfileMediaType']);
 									$custom_media_title = str_replace("-"," ",$custom_media_info[1]);
@@ -3226,7 +3430,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											'height' => 150
 										);
 										$profile_image_src = bfi_thumb( $image_path, $params );
-										echo "  <div class=\"photo\"><img src=\"" . $profile_image_src ."\"/></div>\n";
+										echo "  <div class=\"photo \" ><img src=\"" . $profile_image_src ."\"/></div>\n";
 										//echo "  <div class=\"photo\"><img src=\"" . get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataImg['ProfileMediaURL'] . "&a=t&w=100&h=150\"/></div>\n";
 										echo "		<div class=\"item-order\" style='display:none;'>Order: <input type=\"hidden\" name=\"ProfileMediaOrder_" . $dataImg['ProfileMediaID'] . "\" style=\"width: 25px\" value=\"" . $dataImg['ProfileMediaOrder'] . "\" /></div>";
 										echo "<div class=\"boxcover-category\">".strtoupper($dataImg['ProfileMediaType'])."</div>";
