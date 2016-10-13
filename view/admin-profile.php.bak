@@ -2025,8 +2025,15 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										if ($action == "add") {
 
 											if(strpos($DataTypeOptionValue, $DataTypeGenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
-
-												echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"userProfileType\" >".$data3['DataTypeTitle']. "<br />\n";
+												$checked_profiletypes_arr = [];
+												if($_POST['ProfileType']){
+														foreach($_POST['ProfileType'] as $k=>$v){
+														$checked_profiletypes_arr[] = isset($_POST['ProfileType'][$k]) ? $_POST['ProfileType'][$k] : "";
+														}
+														$checked = in_array($data3['DataTypeID'], $checked_profiletypes_arr) ? "checked=\"checked\"" : "";
+												}
+												
+												echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"userProfileType\" $checked>".$data3['DataTypeTitle']. "<br />\n";
 											}
 											
 										}

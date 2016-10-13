@@ -351,7 +351,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 						$updated = $wpdb->query($update);
 
 						//Generate folder
-						rb_agency_createdir($ProfileContactDisplay);
+						rb_agency_createdir($ProfileContactDisplay,true);
 					}
 
 					//display on profile view
@@ -464,10 +464,10 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							# get current profile contact display
 							$ProfileData = $wpdb->get_row($wpdb->prepare("SELECT ProfileContactDisplay FROM ".table_agency_profile." WHERE ProfileID = %d",$ProfileID),ARRAY_A);
 							//echo $ProfileData['ProfileContactDisplay']."=".$_POST['ProfileContactDisplay'];
-							# If there is change in profile contact display name
-							//if($ProfileData['ProfileContactDisplay'] != $_POST['ProfileContactDisplay']){
-								#rename folder
-								$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+							
+							$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+							#check and generate the right gallery folder
+							if($ProfileData['ProfileContactDisplay'] != $_POST['ProfileContactDisplay']){
 								if ($rb_agency_option_profilenaming == 0) {
 									$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
 								} elseif ($rb_agency_option_profilenaming == 1) {
@@ -480,17 +480,18 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 									$ProfileGalleryFixed = $ProfileContactNameFirst;
 								} elseif ($rb_agency_option_profilenaming == 5) {
 									$ProfileGalleryFixed = $ProfileContactNameLast;
-								}						
-								
-								$ProfileGalleryFixed = str_replace(' ', '-', strtolower($ProfileGalleryFixed));				
+								}
+								$ProfileGalleryFixed = str_replace(' ', '-', strtolower($ProfileGalleryFixed));
+								$ProfileGalleryFixed = str_replace(' ', '-', strtolower($ProfileGalleryFixed));
+								$ProfileGalleryFixed = rb_agency_createdir($ProfileGalleryFixed);	
 								$oldDir =RBAGENCY_UPLOADPATH ."/". $ProfileGallery;
 								$newDir =RBAGENCY_UPLOADPATH ."/". $ProfileGalleryFixed;
 								rename($oldDir,$newDir );
 								@rmdir($oldDir);
 
 								$ProfileGallery = $ProfileGalleryFixed;
-							//}
-							
+							}
+
 
 						// Update Record
 						$update = "UPDATE " . table_agency_profile . " SET
