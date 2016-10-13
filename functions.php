@@ -1420,6 +1420,15 @@
 
 		global $wpdb;
 
+		//check for profile custom date
+		$sql = "SELECT ProfileCustomDateValue FROM ".table_agency_customfield_mux." LIMIT 1";
+		$r = $wpdb->get_results($sql);
+		if(count($r) == 0){
+			//create column
+			$queryAlter = "ALTER TABLE " . table_agency_customfield_mux ." ADD ProfileCustomDateValue DATETIME default NULL";
+			$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+		}
+
 		$p = $wpdb->get_row("SELECT ProfileUserLinked,ProfileIsActive FROM ".table_agency_profile." WHERE ProfileID = ".$ProfileID,ARRAY_A);
 		if($p["ProfileIsActive"] == 1){
 			delete_user_meta($p['ProfileUserLinked'], "updated_ProfileCustomID".$data3['ProfileCustomID']);
@@ -1431,17 +1440,19 @@
 		$rb_agency_option_locationtimezone 	= isset($rb_agency_options_arr['rb_agency_option_locationtimezone'])?(int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
 
 		if( (!empty($data3['ProfileCustomID']) || $data3['ProfileCustomID'] !="") ){
-			$subresult = $wpdb->get_row($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
+			$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
 			$row = $subresult;
+
 
 			#get profile user linked
 			$user = $wpdb->get_row("SELECT ProfileUserLinked FROM ".table_agency_profile." WHERE ProfileID = ".$ProfileID,ARRAY_A);
 
 			$ProfileCustomTitle = $data3['ProfileCustomTitle'];
 			$ProfileCustomType  = $data3['ProfileCustomType'];
-			$ProfileCustomDateValue =  ($row["ProfileCustomDateValue"]!=="1970-01-01"  && $row["ProfileCustomDateValue"]!=="0000-00-00")?$row["ProfileCustomDateValue"]:"";
-			$ProfileCustomValue = !empty($row["ProfileCustomValue"])?$row["ProfileCustomValue"]:"";
-
+			$ProfileCustomDateValue =  ($row[1]["ProfileCustomDateValue"]!=="1970-01-01"  && $row[1]["ProfileCustomDateValue"]!=="0000-00-00")?$row[0]["ProfileCustomDateValue"]:"";
+			$ProfileCustomValue = !empty($row[1]["ProfileCustomValue"])?$row[1]["ProfileCustomValue"]:$row[0]["ProfileCustomValue"];
+			$ProfileCustomValue = !empty($ProfileCustomValue) ? $ProfileCustomValue : "";
+			$ProfileCustomDateValue = !empty($ProfileCustomDateValue) ? $ProfileCustomDateValue : "";
 			/* Pull data from post so data will not lost @Satya 12/12/2013 */
 			if($ProfileCustomValue=="" && isset($_POST)){
 				$customindex = "ProfileCustomID".$data3['ProfileCustomID'] ;
@@ -5861,7 +5872,16 @@ function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$Pr
 			if ($action == "add") {
 
 				if(strpos($DataTypeOptionValue, $GenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
-					echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" profile-type-title=\"".$child["DataTypeTitle"]."\" value=\"" . $child['DataTypeID'] . "\" profile-type-title=\"".$child['DataTypeTitle']."\" id=\"ProfileType[]\" class=\"userProfileType \"/>&nbsp;".$child['DataTypeTitle']."<br>";
+
+					$checked_profiletypes_arr = [];
+					if($_POST['ProfileType']){
+						foreach($_POST['ProfileType'] as $k=>$v){
+							$checked_profiletypes_arr[] = isset($_POST['ProfileType'][$k]) ? $_POST['ProfileType'][$k] : "";
+						}
+						$checked = in_array($child['DataTypeID'], $checked_profiletypes_arr) ? "checked=\"checked\"" : "";
+					}
+
+					echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" profile-type-title=\"".$child["DataTypeTitle"]."\" value=\"" . $child['DataTypeID'] . "\" profile-type-title=\"".$child['DataTypeTitle']."\" id=\"ProfileType[]\" class=\"userProfileType \" $checked/>&nbsp;".$child['DataTypeTitle']."<br>";
 				}
 									
 									
@@ -6065,9 +6085,9 @@ function rb_custom_fields_template_noprofile($visibility = 0, $data3){
 
 			$ProfileCustomTitle = $data3['ProfileCustomTitle'];
 			$ProfileCustomType  = $data3['ProfileCustomType'];
-			$ProfileCustomValue = "";
+			$ProfileCustomValue = !empty($_SESSION['profileCustomValue']["ProfileCustomID".$data3["ProfileCustomID"]]) ? $_SESSION['profileCustomValue']["ProfileCustomID".$data3["ProfileCustomID"]] : "";
 
-		
+			
 				// SET Label for Measurements
 				// Imperial(in/lb), Metrics(ft/kg)
 				$rb_agency_options_arr = get_option('rb_agency_options');
@@ -6262,7 +6282,7 @@ function rb_custom_fields_template_noprofile($visibility = 0, $data3){
 									<div class='error_msg' style='color:red; min-width:0px'></div>";
 					}
 				} elseif ($ProfileCustomType == 10) { //Date
-						$getDateValue = !empty($ProfileCustomDateValue) ? $ProfileCustomDateValue : $ProfileCustomValue;
+						$getDateValue = !empty($_SESSION['profileCustomValue']["ProfileCustomID".$data3["ProfileCustomID"]."_date"]) ? $_SESSION['profileCustomValue']["ProfileCustomID".$data3["ProfileCustomID"]."_date"] : "";
 						echo "<input type=\"text\" id=\"rb_datepicker". $data3['ProfileCustomID']."\" class=\"rb-datepicker\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."_date\" value=\"". $getDateValue ."\" /><br />\n";
 						echo "<script type=\"text/javascript\">\n\n";
 						echo "jQuery(function(){\n\n";

@@ -129,6 +129,23 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 	}
 
 	if (isset($_GET["action"]) && $_GET["action"] == "add") {
+
+		//set customfields value to sessions
+				$_SESSION['profileCustomValue'] = [];
+				foreach($_POST as $k=>$v){
+					if(substr($k,0,15) == 'ProfileCustomID' ){
+						$ProfileCustomValue = $v;
+						if(is_array($ProfileCustomValue)){
+							$ProfileCustomValue = implode(',',$ProfileCustomValue);
+						}else{
+							$ProfileCustomValue = $v;
+						}
+						$_SESSION['profileCustomValue'][$k] = $ProfileCustomValue;						
+					}					
+					
+				}
+				
+
 		$userdata = array(
 			'user_pass' => esc_attr($ProfilePassword),
 			'user_login' => esc_attr($ProfileUsername),
@@ -172,6 +189,22 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 	}
 
 	if (isset($_POST['action']) && $_POST["action"] == "editRecord") {
+
+		//set customfields value to sessions
+				$_SESSION['profileCustomValue'] = [];
+				foreach($_POST as $k=>$v){
+					if(substr($k,0,15) == 'ProfileCustomID' ){
+						$ProfileCustomValue = $v;
+						if(is_array($ProfileCustomValue)){
+							$ProfileCustomValue = implode(',',$ProfileCustomValue);
+						}else{
+							$ProfileCustomValue = $v;
+						}
+						$_SESSION['profileCustomValue'][$k] = $ProfileCustomValue;						
+					}					
+					
+				}
+
 		if($ProfileContactEmail != $_POST['HiddenContactEmail']){
 			if (!is_email($ProfileContactEmail)) {
 				$errorValidation['ProfileContactEmail']= __("You must enter a valid email address.<br />", RBAGENCY_TEXTDOMAIN);
@@ -193,6 +226,15 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 		case 'addRecord':
 			if (!$have_error) {
 
+				//check for profile custom date
+				$sql = "SELECT ProfileCustomDateValue FROM ".table_agency_customfield_mux." LIMIT 1";
+				$r = $wpdb->get_results($sql);
+				if(count($r) == 0){
+					//create column
+					$queryAlter = "ALTER TABLE " . table_agency_customfield_mux ." ADD ProfileCustomDateValue DATETIME default NULL";
+					$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+				}
+				
 				// Bug Free!
 				if ($have_error == false) {
 					if (function_exists('rb_agency_interact_menu')) {
@@ -355,7 +397,9 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 						}
 					}
 
-
+					foreach($_SESSION['profileCustomValue'] as $k=>$v){
+						unset($_SESSION['profileCustomValue']);
+					}
 
 					echo ('<div id="message" class="updated"><p>' . __("New Profile added successfully!", RBAGENCY_TEXTDOMAIN) . ' <a href="' . admin_url("admin.php?page=" . $_GET['page']) . '&action=editRecord&ProfileID=' . $ProfileID . '">' . __("Update and add media", RBAGENCY_TEXTDOMAIN) . '</a></p></div>');
 					// We can edit it now
@@ -584,6 +628,10 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 								}
 								$results1 = $wpdb->query($insert1);
 							}
+						}
+
+						foreach($_SESSION['profileCustomValue'] as $k=>$v){
+							unset($_SESSION['profileCustomValue']);
 						}
 
 						// Check Directory - create directory if does not exist
@@ -1296,7 +1344,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											echo "    <tr valign=\"top\">\n";
 											echo "      <th scope=\"row\">" . __("Username", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 											echo "      <td>\n";
-											echo "          <input type=\"text\" id=\"ProfileUsername\" name=\"ProfileUsername\" />\n";
+											echo "          <input type=\"text\" id=\"ProfileUsername\" name=\"ProfileUsername\" value=\"".(isset($_POST["ProfileUsername"]) ? $_POST["ProfileUsername"] : "")."\"/>\n";
 											if(isset($errorValidation['user_login'])){echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['user_login']."</p>\n";}
 											echo "      </td>\n";
 											echo "    </tr>\n";
@@ -1977,8 +2025,15 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										if ($action == "add") {
 
 											if(strpos($DataTypeOptionValue, $DataTypeGenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
-
-												echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"userProfileType\" >".$data3['DataTypeTitle']. "<br />\n";
+												$checked_profiletypes_arr = [];
+												if($_POST['ProfileType']){
+														foreach($_POST['ProfileType'] as $k=>$v){
+														$checked_profiletypes_arr[] = isset($_POST['ProfileType'][$k]) ? $_POST['ProfileType'][$k] : "";
+														}
+														$checked = in_array($data3['DataTypeID'], $checked_profiletypes_arr) ? "checked=\"checked\"" : "";
+												}
+												
+												echo "<input type=\"checkbox\" name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=\"ProfileType[]\" profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"userProfileType\" $checked>".$data3['DataTypeTitle']. "<br />\n";
 											}
 											
 										}

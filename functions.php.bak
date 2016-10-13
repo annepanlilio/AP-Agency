@@ -1420,6 +1420,15 @@
 
 		global $wpdb;
 
+		//check for profile custom date
+		$sql = "SELECT ProfileCustomDateValue FROM ".table_agency_customfield_mux." LIMIT 1";
+		$r = $wpdb->get_results($sql);
+		if(count($r) == 0){
+			//create column
+			$queryAlter = "ALTER TABLE " . table_agency_customfield_mux ." ADD ProfileCustomDateValue DATETIME default NULL";
+			$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+		}
+
 		$p = $wpdb->get_row("SELECT ProfileUserLinked,ProfileIsActive FROM ".table_agency_profile." WHERE ProfileID = ".$ProfileID,ARRAY_A);
 		if($p["ProfileIsActive"] == 1){
 			delete_user_meta($p['ProfileUserLinked'], "updated_ProfileCustomID".$data3['ProfileCustomID']);
@@ -1431,17 +1440,19 @@
 		$rb_agency_option_locationtimezone 	= isset($rb_agency_options_arr['rb_agency_option_locationtimezone'])?(int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
 
 		if( (!empty($data3['ProfileCustomID']) || $data3['ProfileCustomID'] !="") ){
-			$subresult = $wpdb->get_row($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
+			$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
 			$row = $subresult;
+
 
 			#get profile user linked
 			$user = $wpdb->get_row("SELECT ProfileUserLinked FROM ".table_agency_profile." WHERE ProfileID = ".$ProfileID,ARRAY_A);
 
 			$ProfileCustomTitle = $data3['ProfileCustomTitle'];
 			$ProfileCustomType  = $data3['ProfileCustomType'];
-			$ProfileCustomDateValue =  ($row["ProfileCustomDateValue"]!=="1970-01-01"  && $row["ProfileCustomDateValue"]!=="0000-00-00")?$row["ProfileCustomDateValue"]:"";
-			$ProfileCustomValue = !empty($row["ProfileCustomValue"])?$row["ProfileCustomValue"]:"";
-
+			$ProfileCustomDateValue =  ($row[1]["ProfileCustomDateValue"]!=="1970-01-01"  && $row[1]["ProfileCustomDateValue"]!=="0000-00-00")?$row[0]["ProfileCustomDateValue"]:"";
+			$ProfileCustomValue = !empty($row[1]["ProfileCustomValue"])?$row[1]["ProfileCustomValue"]:$row[0]["ProfileCustomValue"];
+			$ProfileCustomValue = !empty($ProfileCustomValue) ? $ProfileCustomValue : "";
+			$ProfileCustomDateValue = !empty($ProfileCustomDateValue) ? $ProfileCustomDateValue : "";
 			/* Pull data from post so data will not lost @Satya 12/12/2013 */
 			if($ProfileCustomValue=="" && isset($_POST)){
 				$customindex = "ProfileCustomID".$data3['ProfileCustomID'] ;
@@ -5807,13 +5818,13 @@ function rb_get_profile_type_childs_checkbox_edit($parentID,$ConfigID,$t){
 				$space .="&nbsp;&nbsp;";
 			}
 			$_childClean = trim(str_replace(' ','_',$child['DataTypeTitle']));
-
+			
 			$sql = "SELECT * FROM ".$wpdb->prefix."agency_customfields_types WHERE FIND_IN_SET('". $_childClean."',ProfileCustomTypes) > 0 "
 				. " AND ProfileCustomID = $ConfigID ";
 
 			$r = $wpdb->get_results($sql);
 			$checked = $wpdb->num_rows > 0 ? 'checked="checked"' : "";
-			$t = trim(str_replace(' ','_',$child['DataTypeTitle']));
+			$t = trim(str_replace('_',' ',$child['DataTypeTitle']));
 			echo $space.'<input type="checkbox" name="ProfileType'.$t.'" value="1" ' .
 														$checked . '  />&nbsp;'.
 														trim($child['DataTypeTitle'])
@@ -6672,7 +6683,7 @@ function save_data_custom_field()
 		$newDataArr = [];
 		$currentDataArr = explode(",",$currentData["ProfileCustomTypes"]);
 		foreach($currentDataArr as $k=>$v){
-			if($datatype["DataTypeTitle"] != $v){
+			if(str_replace("_", " ", $datatype["DataTypeTitle"]) != str_replace("_", " ", $v)){
 				$newDataArr[] = $v;
 			}
 		}
