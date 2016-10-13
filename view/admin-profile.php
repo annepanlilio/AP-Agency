@@ -202,6 +202,13 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 					// Check Directory - create directory if does not exist, rename if does
 					$ProfileGallery = rb_agency_createdir($ProfileGallery);
 
+					//create ProfileIsBooking column if not exists
+						global $wpdb;
+						$wpdb->get_results("SELECT ProfileIsBooking FROM ".table_agency_profile." WHERE ProfileID = $ProfileID");
+						if($wpdb->num_rows == 0){
+							$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD ProfileIsBooking boolean NOT NULL default 0";
+							$wpdb->query($queryAlter);
+						}
 
 
 					//check for Profile-Description column

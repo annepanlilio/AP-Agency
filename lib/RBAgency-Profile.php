@@ -125,8 +125,8 @@ class RBAgency_Profile {
 											break;
 										case 'radio':
 											inputs[i].checked = false;
-										case 'checkbox':
-											inputs[i].checked = false;
+										//case 'checkbox':
+											//inputs[i].checked = false;
 									}
 								}
 							jQuery(".rbfield").find("select").prop('selectedIndex',0);
@@ -1202,7 +1202,10 @@ class RBAgency_Profile {
 					echo "				jQuery('#datebirth_min').val('');\n";
 					echo "				jQuery('#datebirth_max').val('');\n";
 					echo "				jQuery('.rbcheckbox input[type=checkbox]').each(function(){";
+					echo " 					if(jQuery(this).attr('name') !== 'profiletype_locked[]' || jQuery(this).attr('name') !== 'profiletype[]' || jQuery(this).attr('name') !== 'profiletype_locked' || jQuery(this).attr('name') !== 'profiletype')";
+					echo "				{ ";
 					echo "				jQuery(this).removeAttr('checked');";
+					echo " 				}";
 					echo "				});";
 					echo "					jQuery.ajax({\n";
 					echo "								type: 'POST',\n";
@@ -2176,7 +2179,7 @@ class RBAgency_Profile {
 								". $sql_where_array['custom'] ."
 								GROUP BY cmux.ProfileCustomMuxID
 								LIMIT 1)
-							GROUP BY profile.ProfileID
+							
 							";
 					} else {
 						$sql .= "FROM ". table_agency_profile ." profile

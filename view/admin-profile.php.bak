@@ -1669,8 +1669,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 												'gender': $("#ProfileGender").val()
 											},
 											success: function (results) {
-												jQuery(".tbody-table-customfields-private").html(results);
-												console.log(results);
+												$(".tbody-table-customfields-private").html(results);
+												//console.log(results);
 											}
 										});
 									}
