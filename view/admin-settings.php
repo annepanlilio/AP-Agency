@@ -2076,7 +2076,7 @@ elseif ($ConfigID == 3) {
 			$sql = "SELECT DataTypeParentID FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeID = %d";
 			$parent = $wpdb->get_row($wpdb->prepare($sql,$_GET["DataTypeID"]));
 			$selected = $parent->DataTypeParentID == $result->DataTypeID ? "selected" : "";	
-			//echo "<option value=".$result->DataTypeID." $selected>".$result->DataTypeTitle. "</option>";
+			echo "<option value=".$result->DataTypeID." $selected>".$result->DataTypeTitle. "</option>";
 			// -- disable to nested child to be the parent
 			//do_action('rb_get_profile_type_childs_dropdown_display',$result->DataTypeID,4);
 		}	
