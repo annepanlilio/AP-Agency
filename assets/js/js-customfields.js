@@ -10,13 +10,14 @@ jQuery(document).ready(function(){
 				jQuery("#objtype_customize").hide().html(getObj(jQuery(this).val())).fadeIn("fast");
 				
 				if(jQuery(this).val()!=3){
-				  jQuery(".add_more_object").hide();
-							
+				  jQuery(".add_more_object").hide();							
 				}else{
 				 jQuery(".add_more_object").fadeIn("fast");	
 				}
 				if(jQuery("#obj_edit").attr("class") != jQuery(this).val()){
 					jQuery("#obj_edit").hide();
+					jQuery(".inside form").find('.submit').before("<div id=\"objtype_customize\"></div>");
+					//console.log(jQuery("#obj_edit").attr("class")+"="+jQuery(this).val());
 				}
 		}
      
@@ -46,7 +47,7 @@ jQuery(document).ready(function(){
 	      switch(type){
 			case "1": // Text
 			     return '<div class="rbfield rbtext rbsingle">'
-						    +'<label>Title*:</label> <div><input type="text" name="ProfileCustomTitle"/></div>'
+						    +'<label>Title*:</label> <div><input type="text" name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'"/></div>'
 						+'</div>'
 						+ '<div class="rbfield rbtext rbsingle">'
 						    +'<label>Value:</label> <div><input type="text" name="ProfileCustomOptions"/></div>'
@@ -83,7 +84,7 @@ jQuery(document).ready(function(){
 			break;  
 			case "4": // Textbox
 			     return '<div class="rbfield rbtext rbsingle">'
-						    	+'<label>Title*:</label><div><input type="text" name="ProfileCustomTitle"/></div>'
+						    	+'<label>Title*:</label><div><input type="text" name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'"/></div>'
 							+'</div>'
 						+'<div class="rbfield rbtextarea rbsingle">'
 						    +'<label>TextArea:</label><div><textarea cols="60" rows="30" name="ProfileCustomOptions"></textarea></div>'
@@ -173,7 +174,7 @@ jQuery(document).ready(function(){
 			jQuery("#objtype_customize").empty();
 			    jQuery("#obj_edit").remove();
 			    jQuery("#obj_edit").css({display:'block'});
-   		        jQuery("#objtype_customize").empty().html("<div class=\"rbfield rbtext rbsingle\"><label>Title*:</label><div><input type='text' name='ProfileCustomTitle' /></div></div>");
+   		        jQuery("#objtype_customize").empty().html("<div class=\"rbfield rbtext rbsingle\"><label>Title*:</label><div><input type='text' name='ProfileCustomTitle' value="+OriginalProfileCustomTitle+"></div></div>");
 				// jQuery("#objtype_customize").append("<tr><td>&nbsp;</td></tr>");
 				if(jQuery(".objtype").attr("id")==1){
 				 	var appnd = ["<div id=\"obj_edit\" class=\"7\">",
@@ -183,11 +184,16 @@ jQuery(document).ready(function(){
 				 										"<div><div><div><label><input type='radio' name='ProfileUnitType' value='1' />Inches</label></div></div>",
 														"<div><div><label><input type='radio' name='ProfileUnitType' value='2' />Pounds</label></div></div>",
 														"<div><div><label><input type='radio' name='ProfileUnitType' value='3' />Feet/Inches</label></div></div></div></div></div>"];
-														jQuery(".inside form").find('.submit').before(appnd.join(''));
+					jQuery(".inside form").find('.submit').before(appnd.join(''));
 				 } else if(jQuery(".objtype").attr("id")==0) {
 					jQuery("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='1' />cm</td></tr>");
 					jQuery("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='2' />kg</td></tr>");
 					jQuery("#objtype_customize").append("<tr><td><input type='radio' name='ProfileUnitType' value='3' />Feet/Inches</td></tr>");
+				 }else{
+				 	jQuery("#objtype_customize").append("<div class=\"rbfield rbradio rbmulti\"><label>&nbsp;</label>"+
+				 		"<div><div><div><label><input type='radio' name='ProfileUnitType' value='1' />Inches</label></div></div>"+
+				 		"<div><div><label><input type='radio' name='ProfileUnitType' value='2' />Pounds</label></div></div>"+
+				 		"<div><div><label><input type='radio' name='ProfileUnitType' value='3' />Feet/Inches</label></div></div></div></div></div>");
 				 }
 			break;
 			case "8":
