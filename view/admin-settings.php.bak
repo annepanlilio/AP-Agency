@@ -2318,7 +2318,7 @@ elseif ($ConfigID == 3) {
 						FROM ". table_agency_customfields ." main
 						LEFT JOIN ". table_agency_customfields_types ." a
 						ON a.ProfileCustomID = main.ProfileCustomID
-						WHERE FIND_IN_SET('".str_replace(" ", "_",$data['DataTypeTitle'])."',a.ProfileCustomTypes) > 0";
+						WHERE FIND_IN_SET('".str_replace(" ", "_",$data['DataTypeTitle'])."',a.ProfileCustomTypes) > 0 OR FIND_IN_SET('".str_replace("_", " ",$data['DataTypeTitle'])."',a.ProfileCustomTypes) > 0";
 						
 			$results_cus = $wpdb->get_results($query_cus,ARRAY_A);
 			$edit_userCustomFields = array();
