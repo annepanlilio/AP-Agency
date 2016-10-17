@@ -177,6 +177,8 @@ jQuery(document).ready(function(){
 				// jQuery("#objtype_customize").append("<tr><td>&nbsp;</td></tr>");
 				if(jQuery(".objtype").attr("id")==1){
 				 	var appnd = ["<div id=\"obj_edit\" class=\"7\">",
+				 					"<div class=\"rbfield rbtext rbsingle\">",
+				 					'<label>Title:</label><div><input name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'" type="text"></div></div>',
 				 					"<div class=\"rbfield rbradio rbmulti\"><label>&nbsp;</label>",
 				 										"<div><div><div><label><input type='radio' name='ProfileUnitType' value='1' />Inches</label></div></div>",
 														"<div><div><label><input type='radio' name='ProfileUnitType' value='2' />Pounds</label></div></div>",
