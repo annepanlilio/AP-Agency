@@ -5,7 +5,7 @@ class RBAgency_Customfields{
 	public function getCustomFieldsProfileManager($ProfileGender,$param=[]){
 		global $wpdb;
 
-		$customFields = $wpdb->get_results("SELECT * FROM ".table_agency_customfields." WHERE ProfileCustomShowProfile = 1 AND ProfileCustomView = 0",ARRAY_A);
+		$customFields = $wpdb->get_results("SELECT * FROM ".table_agency_customfields." WHERE ProfileCustomShowProfile = 1 AND ProfileCustomView = 0 ORDER BY ProfileCustomOrder ASC",ARRAY_A);
 
 		if($param["operation"] == "addProfile"){ 
 
@@ -79,7 +79,7 @@ class RBAgency_Customfields{
 	public function getCustomFieldsProfileManagerPrivate($ProfileGender,$param=[]){
 		global $wpdb;
 
-		$customFields = $wpdb->get_results("SELECT * FROM ".table_agency_customfields." WHERE ProfileCustomShowProfile = 1 AND ProfileCustomView = 1 OR ProfileCustomView = 2",ARRAY_A);
+		$customFields = $wpdb->get_results("SELECT * FROM ".table_agency_customfields." WHERE ProfileCustomShowProfile = 1 AND ProfileCustomView = 1 OR ProfileCustomView = 2 ORDER BY ProfileCustomOrder ASC",ARRAY_A);
 
 		if($param["operation"] == "addProfile"){ 
 
