@@ -2499,7 +2499,7 @@
 
 				if ($resultCustom->ProfileCustomType == 7){
 
-					if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
+					/**if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
 						if($resultCustom->ProfileCustomOptions == 1 || $resultCustom->ProfileCustomOptions == 3){
 							$label = "cm";
 						} elseif($resultCustom->ProfileCustomOptions == 2){
@@ -2513,7 +2513,7 @@
 						} elseif($resultCustom->ProfileCustomOptions == 3){
 							$label = "ft/in";
 						}
-					}
+					}**/
 
 					preg_match_all('/(\d+(\.\d+)?)/',$resultCustom->ProfileCustomValue, $matches);
 					$resultCustom->ProfileCustomValue = $matches[0][0];

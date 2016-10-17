@@ -231,8 +231,9 @@ jQuery(document).ready(function(){
 			break;  	
 
 			case "10": // Text
+			
 			     return '<div class="rbfield rbtext rbsingle">'
-						    +'<label>Title*:</label><div><input type="text" name="ProfileCustomTitle"/></div>'
+						    +'<label>Title*:</label><div><input type="text" name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'"/></div>'
 				 		+'</div>'
 				 		+'<div class="rbfield rbtext rbsingle">'
 						    +'<label>&nbsp;</label><div><input type="checkbox" name="ProfileCustomNotifyAdmin" value="1"/><span style="font-size:11px;">Notify the admin when a user reached expiry date.</span></div>'
@@ -240,7 +241,7 @@ jQuery(document).ready(function(){
 			break; 
 			case "11": // Text
 			     return '<div class="rbfield rbtext rbsingle">'
-						    +'<label>Title*:</label> <div><input type="text" name="ProfileCustomTitle"/></div>'
+						    +'<label>Title*:</label> <div><input type="text" name="ProfileCustomTitle" value="'+OriginalProfileCustomTitle+'"/></div>'
 						+'</div>'
 						+ '<div class="rbfield rbtext rbsingle">'
 						    +'<label>Value:</label> <div><input type="text" name="ProfileCustomOptions"/></div>'
