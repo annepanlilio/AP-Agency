@@ -1901,6 +1901,17 @@ elseif ($ConfigID == 3) {
 	/** Identify Labels **/
 	define("LabelPlural", __("Profile Types", RBAGENCY_TEXTDOMAIN));
 	define("LabelSingular", __("Profile Type", RBAGENCY_TEXTDOMAIN));
+
+	$countAll = $wpdb->get_row("SELECT COUNT(*) as total FROM ".$wpdb->prefix."agency_data_type",ARRAY_A);
+
+	$sql = "SELECT DataTypeOrder FROM ".$wpdb->prefix."agency_data_type LIMIT 1";
+	$r = $wpdb->get_results($sql);
+	if(count($r) == 0){
+		//create column
+		$queryAlter = "ALTER TABLE " . $wpdb->prefix ."agency_data_type ADD DataTypeOrder int(11) default ".$countAll['total'];
+		$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+	}
+
   /* Initial Registration [RESPOND TO POST] ***********/
   if ( isset($_POST['action']) ) {
 
@@ -1909,7 +1920,12 @@ elseif ($ConfigID == 3) {
 		$DataTypeTag 	= $_POST['DataTypeTag'];
 		$DataTypeOldTitle = $_POST["oldTitle"];
 		$DataTypeParentID = $_POST["DataTypeParentID"];
-		
+		if($_POST["DataTypeOrder"] == 0){
+			$DataTypeOrder = $countAll['total'];
+		}else{
+			$DataTypeOrder = $_POST["DataTypeOrder"];
+		}
+		echo $DataTypeOrder;
 		$DataTypeGenderID = $_POST["DataTypeGenderID"];
 
 
@@ -1922,6 +1938,8 @@ elseif ($ConfigID == 3) {
 			$queryAlter = "ALTER TABLE " . $wpdb->prefix ."agency_data_type ADD DataTypeParentID varchar(20) default 0";
 			$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
 		}
+
+		
 
 			if (empty($DataTypeTag)) {$DataTypeTag = RBAgency_Common::format_stripchars($DataTypeTitle); }
 		
@@ -1965,7 +1983,8 @@ elseif ($ConfigID == 3) {
 								DataTypeTag='" . esc_sql($DataTypeTag) . "',
 								DataTypeParentID = ".$DataTypeParentID.",
 								DataTypeLevel = ".$DataTypeLevel.",
-								DataTypeGenderID = ".$DataTypeGenderID."
+								DataTypeGenderID = ".$DataTypeGenderID.",
+								DataTypeOrder = ".$DataTypeOrder ."
 							WHERE DataTypeID='$DataTypeID'";
 				$updated = $wpdb->query($update);
 				
@@ -2039,6 +2058,7 @@ elseif ($ConfigID == 3) {
 				$DataTypeTitle	=stripslashes($data['DataTypeTitle']);
 				$DataTypeTag	=$data['DataTypeTag'];
 				$DataTypeGenderID	=$data['DataTypeGenderID'];
+				$DataTypeOrder	=$data['DataTypeOrder'];
 			}
 
 			echo "<h3 class=\"title\">". sprintf(__("Edit %s", RBAGENCY_TEXTDOMAIN), LabelPlural) ."</h3>\n";
@@ -2099,6 +2119,7 @@ elseif ($ConfigID == 3) {
 		}
 		echo "</select>";
 		
+		
 
 	}else{
 		$sql = "SELECT * FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = 0";
@@ -2124,6 +2145,12 @@ elseif ($ConfigID == 3) {
 	echo "        <td><input type=\"text\" id=\"DataTypeTag\" name=\"DataTypeTag\" value=\"". $DataTypeTag ."\" /></td>\n";
 	echo "    </tr>\n";
 	}
+
+		echo "    <tr valign=\"top\">\n";
+		echo "        <th scope=\"row\">". __("Order", RBAGENCY_TEXTDOMAIN) .":</th>\n";
+		echo "        <td><input type=\"text\" id=\"DataTypeOrder\" name=\"DataTypeOrder\" style=\"width:65px;\" value=\"".($DataTypeOrder != $countAll['total'] ? $DataTypeOrder : 0)."\"/></td>\n";
+		echo "    </tr>\n";
+
 	echo "  </tbody>\n";
 	echo "</table>\n";
 	if ( $DataTypeID > 0) {
@@ -2151,7 +2178,7 @@ elseif ($ConfigID == 3) {
 			$sort = $_GET['sort'];
 		}
 		else {
-			$sort = "DataTypeTitle";
+			$sort = "DataTypeOrder";
 		}
 
 		/******** Direction ************/
@@ -2254,11 +2281,12 @@ elseif ($ConfigID == 3) {
 			
 			
 			$DataTypeID	=$data['DataTypeID'];
+
 			echo "    <tr>\n";
 			echo "        <th class=\"check-column\" scope=\"row\"><input type=\"checkbox\" class=\"administrator\" id=\"". $DataTypeID ."\" name=\"". $DataTypeID ."\" value=\"". $DataTypeID ."\" /></th>\n";
 			
 			if($data['DataTypeParentID'] > 0){
-				echo "        <td class=\"column\">-". stripslashes($data['DataTypeTitle']) ."\n";
+				echo "        <td class=\"column\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;". stripslashes($data['DataTypeTitle']) ."\n";
 			}else{
 				echo "        <td class=\"column\">". stripslashes($data['DataTypeTitle']) ."\n";
 			}

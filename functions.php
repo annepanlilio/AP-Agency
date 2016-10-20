@@ -5794,7 +5794,7 @@ function rb_get_profile_type_childs_checkbox($parentID,$ConfigID){
 			echo "<div><label>";
 				$t = trim(str_replace(' ','_',$child['DataTypeTitle']));
 				$checked = 'checked="checked"';
-				echo $space."<input type=\"checkbox\" class=\"customfields-child-profiletype_".$parentID."\" name=\"ProfileType".$t."\" value=\"1\"  />&nbsp;".
+				echo $space."<input type=\"checkbox\" class=\"customfields-child-profiletype_".$parentID."\" name=\"ProfileType".$child['DataTypeID']."\" value=\"".$child['DataTypeID']."\"  />&nbsp;".
 				trim($child['DataTypeTitle'])
 				.'&nbsp;<br/>';
 			echo "</label></div>";
@@ -5805,8 +5805,14 @@ function rb_get_profile_type_childs_checkbox($parentID,$ConfigID){
 }
 add_action("rb_get_profile_type_childs_checkbox_display","rb_get_profile_type_childs_checkbox",11,2);
 
-function rb_get_profile_type_childs_checkbox_edit($parentID,$ConfigID,$t){
+function rb_get_profile_type_childs_checkbox_edit($parentID,$ProfileCustomID,$t){
 	global $wpdb;
+
+	$_sql = "SELECT ProfileCustomDataTypeID FROM " . table_agency_customfields_types ." WHERE ProfileCustomID = $ProfileCustomID";
+	$result = $wpdb->get_row($_sql,ARRAY_A);
+
+	$convertDataTypesToArray = explode(",",$result["ProfileCustomDataTypeID"]);
+
 	$sql = "SELECT DISTINCT(DataTypeID),DataTypeTitle,DataTypeLevel,DataTypeParentID,DataTypeTag FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = $parentID";
 	$childs = $wpdb->get_results($sql,ARRAY_A);
 	if($wpdb->num_rows > 0){
@@ -5817,20 +5823,14 @@ function rb_get_profile_type_childs_checkbox_edit($parentID,$ConfigID,$t){
 				$dash .= "-";
 				$space .="&nbsp;&nbsp;";
 			}
-			$_childClean = trim(str_replace(' ','_',$child['DataTypeTitle']));
+			$checked = in_array($child['DataTypeID'],$convertDataTypesToArray ) ? "checked=\"checked\"" : "";
 			
-			$sql = "SELECT * FROM ".$wpdb->prefix."agency_customfields_types WHERE FIND_IN_SET('". $_childClean."',ProfileCustomTypes) > 0 "
-				. " AND ProfileCustomID = $ConfigID ";
-
-			$r = $wpdb->get_results($sql);
-			$checked = $wpdb->num_rows > 0 ? 'checked="checked"' : "";
-			$t = trim(str_replace('_',' ',$child['DataTypeTitle']));
-			echo $space.'<input type="checkbox" name="ProfileType'.$t.'" value="1" ' .
+			echo $space.'<input type="checkbox" name="ProfileType'.$child['DataTypeID'].'" value="'.$child['DataTypeID'].'" ' .
 														$checked . '  />&nbsp;'.
 														trim($child['DataTypeTitle'])
 														.'&nbsp;<br/>';
 
-			do_action('rb_get_profile_type_childs_checkbox_edit_display',$child["DataTypeID"],$ConfigID,$t);
+			do_action('rb_get_profile_type_childs_checkbox_edit_display',$child["DataTypeID"],$ProfileCustomID,$t);
 		}
 	}
 }
