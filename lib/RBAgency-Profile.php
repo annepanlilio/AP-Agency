@@ -245,7 +245,18 @@ class RBAgency_Profile {
 							}
 						}
 
-						
+						if ( isset($_GET['page']) && $_GET['page'] == 'rb_agency_search' ) {
+								echo "				<div class=\"rbfield rbtext rbsingle rb_email\" id=\"rb_email\" >\n";
+								echo "					<label for=\"displayname\">". __("Email", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+								echo "					<div><input type=\"text\" id=\"email\" name=\"email\" value=\"".(isset($_REQUEST["email"])?$_REQUEST["email"]:"")."\" /></div>\n";
+								echo "				</div>\n";
+
+								echo "				<div class=\"rbfield rbtext rbsingle rb_phone\" id=\"rb_phone\" >\n";
+								echo "					<label for=\"displayname\">". __("Phone", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+								echo "					<div><input type=\"text\" id=\"phone\" name=\"phone\" value=\"".(isset($_REQUEST["phone"])?$_REQUEST["phone"]:"")."\" /></div>\n";
+								echo "				</div>\n";
+
+							}
 				
 
 				//check for parentid column and level
@@ -1344,6 +1355,13 @@ class RBAgency_Profile {
 							$filterArray['displayname'] = $_REQUEST['displayname'];
 					}
 
+					if (isset($_REQUEST['email']) && !empty($_REQUEST['email'])){
+							$filterArray['email'] = $_REQUEST['email'];
+					}
+
+					if (isset($_REQUEST['phone']) && !empty($_REQUEST['phone'])){
+							$filterArray['phone'] = $_REQUEST['phone'];
+					}
 
 				/*
 				 * General
@@ -1504,6 +1522,8 @@ class RBAgency_Profile {
 						"namefirst" => NULL,
 						"namelast" => NULL,
 						"displayname" => NULL,
+						"email"=>NULL,
+						"phone"=>NULL,
 						// General
 						"profiletype" => NULL,
 						"profileumltitype" => NULL,
@@ -1566,6 +1586,17 @@ class RBAgency_Profile {
 					// Display Name
 					if (isset($displayname) && !empty($displayname)){
 						$filter .= $wpdb->prepare(" AND profile.ProfileContactDisplay LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($displayname)))) ."%");
+					}
+
+					// Email
+					if (isset($email) && !empty($email)){
+						$filter .= $wpdb->prepare(" AND profile.ProfileContactEmail LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($email)))) ."%");
+					}
+
+					// Phone
+					if (isset($phone) && !empty($phone)){
+						//$filter .= $wpdb->prepare(" AND (profile.ProfileContactPhoneHome LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($phone)))) ."%");
+						$filter .= " AND (profile.ProfileContactPhoneHome LIKE '%".$phone."%' OR profile.ProfileContactPhoneCell LIKE '%".$phone."%' OR profile.ProfileContactPhoneWork LIKE '%".$phone."%') ";
 					}
 
 					// Type
@@ -2389,7 +2420,6 @@ class RBAgency_Profile {
 			/*
 			 * Check if search is Admin or Public
 			 */
-
 
 			//echo self::$order_by;
 				//echo self::$order_by;
