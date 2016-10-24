@@ -531,6 +531,8 @@ function request_datatype_bygender_memberregister(){
 						}
 					}else{
 
+						
+
 						if(!empty($rb_agency_uri_profiletype) && isset($profiletypeid)){
 								if($profiletypeid ==  $data3["DataTypeID"]){
 										echo "<div><label><input type=\"checkbox\" checked='checked' name=\"ProfileType[]\" value=\"" . $data3['DataTypeID'] . "\" id=".$data3['DataTypeID']." myparent=".$data3['DataTypeParentID']." profile-type-title=\"".$data3['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" $checked/><span> " . $data3['DataTypeTitle'] . "</span></label></div>";

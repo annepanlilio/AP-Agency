@@ -1925,7 +1925,7 @@ elseif ($ConfigID == 3) {
 		}else{
 			$DataTypeOrder = $_POST["DataTypeOrder"];
 		}
-		echo $DataTypeOrder;
+		
 		$DataTypeGenderID = $_POST["DataTypeGenderID"];
 
 
@@ -1960,6 +1960,14 @@ elseif ($ConfigID == 3) {
 			} else {
 
 				$DataTypeLevel = rb_get_parent_category_level($DataTypeParentID);
+
+				//check if data exists
+				$sql = "SELECT COUNT(*) as currentcount FROM ".table_agency_data_type." WHERE DataTypeTitle = '".$DataTypeTitle."'";
+				$result = $wpdb->get_row($sql,ARRAY_A);
+
+				if($result["currentcount"]>0){					
+					$DataTypeTag = $DataTypeTag."-".$result["currentcount"];
+				}
 				// Create Record
 				$insert = "INSERT INTO " . table_agency_data_type . " (DataTypeTitle,DataTypeTag,DataTypeParentID,DataTypeLevel) VALUES ('" . esc_sql($DataTypeTitle) . "','" . esc_sql($DataTypeTag) . "',".$DataTypeParentID.",".$DataTypeLevel.")";
 				$results = $wpdb->query($insert);
@@ -2342,16 +2350,16 @@ elseif ($ConfigID == 3) {
 				
 				
 			$query_cus = "SELECT main.*,
-						a.ProfileCustomTypes
+						a.ProfileCustomTypes,a.ProfileCustomDataTypeID
 						FROM ". table_agency_customfields ." main
 						LEFT JOIN ". table_agency_customfields_types ." a
 						ON a.ProfileCustomID = main.ProfileCustomID
-						WHERE FIND_IN_SET('".str_replace(" ", "_",$data['DataTypeTitle'])."',a.ProfileCustomTypes) > 0 OR FIND_IN_SET('".str_replace("_", " ",$data['DataTypeTitle'])."',a.ProfileCustomTypes) > 0";
+						WHERE FIND_IN_SET('".str_replace(" ", "_",$data['DataTypeID'])."',a.ProfileCustomDataTypeID) > 0";
 						
 			$results_cus = $wpdb->get_results($query_cus,ARRAY_A);
 			$edit_userCustomFields = array();
 			foreach ($results_cus as $dcus) {
-				$edit_userCustomFields[ $dcus['ProfileCustomID']] = $dcus['ProfileCustomTitle'];
+				$edit_userCustomFields[ $dcus['ProfileCustomID']] = $dcus['ProfileCustomDataTypeID'];
 			}
 			//print_r($edit_userCustomFields);
 			foreach ($db_ProfileCustomFields as $data_CustomFields) {
@@ -2713,6 +2721,14 @@ echo '</table>';
 
 elseif ($ConfigID == 5) {
 
+	$sql = "SELECT ProfileCustomDataTypeID FROM ".$wpdb->prefix."agency_customfields_types LIMIT 1";
+	$r = $wpdb->get_results($sql);
+	if(count($r) == 0){
+		//create column
+		$queryAlter = "ALTER TABLE " . $wpdb->prefix ."agency_customfields_types ADD ProfileCustomDataTypeID varchar(255) default NULL";
+		$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+	}
+
 echo "<div id=\"custom-fields\">";
 	/** Identify Labels **/
 	define("LabelPlural", __("Custom Fields", RBAGENCY_TEXTDOMAIN));
@@ -3062,30 +3078,40 @@ echo "<div id=\"custom-fields\">";
 				$implodedProfileCustomShowGender = rbGetDataTypeGenderTitleByID($_POST["ProfileCustomShowGenderArr"]);
 				update_option("ProfileCustomShowGenderArr_".$lastid,$implodedProfileCustomShowGender);
 
-				/*
-				 * Add to Custom Client
-				 * if the Profile Custom Client is
-				 * Selected
-				 */
-
-				$Types = "";
-
-				/*
-				 * Set Types Here for each Custom fields.
-				 */
-				$get_types = "SELECT * FROM ". table_agency_data_type;
-
-				$result = $wpdb->get_results($get_types,ARRAY_A);
-
-				foreach($result as $typ){
-					$profiletyp = 'ProfileType' . trim($typ['DataTypeTitle']);
-					$profiletyp = str_replace(' ', '_', $profiletyp);
-					if($_POST[$profiletyp]) {$Types .= str_replace(' ', '_',trim($typ['DataTypeTitle'])) . "," ; }
+				//get data type ids
+				$profileCustomDataTypeids = [];
+				foreach($_POST as $k=>$v){
+					if(strpos($k, 'ProfileType')>-1){
+						$profileCustomDataTypeids[] = $v;
+					}
 				}
+				$implodedProfileCustomDataTypeids = implode(",",$profileCustomDataTypeids);
 
-				$Types = rtrim($Types, ",");
+				$arrProfileCustomDataType = explode(",",$implodedProfileCustomDataTypeids);
 
-				if($Types != "" or !empty($Types)){
+				//get data type titles
+				$titles_arr = [];
+				foreach($arrProfileCustomDataType as $key=>$val){
+					$sql = "SELECT DataTypeTitle FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeID = ".$val;
+					$result = $wpdb->get_row($sql,ARRAY_A);
+					$titles_arr[] = $result["DataTypeTitle"];
+				}
+				$implodedTitles = implode(",",$titles_arr);
+
+				//check for parents
+				$parents_arr = [];
+				foreach($arrProfileCustomDataType as $key=>$val){
+					$sql = "SELECT DataTypeParentID FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeID = ".$val;
+					$result = $wpdb->get_row($sql,ARRAY_A);
+					if($result['DataTypeParentID']>0){
+						if(!in_array($result['DataTypeParentID'], $parents_arr)){
+							array_push($parents_arr, $result['DataTypeParentID']);
+						}						
+					}
+				}
+				
+
+				if(!empty($titles_arr)){
 
 							$check_sql = "SELECT ProfileCustomTypesID FROM " . table_agency_customfields_types .
 							" WHERE ProfileCustomID = " . $lastid;
@@ -3097,17 +3123,18 @@ echo "<div id=\"custom-fields\">";
 							if($count_check == 0){
 								//create record in Custom Clients
 								$insert_client = "INSERT INTO " . table_agency_customfields_types .
-								" (ProfileCustomID,ProfileCustomTitle,ProfileCustomTypes)
+								" (ProfileCustomID,ProfileCustomTitle,ProfileCustomTypes,ProfileCustomDataTypeID)
 								VALUES (" . $lastid . ",'"
 											. esc_sql($ProfileCustomTitle) . "','"
-											. $Types . "')";
+											. $implodedTitles . "','".$implodedProfileCustomDataTypeids."')";
 
 								$results_client = $wpdb->query($insert_client);
 							} else {
 								//update if already existing
 								$update = "UPDATE " . table_agency_customfields_types . "
 											SET
-											ProfileCustomTypes='" . $Types . "'
+											ProfileCustomTypes='" . $implodedTitles . "',
+											ProfileCustomDataTypeID='".$implodedProfileCustomDataTypeids."',
 											WHERE ProfileCustomID = ".$lastid;
 								$updated = $wpdb->query($update);
 							}
@@ -3141,6 +3168,7 @@ echo "<div id=\"custom-fields\">";
 				echo" <div class=\"inside\"> ";
 				}
 			} else {
+
 
 
 				$update = "UPDATE " . table_agency_customfields . "
@@ -3179,58 +3207,41 @@ echo "<div id=\"custom-fields\">";
 				//add_option("rb_agency_ProfileCustomShowCastingJob_".$ProfileCustomID, $ProfileCustomShowCastingJob);
 				//add_option("rb_agency_ProfileCustomShowCastingRegister_".$ProfileCustomID, $ProfileCustomShowCastingRegister);
 
-				/*
-				 * Check if There is Custom client
-				 * to be updated
-				 */
+				//get data type ids
+				$profileCustomDataTypeids = [];
+				foreach($_POST as $k=>$v){
+					if(strpos($k, 'ProfileType')>-1){
+						$profileCustomDataTypeids[] = $v;
+					}
+				}
+				$implodedProfileCustomDataTypeids = implode(",",$profileCustomDataTypeids);
 
-				$Types = "";
+				$arrProfileCustomDataType = explode(",",$implodedProfileCustomDataTypeids);
 
-				/*
-				 * Set Types Here for each Custom fields.
-				 */
-				$get_types = "SELECT * FROM ". table_agency_data_type;
+				//get data type titles
+				$titles_arr = [];
+				foreach($arrProfileCustomDataType as $key=>$val){
+					$sql = "SELECT DataTypeTitle FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeID = ".$val;
+					$result = $wpdb->get_row($sql,ARRAY_A);
+					$titles_arr[] = $result["DataTypeTitle"];
+				}
+				$implodedTitles = implode(",",$titles_arr);
 
-				$result = $wpdb->get_results($get_types,ARRAY_A);
-
-				foreach ($result as $typ){
-					$t = 'ProfileType' . trim($typ['DataTypeTitle']);
-					$t = str_replace(' ', '_', $t);
-					$n = trim($typ['DataTypeTitle']);
-					$n = str_replace(' ', '_', $n);
-					if($$t) {
-						$$n = true;
-						$Types .= str_replace(' ', '_',trim($typ['DataTypeTitle'])) . "," ;
-					} else {
-						$$n = false;
+				//check for parents
+				$parents_arr = [];
+				foreach($arrProfileCustomDataType as $key=>$val){
+					$sql = "SELECT DataTypeParentID FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeID = ".$val;
+					$result = $wpdb->get_row($sql,ARRAY_A);
+					if($result['DataTypeParentID']>0){
+						if(!in_array($result['DataTypeParentID'], $parents_arr)){
+							array_push($parents_arr, $result['DataTypeParentID']);
+						}						
 					}
 				}
 
-				$Types = rtrim($Types, ",");
-				
-				//check if has parent, then checked
-				$TypesArr = explode(",",$Types);
-				$ParentIDs = [];
-				foreach($TypesArr as $type){
-					$title = str_replace('_',' ',$type);
-					$sql = "SELECT DataTypeParentID FROM ".table_agency_data_type." WHERE DataTypeTitle = %s";
-					$results = $wpdb->get_results($wpdb->prepare($sql,$title),ARRAY_A);
-					foreach($results as $result){
-						if($result["DataTypeParentID"]>0){
-							if(!in_array($result["DataTypeParentID"], $ParentIDs)){
-								$ParentIDs[] = $result["DataTypeParentID"];
-							}							
-						}
-					}
-				}
-				//include the parent to be check
-				foreach($ParentIDs as $parentID){
-					$sql = "SELECT DataTypeTitle FROM ".table_agency_data_type." WHERE DataTypeID = %d";
-					$result = $wpdb->get_row($wpdb->prepare($sql,$parentID),ARRAY_A);
-					$Types .= ",".$result["DataTypeTitle"];
-				}
 
-				if($Types != "" or !empty($Types)){
+
+				if(!empty($titles_arr)){
 
 				
 					$_alteroption = get_option('table_agency_customfields_types' , false);
@@ -3246,22 +3257,26 @@ echo "<div id=\"custom-fields\">";
 							$check_sql = "SELECT ProfileCustomTypesID FROM " . table_agency_customfields_types .
 							" WHERE ProfileCustomID = " . $ProfileCustomID;
 							$check_results = $wpdb->get_results($check_sql,ARRAY_A);
+
 							$count_check = count($check_results);
 							if($count_check <= 0){
 								//create record in Custom Clients
 								$insert_client = "INSERT INTO " . table_agency_customfields_types .
-								" (ProfileCustomID,ProfileCustomTitle,ProfileCustomTypes)
+								" (ProfileCustomID,ProfileCustomTitle,ProfileCustomTypes,ProfileCustomDataTypeID)
 								VALUES (" . $ProfileCustomID . ",'"
 											. esc_sql($ProfileCustomTitle) . "','"
-											. $Types . "')";
+											. $implodedTitles . "','".$implodedProfileCustomDataTypeids."')";
 								$results_client = $wpdb->query($insert_client);
+								
 							} else {
 								//update if already existing
 								$update = "UPDATE " . table_agency_customfields_types . "
 											SET
-											ProfileCustomTypes='" . $Types . "'
+											ProfileCustomTypes='" . $implodedTitles . "',
+											ProfileCustomDataTypeID='".$implodedProfileCustomDataTypeids."'
 											WHERE ProfileCustomID = ".$ProfileCustomID;
 								$updated = $wpdb->query($update);
+								
 							}
 
 				} else {
@@ -3512,7 +3527,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 								echo "<div><label>";
 											$t = trim(str_replace(' ','_',$typ['DataTypeTitle']));
 											//$checked = 'checked="checked"'; default is unchecked
-											echo '<input type="checkbox" class="customfields-parent-profiletype" name="ProfileType'.$t.'" value="1" ' .
+											echo '<input type="checkbox" class="customfields-parent-profiletype" name="ProfileType'.$typ['DataTypeID'].'" value="'.$typ['DataTypeID'].'" ' .
 												$checked . ' parent-id="'.$typ['DataTypeID'].'" />&nbsp;'.
 												trim($typ['DataTypeTitle'])
 												.'&nbsp;<br/>';
@@ -3673,34 +3688,24 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 											$ProfileCustomID = $_GET['ProfileCustomID'];
 
 											//get custom types
-											$_sql = "SELECT ProfileCustomTypes FROM " . table_agency_customfields_types .
+											$_sql = "SELECT ProfileCustomDataTypeID FROM " . table_agency_customfields_types .
 												" WHERE ProfileCustomID = $ProfileCustomID";
-											$x = $wpdb->get_row($_sql);// or die($wpdb->print_error());
+											$result = $wpdb->get_row($_sql,ARRAY_A);// or die($wpdb->print_error());
 
-											if(strpos($x->ProfileCustomTypes,",") > -1){
-													$rTypes = explode(",",str_replace("_", " ", $x->ProfileCustomTypes));
-											} else {
-													$rTypes = str_replace("_", " ", $x->ProfileCustomTypes);
-											}
+											$convertDataTypesToArray = explode(",",$result["ProfileCustomDataTypeID"]);
 
 											$get_types = "SELECT * FROM ". table_agency_data_type." WHERE DataTypeParentID = 0";
 
 											$result = $wpdb->get_results($get_types,ARRAY_A);
 
 											foreach( $result as $typ){
-												$t = trim(str_replace('_',' ',$typ['DataTypeTitle']));
+												$t = trim(str_replace('_',' ',$typ['DataTypeID']));
 												$checked = '';
-												if(is_array($rTypes)){
-													if(in_array($t,$rTypes)){
-															$checked = 'checked="checked"';
-													}
-												} else {
-													if($t == $rTypes){
-															$checked = 'checked="checked"';
-													}
+												if(in_array($t,$convertDataTypesToArray)){
+													$checked = 'checked="checked"';
 												}
 
-												echo '<input type="checkbox" name="ProfileType'.$t.'" value="1" ' .
+												echo '<input type="checkbox" name="ProfileType'.$typ['DataTypeID'].'" value="'.$typ['DataTypeID'].'" ' .
 														$checked . '  />&nbsp;'.
 														trim($typ['DataTypeTitle'])
 														.'&nbsp;<br/>';
@@ -3981,7 +3986,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		echo "<tbody>\n";
 
 		$query = "SELECT main.*,
-					a.ProfileCustomTypes
+					a.ProfileCustomTypes,a.ProfileCustomDataTypeID
 					FROM ". table_agency_customfields ." main
 					LEFT JOIN ". table_agency_customfields_types ." a
 					ON a.ProfileCustomID = main.ProfileCustomID
@@ -4091,13 +4096,12 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		
 		echo "        <td class=\"column\">".$custom_views."</td>\n";
 
-
-		$ProfileCustomTypesArr = explode(',',$data["ProfileCustomTypes"]);
-		$ProfileCustomTypesArr = array_unique($ProfileCustomTypesArr);
-		$dataTypes = $wpdb->get_results("SELECT DataTypeTitle FROM ".$wpdb->prefix."agency_data_type",ARRAY_A);
+		
+		$ProfileCustomDataTypeIDArr = explode(',',$data["ProfileCustomDataTypeID"]);
+		$dataTypes = $wpdb->get_results("SELECT DataTypeTitle,DataTypeID FROM ".$wpdb->prefix."agency_data_type",ARRAY_A);
 		$displayCustomTypesArr = [];
-		foreach($dataTypes as $dataType){
-			if(in_array($dataType["DataTypeTitle"], $ProfileCustomTypesArr) || in_array(str_replace(" ", "_", $dataType["DataTypeTitle"]), $ProfileCustomTypesArr)){
+		foreach($dataTypes as $dataType){	
+			if(in_array($dataType["DataTypeID"], $ProfileCustomDataTypeIDArr)){
 				$displayCustomTypesArr[] = $dataType["DataTypeTitle"];
 			}
 		}
