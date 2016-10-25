@@ -488,7 +488,7 @@ function request_datatype_bygender_memberregister(){
 
 		echo "<div>
 				<label>
-					<input type=\"checkbox\" name=\"ProfileType[]\" value=\"".$result['DataTypeID']."\" id=".$result['DataTypeID']." myparent=".$result['DataTypeParentID']." profile-type-title=\"".$result['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" checked/>
+					<input type=\"checkbox\" name=\"ProfileType[]\" value=\"".$result['DataTypeID']."\" id=".$result['DataTypeID']." myparent=".$result['DataTypeParentID']." profile-type-title=\"".$result['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" checked disabled/>
 					<span> " . $result['DataTypeTitle'] . "</span>
 				</label>
 			</div>";

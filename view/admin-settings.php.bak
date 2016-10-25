@@ -864,7 +864,8 @@ elseif ($ConfigID == 1) {
 								"Stats and Availability with Primary Photo and Thumbnails",//15
 								"Profile View with voice demos", // 16
 								"Booking", // 17
-								"Primary Image + Scrolling Thumbnails + Video Player"); // 18
+								"Primary Image + Scrolling Thumbnails + Video Player",
+								"Layout 19 - Fullwidth Scroller"); // 19
 
 		$allowed_hosts = array('demo1.modelingagencysoftware.com', 'demo2.modelingagencysoftware.com', 'demo3.modelingagencysoftware.com', 'demo4.modelingagencysoftware.com', 'demo5.modelingagencysoftware.com', 'demo6.modelingagencysoftware.com');
 		$paid_layout = explode(",", $rb_agency_option_custom_layout);
@@ -2274,7 +2275,7 @@ elseif ($ConfigID == 3) {
 		
 		
 		$query_cus = "SELECT main.*,
-					a.ProfileCustomTypes
+					a.ProfileCustomTypes,a.ProfileCustomDataTypeID
 					FROM ". table_agency_customfields ." main
 					LEFT JOIN ". table_agency_customfields_types ." a
 					ON a.ProfileCustomID = main.ProfileCustomID
@@ -2359,15 +2360,18 @@ elseif ($ConfigID == 3) {
 			$results_cus = $wpdb->get_results($query_cus,ARRAY_A);
 			$edit_userCustomFields = array();
 			foreach ($results_cus as $dcus) {
-				$edit_userCustomFields[ $dcus['ProfileCustomID']] = $dcus['ProfileCustomDataTypeID'];
+				$edit_userCustomFields[] = $dcus['ProfileCustomDataTypeID'];
 			}
-			//print_r($edit_userCustomFields);
+			
 			foreach ($db_ProfileCustomFields as $data_CustomFields) {
-				$checked = array_key_exists( $data_CustomFields['ProfileCustomID'], $edit_userCustomFields);
+				
+				//$checked = array_key_exists( $data_CustomFields['ProfileCustomID'], $edit_userCustomFields);
+				$checked = in_array($data_CustomFields['ProfileCustomDataTypeID'], $edit_userCustomFields) ? "checked" : "";
+					
 				echo "<label>
 					<input name=\"inner-custom-fields[]\" value=\"".$data_CustomFields['ProfileCustomID']."\" ";
-					checked( $checked);
-					echo "type=\"checkbox\" class=\"inner-custom-fields-check\"  ProfileCustomID=\"".$data_CustomFields['ProfileCustomID']."\" dataTypeID=\"".$data['DataTypeID']."\" />
+					
+					echo "type=\"checkbox\" class=\"inner-custom-fields-check\"  ProfileCustomID=\"".$data_CustomFields['ProfileCustomID']."\" dataTypeID=\"".$data['DataTypeID']."\" $checked/>
 					<span>" . $data_CustomFields['ProfileCustomTitle'] . "</span></label><br/>
 					";
 			}
@@ -3275,6 +3279,7 @@ echo "<div id=\"custom-fields\">";
 											ProfileCustomTypes='" . $implodedTitles . "',
 											ProfileCustomDataTypeID='".$implodedProfileCustomDataTypeids."'
 											WHERE ProfileCustomID = ".$ProfileCustomID;
+
 								$updated = $wpdb->query($update);
 								
 							}

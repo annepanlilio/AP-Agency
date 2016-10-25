@@ -2364,9 +2364,11 @@ elseif ($ConfigID == 3) {
 			}
 			
 			foreach ($db_ProfileCustomFields as $data_CustomFields) {
-				
+				//print_r($edit_userCustomFields);
+				$ProfileCustomDataTypeIDArr = explode(",",$data_CustomFields['ProfileCustomDataTypeID']);
+				//echo $data['DataTypeID']."=".$data_CustomFields['ProfileCustomDataTypeID'];
 				//$checked = array_key_exists( $data_CustomFields['ProfileCustomID'], $edit_userCustomFields);
-				$checked = in_array($data_CustomFields['ProfileCustomDataTypeID'], $edit_userCustomFields) ? "checked" : "";
+				$checked = in_array($data['DataTypeID'], $ProfileCustomDataTypeIDArr) ? "checked" : "";
 					
 				echo "<label>
 					<input name=\"inner-custom-fields[]\" value=\"".$data_CustomFields['ProfileCustomID']."\" ";

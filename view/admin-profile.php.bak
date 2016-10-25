@@ -1282,13 +1282,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								'updated_ProfileLocationCountry'=>'ProfileLocationCountry',
 								'updated_ProfileType'=>'ProfileType'
 								];
+								$fields_val = [];
 								if($ProfileIsActive == 3){
 									foreach($fields as $k=>$v){
-										$fields[$k] = get_user_meta($ProfileUserLinked, "updated_".$v, true);
+										$fields_val[$k] = get_user_meta($ProfileUserLinked, "updated_".$v, true);
 									}
 								}elseif($ProfileIsActive == 1){
 									foreach($fields as $k=>$v){
-										unset($fields[$k]);
+										unset($fields_val[$k]);
 										delete_user_meta($ProfileUserLinked, "updated_".$v, "");
 
 									}
@@ -1302,7 +1303,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									echo "    <tr valign=\"top\">\n";
 									echo "      <th scope=\"row\">" . __("Display Name", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 									echo "      <td>\n";
-									echo "          <input type=\"text\" id=\"ProfileContactDisplay\" name=\"ProfileContactDisplay\" value=\"" . (isset($ProfileContactDisplay)?$ProfileContactDisplay:"") . "\" class=\"".(!empty($fields['updated_ProfileContactDisplay']) ? 'marked_changed' : "")."\"/>\n";
+									echo "          <input type=\"text\" id=\"ProfileContactDisplay\" name=\"ProfileContactDisplay\" value=\"" . (isset($ProfileContactDisplay)?$ProfileContactDisplay:"") . "\" class=\"".(!empty($fields_val['updated_ProfileContactDisplay']) ? 'marked_changed' : "")."\"/>\n";
 									if(isset($errorValidation['rb_agency_option_profilenaming'])){echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['rb_agency_option_profilenaming']."</p>\n";}
 									echo "      </td>\n";
 									echo "    </tr>\n";
@@ -1326,14 +1327,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("First Name", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"" . (isset($ProfileContactNameFirst)?$ProfileContactNameFirst:"") . "\" class=\"".(!empty($fields['updated_ProfileContactNameFirst']) ? 'marked_changed' : "")."\"/>\n";
+								echo "          <input type=\"text\" id=\"ProfileContactNameFirst\" name=\"ProfileContactNameFirst\" value=\"" . (isset($ProfileContactNameFirst)?$ProfileContactNameFirst:"") . "\" class=\"".(!empty($fields_val['updated_ProfileContactNameFirst']) ? 'marked_changed' : "")."\"/>\n";
 								if(isset($errorValidation['ProfileContactNameFirst'])){echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['ProfileContactNameFirst']."</p>\n";}
 								echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Last Name", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"" . (isset($ProfileContactNameLast)?$ProfileContactNameLast:"") . "\" class=\"".(!empty($fields['updated_ProfileContactNameLast']) ? 'marked_changed' : "")."\"/>\n";
+								echo "          <input type=\"text\" id=\"ProfileContactNameLast\" name=\"ProfileContactNameLast\" value=\"" . (isset($ProfileContactNameLast)?$ProfileContactNameLast:"") . "\" class=\"".(!empty($fields_val['updated_ProfileContactNameLast']) ? 'marked_changed' : "")."\"/>\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 
@@ -1375,7 +1376,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "      <td>\n";
 
 
-								echo "          <textarea type=\"text\" cols=\"220\" rows=\"5\" id=\"ProfileDescription\" name=\"ProfileDescription\" ".(!empty($fields['updated_ProfileDescription']) ? "class=\"marked_changed\"" : "").">";
+								echo "          <textarea type=\"text\" cols=\"220\" rows=\"5\" id=\"ProfileDescription\" name=\"ProfileDescription\" ".(!empty($fields_val['updated_ProfileDescription']) ? "class=\"marked_changed\"" : "").">";
 
 								echo	esc_attr( $ProfileDescription );
 								echo "</textarea>";
@@ -1413,30 +1414,30 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "      <th scope=\"row\">" . __("Birthdate", RBAGENCY_TEXTDOMAIN) . " <em>YYYY-MM-DD</em></th>\n";
 								echo "      <td>\n";
 
-								echo "          <input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" class=\"datepicker-bd ".(!empty($fields['updated_ProfileDateBirth']) ? "marked_changed" : "")."\" value=\"" . $ProfileDateBirth . "\" value=\"" . (isset($ProfileContactEmail)?$ProfileContactEmail:"") . "\" />\n";
+								echo "          <input type=\"text\" id=\"ProfileDateBirth\" name=\"ProfileDateBirth\" class=\"datepicker-bd ".(!empty($fields_val['updated_ProfileDateBirth']) ? "marked_changed" : "")."\" value=\"" . $ProfileDateBirth . "\" value=\"" . (isset($ProfileContactEmail)?$ProfileContactEmail:"") . "\" />\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Email Address", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactEmail\" name=\"ProfileContactEmail\" value=\"" . (isset($ProfileContactEmail)?$ProfileContactEmail:"") . "\" class=\"".(!empty($fields['updated_ProfileContactEmail']) ? 'marked_changed' : "")."\"/>\n";
+								echo "          <input type=\"text\" id=\"ProfileContactEmail\" name=\"ProfileContactEmail\" value=\"" . (isset($ProfileContactEmail)?$ProfileContactEmail:"") . "\" class=\"".(!empty($fields_val['updated_ProfileContactEmail']) ? 'marked_changed' : "")."\"/>\n";
 								if(isset($errorValidation['ProfileContactEmail'])){echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['ProfileContactEmail']."</p>\n";}
-									echo "          <input type=\"hidden\" id=\"ProfileContactEmail\" name=\"HiddenContactEmail\" value=\"" . (isset($ProfileContactEmail)?$ProfileContactEmail:"") . "\" class=\"".(!empty($fields['updated_ProfileContactEmail']) ? 'marked_changed' : "")."\"/>\n";
+									echo "          <input type=\"hidden\" id=\"ProfileContactEmail\" name=\"HiddenContactEmail\" value=\"" . (isset($ProfileContactEmail)?$ProfileContactEmail:"") . "\" class=\"".(!empty($fields_val['updated_ProfileContactEmail']) ? 'marked_changed' : "")."\"/>\n";
 									echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Website", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileContactWebsite\" name=\"ProfileContactWebsite\" value=\"" . (isset($ProfileContactWebsite)?$ProfileContactWebsite:"") . "\"  class=\"".(!empty($fields['updated_ProfileContactWebsite']) ? 'marked_changed' : "")."\"/>\n";
+								echo "          <input type=\"text\" id=\"ProfileContactWebsite\" name=\"ProfileContactWebsite\" value=\"" . (isset($ProfileContactWebsite)?$ProfileContactWebsite:"") . "\"  class=\"".(!empty($fields_val['updated_ProfileContactWebsite']) ? 'marked_changed' : "")."\"/>\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Phone", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
 								echo "      <fieldset>\n";
-								echo "          <label>Home:</label><br /><input type=\"text\" id=\"ProfileContactPhoneHome\" name=\"ProfileContactPhoneHome\" value=\"" . (isset($ProfileContactPhoneHome)?$ProfileContactPhoneHome:"") . "\" class=\"".(!empty($fields['updated_ProfileContactPhoneHome']) ? 'marked_changed' : "")."\"/><br />\n";
-								echo "          <label>Cell:</label><br /><input type=\"text\" id=\"ProfileContactPhoneCell\" name=\"ProfileContactPhoneCell\" value=\"" . (isset($ProfileContactPhoneCell)?$ProfileContactPhoneCell:"") . "\" class=\"".(!empty($fields['updated_ProfileContactPhoneCell']) ? 'marked_changed' : "")."\"/><br />\n";
-								echo "          <label>Work:</label><br /><input type=\"text\" id=\"ProfileContactPhoneWork\" name=\"ProfileContactPhoneWork\" value=\"" . (isset($ProfileContactPhoneWork)?$ProfileContactPhoneWork:"") . "\" class=\"".(!empty($fields['updated_ProfileContactPhoneWork']) ? 'marked_changed' : "")."\"/><br />\n";
+								echo "          <label>Home:</label><br /><input type=\"text\" id=\"ProfileContactPhoneHome\" name=\"ProfileContactPhoneHome\" value=\"" . (isset($ProfileContactPhoneHome)?$ProfileContactPhoneHome:"") . "\" class=\"".(!empty($fields_val['updated_ProfileContactPhoneHome']) ? 'marked_changed' : "")."\"/><br />\n";
+								echo "          <label>Cell:</label><br /><input type=\"text\" id=\"ProfileContactPhoneCell\" name=\"ProfileContactPhoneCell\" value=\"" . (isset($ProfileContactPhoneCell)?$ProfileContactPhoneCell:"") . "\" class=\"".(!empty($fields_val['updated_ProfileContactPhoneCell']) ? 'marked_changed' : "")."\"/><br />\n";
+								echo "          <label>Work:</label><br /><input type=\"text\" id=\"ProfileContactPhoneWork\" name=\"ProfileContactPhoneWork\" value=\"" . (isset($ProfileContactPhoneWork)?$ProfileContactPhoneWork:"") . "\" class=\"".(!empty($fields_val['updated_ProfileContactPhoneWork']) ? 'marked_changed' : "")."\"/><br />\n";
 								echo "      </fieldset>\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
@@ -1450,7 +1451,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$location= site_url();
 
 								echo '<input type="hidden" id="url" value="'.$location.'">';
-								echo "<select name=\"ProfileLocationCountry\" id=\"ProfileLocationCountry\"  onchange='javascript:populateStates(\"ProfileLocationCountry\",\"ProfileLocationState\");' class=\"".(!empty($fields['updated_ProfileLocationCountry']) ? 'marked_changed' : "")."\">";
+								echo "<select name=\"ProfileLocationCountry\" id=\"ProfileLocationCountry\"  onchange='javascript:populateStates(\"ProfileLocationCountry\",\"ProfileLocationState\");' class=\"".(!empty($fields_val['updated_ProfileLocationCountry']) ? 'marked_changed' : "")."\">";
 								echo '<option value="">'. __("Select country", RBAGENCY_TEXTDOMAIN) .'</option>';
 								foreach($result_query_get as $r){
 										$selected = isset($ProfileLocationCountry) && $ProfileLocationCountry==$r->CountryID?"selected=selected":"";
@@ -1466,7 +1467,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "      <td>\n";
 								$query_get ="SELECT * FROM `".table_agency_data_state."` WHERE CountryID='".(isset($ProfileLocationCountry)?$ProfileLocationCountry:"")."'" ;
 								$result_query_get = $wpdb->get_results($query_get);
-								echo '<select name="ProfileLocationState" id="ProfileLocationState" class="'.(!empty($fields['updated_ProfileLocationState']) ? 'marked_changed' : "").'">';
+								echo '<select name="ProfileLocationState" id="ProfileLocationState" class="'.(!empty($fields_val['updated_ProfileLocationState']) ? 'marked_changed' : "").'">';
 								echo '<option value="">'. __("Select state", RBAGENCY_TEXTDOMAIN) .'</option>';
 								foreach($result_query_get as $r){
 									$selected = isset($ProfileLocationState) && $ProfileLocationState==$r->StateID?"selected=selected":"";
@@ -1481,13 +1482,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Street", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileLocationStreet\" name=\"ProfileLocationStreet\" value=\"" . (isset($ProfileLocationStreet)?$ProfileLocationStreet:"") . "\" class=\"".(!empty($fields['updated_ProfileLocationStreet']) ? 'marked_changed' : "")."\"/>\n";
+								echo "          <input type=\"text\" id=\"ProfileLocationStreet\" name=\"ProfileLocationStreet\" value=\"" . (isset($ProfileLocationStreet)?$ProfileLocationStreet:"") . "\" class=\"".(!empty($fields_val['updated_ProfileLocationStreet']) ? 'marked_changed' : "")."\"/>\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("City", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileLocationCity\" name=\"ProfileLocationCity\" value=\"" . (isset($ProfileLocationCity)?$ProfileLocationCity:"") . "\" class=\"".(!empty($fields['updated_ProfileLocationCity']) ? 'marked_changed' : "")."\"/>\n";
+								echo "          <input type=\"text\" id=\"ProfileLocationCity\" name=\"ProfileLocationCity\" value=\"" . (isset($ProfileLocationCity)?$ProfileLocationCity:"") . "\" class=\"".(!empty($fields_val['updated_ProfileLocationCity']) ? 'marked_changed' : "")."\"/>\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 
@@ -1495,7 +1496,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Zip", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <input type=\"text\" id=\"ProfileLocationZip\" name=\"ProfileLocationZip\" value=\"" . (isset($ProfileLocationZip)?$ProfileLocationZip:"") . "\" class=\"".(!empty($fields['updated_ProfileLocationZip']) ? 'marked_changed' : "")."\"/>\n";
+								echo "          <input type=\"text\" id=\"ProfileLocationZip\" name=\"ProfileLocationZip\" value=\"" . (isset($ProfileLocationZip)?$ProfileLocationZip:"") . "\" class=\"".(!empty($fields_val['updated_ProfileLocationZip']) ? 'marked_changed' : "")."\"/>\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";
 
