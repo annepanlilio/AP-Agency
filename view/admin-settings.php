@@ -3139,6 +3139,7 @@ echo "<div id=\"custom-fields\">";
 								//update if already existing
 								$update = "UPDATE " . table_agency_customfields_types . "
 											SET
+											ProfileCustomTitle='".esc_sql($ProfileCustomTitle)."',
 											ProfileCustomTypes='" . $implodedTitles . "',
 											ProfileCustomDataTypeID='".$implodedProfileCustomDataTypeids."',
 											WHERE ProfileCustomID = ".$lastid;
@@ -3278,6 +3279,7 @@ echo "<div id=\"custom-fields\">";
 								//update if already existing
 								$update = "UPDATE " . table_agency_customfields_types . "
 											SET
+											ProfileCustomTitle='".esc_sql($ProfileCustomTitle)."',
 											ProfileCustomTypes='" . $implodedTitles . "',
 											ProfileCustomDataTypeID='".$implodedProfileCustomDataTypeids."'
 											WHERE ProfileCustomID = ".$ProfileCustomID;
