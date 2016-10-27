@@ -6688,12 +6688,13 @@ function save_data_custom_field()
 
 	$customfield = $wpdb->get_row("SELECT ProfileCustomID,ProfileCustomTitle FROM ".$wpdb->prefix."agency_customfields WHERE ProfileCustomID = ".$customFieldID,ARRAY_A);
 
-	$datatype = $wpdb->get_row("SELECT DataTypeTitle FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeID = ".$dataTypeID,ARRAY_A);
+	$datatype = $wpdb->get_row("SELECT DataTypeTitle,DataTypeID FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeID = ".$dataTypeID,ARRAY_A);
 
-	$currentData = $wpdb->get_row("SELECT ProfileCustomTypes FROM ".$wpdb->prefix."agency_customfields_types WHERE ProfileCustomID = ".$customFieldID,ARRAY_A);
+	$currentData = $wpdb->get_row("SELECT ProfileCustomTypes,ProfileCustomDataTypeID FROM ".$wpdb->prefix."agency_customfields_types WHERE ProfileCustomID = ".$customFieldID,ARRAY_A);
 
-	if($_POST['inChange'] == 1){
+	if($_POST['inChange'] == 1){ //if checked
 		$newData = $currentData["ProfileCustomTypes"].",".$datatype["DataTypeTitle"];
+		$newDataTypeID = $currentData["ProfileCustomDataTypeID"].",".$datatype["DataTypeID"];
 		
 	}else{
 		$newDataArr = [];
@@ -6727,4 +6728,28 @@ function save_data_custom_field()
 add_action("wp_ajax_save_data_custom_field","save_data_custom_field");
 add_action("wp_ajax_nopriv_save_data_custom_field","save_data_custom_field");
 
+function rb_get_profile_custom_value($profileID,$customView = ""){
+	global $wpdb;
+
+	$sql = "SELECT mux.ProfileCustomValue,mux.ProfileCustomDateValue,cus.ProfileCustomTitle FROM ".
+			$wpdb->prefix."agency_customfield_mux as mux INNER JOIN ".
+			$wpdb->prefix."agency_customfields as cus ON cus.ProfileCustomID = mux.ProfileCustomID INNER JOIN ".
+			$wpdb->prefix."agency_profile as profile ON profile.ProfileID = mux.ProfileID WHERE cus.ProfileCustomView = ".$customView." AND profile.ProfileID = ".$profileID;
+	$results = $wpdb->get_results($sql,ARRAY_A);
+	
+	$result_value_handler = [];
+	foreach($results as $result){
+		$title = $result["ProfileCustomTitle"];
+		$title = strtolower($title);
+		$title = str_replace(" ", "_", $title);
+		//check if date
+		if($result['ProfileCustomDateValue'] !== '0000-00-00' && !empty($result['ProfileCustomDateValue'])){
+			$result_value_handler[$title] = $result['ProfileCustomDateValue'];
+		}else{
+			$result_value_handler[$title] = $result['ProfileCustomValue'];
+		}
+		
+	}
+	return $result_value_handler;
+}
 ?>

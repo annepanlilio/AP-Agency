@@ -6615,12 +6615,12 @@ function rb_get_customfields_search_ajax(){
 		}
 		$find_in_set = implode("OR",$find_in_set_arr);
 	}else{
-		$find_in_set = " FIND_IN_SET('".$_REQUEST['profile_types']."',b.ProfileCustomTypes)>0 ";
+		$find_in_set = " FIND_IN_SET('".$_REQUEST['profile_types']."',b.ProfileCustomDataTypeID)>0 ";
 	}
 
 	
 
-	$sql = "SELECT a.*,b.ProfileCustomTypes FROM ".table_agency_customfields." a INNER JOIN ".table_agency_customfields_types." b ON a.ProfileCustomID = b.ProfileCustomID WHERE ".$find_in_set." ORDER BY a.ProfileCustomOrder ASC";
+	$sql = "SELECT a.*,b.ProfileCustomTypes,b.ProfileCustomDataTypeID FROM ".table_agency_customfields." a INNER JOIN ".table_agency_customfields_types." b ON a.ProfileCustomID = b.ProfileCustomID WHERE ".$find_in_set." ORDER BY a.ProfileCustomOrder ASC";
 	
 		$results = $wpdb->get_results($sql,ARRAY_A);
 

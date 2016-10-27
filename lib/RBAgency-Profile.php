@@ -414,7 +414,7 @@ class RBAgency_Profile {
 												url: "<?php echo admin_url('admin-ajax.php') ?>",
 												data: {
 													action: "rb_get_customfields_search_ajax",
-													'profile_types': $(".DataTypeIDClassCheckbox:checked").attr('profile_title'),
+													'profile_types': $(".DataTypeIDClassCheckbox:checked").val(),
 													'gender': jQuery(this).val()
 												},
 												success: function (results) {
@@ -435,13 +435,13 @@ class RBAgency_Profile {
 							echo "				<div class=\"rbfield rbtext rbsingle rb_gender\" id=\"rb_gender\" ".$hide_gender.">\n";
 							echo "					<label for=\"gender\">". __("Gender", RBAGENCY_TEXTDOMAIN) . "</label>\n";
 							echo "					<div>";
-							$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID";
+							$query2 = "SELECT GenderID, GenderTitle FROM ". table_agency_data_gender ." ORDER BY GenderID ASC";
 							$results2 = $wpdb->get_results($query2,ARRAY_A);
 							echo "						<select name=\"gender\" id=\"gender\">\n";
 							echo "							<option value=\"All Gender\">". __("Any Gender", RBAGENCY_TEXTDOMAIN) . "</option>\n";
 															// Pul Genders from Database
 															foreach ($results2 as $key) {
-																	if(isset($key["GenderID"]))
+																	
 																	echo "<option value=\"". $key["GenderID"] ."\"".selected(isset($_REQUEST['gender'])?$_REQUEST['gender']:"", $key["GenderID"],false).">". $key["GenderTitle"] ."</option>\n";
 															}
 							echo "						</select>\n";
@@ -697,7 +697,7 @@ class RBAgency_Profile {
 								url: "<?php echo admin_url('admin-ajax.php') ?>",
 								data: {
 									action: "rb_get_customfields_search_ajax",
-									'profile_types': jQuery(".DataTypeIDClassCheckbox:checked").attr("profile_title")
+									'profile_types': jQuery(".DataTypeIDClassCheckbox:checked").val()
 								},
 								success: function (results) {
 									console.log(results);
