@@ -716,7 +716,7 @@ function manage_elem(typ1, main_elm, hidden_elm){
                        });
                            
                        main_elm.animate({opacity:1},1000,function(){
-                        jQuery('#profile-list div[class*=rbprofile-list]').filter(':gt('+(total_items-1)+')').remove(); 
+                       // jQuery('#profile-list div[class*=rbprofile-list]').filter(':gt('+(total_items-1)+')').remove(); 
                      
                          hidden_elm.html('');
                         });
