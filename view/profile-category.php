@@ -332,6 +332,8 @@ echo $rb_header = RBAgency_Common::rb_header();
 
 
 get_sidebar();
+
+
 echo $rb_footer = RBAgency_Common::rb_footer(); 
 
 ?>
