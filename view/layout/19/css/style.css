@@ -1,0 +1,339 @@
+/* Profile Layout with Scrolling Thumbnails and Primary Image (include-profile-layout2.php) */
+.cb {
+  clear: both;
+}
+.back-button {
+  display: none;
+}
+#rblayout-nineteen #name {  
+  padding: 45px 0 30px;  
+  text-align: center;
+  position: relative;
+}
+#rblayout-nineteen #name h2:after {
+  left: 50%;  
+  content: "";
+  height: 1px;
+  width: 30px;
+  bottom: 17px;
+  margin-left: -15px;
+  position: absolute;
+  background-color: #cacaca;
+}
+#rblayout-nineteen .container {
+  position: relative;
+}
+#rblayout-nineteen #links {
+  margin: 0;
+  border: none;
+  list-style: none;
+  padding: 0 0 45px;
+  text-align: center;
+  text-transform: uppercase;
+}
+#rblayout-nineteen #links li {
+  padding: 0;
+  margin: 3px;  
+  float: none;
+  font-size: 14px;  
+  display: inline-block;
+}
+/*#rblayout-nineteen .mCSB_container a img {
+  height: 200px;
+  /*max-height: 100%;
+}*/
+#rblayout-nineteen #profile-stats ul {
+  padding: 0;
+  list-style: none;
+  text-align: center;  
+}
+#rblayout-nineteen #profile-stats ul li {
+  font-size: 14px;
+  padding: 5px 7px;
+  display: inline-block;
+}
+#rblayout-nineteen #profile-stats ul li .title {
+  color: #666;
+  text-transform: uppercase;
+}
+#rblayout-nineteen #profile-stats ul li .value {
+  color: #26728c;
+}
+#rblayout-nineteen #photos .photo {
+  width: 20%;
+  float: left;
+  padding: 7px;
+}
+/*#rblayout-nineteen #photos .photo img {
+  max-width: 100%;
+}*/
+#rblayout-nineteen #photos #grid-view {
+  display: none;
+}
+
+/*Tabs*/
+#rblayout-nineteen .nav-tabs .nav-link {
+  padding: 7px;
+  border: none;
+  border-bottom: 2px solid transparent;
+}
+#rblayout-nineteen .nav-tabs .nav-link:hover,
+#rblayout-nineteen .nav-tabs .nav-link.active {
+  border-bottom: 2px solid #26728c;
+}
+
+/*Digitals*/
+#digitals {
+  padding: 0 15px;
+  text-align: center;
+}
+#rblayout-nineteen #digitals .digital {
+  width: 25%;
+  /*float: left;*/
+  padding: 7px;
+  display: inline-block;  
+  text-align: center;
+}
+#rblayout-nineteen #digitals .digital img {
+  max-width: 100%;
+}
+#rblayout-nineteen #digitals .digital.video i,
+#rblayout-nineteen #digitals .digital.resume i,
+#rblayout-nineteen #digitals .digital.voicedemo i {  
+  font-size: 32px;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+#rblayout-nineteen #digitals .digital.video span,
+#rblayout-nineteen #digitals .digital.resume span,
+#rblayout-nineteen #digitals .digital.voicedemo span {  
+  color: #333;
+}
+#rblayout-nineteen #digitals .digital.video .box,
+#rblayout-nineteen #digitals .digital.resume .box,
+#rblayout-nineteen #digitals .digital.voicedemo .box {
+  position: relative;
+  background-color: #ddd;
+}
+#rblayout-nineteen #digitals .digital.video .box .icon,
+#rblayout-nineteen #digitals .digital.resume .box .icon,
+#rblayout-nineteen #digitals .digital.voicedemo .box .icon {
+  top: 40%;
+  left: 0;
+  width: 100%;
+  position: absolute;
+}
+#rblayout-nineteen #digitals .digital.video img,
+#rblayout-nineteen #digitals .digital.resume img,
+#rblayout-nineteen #digitals .digital.voicedemo img{
+  visibility: hidden;
+}
+#rblayout-nineteen .profile-action {
+  top: 0;
+  right: 15px;
+  list-style: none;
+  position: absolute;
+}
+#rblayout-nineteen .profile-action li {
+  padding: 0 7px;
+  display: inline-block;
+}
+
+
+/*Videos*/
+#videos .video {
+  /*float: left;*/  
+  padding: 7px;
+  margin: 0 auto;
+  max-width: 720px;
+  /*width: 33.33333333333333%;*/
+}
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  padding-top: 25px;
+  height: 0;
+}
+.videoWrapper iframe,
+.videoWrapper object,
+.videoWrapper embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%!important;
+  height: 100%!important;
+}
+
+/* basic scrollbar styling */
+/* vertical scrollbar */
+.mCSB_container{
+  width:auto;
+  margin-right:30px;
+  overflow:hidden;
+}
+.mCSB_container.mCS_no_scrollbar{
+  margin-right:0;
+}
+.mCS_disabled .mCSB_container.mCS_no_scrollbar,
+.mCS_destroyed .mCSB_container.mCS_no_scrollbar{
+  margin-right:30px;
+}
+.mCustomScrollBox .mCSB_scrollTools{
+  width:16px;
+  height:100%;
+  top:0;
+  right:0;
+}
+.mCSB_scrollTools .mCSB_draggerContainer{
+  position:absolute;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0; 
+  height:auto;
+}
+.mCSB_scrollTools .mCSB_draggerRail{
+  width:2px;
+  height:100%;
+  margin:0 auto;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+.mCSB_scrollTools .mCSB_dragger{
+  cursor:pointer;
+  width:100%;
+  height:30px;
+}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+  width:4px;
+  height:100%;
+  margin:0 auto;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+  text-align:center;
+}
+/* horizontal scrollbar */
+.mCSB_horizontal .mCSB_container{
+  height:100%;
+  margin-right:0;
+  margin-bottom:20px;
+  overflow:hidden;
+}
+.mCSB_horizontal .mCSB_container.mCS_no_scrollbar{
+  margin-bottom:0;
+}
+.mCS_disabled .mCSB_horizontal .mCSB_container.mCS_no_scrollbar,
+.mCS_destroyed .mCSB_horizontal .mCSB_container.mCS_no_scrollbar{
+  margin-right:0;
+  margin-bottom:30px;
+}
+.mCSB_horizontal.mCustomScrollBox .mCSB_scrollTools{
+  width:100%;
+  height:16px;
+  top:auto;
+  right:auto;
+  bottom:0!important;
+  left:0;
+  overflow:hidden;
+}
+.mCSB_horizontal .mCSB_scrollTools a+.mCSB_draggerContainer{
+  margin:0 20px;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_draggerRail{
+  width:100%;
+  height:1px;
+  margin:7px 0;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_dragger{
+  width:30px;
+  height:100%;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+  width:100%;
+  height:4px;
+  margin:6px auto;
+  -webkit-border-radius:10px;
+  -moz-border-radius:10px;
+  border-radius:10px;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_buttonLeft,
+.mCSB_horizontal .mCSB_scrollTools .mCSB_buttonRight{
+  display:none;
+  position:relative;
+  width:20px;
+  height:100%;
+  overflow:hidden;
+  margin:0 auto;
+  cursor:pointer;
+  float:left;
+}
+.mCSB_horizontal .mCSB_scrollTools .mCSB_buttonRight{
+  margin-left:-40px;
+  float:right;
+}
+.mCustomScrollBox{
+  -ms-touch-action:none; /*MSPointer events - direct all pointer events to js*/
+}
+
+/* default scrollbar colors and backgrounds (default theme) */
+.mCustomScrollBox>.mCSB_scrollTools{
+  opacity:0.75;
+}
+.mCustomScrollBox:hover>.mCSB_scrollTools{
+  opacity:1;
+}
+.mCSB_scrollTools .mCSB_draggerRail{
+  background:#000; /* rgba fallback */
+  background:rgba(0,0,0,0.4);
+  filter:"alpha(opacity=40)"; -ms-filter:"alpha(opacity=40)"; /* old ie */
+}
+.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
+  background:#fff; /* rgba fallback */
+  background:rgba(0,0,0,0.75);
+  filter:"alpha(opacity=75)"; -ms-filter:"alpha(opacity=75)"; /* old ie */
+}
+.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+  background:rgba(0,0,0,0.85);
+  filter:"alpha(opacity=85)"; -ms-filter:"alpha(opacity=85)"; /* old ie */
+}
+.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
+.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+  background:rgba(0,0,0,0.9);
+  filter:"alpha(opacity=90)"; -ms-filter:"alpha(opacity=90)"; /* old ie */
+}
+.mCSB_scrollTools .mCSB_buttonLeft,
+.mCSB_scrollTools .mCSB_buttonRight{
+  background-image:url(../images/mCSB_buttons.png);
+  background-repeat:no-repeat;
+  opacity:0.4;
+  filter:"alpha(opacity=40)"; -ms-filter:"alpha(opacity=40)"; /* old ie */
+}
+.mCSB_scrollTools .mCSB_buttonLeft{
+  background-position:0 -40px;
+  /* 
+  sprites locations are 0 -40px/-20px -40px/-40px -40px/-60px -40px (light) and -80px -40px/-100px -40px/-120px -40px/-140px -40px (dark) 
+  */
+}
+.mCSB_scrollTools .mCSB_buttonRight{
+  background-position:0 -56px;
+  /* 
+  sprites locations are 0 -56px/-20px -56px/-40px -56px/-60px -56px (light) and -80px -56px/-100px -56px/-120px -56px/-140px -56px (dark) 
+  */
+}
+.mCSB_scrollTools .mCSB_buttonLeft:hover,
+.mCSB_scrollTools .mCSB_buttonRight:hover{
+  opacity:0.75;
+  filter:"alpha(opacity=75)"; -ms-filter:"alpha(opacity=75)"; /* old ie */
+}
+.mCSB_scrollTools .mCSB_buttonLeft:active,
+.mCSB_scrollTools .mCSB_buttonRight:active{
+  opacity:0.9;
+  filter:"alpha(opacity=90)"; -ms-filter:"alpha(opacity=90)"; /* old ie */
+}
+
+/*.mCustomScrollBox{ height:auto!important;}*/
