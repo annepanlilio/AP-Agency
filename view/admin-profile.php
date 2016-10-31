@@ -845,14 +845,17 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 
 						//check IMDB privacy
 						$wpdb->query("UPDATE ".table_agency_profile_media." SET isPrivate = 0 WHERE ProfileMediaType = 'Link'");
-						foreach($_POST['set_imdb_private'] as $k=>$v){
+						if(isset($_POST['set_imdb_private'])){
+							foreach($_POST['set_imdb_private'] as $k=>$v){
 
-							if(isset($_POST['set_imdb_private'][$k])){
-								$wpdb->query("UPDATE ".table_agency_profile_media." SET isPrivate = 1 WHERE ProfileMediaID = ".$_POST['set_imdb_private'][$k]);
-							}else{
-								$wpdb->query("UPDATE ".table_agency_profile_media." SET isPrivate = 0 WHERE ProfileMediaID = ".$_POST['set_imdb_private'][$k]);
+								if(isset($_POST['set_imdb_private'][$k])){
+									$wpdb->query("UPDATE ".table_agency_profile_media." SET isPrivate = 1 WHERE ProfileMediaID = ".$_POST['set_imdb_private'][$k]);
+								}else{
+									$wpdb->query("UPDATE ".table_agency_profile_media." SET isPrivate = 0 WHERE ProfileMediaID = ".$_POST['set_imdb_private'][$k]);
+								}
 							}
 						}
+						
 
 						// Update Image order
 						$ProfileMediaOrder1 =  array();

@@ -2089,6 +2089,7 @@ elseif ($ConfigID == 3) {
 			echo "<p>". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
   }
 	echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']."&action=editRecord&DataTypeID=".$_GET['DataTypeID']."&ConfigID=4") ."\">\n";
+
 	echo "<table class=\"form-table\">\n";
 	echo "<tbody>\n";
 	echo "    <tr valign=\"top\">\n";
@@ -2741,6 +2742,14 @@ elseif ($ConfigID == 5) {
 		$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
 	}
 
+	$sql = "SELECT ProfileCustomHideProfileView FROM ".table_agency_customfields." LIMIT 1";
+	$r = $wpdb->get_results($sql);
+	if(count($r) == 0){
+		//create column
+		$queryAlter = "ALTER TABLE " . table_agency_customfields ." ADD ProfileCustomHideProfileView INT(10) default 0";
+		$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+	}
+
 echo "<div id=\"custom-fields\">";
 	/** Identify Labels **/
 	define("LabelPlural", __("Custom Fields", RBAGENCY_TEXTDOMAIN));
@@ -2890,6 +2899,8 @@ echo "<div id=\"custom-fields\">";
 	/* Initial Registration [RESPOND TO POST] ***********/
 	if ( isset($_POST['action']) ) {
 
+
+
 		$ProfileCustomID			= isset($_POST['ProfileCustomID'])?$_POST['ProfileCustomID']:"";
 		$ProfileCustomTitle			= isset($_POST['ProfileCustomTitle'])?$_POST['ProfileCustomTitle']:"";
 		$ProfileCustomType			= isset($_POST['ProfileCustomType']) ?$_POST['ProfileCustomType']:"";
@@ -2898,6 +2909,7 @@ echo "<div id=\"custom-fields\">";
 		$ProfileCustomOrder 		= (int)$_POST['ProfileCustomOrder'];
 		$ProfileCustomShowGender	= (int)$_POST['ProfileCustomShowGender'];
 		$ProfileCustomShowProfile  	= isset($_POST['ProfileCustomShowProfile'])?(int)$_POST['ProfileCustomShowProfile']:0;
+		$ProfileCustomHideProfileView  	= isset($_POST['ProfileCustomHideProfileView'])?(int)$_POST['ProfileCustomHideProfileView']:0;
 
 		$ProfileCustomShowSearch  	= isset($_POST['ProfileCustomShowSearch']) ? (int)$_POST['ProfileCustomShowSearch'] : 0;
 		$ProfileCustomShowLogged  	= isset($_POST['ProfileCustomShowLogged'])?(int)$_POST['ProfileCustomShowLogged']:0;
@@ -3095,7 +3107,7 @@ echo "<div id=\"custom-fields\">";
 			}else {
 					
 				// Create Record
-				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowInitialRegistration,ProfileCustomShowSearchSimple,ProfileCustomShowCastingJob,ProfileCustomShowCastingRegister,ProfileCustomShowCastingManager,ProfileCustomDisplayExDetails) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomShowSearch) ."','".esc_sql($ProfileCustomShowFilter) ."' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowInitialRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "','". esc_sql($ProfileCustomShowCastingJob)."','". esc_sql($ProfileCustomShowCastingRegister)."','". esc_sql($ProfileCustomShowCastingManager)."','". esc_sql($ProfileCustomDisplayExDetails)."')";
+				$insert = "INSERT INTO " . table_agency_customfields . " (ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomHideProfileView,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowLogged,ProfileCustomShowAdmin,ProfileCustomShowRegistration, ProfileCustomShowInitialRegistration,ProfileCustomShowSearchSimple,ProfileCustomShowCastingJob,ProfileCustomShowCastingRegister,ProfileCustomShowCastingManager,ProfileCustomDisplayExDetails) VALUES ('" . esc_sql($ProfileCustomTitle) . "','" . esc_sql($ProfileCustomType) . "','" . esc_sql($ProfileCustomOptions) . "','" . esc_sql($ProfileCustomView) . "','" . esc_sql($ProfileCustomOrder ) . "','" . esc_sql($ProfileCustomShowGender ) . "','" . esc_sql($ProfileCustomShowProfile ) . "','" . esc_sql($ProfileCustomHideProfileView ) . "','" . esc_sql($ProfileCustomShowSearch) ."','".esc_sql($ProfileCustomShowFilter) ."' , '". esc_sql($ProfileCustomShowLogged ) . "','" . esc_sql($ProfileCustomShowAdmin) . "','" . esc_sql($ProfileCustomShowRegistration). "','" . esc_sql($ProfileCustomShowInitialRegistration). "','" . esc_sql($ProfileCustomShowSearchSimple) . "','". esc_sql($ProfileCustomShowCastingJob)."','". esc_sql($ProfileCustomShowCastingRegister)."','". esc_sql($ProfileCustomShowCastingManager)."','". esc_sql($ProfileCustomDisplayExDetails)."')";
 				$results = $wpdb->query($insert);
 				$lastid = $wpdb->insert_id;
 
@@ -3210,6 +3222,7 @@ echo "<div id=\"custom-fields\">";
 								ProfileCustomOrder=" . esc_sql($ProfileCustomOrder) . " ,
 								ProfileCustomShowGender=" . esc_sql($ProfileCustomShowGender) . ",
 								ProfileCustomShowProfile=" . esc_sql($ProfileCustomShowProfile) . " ,
+								ProfileCustomHideProfileView=" . esc_sql($ProfileCustomHideProfileView) . " ,
 								ProfileCustomShowSearch=" . esc_sql($ProfileCustomShowSearch) . " ,
 								ProfileCustomShowFilter=" . esc_sql($ProfileCustomShowFilter) . " ,
 								ProfileCustomShowLogged=" . esc_sql($ProfileCustomShowLogged) . " ,
@@ -3405,6 +3418,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 				$ProfileCustomOrder			=	$data['ProfileCustomOrder'];
 				$ProfileCustomShowGender	=	$data['ProfileCustomShowGender'];
 				$ProfileCustomShowProfile	=	$data['ProfileCustomShowProfile'];
+				$ProfileCustomHideProfileView	=	$data['ProfileCustomHideProfileView'];
 				$ProfileCustomShowSearch	=	$data['ProfileCustomShowSearch'];
 				$ProfileCustomShowLogged	=	$data['ProfileCustomShowLogged'];
 				$ProfileCustomShowRegistration=	$data['ProfileCustomShowRegistration'];
@@ -3433,6 +3447,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 			$ProfileCustomOrder				= 0;
 			$ProfileCustomShowGender		= 0;
 			$ProfileCustomShowProfile		= 0;
+			$ProfileHideProfileView		= 0;
 			$ProfileCustomShowSearch		= 0;
 			$ProfileCustomShowSearchSimple	= 0;
 			$ProfileCustomShowLogged		= 0;
@@ -3502,6 +3517,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\"  checked=\"checked\" /> Show on Search Form (Advanced)</label></div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" /> Show on Search Form (Simple)</label></div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" checked=\"checked\" /> Show on Profile Manager</label></div>
+								<div><label><input type=\"checkbox\" name=\"ProfileCustomHideProfileView\" value=\"1\" /> Hide Value on Profile View</label></div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingJob\" value=\"1\" /> Show on Casting Job</label></div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingRegister\" value=\"1\" /> Show on Casting Registration</label></div>
 								<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingManager\" value=\"1\" /> Show on Casting Manager</label></div>
@@ -3662,6 +3678,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearch\" value=\"1\" ". ($data1["ProfileCustomShowSearch"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Advanced)</label></div>
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowSearchSimple\" value=\"1\" ". ($data1["ProfileCustomShowSearchSimple"] == 1 ? 'checked=\"checked\"':'')." /> Show on Search Form (Simple)</label></div>
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowProfile\" value=\"1\" ". ($data1["ProfileCustomShowProfile"] == 1 ? 'checked=\"checked\"':'')." /> Show on Profile Manager</label></div>
+														<div><label><input type=\"checkbox\" name=\"ProfileCustomHideProfileView\" value=\"1\" ". ($data1["ProfileCustomHideProfileView"] == 1 ? 'checked=\"checked\"':'')." /> Hide Value on Profile View</label></div>
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingJob\" value=\"1\" ". ($data1["ProfileCustomShowCastingJob"] == 1 ? 'checked=\"checked\"':'')."/> Show on Casting Job</label></div>
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingRegister\" value=\"1\" ". ($data1["ProfileCustomShowCastingRegister"] == 1 ? 'checked=\"checked\"':'')."/> Show on Casting Registration</label></div>
 														<div><label><input type=\"checkbox\" name=\"ProfileCustomShowCastingManager\" value=\"1\" ". ($data1["ProfileCustomShowCastingManager"] == 1 ? 'checked=\"checked\"':'')."/> Show on Casting Manager</label></div>
@@ -4128,14 +4145,22 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		
 		echo "        <td class=\"column\">".$custom_views."</td>\n";
 
-		
+		$ProfileCustomTypesArr = explode(',',$data["ProfileCustomTypes"]);
 		$ProfileCustomDataTypeIDArr = explode(',',$data["ProfileCustomDataTypeID"]);
 		$dataTypes = $wpdb->get_results("SELECT DataTypeTitle,DataTypeID FROM ".$wpdb->prefix."agency_data_type",ARRAY_A);
 		$displayCustomTypesArr = [];
 		foreach($dataTypes as $dataType){	
-			if(in_array($dataType["DataTypeID"], $ProfileCustomDataTypeIDArr)){
-				$displayCustomTypesArr[] = $dataType["DataTypeTitle"];
+
+			if(empty($ProfileCustomDataTypeIDArr)){
+				if(in_array($dataType["DataTypeTitle"], $ProfileCustomTypesArr)){
+					$displayCustomTypesArr[] = $dataType["DataTypeTitle"];
+				}
+			}else{
+				if(in_array($dataType["DataTypeID"], $ProfileCustomDataTypeIDArr)){
+					$displayCustomTypesArr[] = $dataType["DataTypeTitle"];
+				}
 			}
+			
 		}
 		echo "        <td class=\"column\">".implode("<br/>", str_replace("_", " ",$displayCustomTypesArr ))."</td>\n";
 

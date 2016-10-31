@@ -6636,7 +6636,7 @@ function rb_get_customfields_search_ajax(){
 	
 		$results = $wpdb->get_results($sql,ARRAY_A);
 		
-		echo $wpdb->last_error;
+		
 
 		$q =  "SELECT a.*,b.ProfileCustomTypes FROM ".table_agency_customfields." a INNER JOIN ".table_agency_customfields_types." b ON a.ProfileCustomID = b.ProfileCustomID AND a.ProfileCustomShowInitialRegistration = 1";
 		$res = $wpdb->get_results($q,ARRAY_A);

@@ -1944,7 +1944,7 @@
 					$row_tag = "li";
 				}
 		$title_to_exclude_arr = array();
-		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue, cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
+		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue, cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID AND c.ProfileCustomHideProfileView = 0 WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
 		foreach ($resultsCustom as $resultCustom) {
 
 			if(!in_array($resultCustom->ProfileCustomTitle, $title_to_exclude_arr)){
@@ -2475,7 +2475,7 @@
 
 		$_allFields = array();
 
-		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue, cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
+		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue, cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND c.ProfileCustomHideProfileView = 0 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
 		foreach ($resultsCustom as $resultCustom) {
 			// If a value exists...
 
@@ -6748,7 +6748,7 @@ function rb_get_profile_custom_value($profileID,$customView = ""){
 	$sql = "SELECT mux.ProfileCustomValue,mux.ProfileCustomDateValue,cus.ProfileCustomTitle FROM ".
 			$wpdb->prefix."agency_customfield_mux as mux INNER JOIN ".
 			$wpdb->prefix."agency_customfields as cus ON cus.ProfileCustomID = mux.ProfileCustomID INNER JOIN ".
-			$wpdb->prefix."agency_profile as profile ON profile.ProfileID = mux.ProfileID WHERE cus.ProfileCustomView = ".$customView." AND profile.ProfileID = ".$profileID;
+			$wpdb->prefix."agency_profile as profile ON profile.ProfileID = mux.ProfileID AND cus.ProfileCustomHideProfileView = 0 WHERE cus.ProfileCustomView = ".$customView." AND profile.ProfileID = ".$profileID;
 	$results = $wpdb->get_results($sql,ARRAY_A);
 	
 	$result_value_handler = [];

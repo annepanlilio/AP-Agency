@@ -4,6 +4,17 @@ global $wpdb;
 define("LabelPlural", "Profile");
 define("LabelSingular", "Profiles");
 
+//altering the main profile table for private fields...
+	$queryAlterCheck = "SELECT isPrivate FROM " . table_agency_profile_media ." LIMIT 1";
+	$resultsDataAlter = $wpdb->get_results($queryAlterCheck,ARRAY_A);
+	$count_alter = $wpdb->num_rows;
+	if($count_alter == 0){
+		// sometimes upgrade script wasnt execute.. so we just want to be sure.
+		$queryAlter = "ALTER TABLE " . table_agency_profile_media ." ADD isPrivate boolean NOT NULL default false";
+		$resultsDataAlter = $wpdb->get_results($queryAlter,ARRAY_A);
+		/* echo "<h2>Table Altered for Private profile option. Please refresh the page.</h2>";
+		exit; */
+	}
 
 /*
  * Pull Options
@@ -830,6 +841,17 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							// Update Primary Image
 							$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='0' WHERE ProfileID=$ProfileID");
 							$results = $wpdb->query("UPDATE " . table_agency_profile_media . " SET ProfileMediaPrimary='1' WHERE ProfileID=$ProfileID AND ProfileMediaID=$ProfileMediaPrimaryID");
+						}
+
+						//check IMDB privacy
+						$wpdb->query("UPDATE ".table_agency_profile_media." SET isPrivate = 0 WHERE ProfileMediaType = 'Link'");
+						foreach($_POST['set_imdb_private'] as $k=>$v){
+
+							if(isset($_POST['set_imdb_private'][$k])){
+								$wpdb->query("UPDATE ".table_agency_profile_media." SET isPrivate = 1 WHERE ProfileMediaID = ".$_POST['set_imdb_private'][$k]);
+							}else{
+								$wpdb->query("UPDATE ".table_agency_profile_media." SET isPrivate = 0 WHERE ProfileMediaID = ".$_POST['set_imdb_private'][$k]);
+							}
 						}
 
 						// Update Image order
@@ -3316,9 +3338,10 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "<h3>Links</h3>\n";
 							echo "<ul>\n";
 							foreach ($resultsLinks  as $dataLinks) {
+								$checked = $dataLinks["isPrivate"] == 1 ? "checked" : "";
 							echo "	<li>\n";
 							echo "		<a href='". $dataLinks['ProfileMediaURL'] ."' target='_blank'>". $dataLinks['ProfileMediaTitle'] ."\n";
-							echo "		[<a href=\"javascript:confirmDelete('" . $dataLinks['ProfileMediaID'] . "','Link')\" title=\"Delete this Link\" class=\"delete-file\">DELETE</a>]\n";
+							echo "		[<a href=\"javascript:confirmDelete('" . $dataLinks['ProfileMediaID'] . "','Link')\" title=\"Delete this Link\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" name=\"set_imdb_private[]\" value=\"".$dataLinks['ProfileMediaID']."\" $checked>&nbsp;Click to set private\n";
 							echo "	</li>\n";
 							}
 							echo "</ul>\n";
