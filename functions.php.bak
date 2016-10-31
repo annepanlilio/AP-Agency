@@ -6606,23 +6606,37 @@ function rb_get_customfields_search_ajax(){
 	
 	global $wpdb;
 	//require_once("theme/view-custom-fields-registration.php");
+	$search_type = isset($_POST['search_type']) ? $_POST['search_type'] : "basic";
 	$implodedProfileType = implode(",",$_REQUEST['profile_types']);
 	$arrChecker = [];
 	$find_in_set_arr = [];
 	if(is_array($_REQUEST['profile_types'])){
 		foreach($_REQUEST['profile_types'] as $k=>$v){
-			$find_in_set_arr[] = " FIND_IN_SET('".$v."',b.ProfileCustomTypes)>0 ";
+			if(!empty($v)){
+				$find_in_set_arr[] = " FIND_IN_SET('".$v."',b.ProfileCustomDataTypeID)>0 ";
+			}
+			
 		}
-		$find_in_set = implode("OR",$find_in_set_arr);
+		$find_in_set = "(".implode("OR",$find_in_set_arr).")";
 	}else{
-		$find_in_set = " FIND_IN_SET('".$_REQUEST['profile_types']."',b.ProfileCustomTypes)>0 ";
+		$find_in_set = " FIND_IN_SET('".$_REQUEST['profile_types']."',b.ProfileCustomDataTypeID)>0 ";
 	}
 
 	
+	if($search_type == "advanced"){
+		$find_in_set = !empty($find_in_set) ? "a.ProfileCustomShowSearch > 0 AND ".$find_in_set : "a.ProfileCustomShowSearch > 0";
+		$sql = "SELECT a.*,b.ProfileCustomTypes,b.ProfileCustomDataTypeID FROM ".table_agency_customfields." a INNER JOIN ".table_agency_customfields_types." b ON a.ProfileCustomID = b.ProfileCustomID WHERE ".$find_in_set." ORDER BY a.ProfileCustomOrder ASC";
+	}else{
+		$find_in_set = !empty($find_in_set) ? "a.ProfileCustomShowSearchSimple > 0 AND ".$find_in_set : "a.ProfileCustomShowSearchSimple > 0";
+		$sql = "SELECT a.*,b.ProfileCustomTypes,b.ProfileCustomDataTypeID FROM ".table_agency_customfields." a INNER JOIN ".table_agency_customfields_types." b ON a.ProfileCustomID = b.ProfileCustomID WHERE ".$find_in_set." ORDER BY a.ProfileCustomOrder ASC";
+	}
+	
 
-	$sql = "SELECT a.*,b.ProfileCustomTypes FROM ".table_agency_customfields." a INNER JOIN ".table_agency_customfields_types." b ON a.ProfileCustomID = b.ProfileCustomID WHERE ".$find_in_set." ORDER BY a.ProfileCustomOrder ASC";
+	//$sql = "SELECT a.*,b.ProfileCustomTypes,b.ProfileCustomDataTypeID FROM ".table_agency_customfields." a INNER JOIN ".table_agency_customfields_types." b ON a.ProfileCustomID = b.ProfileCustomID WHERE ".$find_in_set." ORDER BY a.ProfileCustomOrder ASC";
 	
 		$results = $wpdb->get_results($sql,ARRAY_A);
+		
+		echo $wpdb->last_error;
 
 		$q =  "SELECT a.*,b.ProfileCustomTypes FROM ".table_agency_customfields." a INNER JOIN ".table_agency_customfields_types." b ON a.ProfileCustomID = b.ProfileCustomID AND a.ProfileCustomShowInitialRegistration = 1";
 		$res = $wpdb->get_results($q,ARRAY_A);

@@ -301,8 +301,7 @@ class RBAgency_Profile {
 								$sql = "SELECT * FROM ".table_agency_data_type." WHERE DataTypeParentID = 0";
 								$result = $wpdb->get_results($sql,ARRAY_A);
 								foreach($result as $r){
-
-									if($r['DataTypeTag'] == $profile_type){
+									if(trim($r['DataTypeTag']) == $profile_type){
 										echo "<div><label>";
 													$t = trim(str_replace(' ','_',$r['DataTypeTitle']));													
 														echo '<input type="checkbox" name="profiletype[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" profile_title="'.$r['DataTypeTitle'].'"  class="DataTypeIDClassCheckbox" checked disabled/>&nbsp;'.
@@ -313,7 +312,7 @@ class RBAgency_Profile {
 													
 										echo "</label></div>"; 
 
-										if($r['DataTypeTag'] == $profile_type){
+										if(trim($r['DataTypeTag']) == $profile_type){
 											do_action('rb_get_profile_type_childs_checkbox_ajax_display',$r['DataTypeID'],4,$args = array('mode'=>$atts_arr['att_mode'],'type'=>$atts_arr['att_type']) );
 										}
 									}
@@ -388,6 +387,7 @@ class RBAgency_Profile {
 							<script type="text/javascript">
 								jQuery(document).ready(function($){
 									console.log($(".DataTypeIDClassCheckbox:checked").length);
+
 									if($(".DataTypeIDClassCheckbox:checked").length>0){
 										$.ajax({
 											type: "POST",
@@ -404,9 +404,7 @@ class RBAgency_Profile {
 										});
 									}
 
-									jQuery("#gender").on("change",function(){
-
-										
+									jQuery("#gender").on("change",function(){								
 
 
 										jQuery.ajax({
@@ -418,7 +416,7 @@ class RBAgency_Profile {
 													'gender': jQuery(this).val()
 												},
 												success: function (results) {
-													jQuery(".customfields-onload").html(results);
+													jQuery(".customfields_search_form").html(results);
 													console.log(results);
 												}
 											});
@@ -778,7 +776,7 @@ class RBAgency_Profile {
 					
 				}
 				$field_results = $wpdb->get_results($field_sql,ARRAY_A);
-
+			if($atts_arr['att_mode'] == 'ajax' && $atts_arr['att_type'] == 'advanced'){
 				echo "<div class=\"customfields-onload\" >";
 				foreach($field_results  as $data){
 					// Set Variables
@@ -1120,6 +1118,8 @@ class RBAgency_Profile {
 
 				}
 				echo "</div>" ;
+
+			}
 
 				/* status The “Status” field should not show up on front-end search. */
 				if(isset($_REQUEST['page']) && $_REQUEST['page']=='rb_agency_search'){

@@ -2784,7 +2784,24 @@ echo "<div id=\"custom-fields\">";
 
 						// Assume the rest dont exist either
 			//junjavier :edit started
-					$table_columns = "(ProfileCustomID,ProfileCustomTitle,ProfileCustomType,ProfileCustomOptions,ProfileCustomView,ProfileCustomOrder,ProfileCustomShowGender,ProfileCustomShowProfile,ProfileCustomShowSearch,ProfileCustomShowFilter,ProfileCustomShowSearchSimple,ProfileCustomShowLogged,ProfileCustomShowRegistration,ProfileCustomShowAdmin,ProfileCustomShowCastingJob,ProfileCustomShowCastingRegister,ProfileCustomShowCastingManager) ";
+					$table_columns = "(
+					ProfileCustomID,
+					ProfileCustomTitle,
+					ProfileCustomType,
+					ProfileCustomOptions,
+					ProfileCustomView,
+					ProfileCustomOrder,
+					ProfileCustomShowGender,
+					ProfileCustomShowProfile,
+					ProfileCustomShowSearch,
+					ProfileCustomShowFilter,
+					ProfileCustomShowSearchSimple,
+					ProfileCustomShowLogged,
+					ProfileCustomShowRegistration,
+					ProfileCustomShowAdmin,
+					ProfileCustomShowCastingJob,
+					ProfileCustomShowCastingRegister,
+					ProfileCustomShowCastingManager) ";
 					$insert = $wpdb->query("INSERT INTO " . table_agency_customfields .$table_columns. " VALUES (1, 'Ethnicity', 	3, '|African American|Caucasian|American Indian|East Indian|Eurasian|Filipino|Hispanic/Latino|Asian|Chinese|Japanese|Korean|Polynesian|Other|Mixed|', 0, 1, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");
 					   $insert = $wpdb->query("INSERT INTO " . table_agency_customfields .$table_columns. " VALUES (2, 'Skin Tone', 	3, '|Fair|Medium|Dark|', 0, 2, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");
 					$insert = $wpdb->query("INSERT INTO " . table_agency_customfields .$table_columns. " VALUES (3, 'Hair Color', 	3, '|Blonde|Black|Brown|Dark Brown|Light Brown|Red|Strawberry|Auburn|', 0, 3, 0, 1, 1,0, 0,0, 1, 0, 0, 0, 0)");
@@ -2833,29 +2850,29 @@ echo "<div id=\"custom-fields\">";
 			//junjavier : edit end
 					 $results = $wpdb->query($insert);
 				
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (1 , 1 , 'Ethnicity', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (2 , 2 , 'Skin Tone', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (3 , 3 , 'Hair Color', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (4 , 4 , 'Eye Color', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (5 , 5 , 'Height', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (6 , 6 , 'Weight', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (7 , 7 , 'Bust', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (8 , 8 , 'Bra Cup Size', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (9 , 9 , 'Chest', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (10 , 10 , 'Waist', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (11 , 11 , 'Hips', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (12 , 12 , 'Inseam', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (13 , 13 , 'Shirt Size', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (14 , 14 , 'Suit Size', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (15 , 15 , 'Dress Size', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (16 , 16 , 'Shoe Size', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (17 , 17 , 'Expertise', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (18 , 18 , 'Experience', 'Model,Talent')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (1 , 1 , 'Ethnicity', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (2 , 2 , 'Skin Tone', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (3 , 3 , 'Hair Color', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (4 , 4 , 'Eye Color', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (5 , 5 , 'Height', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (6 , 6 , 'Weight', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (7 , 7 , 'Bust', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (8 , 8 , 'Bra Cup Size', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (9 , 9 , 'Chest', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (10 , 10 , 'Waist', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (11 , 11 , 'Hips', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (12 , 12 , 'Inseam', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (13 , 13 , 'Shirt Size', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (14 , 14 , 'Suit Size', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (15 , 15 , 'Dress Size', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (16 , 16 , 'Shoe Size', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (17 , 17 , 'Expertise', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (18 , 18 , 'Experience', 'Model,Talent','1,2')");
 					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (19 , 19 , 'Language', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (20 , 20 , 'Union', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (21 , 21 , 'Best Way to Contact You', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (22 , 22 , 'Contract Date', 'Model,Talent')");
-					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (23 , 23 , 'Visa Number', 'Model,Talent')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (20 , 20 , 'Union', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (21 , 21 , 'Best Way to Contact You', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (22 , 22 , 'Contract Date', 'Model,Talent','1,2')");
+					 $insert_types = $wpdb->query("INSERT INTO ".table_agency_customfields_types. " VALUES (23 , 23 , 'Visa Number', 'Model,Talent','1,2')");
 					$results_types = $wpdb->query($insert_types);
 
 					// jenner - to fixed junjavier error due num of colunms.. hahaha

@@ -1215,7 +1215,12 @@ elseif ($ConfigID == 11) {
 		echo " </tr>\n";
 
 
-
+		echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Allow User to Upload Photos', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td>\n";
+		echo "     <input type=\"checkbox\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_allow_upload_photo]\" value=\"1\" ".checked((int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_allow_upload_photo'], 1,false)."/>\n";
+		echo "   </td>\n";
+		echo " </tr>\n";
 
 
 
@@ -1900,6 +1905,7 @@ elseif ($ConfigID == 3) {
 // *************************************************************************************************** //
 // Setup Profile Categories
 	/** Identify Labels **/
+
 	define("LabelPlural", __("Profile Types", RBAGENCY_TEXTDOMAIN));
 	define("LabelSingular", __("Profile Type", RBAGENCY_TEXTDOMAIN));
 

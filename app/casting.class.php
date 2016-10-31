@@ -513,11 +513,11 @@ class RBAgency_Casting {
 			//check if shortcode has thumbnail
 			$shortcodeIsLink = strpos($SearchMuxMessage,"[link-place-holder]");
 			if($shortcodeIsLink !== false){
-				$SearchMuxMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>",$SearchMuxMessage);
+				$SearchMuxMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."\r\n\r\n",$SearchMuxMessage);
 			}
 			$shortcodeIsThumbnail = strpos($SearchMuxMessage,"[thumbnail-place-holder]");
 			if($shortcodeIsThumbnail !== false){
-				$SearchMuxMessage = str_replace("[thumbnail-place-holder]",$profileimage ."<br/><br/>",$SearchMuxMessage);
+				$SearchMuxMessage = str_replace("[thumbnail-place-holder]",$profileimage ."\r\n\r\n",$SearchMuxMessage);
 			}
 			$MassEmailMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$MassEmailMessage);
 			$MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
@@ -678,7 +678,7 @@ class RBAgency_Casting {
 						$headers[] = 'Bcc: '.$bcc;
 				}
 			}
-			$SearchMuxMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."<br/><br/>".$profileimage ."<br/><br/>",$SearchMuxMessage);
+			$SearchMuxMessage = str_replace("[link-place-holder]",site_url()."/client-view/".$SearchMuxHash."\r\n\r\n".$profileimage ."\r\n\r\n",$SearchMuxMessage);
 			$SearchMuxMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$SearchMuxMessage);
 			$SearchMuxMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$SearchMuxMessage);
 			$SearchMuxMessage = $SearchMuxMessage;

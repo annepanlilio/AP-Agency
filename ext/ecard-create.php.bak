@@ -488,10 +488,11 @@ function request_datatype_bygender_memberregister(){
 
 		echo "<div>
 				<label>
-					<input type=\"checkbox\" name=\"ProfileType[]\" value=\"".$result['DataTypeID']."\" id=".$result['DataTypeID']." myparent=".$result['DataTypeParentID']." profile-type-title=\"".$result['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" checked disabled/>
+					<input type=\"checkbox\" name=\"ProfileTypeDisabled[]\" value=\"".$result['DataTypeID']."\" id=".$result['DataTypeID']." myparent=".$result['DataTypeParentID']." profile-type-title=\"".$result['DataTypeTitle']."\" class=\"DataTypeIDClassCheckbox\" checked disabled/>
 					<span> " . $result['DataTypeTitle'] . "</span>
 				</label>
 			</div>";
+		echo "<input type=\"hidden\" name=\"ProfileType[]\" value=\"".$result['DataTypeID']."\" id=".$result['DataTypeID']." myparent=".$result['DataTypeParentID']." profile-type-title=\"".$result['DataTypeTitle']."\" />";
 		do_action('rb_get_profile_type_childs_checkbox_ajax_register_display',$result["DataTypeID"],$genderID);
 		exit;
 

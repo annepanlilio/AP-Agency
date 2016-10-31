@@ -385,6 +385,9 @@ class RBAgency_Casting {
 			$rb_agency_value_agencyemail = $rb_agency_options_arr['rb_agency_option_agencyemail'];
 			$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 
+			$rb_agency_email = $rb_agency_options_arr["rb_agency_option_agencyemail"];
+			$rb_agency_email_can_received = $rb_agency_options_arr["rb_agency_option_agency_email_receive_notification"] > 0 ? 1 : 0;
+
 			$MassEmailSubject = $_POST["MassEmailSubject"];
 			$MassEmailMessage = $_POST["MassEmailMessage"]; //preg_replace('/[^A-Za-z0-9 !@#$%^&*().\[\]\\\- \t\n\r\0\x0B]/u','',$_POST["MassEmailMessage"]);
 			$MassEmailMessage = preg_replace('/\n(\s*\n)+/', '</p><p>', $MassEmailMessage);
@@ -519,6 +522,9 @@ class RBAgency_Casting {
 			$MassEmailMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$MassEmailMessage);
 			$MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
 			$isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, stripcslashes(make_clickable($MassEmailMessage)), $headers);
+			if($rb_agency_email_can_received > 0){
+				wp_mail($rb_agency_email, $MassEmailSubject, stripcslashes(make_clickable($MassEmailMessage)), $headers);
+			}
 			$url = admin_url('admin.php?page=rb_agency_searchsaved&m=1');
 			if($isSent){ ?>
 			<script type="text/javascript">
@@ -540,6 +546,9 @@ class RBAgency_Casting {
 			$rb_agency_value_agencyname = isset($rb_agency_options_arr['rb_agency_option_agencyname'])?$rb_agency_options_arr['rb_agency_option_agencyname']:"";
 			$rb_agency_option_agencyemail = isset($rb_agency_options_arr['rb_agency_option_agencyemail'])?$rb_agency_options_arr['rb_agency_option_agencyemail']:"";
 			$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
+
+			$rb_agency_email = $rb_agency_options_arr["rb_agency_option_agencyemail"];
+			$rb_agency_email_can_received = $rb_agency_options_arr["rb_agency_option_agency_email_receive_notification"] > 0 ? 1 : 0;
 
 			$rb_agency_option_castingcart_email_age = isset($rb_agency_options_arr['rb_agency_option_castingcart_email_age']) ?$rb_agency_options_arr['rb_agency_option_castingcart_email_age']:0;
 			$detail_year_op = isset($rb_agency_options_arr['rb_agency_option_profilelist_expanddetails_year'])?true:false;
@@ -674,6 +683,9 @@ class RBAgency_Casting {
 			$SearchMuxMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$SearchMuxMessage);
 			$SearchMuxMessage = $SearchMuxMessage;
 			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject,  $SearchMuxMessage, $headers);
+			if($rb_agency_email_can_received > 0){
+				wp_mail($rb_agency_email, $SearchMuxSubject, $SearchMuxMessage, $headers);
+			}
 
 			//var_dump(array($headers,$SearchMuxToEmail,$SearchMuxSubject, $SearchMuxSubject, $SearchMuxHash));
 			//if($isSent){
@@ -789,6 +801,8 @@ class RBAgency_Casting {
 
 			$rb_agency_options_arr = get_option('rb_agency_options');
 			$agency_name = $rb_agency_options_arr['rb_agency_option_agencyname'];
+			$rb_agency_email = $rb_agency_options_arr["rb_agency_option_agencyemail"];
+			$rb_agency_email_can_received = $rb_agency_options_arr["rb_agency_option_agency_email_receive_notification"] > 0 ? 1 : 0;
 			$headers[]  = 'MIME-Version: 1.0';
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1';
 
@@ -804,7 +818,9 @@ class RBAgency_Casting {
 
 			$isSent = wp_mail(get_bloginfo('admin_email'), get_bloginfo("name").": Job Availability", $MassEmailMessage, $headers);
 
-
+			if($rb_agency_email_can_received > 0){
+				wp_mail($rb_agency_email,get_bloginfo("name").": Job Availability", $MassEmailMessage, $headers);
+			}
 
 
 	}
