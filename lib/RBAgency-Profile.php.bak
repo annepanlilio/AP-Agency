@@ -413,7 +413,8 @@ class RBAgency_Profile {
 												data: {
 													action: "rb_get_customfields_search_ajax",
 													'profile_types': $(".DataTypeIDClassCheckbox:checked").val(),
-													'gender': jQuery(this).val()
+													'gender': jQuery(this).val(),
+													'search_type': "<?php echo $atts_arr['att_type']; ?>"
 												},
 												success: function (results) {
 													jQuery(".customfields_search_form").html(results);
@@ -680,7 +681,7 @@ class RBAgency_Profile {
 						//here, display custom fields for searching
 				echo "<div class=\"customfields_search_form\" ></div>";
 
-				if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+				if( $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
 
 					if($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic'){
 
@@ -688,14 +689,15 @@ class RBAgency_Profile {
 						<script type="text/javascript">
 						jQuery(document).ready(function(){
 							var ProfileTypeIDArr = []; 
-						 	ProfileTypeIDArr.push(jQuery(".DataTypeIDClassCheckbox:checked").attr("profile_title"));
+						 	ProfileTypeIDArr.push(jQuery(".DataTypeIDClassCheckbox:checked").val());
 						 	
 						 	jQuery.ajax({
 								type: "POST",
 								url: "<?php echo admin_url('admin-ajax.php') ?>",
 								data: {
 									action: "rb_get_customfields_search_ajax",
-									'profile_types': jQuery(".DataTypeIDClassCheckbox:checked").val()
+									'profile_types': jQuery(".DataTypeIDClassCheckbox:checked").val(),
+									'search_type': "<?php echo $atts_arr['att_type']; ?>"
 								},
 								success: function (results) {
 									console.log(results);
@@ -711,10 +713,10 @@ class RBAgency_Profile {
 						<script type="text/javascript">
 						jQuery(document).ready(function(){
 							var ProfileTypeIDArr = []; 
-						 	ProfileTypeIDArr.push(jQuery(".DataTypeIDClassCheckbox:checked").attr("profile_title"));
+						 	ProfileTypeIDArr.push(jQuery(".DataTypeIDClassCheckbox:checked").val());
 						 	jQuery(".DataTypeIDClassCheckbox").on('click',function(){
 								var profileTypeIDs = [];
-								var checkedProfileType = jQuery(this).attr('profile_title');
+								var checkedProfileType = jQuery(this).val();
 								var checked = jQuery(this).is(':checked');
 								ProfileTypeIDArr.push(checkedProfileType);
 								
@@ -731,7 +733,8 @@ class RBAgency_Profile {
 									url: "<?php echo admin_url('admin-ajax.php') ?>",
 									data: {
 										action: "rb_get_customfields_search_ajax",
-										'profile_types': ProfileTypeIDArr
+										'profile_types': ProfileTypeIDArr,
+										'search_type': "<?php echo $atts_arr['att_type']; ?>"
 									},
 									success: function (results) {
 										console.log(results);
@@ -746,6 +749,70 @@ class RBAgency_Profile {
 				?>
 				
 				<?php
+				}else{
+					$searchType =  strpos($_SERVER['REQUEST_URI'], 'basic') >-1 ? 'basic' : 'advanced';
+					?>
+					<script type="text/javascript">
+						jQuery(document).ready(function($){
+							var ProfileTypeIDArr = []; 
+						 	ProfileTypeIDArr.push(jQuery(".DataTypeIDClassCheckbox:checked").val());
+						 	jQuery(".DataTypeIDClassCheckbox").on('click',function(){
+								var profileTypeIDs = [];
+								var checkedProfileType = jQuery(this).val();
+								var checked = jQuery(this).is(':checked');
+								ProfileTypeIDArr.push(checkedProfileType);
+								
+								if(checked!==true){
+									ProfileTypeIDArr = jQuery.grep(ProfileTypeIDArr, function(value) {
+											return value != checkedProfileType;
+									});
+								}else{
+									jQuery(this).attr('checked','checked');
+								}
+
+								jQuery.ajax({
+									type: "POST",
+									url: "<?php echo admin_url('admin-ajax.php') ?>",
+									data: {
+										action: "rb_get_customfields_search_ajax",
+										'profile_types': ProfileTypeIDArr,
+										'search_type': "<?php echo $searchType; ?>"
+									},
+									success: function (results) {
+										//console.log(results);
+										jQuery(".customfields-onload").html(results);
+									}
+								});	
+							});
+
+							jQuery("#gender").on("change",function(){								
+
+
+										jQuery.ajax({
+												type: "POST",
+												url: "<?php echo admin_url('admin-ajax.php') ?>",
+												data: {
+													action: "rb_get_customfields_search_ajax",
+													'profile_types': ProfileTypeIDArr,
+													'gender': jQuery(this).val(),
+													'search_type': "<?php echo $searchType; ?>"
+												},
+												success: function (results) {
+													jQuery(".customfields-onload").html(results);
+													//console.log(results);
+													console.log(ProfileTypeIDArr);
+												}
+											});
+										
+											
+										
+										
+									});
+						});
+						</script>
+
+					<?php
+
 				}
 			/*
 			 * Custom Fields
@@ -776,7 +843,7 @@ class RBAgency_Profile {
 					
 				}
 				$field_results = $wpdb->get_results($field_sql,ARRAY_A);
-			if($atts_arr['att_mode'] == 'ajax' && $atts_arr['att_type'] == 'advanced'){
+			if( ($atts_arr['att_mode'] == 'ajax' && $atts_arr['att_type'] == 'advanced') || $atts_arr['att_type'] == ""){
 				echo "<div class=\"customfields-onload\" >";
 				foreach($field_results  as $data){
 					// Set Variables
