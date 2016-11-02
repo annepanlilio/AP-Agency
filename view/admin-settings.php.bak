@@ -2089,6 +2089,7 @@ elseif ($ConfigID == 3) {
 			echo "<p>". __("Make changes in the form below to edit a ", RBAGENCY_TEXTDOMAIN) ." ". LabelSingular .". <strong>". __("Required fields are marked", RBAGENCY_TEXTDOMAIN) ." *</strong></p>\n";
   }
 	echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"". admin_url("admin.php?page=". $_GET['page']."&action=editRecord&DataTypeID=".$_GET['DataTypeID']."&ConfigID=4") ."\">\n";
+
 	echo "<table class=\"form-table\">\n";
 	echo "<tbody>\n";
 	echo "    <tr valign=\"top\">\n";

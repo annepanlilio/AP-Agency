@@ -4646,8 +4646,10 @@ function get_social_media_links($ProfileID = ""){
 
 		if($order == 1){
 			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaPrimary DESC, ProfileMediaID DESC ". $sql_count, $profileID, $ProfileMediaType);
-		} else {
+		} elseif($order == 0) {
 			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY convert(`ProfileMediaOrder`, decimal)  ASC ". $sql_count, $profileID, $ProfileMediaType);
+		}else{
+			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaPrimary DESC, ProfileMediaID ASC ". $sql_count, $profileID, $ProfileMediaType);
 		}
 
 		return $queryImg ;

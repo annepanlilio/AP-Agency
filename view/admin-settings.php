@@ -920,6 +920,7 @@ elseif ($ConfigID == 1) {
 		echo "     <select name=\"rb_agency_options[rb_agency_option_galleryorder]\">\n";
 		echo "       <option value=\"1\" ". selected(isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0, 1,false) ."> ". __("Show most recently uploaded first", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "       <option value=\"0\" ". selected(isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0, 0,false) ."> ". __("Show chronological order", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+		echo "       <option value=\"2\" ". selected(isset($rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0, 2,false) ."> ". __("Show first upload first", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
