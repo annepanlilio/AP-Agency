@@ -975,7 +975,7 @@ elseif ($ConfigID == 8) {
 							} elseif ($rb_agency_option_profilenaming == 1) {
 								$ProfileGalleryFixed = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
 							} elseif ($rb_agency_option_profilenaming == 2) {
-								$ProfileGalleryFixed = $ProfileContactDisplay;
+								$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
 							} elseif ($rb_agency_option_profilenaming == 3) {
 								$ProfileGalleryFixed = "ID-". $ProfileID;
 							} elseif ($rb_agency_option_profilenaming == 4) {
@@ -1113,7 +1113,7 @@ elseif ($ConfigID == 8) {
 							} elseif ($rb_agency_option_profilenaming == 1) {
 								$ProfileGalleryFixed = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
 							} elseif ($rb_agency_option_profilenaming == 2) {
-								$ProfileGalleryFixed = $ProfileContactDisplay;
+								$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
 							} elseif ($rb_agency_option_profilenaming == 3) {
 								$ProfileGalleryFixed = "ID-". $ProfileID;
 							} elseif ($rb_agency_option_profilenaming == 4) {

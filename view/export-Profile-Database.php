@@ -48,10 +48,17 @@ global $wpdb;
            if(isset($_POST["export-profile"]) && $_POST["export-profile"] == "template"){
         		$limit_template = "LIMIT 1";
             }elseif(isset($_POST["export-profile"]) && $_POST["export-profile"] != "template" && !empty($_POST["export-profile"]) ){
-            	$limit_values = explode("-",$_POST["export-profile"]);
+            	if(strpos('-', $_POST["export-profile"])>-1){
+            		$limit_values = explode("-",$_POST["export-profile"]);
+            		$limit_offset = $limit_values[0];
+        			$limit_template = " LIMIT ".$limit_offset.", 100";
+            	}else{
+            		$limit_offset = $_POST["export-profile"];
+        			$limit_template = " LIMIT ".$limit_offset;
+            	}
+            	
             	// $limit_offset = ( intval($limit_values[0]) < 100) ? $limit_values[0] : $limit_values[0];
-            	$limit_offset = $limit_values[0];
-        		$limit_template = " LIMIT ".$limit_offset.", 100";
+            	
             }
             
             $objPHPExcel->getActiveSheet()->fromArray(array($headings),NULL,'A'.$rowNumber);
