@@ -449,35 +449,42 @@ class RBAgency_Casting {
 							$results = $wpdb->get_results($query,ARRAY_A);
 							$count = count($results);
 							$arr_thumbnail = (array)unserialize($cartProfileMedia);
+							$profile_arr_handler = array();
 							foreach($results as $data2) {
-								$ProfileContactNameFirst = $data2["ProfileContactNameFirst"];
-								$ProfileContactNameLast = $data2["ProfileContactNameLast"];
-								$ProfileID = $data2["ProfileID"];
-								if ($rb_agency_option_profilenaming == 0) {
-									$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
-								} elseif ($rb_agency_option_profilenaming == 1) {
-									$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
-								} elseif ($rb_agency_option_profilenaming == 2) {
-									$ProfileContactDisplay = $data2["ProfileContactDisplay"];
-								} elseif ($rb_agency_option_profilenaming == 3) {
-									$ProfileContactDisplay = "ID-". $ProfileID;
-								} elseif ($rb_agency_option_profilenaming == 4) {
-									$ProfileContactDisplay = $ProfileContactNameFirst;
-								} elseif ($rb_agency_option_profilenaming == 5) {
-									$ProfileContactDisplay = $ProfileContactNameLast;
+
+								if(!in_array($data2["ProfileID"], $profile_arr_handler)){
+									$ProfileContactNameFirst = $data2["ProfileContactNameFirst"];
+									$ProfileContactNameLast = $data2["ProfileContactNameLast"];
+									$ProfileID = $data2["ProfileID"];
+									if ($rb_agency_option_profilenaming == 0) {
+										$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
+									} elseif ($rb_agency_option_profilenaming == 1) {
+										$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+									} elseif ($rb_agency_option_profilenaming == 2) {
+										$ProfileContactDisplay = $data2["ProfileContactDisplay"];
+									} elseif ($rb_agency_option_profilenaming == 3) {
+										$ProfileContactDisplay = "ID-". $ProfileID;
+									} elseif ($rb_agency_option_profilenaming == 4) {
+										$ProfileContactDisplay = $ProfileContactNameFirst;
+									} elseif ($rb_agency_option_profilenaming == 5) {
+										$ProfileContactDisplay = $ProfileContactNameLast;
+									}
+									$profileimage .= "<div style=\"color:#020202;float: left; max-width: 100px; height: 175px; margin: 2px; overflow:hidden;\">";
+									$profileimage .= "<div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
+									$profileimage .= "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
+									if(isset($arr_thumbnail[$data2["ProfileID"]])){
+										$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
+										$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"". RBAGENCY_UPLOADDIR . $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL."\" /></div>\n";
+									} else {
+										$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"". RBAGENCY_UPLOADDIR . $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL']."\" /></a>";
+									}
+									$profileimage .=  $ProfileContactDisplay; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
+									$profileimage .= "</div>\n";
+									$profileimage .= "</div>\n";
+
+									array_push($profile_arr_handler, $data2["ProfileID"]);
 								}
-								$profileimage .= "<div style=\"color:#020202;float: left; max-width: 100px; height: 175px; margin: 2px; overflow:hidden;\">";
-								$profileimage .= "<div style=\"margin:3px;max-width:250px; max-height:300px; overflow:hidden;\">";
-								$profileimage .= "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
-								if(isset($arr_thumbnail[$data2["ProfileID"]])){
-									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
-									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \"  \" src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."&a=t&w=100&h=130\" /></div>\n";
-								} else {
-									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."&a=t&w=100&h=130\" /></a>";
-								}
-								$profileimage .=  $ProfileContactDisplay; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
-								$profileimage .= "</div>\n";
-								$profileimage .= "</div>\n";
+								
 							}
 							$profileimage .="</div></p>";
 		}
@@ -640,10 +647,10 @@ class RBAgency_Casting {
 								if(isset($arr_thumbnail[$data2["ProfileID"]])){
 									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
 									$profileimage .= "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
-									$profileimage .= "<img src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."&w=150&h=200&a=t\"/></a>";
+									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL."\"/></a>";
 								} else {
 									$profileimage .= "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
-									$profileimage .= "<img src=\"". get_bloginfo("siteurl")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'] ."&w=150&h=200&a=t\"/></a>";
+									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL']."\"/></a>";
 								}
 								$profileimage .= "</div>\n";
 								$profileimage .= "<span>". $ProfileContactDisplay ."</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);

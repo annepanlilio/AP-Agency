@@ -528,9 +528,9 @@ class RBAgency_Casting {
 			}
 			$MassEmailMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$MassEmailMessage);
 			$MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
-			$isSent = wp_mail($MassEmailRecipient, $MassEmailSubject, stripcslashes(make_clickable($MassEmailMessage)), $headers);
+			$isSent = wp_mail($MassEmailRecipient, utf8_decode($MassEmailSubject), stripcslashes(make_clickable($MassEmailMessage)), $headers);
 			if($rb_agency_email_can_received > 0){
-				wp_mail($rb_agency_email, $MassEmailSubject, stripcslashes(make_clickable($MassEmailMessage)), $headers);
+				wp_mail($rb_agency_email, utf8_decode($MassEmailSubject), stripcslashes(make_clickable($MassEmailMessage)), $headers);
 			}
 			$url = admin_url('admin.php?page=rb_agency_searchsaved&m=1');
 			if($isSent){ ?>
@@ -689,9 +689,9 @@ class RBAgency_Casting {
 			$SearchMuxMessage	= str_ireplace("[site-url]",get_bloginfo("url"),$SearchMuxMessage);
 			$SearchMuxMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$SearchMuxMessage);
 			$SearchMuxMessage = $SearchMuxMessage;
-			$isSent = wp_mail($SearchMuxToEmail, $SearchMuxSubject,  $SearchMuxMessage, $headers);
+			$isSent = wp_mail($SearchMuxToEmail, utf8_decode($SearchMuxSubject),  $SearchMuxMessage, $headers);
 			if($rb_agency_email_can_received > 0){
-				wp_mail($rb_agency_email, $SearchMuxSubject, $SearchMuxMessage, $headers);
+				wp_mail($rb_agency_email, utf8_decode($SearchMuxSubject), $SearchMuxMessage, $headers);
 			}
 
 			//var_dump(array($headers,$SearchMuxToEmail,$SearchMuxSubject, $SearchMuxSubject, $SearchMuxHash));
