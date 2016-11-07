@@ -55,6 +55,13 @@
 			exit;
 		}
 
+		$sql = "SELECT ProfileResume FROM ".$wpdb->prefix."agency_profile LIMIT 1";
+		$r = $wpdb->get_results($sql);
+		if(count($r) == 0){
+			//create column
+			$queryAlter = "ALTER TABLE " . $wpdb->prefix ."agency_profile ADD ProfileResume TEXT default NULL";
+			$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+		}	
 	/*
 	 * Get Preferences
 	 */
@@ -190,6 +197,8 @@
 			$ProfileStatHits			=stripslashes($rbdata['ProfileStatHits']);
 			$ProfileDateViewLast		=stripslashes($rbdata['ProfileDateViewLast']);
 
+			$ProfileResume		=stripslashes($rbdata['ProfileResume']);
+			
 			// Update Stats
 			$updateStats = $wpdb->query("UPDATE ". table_agency_profile ." SET ProfileStatHits = ProfileStatHits + 1, ProfileDateViewLast = NOW() WHERE ProfileID = '". $ProfileID ."' LIMIT 1");
 		}

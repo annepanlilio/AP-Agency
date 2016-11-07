@@ -25,6 +25,14 @@ define("LabelSingular", "Profiles");
 		/* echo "<h2>Table Altered for Private profile option. Please refresh the page.</h2>";
 		exit; */
 	}
+
+	$sql = "SELECT ProfileResume FROM ".$wpdb->prefix."agency_profile LIMIT 1";
+	$r = $wpdb->get_results($sql);
+	if(count($r) == 0){
+		//create column
+			$queryAlter = "ALTER TABLE " . $wpdb->prefix ."agency_profile ADD ProfileResume TEXT default NULL";
+			$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+	}
 /*
  * Pull Options
  */
@@ -133,6 +141,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 
 	$isPrivate = isset($_POST['isPrivate'])?$_POST['isPrivate']:"";
 	$CustomOrder = isset($_POST['CustomOrder']) ? $_POST['CustomOrder'] : '';
+
+	$ProfileResume = isset($_POST['profile_resume']) ? $_POST['profile_resume'] : "";
 
 	// Get Primary Image
 	$ProfileMediaPrimaryID = isset($_POST['ProfileMediaPrimary'])?$_POST['ProfileMediaPrimary']:"";
@@ -315,7 +325,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							ProfileIsBooking,
 							ProfileStatHits,
 							ProfileDateViewLast,
-							CustomOrder)" .
+							CustomOrder,ProfileResume)" .
 						"VALUES (
 							'" . esc_attr($ProfileGallery) . "',
 							'" . esc_attr($ProfileContactDisplay) . "',
@@ -348,7 +358,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							'" . esc_attr($ProfileIsBooking) . "',
 							'" . esc_attr($ProfileStatHits) . "',
 							'" . esc_attr($ProfileDateViewLast) . "',
-							'" . esc_attr($CustomOrder) . "'
+							'" . esc_attr($CustomOrder) . "',
+							'" . esc_attr($ProfileResume) . "'
 						)";
 						
 					$results = $wpdb->query($insert);
@@ -396,6 +407,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 					add_user_meta( $ProfileID, 'ShowProfileContactLinkFacebook',$ShowProfileContactLinkFacebook);
 					add_user_meta( $ProfileID, 'ShowProfileContactLinkYouTube',$ShowProfileContactLinkYouTube);
 					add_user_meta( $ProfileID, 'ShowProfileContactLinkFlickr',$ShowProfileContactLinkFlickr);
+
+					
 
 					// Add Custom Field Values stored in Mux
 					foreach ($_POST as $key => $value) {
@@ -543,7 +556,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							ProfileIsFeatured='" . esc_attr($ProfileIsFeatured) . "',
 							ProfileIsPromoted='" . esc_attr($ProfileIsPromoted) . "',
 							ProfileIsBooking='" . esc_attr($ProfileIsBooking) . "',
-							CustomOrder='" . esc_attr($CustomOrder) . "'
+							CustomOrder='" . esc_attr($CustomOrder) . "',
+							ProfileResume = '".$ProfileResume."'
 							WHERE ProfileID=$ProfileID";
 
 						$results = $wpdb->query($update);
@@ -591,6 +605,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 
 						}
 
+						
 
 
 					//display on profile view
@@ -1197,6 +1212,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$isPrivate = stripslashes($data['isPrivate']);
 			$CustomOrder = stripslashes($data['CustomOrder']);
 			$ProfileRating = stripslashes($data['ProfileRating']);
+			$ProfileResume = stripslashes($data['ProfileResume']);
 		}
 
 		$caption_header = __("Edit", RBAGENCY_TEXTDOMAIN) . " " . LabelSingular;
@@ -1666,6 +1682,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			});
 			</script>
 
+			
 			<!-- Row 1: Column Left End -->
 
 			<!-- Row 1: Column Right Start -->
@@ -2413,7 +2430,25 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			</div>
 
 			<!-- Row 1: Column Right End -->
-
+			<div id="dashboard-widgets" class="metabox-holder columns-1">
+			<div id="postbox-container-1" class="postbox-container">
+				<div id="side-sortables" class="meta-box-sortables ui-sortable">
+			<div id="resume_edito" class="postbox ">
+						<h3 class="hndle"><span><?php echo __("Resume Editor", RBAGENCY_TEXTDOMAIN); ?></span></h3>
+						<div class="inside">
+							<div class="main">
+								<?php
+								$profile_resume = $ProfileResume;
+								$content = !empty($profile_resume) ? $profile_resume : "";
+								$editor_id = 'profile_resume'; 
+								wp_editor( $content, $editor_id,array("wpautop"=>false,"tinymce"=>true) ); 
+								?>
+							</div>
+						</div>
+					</div>
+					</div>
+					</div>
+					</div>
 
 		</div>
 		<?php
@@ -3367,10 +3402,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 
 		<div id="dashboard-widgets" class="metabox-holder columns-2">
 
+		
 			<!-- Row 4: Column Left Start -->
 
 			<div id="postbox-container-5" class="postbox-container">
 				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
+
+					
 
 					<div id="dashboard_upload_images" class="postbox ">
 						<div class="handlediv" title="Click to toggle"><br></div>

@@ -1,0 +1,229 @@
+#wpbody-content{ width:98% !important;}
+/* menu & icons */
+#rb-overview-icon { background:transparent url(../img/rb-icon-gray-32.png) no-repeat scroll; }
+
+.checked-profile {  height:32px; width: 25%; margin-right: 50px !important; float: right !important; background:transparent url(../img/checked.png) no-repeat scroll; background-size: 25px 25px; }
+.pending-profile {  height:32px; width: 25%; margin-right: 50px !important; float: right !important; background:transparent url(../img/pending.png) no-repeat scroll; background-size: 25px 25px; }
+.loading-profile {  height:32px; width: 25%; margin-right: 50px !important; float: right !important; background:transparent url(../img/loader.gif) no-repeat scroll; }
+.error-profile{  height:32px; width: 25%; margin-right: 50px !important; float: right !important; background:transparent url(../img/error.png) no-repeat scroll; }
+
+#toplevel_page_rb_agency_menu div.wp-menu-image { background:transparent url(../img/rb-icon-gray.png) no-repeat scroll; }
+#toplevel_page_rb_agency_menu:hover div.wp-menu-image { background:transparent url(../img/rb-icon-color.png) no-repeat scroll; }
+#toplevel_page_rb_agency_menu.wp-has-current-submenu div.wp-menu-image,
+#toplevel_page_rb_agency_menu.current div.wp-menu-image { background: transparent url(../img/rb-icon-white.png) no-repeat scroll; }
+
+/*Remove icon*/
+#profile-manage-media .rotateimage {background: transparent url(../img/rotate.png); width:16px; height:16px; display:block; float:left;  }
+
+.boxblock-holder { }
+.boxblock-container {
+	box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+	float: left;
+	padding: 10px;
+	width: 100%;
+	}
+
+hr { border: none; }
+
+/* /wp-admin/admin.php?page=rb_agency_profiles : Filter Profiles */
+#filter-profiles span { float: left; width: 25%; min-height: 50px; }
+#filter-profiles span label { display: inline-block; width: 100%; }
+#filter-profiles span.submit { width: auto; margin: 0!important; float: left!important; }
+#filter-profiles span input[type="text"],
+#filter-profiles span select { width: 95%; }
+#filter-profiles span input[type="submit"] { margin-top: 17px; }
+.postbox .inside { overflow: hidden; }
+
+.boxblock { /*background-color:#FFFFFF;*/ border-color:#DFDFDF; -moz-border-radius:6px 6px 6px 6px; border-style:solid; border-width:1px; line-height:1; margin-bottom:20px; min-width:255px; position:relative; width:99.5%;}
+.boxblock .inner { padding: 10px; }
+.boxblock h3 { font-size: 1.17em!important; line-height:1; margin: 0px; padding:7px 9px; background:url("../images/gray-grad.png") repeat-x scroll left top #DFDFDF; text-shadow:0 1px 0 #FFFFFF; -moz-border-radius:6px 6px 0 0; }
+.boxblock p.tight { margin: 0px; padding: 0px; }
+.boxblock p.sub { margin: 0px; padding: 0px; color:#777777; font-family:Georgia,"Times New Roman","Bitstream Charter",Times,serif; font-size:13px; font-style:italic; }
+.boxblock p.submit { padding: 10px; }
+.boxblock table { width: 100%; background:none repeat scroll 0 0 #F9F9F9; border-bottom:1px solid #ECECEC; border-top:1px solid #ECECEC; margin: 0px; padding: 0px; }
+.boxblock thead tr {  }
+.boxblock thead tr th { font-family: sans-serif; font-size:12px; font-weight:bold; line-height:1; margin: 0px; padding:7px 9px; background:url("../images/gray-grad.png") repeat-x scroll left top #DFDFDF; text-shadow:0 1px 0 #FFFFFF; color:#333333; -moz-border-radius:6px 6px 0 0;  }
+.boxblock tbody tr { border-bottom: 1px solid #000; }
+.boxblock tbody tr td { font-size: 14px; font-family: "Lucida Grande",Verdana,Arial,"Bitstream Vera Sans",sans-serif; color: ##21759B; padding: 3px; }
+
+.boxlinkgroup { border-top: 2px solid #454545; clear: both; }
+.boxlink { display: inline-block;
+vertical-align: top; width: 300px; margin: 10px; min-height: 150px; }
+
+.boxblock li{ float:left; width:46%; overflow:hidden; margin-bottom:20px; padding:1%; border:2px solid #21759B; background:#EDF9FE; -moz-border-radius:7px; -webkit-border-radius:7px; }
+.boxblock li.even{ float:right;}
+.boxblock li.odd{ clear:both;}
+.boxblock.icon{ float:left; width:60px; }
+.boxblock .content{ float:left;}
+.boxblock .title{ display:block; margin: 15px 0 3px 0; font-weight:bold; font-style:italic; font-size:13px; font-family:Georgia, "Times New Roman", Times, serif;}
+.boxblock a.title{ text-decoration:none;}
+.boxblock .description{ font-style:italic; font-size:12px;}
+.boxblock .description p{ padding:0; margin:0;}
+
+input.stubby { width: 80px; }
+
+
+.boxblock table .textarea-field { display:none; }
+.boxblock table input { min-width: 218px; }
+.wp-admin select { min-width: 136px; }
+.boxblock table select { min-width: 218px; }
+.boxblock table fieldset label {  line-height: 20px; }
+.boxblock table fieldset { width: 218px; }
+.boxblock table fieldset div { float: left; width: 100px }
+.boxblock table fieldset div:first-child { margin-right: 18px; }
+.boxblock table fieldset input[type="text"],
+.boxblock table fieldset select { width: 100%; min-width: 50px; }
+.boxblock table fieldset input[type="radio"],
+.boxblock table fieldset input[type="checkbox"] { width: auto; min-width: auto; }
+.boxblock table .rbtextarea textarea { width: 218px; height: 100px; }
+.boxblock #submitbox { overflow: hidden; margin-top: 15px; }
+
+/* Profile Page */
+.profileimage { position: relative; width: 100px; float: left; padding: 5px; margin: 0px 10px 10px 0; height: 170px; overflow: hidden; }
+.profileimage .primary { font-size: 12px; }
+#profile-manage-media .primary { z-index: 5; position: absolute; top: 135px; padding: 2px; text-align: center; width: 100px; color: #fff; }
+#profile-manage-media .delete { z-index: 6; position: absolute; top: 3px; padding: 2px; background: #000; border: solid #000 3px; color: #fff; -moz-border-radius-bottomright: 5px; border-bottom-right-radius: 3px; -webkit-border-bottom-right-radius: 3px;}
+#profile-manage-media .delete a { color: #fff; text-decoration: none; }
+#profile-manage-media .delete a span { float: left; display: none; }
+#profile-manage-media .delete a:hover { border: none; }
+#profile-manage-media .delete a:hover span { background: #000; display: inline; }
+
+
+
+#popup_bg{
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0,0,0,.5);
+	z-index: 1000;
+	display: none;
+}
+
+#popup{
+	width: 470px;
+	height: 290px;
+	background: #fff;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	margin-left: -250px;
+	margin-top: -160px;
+	z-index: 1001;
+	padding: 15px;
+	padding-top: 6px;
+	border-radius:15px;
+	-webkit-border-radius:15px;
+	-moz-border-radius:15px;
+	box-shadow:0px 0px 5px rgba(0,0,0,.5);
+	-webkit-box-shadow:0px 0px 5px rgba(0,0,0,.5);
+	-moz-box-shadow:0px 0px 5px rgba(0,0,0,.5);
+	display: none;
+}
+
+.popup_title{
+	font-size: 14px;
+	font-family: Verdana;
+	letter-spacing: 1px;
+	display: block;
+}
+
+.popup_close{
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	cursor: pointer;
+	font-family: Verdana;
+	font-weight: bold;
+}
+.wp-core-ui .button-primary {
+	margin-right: 3px;
+}
+.tablenav .tablenav-pages .current {
+	margin-right: 1px;
+}
+
+/* Dashboard Widget Forms */
+.rbtool-box { clear: both; }
+.postbox .rbform-table { width: 100%; }
+.postbox .rbform-table th { text-align: left; }
+.postbox .rbform-table td input[type=""] { width: 30%; }
+#dashboard_public_information td label.dropdown { display: none; }
+#dashboard_upload_images td input[type="file"] { width: 100%; }
+#dashboard_media .media-files .media-file { float: left; width: 120px; height: auto; padding: 5px 10px; margin: 0px 3px 5px 3px; background: #eee; border: 1px solid #ddd; }
+#dashboard_media .media-files .media-file:hover { background: #ddd; }
+#dashboard_media .media-files .media-file a.link-icon { float: left; width: 120px; height: 108px; margin-bottom: 4px; background-position: center center; background-repeat: no-repeat; background-color: #fff; font-size: 0px; }
+#dashboard_media .media-files .media-file.voice-demo a.link-icon { background-image: url(../img/admin-mp3.png); }
+#dashboard_media .media-files .media-file.resume a.link-icon { background-image: url(../img/admin-pdf.png); }
+#dashboard_media .media-files .media-file.headshots { width: auto; height: auto; overflow: hidden; padding: 10px 5px; }
+input[type=checkbox], input[type=radio] { width: 12px!important; height: 15px!important; }
+input[type=radio]:checked:before { margin-bottom: 2px!important; }
+
+/* Dashboard Gallery Widget */
+#dashboard_gallery .main .gallery-item { float: left; margin: 10px 5px; padding: 5px; position: relative; font-size: 12px; }
+#dashboard_gallery .main .gallery-item.primary { background: #666; }
+#dashboard_gallery .main .gallery-item.primary div.make-primary { color: #fff; }
+#dashboard_gallery .main .gallery-item img { max-height: 150px; float: left; display: block; }
+#dashboard_gallery .main .gallery-item .rbicon-del { position: absolute; right: -5px; top: -5px; }
+#dashboard_gallery .main .gallery-item > div { display: block; clear: both; }
+#dashboard_gallery .main .gallery-item > div.item-order { padding: 5px; background: #ddd; }
+#dashboard_gallery .main .gallery-item > div.make-primary { padding: 5px 0px; }
+
+/* Icons */
+.icon-small { display: inline-block; font-size: 0px; width: 26px; height: 26px; overflow: hidden; text-indent: 999px; }
+.rbicon-del { background-image: url(rbicon-del.png); background-repeat: no-repeat; }
+
+/* Video */
+.rbvideo { position: relative; padding-bottom: 56.25%; /* 16:9 */ padding-top: 25px; height: 0; }
+.rbvideo object, .rbvideo iframe, .rbvideo embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+/* Welcome */
+#rbquick-links { padding-bottom: 15px; }
+#rbquick-links a { margin-top: 5px; }
+
+.welcome-panel-column#welcome-video { margin-right: 15px; margin-bottom:30px; float:right; width:40% }
+
+/* Manage Profiles */
+#rbplugin table.widefat tr td.column-ProfilesProfileDate span { display: block; }
+
+/* Search Results */
+#rbplugin table.widefat tr th, table.widefat tr td { border-bottom: 1px solid #e5e5e5; }
+#rbplugin table.widefat tr.inactive { background: #e0979f; }
+#rbplugin table.widefat tr.active { background: #a9d59d; }
+#rbplugin table.widefat tr.archived { background: #c0c0c0; }
+#rbplugin table.widefat tr.pending { background: #e8f6ff; }
+#rbplugin table.widefat tr.active-notvisible { background: #d2d49b; }
+
+/* Saved Searches */
+.searchsaved-profiles { overflow: hidden; padding: 0 0 10px 10px; background: #EAEAEA; border: 1px solid #dedede; }
+.agency_page_rb_agency_searchsaved hr { clear: both; }
+.searchsaved-profiles .saved-profile { float: left; margin: 10px 10px 0 0; max-width: 110px; height: 195px; }
+.searchsaved-profiles .saved-profile .thumbnail { overflow: hidden; max-width: 100%; margin-top: 5px; height: 150px; }
+.searchsaved-profiles .saved-profile .thumbnail img { max-width: 100%; }
+
+/* Edit Saved Searches */
+#searchsaved-edit { width: 100%; }
+#searchsaved-edit .saved-profile { max-width: 150px; height: 250px; }
+#searchsaved-edit .saved-profile .thumbnail { height: 200px; margin-bottom: 5px; }
+
+/* Email Saved Searches */
+#searchsaved-email { height: 500px; overflow-y: scroll; margin-top: 5px; }
+
+/* Settings Custom Fields */
+#custom-fields .postbox { width: 35%; background: transparent; border: none; float: left; }
+#custom-fields .inside { padding: 0; }
+#custom-fields .all-custom_fields { width: 65%; float: right; }
+#new-customfields .submit { margin-top: 10px; }
+#new-customfields .rbfield > label { width: 30%; }
+#new-customfields .rbfield > div { width: 65%; }
+#new-customfields .rbfield > div { width: 65%; }
+#new-customfields .rbfield > div div small { display: inline-block; margin-left: 24px; }
+#new-customfields .add-more-option { margin-left: 30%; }
+
+/* Admin Search Profiles */
+#casting-cart .in-cart { float: left; font-family:Georgia; font-size:13px; font-style: italic; color: #777; margin-top: 10px; }
+#casting-cart .empty-cart { float: right; margin-bottom: 10px; }
+#cart-actions .button-primary { margin-bottom: 5px; }

@@ -15,7 +15,16 @@ define("LabelSingular", "Profiles");
 		/* echo "<h2>Table Altered for Private profile option. Please refresh the page.</h2>";
 		exit; */
 	}
-
+	$queryAlterCheck = "SELECT ProfileVideoType FROM " . table_agency_profile_media ." LIMIT 1";
+	$resultsDataAlter = $wpdb->get_results($queryAlterCheck,ARRAY_A);
+	$count_alter = $wpdb->num_rows;
+	if($count_alter == 0){
+		// sometimes upgrade script wasnt execute.. so we just want to be sure.
+		$queryAlter = "ALTER TABLE " . table_agency_profile_media ." ADD ProfileVideoType varchar(255) default NULL";
+		$resultsDataAlter = $wpdb->get_results($queryAlter,ARRAY_A);
+		/* echo "<h2>Table Altered for Private profile option. Please refresh the page.</h2>";
+		exit; */
+	}
 /*
  * Pull Options
  */
