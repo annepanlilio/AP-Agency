@@ -132,6 +132,8 @@
 					$ProfileContactDisplay = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
 				} elseif ($rb_agency_option_profilenaming == 1) {
 					$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
+				} elseif ($rb_agency_option_profilenaming == 2) {
+					$ProfileContactDisplay = $ProfileContactDisplay;
 				} elseif ($rb_agency_option_profilenaming == 3) {
 					$ProfileContactDisplay = "ID-". $ProfileID;
 				} elseif ($rb_agency_option_profilenaming == 4) {

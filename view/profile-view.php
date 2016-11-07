@@ -31,8 +31,13 @@
 			if($rb_agency_options_arr['rb_agency_option_404profile'] == 'home'){
 				wp_redirect(home_url(), 301);
 				exit;
-			}elseif(!empty($rb_agency_options_arr['rb_agency_option_404profile'])){
-				wp_redirect(home_url(), 301);
+			}else{
+				if(!empty($rb_agency_options_arr['rb_agency_option_404profile'])){
+					wp_redirect(site_url()."/".$rb_agency_options_arr['rb_agency_option_404profile'], 301);
+				}else{
+					wp_redirect(site_url()."/404-profile", 301);
+				}
+				
 				exit;
 			}
 			echo $rb_header = RBAgency_Common::rb_header();
