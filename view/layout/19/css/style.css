@@ -2,15 +2,22 @@
 .cb {
   clear: both;
 }
-.back-button {
+.back-button,
+.go-back-btn {
   display: none;
 }
 #rblayout-nineteen #name {  
-  padding: 45px 0 30px;  
+  padding: 0 0 30px;  
   text-align: center;
   position: relative;
 }
-#rblayout-nineteen #name h2:after {
+#rblayout-nineteen #name button {  
+  padding: 0;
+  color: #333;
+  margin-right: 15px;
+  background: transparent;  
+}
+#rblayout-nineteen #name h3:after {
   left: 50%;  
   content: "";
   height: 1px;
@@ -21,6 +28,7 @@
   background-color: #cacaca;
 }
 #rblayout-nineteen .container {
+  text-align: center;
   position: relative;
 }
 #rblayout-nineteen #links {
@@ -30,6 +38,7 @@
   padding: 0 0 45px;
   text-align: center;
   text-transform: uppercase;
+  display: inline-block;
 }
 #rblayout-nineteen #links li {
   padding: 0;
@@ -59,15 +68,19 @@
 #rblayout-nineteen #profile-stats ul li .value {
   color: #26728c;
 }
-#rblayout-nineteen #photos .photo {
-  width: 20%;
-  float: left;
-  padding: 7px;
+#rblayout-nineteen #grid-view {
+  text-align: center;
+  margin: 0 -7px;
 }
-/*#rblayout-nineteen #photos .photo img {
+#rblayout-nineteen #grid-view .photo {
+  width: 49.5%;  
+  padding: 7px;
+  display: inline-block;
+}
+#rblayout-nineteen #grid-view .photo img {
   max-width: 100%;
-}*/
-#rblayout-nineteen #photos #grid-view {
+}
+#rblayout-nineteen #grid-view {
   display: none;
 }
 
@@ -82,13 +95,28 @@
   border-bottom: 2px solid #26728c;
 }
 
+/*IMDB*/
+#imdb {
+  text-align: center;
+}
+#imdb ul {
+  padding: 0;
+  list-style: none;  
+}
+#imdb ul li {
+  width: 25%;
+  padding: 30px;
+  display: inline-block;
+  background-color: #eee;
+}
+
 /*Digitals*/
 #digitals {
   padding: 0 15px;
   text-align: center;
 }
 #rblayout-nineteen #digitals .digital {
-  width: 25%;
+  width: 49.5%;
   /*float: left;*/
   padding: 7px;
   display: inline-block;  
@@ -128,14 +156,22 @@
 #rblayout-nineteen #digitals .digital.voicedemo img{
   visibility: hidden;
 }
+#rblayout-nineteen #resume .container {
+  text-align: left;
+}
+#rblayout-nineteen #digitals .resume {
+  text-align: left;
+}
 #rblayout-nineteen .profile-action {
-  top: 0;
+ /* top: 0;
   right: 15px;
   list-style: none;
-  position: absolute;
+  position: absolute;*/
+  padding: 0;
+  display: inline-block;
 }
 #rblayout-nineteen .profile-action li {
-  padding: 0 7px;
+  /*padding: 0 7px;*/
   display: inline-block;
 }
 
@@ -146,7 +182,12 @@
   padding: 7px;
   margin: 0 auto;
   max-width: 720px;
+  text-align: center;
+  margin-bottom: 15px;
   /*width: 33.33333333333333%;*/
+}
+#videos .video h3 {
+  margin-top: 15px;
 }
 .videoWrapper {
   position: relative;
@@ -173,6 +214,10 @@
 }
 .mCSB_container.mCS_no_scrollbar{
   margin-right:0;
+  display: inline-block;
+}
+.mCSB_container img {
+  float: left;
 }
 .mCS_disabled .mCSB_container.mCS_no_scrollbar,
 .mCS_destroyed .mCSB_container.mCS_no_scrollbar{
@@ -222,7 +267,13 @@
   overflow:hidden;
 }
 .mCSB_horizontal .mCSB_container.mCS_no_scrollbar{
+  width: auto!important;
   margin-bottom:0;
+}
+.mCSB_horizontal .mCSB_container.mCS_no_scrollbar img {
+  float: none;
+  text-align: center;
+  display: inline-block;
 }
 .mCS_disabled .mCSB_horizontal .mCSB_container.mCS_no_scrollbar,
 .mCS_destroyed .mCSB_horizontal .mCSB_container.mCS_no_scrollbar{
@@ -337,3 +388,62 @@
 }
 
 /*.mCustomScrollBox{ height:auto!important;}*/
+
+
+#photo-scroller {
+  display: none;
+  text-align: center;
+}
+#photo-mobile {
+  display: block;
+  padding: 0 30px;
+}
+#photo-mobile img {
+  max-width: 100%;
+  margin-bottom: 15px;
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 641px) {
+  #rblayout-nineteen #grid-view .photo {
+    width: 24.5%;
+  }
+  #rblayout-nineteen #digitals .digital {
+    width: 24.5%;
+  }
+  #photo-scroller {
+    display: block;
+  }
+  #photo-mobile {
+    display: none;
+  }
+  .mCSB_horizontal .mCSB_container.mCS_no_scrollbar img {
+    float: left;
+  }
+}
+@media only screen and (min-width : 992px) {  
+  #rblayout-nineteen {
+    padding-top: 15px;
+  }
+  #rblayout-nineteen > .container {
+    margin-bottom: 15px;
+  }
+  #rblayout-nineteen #profile-nav {
+    float: right;
+  }
+  #rblayout-nineteen #name {
+    float: left;
+    padding: 0;
+  }
+  #rblayout-nineteen #name h3 {    
+    margin-top: 5px;
+    margin-bottom: 0;
+    text-transform: uppercase;
+  }
+  #rblayout-nineteen #name h3:after {    
+    display: none;    
+  }
+  #rblayout-nineteen #links {
+    padding-bottom: 0;
+  }
+}
