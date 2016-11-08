@@ -64,7 +64,7 @@ echo "	<div id=\"rbprofile\">\n";
 echo " 		<div id=\"rblayout-nineteen\" class=\"rblayout\">\n";
 
 echo "			<div class=\"container\">";
-echo "				<div id=\"name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
+echo "				<div id=\"name\"><h3><button onclick=\"goBack()\" title=\"Back\"><i class=\"fa fa-angle-double-left\"></i></a></button>". $ProfileContactDisplay ."</h3></div>\n";
 echo "				<div id=\"profile-nav\">";
 echo "					<ul id=\"links\" class=\"profile-tab-menu nav nav-tabs\">";
 if(in_array("Actor", $_profileType)){
@@ -74,8 +74,8 @@ if(in_array("Actor", $_profileType)){
 }
 
 
-if(has_profile_media("Headshot", $ProfileID) || has_profile_media("Polaroid", $ProfileID) || has_profile_media("CompCard", $ProfileID) || has_profile_media("Resume", $ProfileID) || has_profile_media("VoiceDemo", $ProfileID)){
-	echo "						<li class=\"nav-item link\"><a href=\"#digitals\" title=\"\" id=\"nav-digitals\" class=\"nav-link\" data-toggle=\"tab\" role=\"tab\">Digitals</a></li>\n";	
+if(has_profile_media("Headshot", $ProfileID) || has_profile_media("Polaroid", $ProfileID) || has_profile_media("CompCard", $ProfileID) || !empty($ProfileResume) || has_profile_media("VoiceDemo", $ProfileID)){
+	echo "						<li class=\"nav-item link\"><a href=\"#digitals\" title=\"\" id=\"nav-digitals\" class=\"nav-link\" data-toggle=\"tab\" role=\"tab\">Digitals</a></li>\n";
 }
 
 if(in_array("Actor", $_profileType)){
@@ -109,12 +109,12 @@ echo "				<div class=\"tab-content\">";
 // Photos
 echo "					<div id=\"photos\" class=\"tab-pane fade in active\" role=\"tabpanel\">";
 // Grid View
-echo "						<div id=\"grid-view\" class=\"grid-view container\">"; //								
+echo "						<div id=\"grid-view\" class=\"grid-view\">"; //								
 								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID, "Image");
 								$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 								$countImg  = $wpdb->num_rows;
 								foreach($resultsImg as $dataImg ){								
-	echo "							<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ". $reltarget ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=350&h=400&a=t\"  /></a></div>\n";
+	echo "							<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ". $reltarget ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=768&a=t\"  /></a></div>\n";
 								}
 echo "						</div><!-- #grid-view -->"; //
 // Scroller View
@@ -130,6 +130,18 @@ echo "						<div id=\"photo-scroller\" class=\"scroller scroller-view\">";
 									}
 								}
 echo "						</div><!-- #photo-scroller -->"; //
+echo "						<div id=\"photo-mobile\" class=\"mobile-view\">";								
+								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+								$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
+								$countImg  = $wpdb->num_rows;
+								foreach($resultsImg as $dataImg ){
+									if ($countImg > 1) {
+										echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ". $reltarget ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=640\"  /></a>\n";
+									} else {
+										echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ". $reltarget ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=640\" /></a>\n";
+									}
+								}
+echo "						</div><!-- #photo-mobile -->"; //
 echo "					</div><!-- #photos -->"; //
 
 
@@ -155,10 +167,15 @@ echo "							<div class=\"digitals\">";
 								get_profile_media_by_type("CompCard", $ProfileID, $ProfileGallery);
 echo "							<div class=\"cb\"></div>";
 
-								if(!in_array("Actor", $_profileType)){
-									get_profile_media_by_type("Resume", $ProfileID, $ProfileGallery, true);
-// echo "								<div class=\"cb\"></div>";
-								}
+								// if(!in_array("Actor", $_profileType)){
+									// get_profile_media_by_type("Resume", $ProfileID, $ProfileGallery, true);
+									if(!empty($ProfileResume)) {
+echo "									<div class=\"resume container\">";
+echo 										$ProfileResume;
+echo "									</div>";
+									}
+									
+								// }
 
 								get_profile_media_by_type("VoiceDemo", $ProfileID, $ProfileGallery, true);
 echo "							<div class=\"cb\"></div>";
@@ -284,7 +301,9 @@ echo "								<div class=\"videos\">\n";
 											echo '<iframe style="width:720px; height:480px;" src="//player.vimeo.com/video/'.$embed_string.'?portrait=0&amp;badge=0&amp;showinfo=0&amp;controls=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';											
 										}
 										echo "</div>\n";
-										echo "<p>".$dataMedia['ProfileMediaTitle']."</p>";
+										$vidTitle = explode("<br>", $dataMedia['ProfileMediaTitle']);
+										echo "<h3>".$vidTitle[0]."</h3>";
+										echo "<h5>".$vidTitle[1]."</h5>";
 										echo "</div>\n";
 									}
 echo "								</div>\n";// #videos
@@ -294,10 +313,9 @@ echo "				</div><!-- .tab-content -->";
 // Resume
 echo "				<div id=\"resume\" class=\"tab-pane fade\" role=\"tabpanel\">";
 echo "					<div class=\"container\">";
-echo "						<div class=\"digitals\">";
-								get_profile_media_by_type("Resume", $ProfileID, $ProfileGallery, true);
-echo "							<div class=\"cb\"></div>";
-echo "						</div><!-- .digitals -->";
+							//get_profile_media_by_type("Resume", $ProfileID, $ProfileGallery, true);
+							echo $ProfileResume;
+echo "						<div class=\"cb\"></div>";
 echo "					</div><!-- .container -->";
 echo "				</div><!-- .tab-content -->";
 // IMDB
@@ -320,6 +338,7 @@ echo "				</div><!-- .tab-content -->";
 
 // Profile Stats
 echo "			<div class=\"container\">";
+echo "				<div class=\"row\">";
 					if(!empty($profile_cf)){					
 echo "				<div id=\"profile-stats\" class=\"rbcol-12 rbcolumn\">";
 echo "					<ul>";
@@ -335,6 +354,7 @@ echo "							<li><span class=\"title\">".$stitle."</span>: <span class=\"value\"
 echo "					</ul>";
 echo "				</div>\n";
 					}
+echo "				</div><!-- .row -->\n";
 echo "			</div>\n";
 
 echo " <div class=\"container go-back-btn\" style=\"width:10%;\">";
@@ -496,24 +516,3 @@ function get_profile_type($ProfileType){
 //         print_r($cf_public);
 
 ?>
-
-<script type="text/javascript">
-(function($) {
-		$(document).ready(function(){
-	$('#links a').click(function (e) {
-		e.preventDefault();
-		$(this).tab('show');
-	});
-
-	var headerHeight = $(".site-header").outerHeight();
-	var navHeight = $(".site-nav").outerHeight();
-	var profilenavHeight = $("#rblayout-nineteen > .container").outerHeight();
-
-	function setPortfolioScrollHeights() {
-	    var scrollHeight = navsHeight() + $(".footer").height() + 45;
-	    $(".portfolio-scroll").css("height", "calc(100vh - " + scrollHeight + "px)");
-	    $(".portfolio-scroll ul").css("height", "calc(100vh - " + (scrollHeight + 20) + "px)");
-	}
-});
-	})(jQuery);
-</script>
