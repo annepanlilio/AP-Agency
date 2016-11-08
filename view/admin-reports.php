@@ -2328,10 +2328,10 @@ class RBAgencyCSVXLSImpoterPlugin {
 		//create folder new upload path if not yet created
 		$rb_upload_dr = wp_upload_dir();
 		$new_upload_path = $rb_upload_dr['basedir'] . '/rb-agency/';
-		//if (!is_dir($new_upload_path)) {
-			//@mkdir($new_upload_path, 0755);
-			//@chmod($new_upload_path, 0777);
-		//}
+		if (!is_dir($new_upload_path)) {
+			@mkdir($new_upload_path, 0755);
+			@chmod($new_upload_path, 0777);
+		}
 
 		$get_ext = pathinfo($_FILES['source_file']['name'], PATHINFO_EXTENSION);
 		$target_path = $new_upload_path ;

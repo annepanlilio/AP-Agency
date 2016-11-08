@@ -1348,11 +1348,14 @@ elseif ($ConfigID == 81)
 			$to = $total_profiles->total_profiles;
 		}
 
-		echo "<input  required type=\"radio\" name=\"export-profile\" value=\"".($from==1?0:$from-1)."-".$to."\">Export Profiles(".($from)."-".$to.")<br/>";
+		echo "<input  required type=\"radio\" name=\"export-profile\" class=\"download-by-parts\" value=\"".($from==1?0:$from-1)."-".$to."\">Export Profiles(".($from)."-".$to.")<br/>";
 
 		$loop_count = (($a==1)?$count:$loop_count + $count);
 
 	}
+	echo "<input required type=\"radio\" name=\"export-profile\" class=\"download-all-profiles\" value=\"".$total_profiles->total_profiles."\">Export All Profiles (".$total_profiles->total_profiles.")<br/>";
+	echo "<p class=\"onetime-download-warning\" style=\"display:none;\">".__("<b>Warning :</b> One-Time Export may take up some time to finish and may not work at all times, depending on the server's capacity.")."</p>";
+
 	echo "      <select name=\"file_type\" required>";
 	echo "          <option value=\"\">Select file format</option>";
 	echo "          <option value=\"xls\">XLS</option>";
@@ -1362,6 +1365,19 @@ elseif ($ConfigID == 81)
 	echo "      <input type=\"submit\" value=\"Export Now\" class=\"button-primary\">";
 
 	echo "  </form>";
+
+	?>
+	<script>
+		jQuery(document).ready(function($){
+			$(".download-all-profiles").click(function(){
+				$(".onetime-download-warning").show();				
+			});
+			$(".download-by-parts").click(function(){
+				$(".onetime-download-warning").hide();				
+			});
+		});
+	</script>
+	<?php
 }
 elseif ($ConfigID == 80) {
 
