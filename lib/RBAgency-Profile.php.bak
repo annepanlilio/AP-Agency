@@ -1219,8 +1219,17 @@ class RBAgency_Profile {
 					if($ptype == 0 && $user_role != 'administrator') {
 						$requestURI =  str_replace('/','',$_SERVER['REQUEST_URI']);
 						
+						$is_casting_agent = "";
 						if($requestURI != 'casting-dashboard'){
-							echo "<a href=\"".get_bloginfo("url")."/casting-dashboard/\">".__("Go Back to My Dashboard",RBAGENCY_TEXTDOMAIN)."</a>\n";
+
+							if(class_exists('RBAgencyCasting')){
+								$profile_is_active = $wpdb->get_row($wpdb->prepare("SELECT CastingID FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$user_ID));
+								$is_casting_agent = $wpdb->num_rows;
+							}
+							if($is_casting_agent>0){
+								echo "<a href=\"".get_bloginfo("url")."/casting-dashboard/\">".__("Go Back to My Dashboard",RBAGENCY_TEXTDOMAIN)."</a>\n";
+							}
+							
 						}
 					}
 					$is_casting_page = get_query_var("rbgroup");
