@@ -412,7 +412,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 
 					// Add Custom Field Values stored in Mux
 					foreach ($_POST as $key => $value) {
-						if ((substr($key, 0, 15) == "ProfileCustomID") && (isset($value) && !empty($value))) {
+						if ((substr($key, 0, 15) == "ProfileCustomID" || substr($key, 0, 22) == "ProfileCustomID_other_") && (isset($value) && !empty($value))) {
 							$ProfileCustomID = substr($key, 15);
 							if (is_array($value)) {
 								$value = implode(",", $value);
@@ -424,6 +424,11 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 								$value = !empty($value) ? date("y-m-d h:i:s",strtotime($value)) : "";
 								$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue) VALUES (%d,%d,%s)", $ProfileID , $ProfileCustomID, $value);
 							} else {
+								if(!is_numeric($ProfileCustomID)){
+
+										$ProfileCustomID = substr($key, 22);
+										$value = !empty($_POST["ProfileCustomID_other_".$ProfileCustomID]) ? $_POST["ProfileCustomID_other_".$ProfileCustomID] : "" ;
+									}
 								$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue) VALUES (%d,%d,%s)", $ProfileID , $ProfileCustomID, $value);
 							}
 							$results1 = $wpdb->query($insert1);
@@ -646,7 +651,10 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 
 						// Add New Custom Field Values
 						foreach ($_POST as $key => $value) {
-							if ((substr($key, 0, 15) == "ProfileCustomID") && (isset($value) && !empty($value) || $value == 0)) {
+							
+							if ((substr($key, 0, 15) == "ProfileCustomID" || substr($key, 0, 22) == "ProfileCustomID_other_") && (isset($value) && !empty($value) || $value == 0)) {
+
+
 								$ProfileCustomID = substr($key, 15);
 								if (is_array($value)) {
 									$value = implode(",", $value);
@@ -660,12 +668,19 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 									$value = !empty($value) ? date("y-m-d h:i:s",strtotime($value)) : "";
 									$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,stripslashes($value));
 								} else {
+									
+									if(!is_numeric($ProfileCustomID)){
+
+										$ProfileCustomID = substr($key, 22);
+										$value = !empty($_POST["ProfileCustomID_other_".$ProfileCustomID]) ? $_POST["ProfileCustomID_other_".$ProfileCustomID] : "" ;
+									}
+									
 									$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,stripslashes($value));
 								}
 								$results1 = $wpdb->query($insert1);
 							}
 						}
-
+						
 						foreach($_SESSION['profileCustomValue'] as $k=>$v){
 							unset($_SESSION['profileCustomValue']);
 						}

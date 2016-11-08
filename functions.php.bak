@@ -6081,6 +6081,8 @@ function rb_get_customfields(){
 add_action( 'wp_ajax_rb_get_customfields', 'rb_get_customfields' );
 add_action( 'wp_ajax_nopriv_rb_get_customfields', 'rb_get_customfields' );
 
+
+
 function rb_custom_fields_template_noprofile($visibility = 0, $data3){
 
 		global $wpdb;

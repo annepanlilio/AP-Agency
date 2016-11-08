@@ -1550,12 +1550,12 @@
 					}
 
 					echo "<label class=\"dropdown\">".$data[0]."</label>";
-					echo "<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".($ProfileCustomType == 9?"multiple":"")." ".(!empty($updated_select) ? "class=\"marked_changed\"" : "").">\n";
+					echo "<select id=\"".$data3['ProfileCustomID']."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".($ProfileCustomType == 9?"multiple":"")." ".(!empty($updated_select) ? "class=\"marked_changed select-dropdown\"" : "class=\"select-dropdown\"").">\n";
 					echo "<option value=\"\">--</option>";
-
+					$arr = array();
 					if($ProfileCustomType == 9){
 							foreach($data as $val1){
-
+								$arr[] = $val1;
 								if(in_array(trim(stripcslashes($val1),'"'),$expertiseToArray)){
 									$isSelected = "selected=\"selected\"";
 									echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
@@ -1568,9 +1568,9 @@
 						} else {
 							$pos = 0;
 							foreach($data as $val1){
-
+								$arr[] = $val1;
 								if($val1 != end($data) && $val1 != $data[0]){
-									if (trim(stripslashes($val1),'"') == trim(stripslashes($ProfileCustomValue),'"') || in_array(stripslashes($val1), explode(",",$ProfileCustomValue))) {
+									if (trim(stripslashes($val1),'"') == trim(stripslashes($ProfileCustomValue),'"') || in_array(stripslashes($val1), explode(",",$ProfileCustomValue)) || !in_array($ProfileCustomValue,$arr)) {
 										$isSelected = "selected=\"selected\"";
 										echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
 									} else {
@@ -1594,12 +1594,32 @@
 						}**/
 					echo "</select>\n";
 
+					if(!in_array($ProfileCustomValue, $arr) && $ProfileCustomType != 9){
+						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "")."\" ".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "style=\"display:none;\"").">";
+					}else{
+						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
+					}
 
+					?>
+					<script>
+						jQuery(document).ready(function($){
+							$(".select-dropdown").change(function(){
+								var customfield_id = $(this).attr('id');
+								console.log($(this).val());
+								if($(this).val() == 'Other' || $(this).val() == 'Others' || $(this).val() == 'other' || $(this).val() == 'others'){
+									$(".ProfileCustomID_other_"+customfield_id).show();
+								}else{
+									$(".ProfileCustomID_other_"+customfield_id).hide();
+								}
+							});
+						});
+					</script>
+					<?php
 					if (!empty($data2) && !empty($option2)) {
 						echo "<label class=\"dropdown\">".$data2[0]."</label>";
 
 							$pos2 = 0;
-							echo "11<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".(!empty($updated_select) ? "class=\"marked_changed\"" : "").">\n";
+							echo "11<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".(!empty($updated_select) ? "class=\"marked_changed select-dropdown\"" : "class=\"select-dropdown\"").">\n";
 							echo "<option value=\"\">--</option>";
 							foreach($data2 as $val2){
 									if($val2 != end($data2) && $val2 !=  $data2[0]){
@@ -1627,11 +1647,39 @@
 							$xplode = array($ProfileCustomValue);
 						}
 						if(!empty($val)){
-							echo "<label class=\"checkbox \" data-raw=\"".addslashes($val)."\"><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array(addslashes($val),$xplode) && !empty($val)){echo "checked=\"checked\""; }echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".(!empty($updated_checkbox) ? "class=\"marked_changed\"" : "")."/> ";
+							echo "<label class=\"checkbox \" data-raw=\"".addslashes($val)."\"><input type=\"checkbox\"  id=\"".$data3['ProfileCustomID']."\" value=\"". $val."\"   "; if(in_array(addslashes($val),$xplode) && !empty($val)){echo "checked=\"checked\""; }echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".(!empty($updated_checkbox) ? "class=\"marked_changed select-checkbox\"" : "class=\"select-checkbox\"")."/> ";
 							echo "". $val."</label><br />";
 						}
 					}
 					echo "</fieldset>";
+					if(!in_array($ProfileCustomValue, $array_customOptions_values) && !empty($ProfileCustomValue)){
+						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "")."\" ".(!empty($ProfileCustomValue)? "" : "style=\"display:none;\"").">";
+					}else{
+						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
+					}
+
+					?>
+					<script>
+						jQuery(document).ready(function($){
+							$(".select-checkbox").click(function(){
+								var customfield_id = $(this).attr('id');
+								console.log($(this).val());
+								if($(this).val() == 'Other' || $(this).val() == 'Others' || $(this).val() == 'other' || $(this).val() == 'others'){
+									if($(this).is(':checked') == true){
+										$(".ProfileCustomID_other_"+customfield_id).show();
+									}else{
+										$(".ProfileCustomID_other_"+customfield_id).hide();
+									}
+								}else{
+									if($(this).is(':checked') == false){
+										$(".ProfileCustomID_other_"+customfield_id).hide();
+									}
+									
+								}
+							});
+						});
+					</script>
+					<?php
 
 				} elseif ($ProfileCustomType == 6) {
 
@@ -1642,25 +1690,58 @@
 					foreach($array_customOptions_values as $val){
 						if(!empty($val)){
 							echo "<fieldset>";
-								echo "<label><input type=\"radio\" value=\"". $val."\" "; if(!empty($val)){checked($val, $ProfileCustomValue);}echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".(!empty($updated_radio) ? "class=\"marked_changed\"" : "")."/>";
+								echo "<label><input type=\"radio\" id=\"".$data3['ProfileCustomID']."\" value=\"". $val."\" "; 
+								if(!empty($val) && in_array($ProfileCustomValue, $array_customOptions_values)){
+									checked($val, $ProfileCustomValue);
+								}elseif(!in_array($ProfileCustomValue, $array_customOptions_values) && !empty($ProfileCustomValue)){
+									echo "checked";
+								}
+								echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".(!empty($updated_radio) ? "class=\"marked_changed select-radio\"" : "class=\"select-radio\"")."/>";
 								echo "". $val."</label><br/>";
 							echo "</fieldset>";
 						}
 					}
+
+
+					if(!in_array($ProfileCustomValue, $array_customOptions_values) && !empty($ProfileCustomValue)){
+						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "")."\" ".(!empty($ProfileCustomValue) ? "" : "style=\"display:none;\"").">";
+					}else{
+						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
+					}
+
+					?>
+					<script>
+						jQuery(document).ready(function($){
+							$(".select-radio").click(function(){
+								var customfield_id = $(this).attr('id');
+								console.log($(this).val());
+								if($(this).val() == 'Other'){
+									$(".ProfileCustomID_other_"+customfield_id).show();
+								}else{
+									$(".ProfileCustomID_other_"+customfield_id).hide();
+									
+								}
+							});
+						});
+					</script>
+					<?php
+
 				} elseif ($ProfileCustomType == 7) { //Imperial/Metrics
 
 					$updated_select = get_user_meta($user['ProfileUserLinked'], "updated_ProfileCustomID".$data3['ProfileCustomID'], true);
 
 					if($data3['ProfileCustomOptions']==3){
+						$arr = array();
 						if($rb_agency_option_unittype == 1){
 							//
-							echo "<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" ".(!empty($updated_select) ? "class=\"marked_changed\"" : "").">\n";
+							echo "<select id=\"". $data3['ProfileCustomID']."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" ".(!empty($updated_select) ? "class=\"marked_changed select-dropdown\"" : "class=\"select-dropdown\"").">\n";
 							echo "  <option value=\"\">--</option>\n";
 							//
 							$i=12;
 							$heightraw = 0;
 							$heightfeet = 0;
 							$heightinch = 0;
+							$arr[] = $i;
 							while($i<=90)  {
 								$heightraw = $i;
 								$heightfeet = floor($heightraw/12);
@@ -1669,6 +1750,29 @@
 								$i++;
 							}
 							echo " </select>\n";
+
+							if(!in_array($ProfileCustomValue, $arr) && !empty($ProfileCustomValue)){
+								echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "")."\" ".(!empty($ProfileCustomValue) ? "" : "style=\"display:none;\"").">";
+							}else{
+								echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
+							}
+
+							?>
+							<script>
+								jQuery(document).ready(function($){
+									$(".select-dropdown").click(function(){
+										var customfield_id = $(this).attr('id');
+										console.log($(this).val());
+										if($(this).val() == 'Other' || $(this).val() == 'Others' || $(this).val() == 'other' || $(this).val() == 'others'){
+											$(".ProfileCustomID_other_"+customfield_id).show();
+										}else{
+											$(".ProfileCustomID_other_"+customfield_id).hide();
+											
+										}
+									});
+								});
+							</script>
+							<?php
 						} else {
 						//
 						preg_match_all('/(\d+(\.\d+)?)/',$ProfileCustomValue, $matches);
@@ -6179,7 +6283,7 @@ function rb_custom_fields_template_noprofile($visibility = 0, $data3){
 					}
 
 					echo "<label class=\"dropdown\">".$data[0]."</label>";
-					echo "<select name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".($ProfileCustomType == 9?"multiple":"").">\n";
+					echo "<select id=\"".$data3['ProfileCustomID']."\" class=\"select-dropdown\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".($ProfileCustomType == 9?"multiple":"").">\n";
 					echo "<option value=\"\">--</option>";
 
 					if($ProfileCustomType == 9){
@@ -6210,6 +6314,22 @@ function rb_custom_fields_template_noprofile($visibility = 0, $data3){
 						}
 
 					echo "</select>\n";
+					echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
+					?>
+					<script>
+						jQuery(document).ready(function($){
+							$(".select-dropdown").change(function(){
+								var customfield_id = $(this).attr('id');
+								console.log($(this).val());
+								if($(this).val() == 'Other' || $(this).val() == 'Others' || $(this).val() == 'other' || $(this).val() == 'others'){
+									$(".ProfileCustomID_other_"+customfield_id).show();
+								}else{
+									$(".ProfileCustomID_other_"+customfield_id).hide();
+								}
+							});
+						});
+					</script>
+					<?php
 
 
 					if (!empty($data2) && !empty($option2)) {
@@ -6240,11 +6360,36 @@ function rb_custom_fields_template_noprofile($visibility = 0, $data3){
 							$xplode = array($ProfileCustomValue);
 						}
 						if(!empty($val)){
-							echo "<label class=\"checkbox\" data-raw=\"".addslashes($val)."\"><input type=\"checkbox\" value=\"". $val."\"   "; if(in_array(addslashes($val),$xplode) && !empty($val)){echo "checked=\"checked\""; }echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" /> ";
+							echo "<label class=\"checkbox\" data-raw=\"".addslashes($val)."\"><input type=\"checkbox\" class=\"select-checkbox\" value=\"". $val."\"   "; if(in_array(addslashes($val),$xplode) && !empty($val)){echo "checked=\"checked\""; }echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" /> ";
 							echo "". $val."</label><br />";
 						}
 					}
 					echo "</fieldset>";
+
+					echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
+
+					?>
+					<script>
+						jQuery(document).ready(function($){
+							$(".select-checkbox").click(function(){
+								var customfield_id = $(this).attr('id');
+								console.log($(this).val());
+								if($(this).val() == 'Other' || $(this).val() == 'Others' || $(this).val() == 'other' || $(this).val() == 'others'){
+									if($(this).is(':checked') == true){
+										$(".ProfileCustomID_other_"+customfield_id).show();
+									}else{
+										$(".ProfileCustomID_other_"+customfield_id).hide();
+									}
+								}else{
+									if($(this).is(':checked') == false){
+										$(".ProfileCustomID_other_"+customfield_id).hide();
+									}
+									
+								}
+							});
+						});
+					</script>
+					<?php
 
 				} elseif ($ProfileCustomType == 6) {
 
@@ -6253,11 +6398,29 @@ function rb_custom_fields_template_noprofile($visibility = 0, $data3){
 					foreach($array_customOptions_values as $val){
 						if(!empty($val)){
 							echo "<fieldset>";
-								echo "<label><input type=\"radio\" value=\"". $val."\" "; if(!empty($val)){checked($val, $ProfileCustomValue);}echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
+								echo "<label><input class=\"select-radio\" id=\"". $data3['ProfileCustomID']."\" type=\"radio\" value=\"". $val."\" "; if(!empty($val)){checked($val, $ProfileCustomValue);}echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" />";
 								echo "". $val."</label><br/>";
 							echo "</fieldset>";
 						}
 					}
+
+					echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
+					?>
+					<script>
+						jQuery(document).ready(function($){
+							$(".select-radio").click(function(){
+								var customfield_id = $(this).attr('id');
+								console.log($(this).val());
+								if($(this).val() == 'Other'){
+									$(".ProfileCustomID_other_"+customfield_id).show();
+								}else{
+									$(".ProfileCustomID_other_"+customfield_id).hide();
+									
+								}
+							});
+						});
+					</script>
+					<?php
 				} elseif ($ProfileCustomType == 7) { //Imperial/Metrics
 
 					if($data3['ProfileCustomOptions']==3){
@@ -6278,6 +6441,26 @@ function rb_custom_fields_template_noprofile($visibility = 0, $data3){
 								$i++;
 							}
 							echo " </select>\n";
+
+							echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
+
+							?>
+							<script>
+								jQuery(document).ready(function($){
+									$(".select-dropdown").click(function(){
+										var customfield_id = $(this).attr('id');
+										console.log($(this).val());
+										if($(this).val() == 'Other' || $(this).val() == 'Others' || $(this).val() == 'other' || $(this).val() == 'others'){
+											$(".ProfileCustomID_other_"+customfield_id).show();
+										}else{
+											$(".ProfileCustomID_other_"+customfield_id).hide();
+											
+										}
+									});
+								});
+							</script>
+							<?php
+
 						} else {
 						//
 						preg_match_all('/(\d+(\.\d+)?)/',$ProfileCustomValue, $matches);
