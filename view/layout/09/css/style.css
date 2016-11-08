@@ -36,3 +36,18 @@
 #rblayout-nine #stats li span.stat-value {
 	font-weight: normal;
 }
+
+#videos {
+	text-align: center;
+}
+#videos .profile-video {
+	width: 100%;	
+}
+
+@media only screen and (min-width : 768px) {
+	#videos .profile-video {
+		width: 47%;
+		padding: 15px;
+		display: inline-block;
+	}
+}
