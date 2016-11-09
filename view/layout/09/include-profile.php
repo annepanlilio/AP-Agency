@@ -192,21 +192,10 @@ echo "				</div> <!-- #info -->\n";//End Info
 						echo "</div> <!-- #files -->";
 					}
 					
-					
-						
-
 					// Videos
-					$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileVideoType IN('youtube','vimeo')";
+					$queryMedia = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType IN('Demo Reel','Video Monologue','Video Slate')";
 					$resultsMedia =  $wpdb->get_results($queryMedia,ARRAY_A);
-					$countMedia = $wpdb->num_rows;					
-
-					$viditem_class = array("profile-video");
-					if($countMedia >= 3) {
-						$viditem_class[] = "col-md-4";
-					} else {
-						$viditem_class[] = "col-md-6";
-					}
-					$vidcol_class = implode(" ",$viditem_class);
+					$countMedia = $wpdb->num_rows;
 
 					if($countMedia > 0) {
 						echo "<div id=\"videos\">";
@@ -217,8 +206,8 @@ echo "				</div> <!-- #info -->\n";//End Info
 							$clean_title = stripslashes($dataMedia['ProfileMediaTitle']);
 							$vidTitleCaption = explode('<br>',$clean_title);
 							if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
-								$embed_string = substr($vid_url, strpos($vid_url, "=")+1);
-								$outVideoMedia .= "<div class=\"".$vidcol_class."\" style=\"margin: 10px 0px 60px 0;\">
+								$embed_string = substr($vid_url, strpos($vid_url, "="));
+								$outVideoMedia .= "<div class=\"profile-video\">
 								<div style=\"margin: 5px;\">".$vidTitleCaption[0]."</div>
 								<div class=\"video-wrapper\"><iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/".$embed_string."\" frameborder=\"0\" allowfullscreen></iframe></div></div>";
 							}
