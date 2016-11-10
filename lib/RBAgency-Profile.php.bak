@@ -125,8 +125,8 @@ class RBAgency_Profile {
 											break;
 										case 'radio':
 											inputs[i].checked = false;
-										//case 'checkbox':
-											//inputs[i].checked = false;
+										case 'checkbox':
+											inputs[i].checked = false;
 									}
 								}
 							jQuery(".rbfield").find("select").prop('selectedIndex',0);
@@ -1677,20 +1677,24 @@ class RBAgency_Profile {
 
 					// Type
 					if (isset($profiletype) && !empty($profiletype)){
+						$arr = array();
 						if(!empty($_POST['profiletype'])){ //if search form trigger
 							foreach($_POST['profiletype'] as $k=>$v){
-								$filter .= " AND FIND_IN_SET('".$_POST['profiletype'][$k]."', profile.ProfileType) ";
+								$arr[] = " FIND_IN_SET('".$_POST['profiletype'][$k]."', profile.ProfileType) ";
 							}
+							
 						}else{//if shortcode probably..
 							# Fixed for search result and pagination
 							if(is_array($profiletype)){
 								foreach($profiletype as $k=>$v){
-									$filter .= " AND FIND_IN_SET('".$v."', profile.ProfileType) ";
+									$arr[] = " FIND_IN_SET('".$v."', profile.ProfileType) ";
 								}
 							}else{
-								$filter .= " AND FIND_IN_SET('".$profiletype."', profile.ProfileType) ";
+								$arr[] = " FIND_IN_SET('".$profiletype."', profile.ProfileType) ";
 							}
 						}
+
+						$filter .= " AND (". implode(" OR ",$arr).")";
 					}
 						
 

@@ -1441,7 +1441,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "      <td>\n";
 
 
-								echo "          <textarea type=\"text\" cols=\"220\" rows=\"5\" id=\"ProfileDescription\" name=\"ProfileDescription\" ".(!empty($fields_val['updated_ProfileDescription']) ? "class=\"marked_changed\"" : "").">";
+								echo "          <textarea type=\"text\" cols=\"50\" rows=\"5\" id=\"ProfileDescription\" name=\"ProfileDescription\" ".(!empty($fields_val['updated_ProfileDescription']) ? "class=\"marked_changed\"" : "").">";
 
 								echo	esc_attr( $ProfileDescription );
 								echo "</textarea>";

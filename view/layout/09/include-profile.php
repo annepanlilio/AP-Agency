@@ -217,6 +217,9 @@ echo "				</div> <!-- #info -->\n";//End Info
 						echo "</div><!-- .row -->";
 						echo "</div><!-- #videos -->";
 					}
+echo "<br>";
+echo '<div class="profiledescription">'.(!empty($ProfileDescription) ? $ProfileDescription : "").'</div>';
+echo '<div class="profileresume" style="padding:35px;">'.(!empty($ProfileResume) ? str_replace("\n", "<br>", $ProfileResume) : "").'</div>';
 echo "			<div class=\"rbclear\"></div>\n";
 
 echo " 		</div> <!-- .rblayout -->\n";

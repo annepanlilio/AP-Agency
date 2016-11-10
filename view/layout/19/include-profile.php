@@ -313,9 +313,11 @@ echo "				</div><!-- .tab-content -->";
 // Resume
 echo "				<div id=\"resume\" class=\"tab-pane fade\" role=\"tabpanel\">";
 echo "					<div class=\"container\">";
-							//get_profile_media_by_type("Resume", $ProfileID, $ProfileGallery, true);
-							echo $ProfileResume;
-echo "						<div class=\"cb\"></div>";
+echo "						<div class=\"digitals\">";
+								//get_profile_media_by_type("Resume", $ProfileID, $ProfileGallery, true);
+								echo !empty($ProfileResume) ? str_replace("\n", "<br>", $ProfileResume) : "";
+echo "							<div class=\"cb\"></div>";
+echo "						</div><!-- .digitals -->";
 echo "					</div><!-- .container -->";
 echo "				</div><!-- .tab-content -->";
 // IMDB

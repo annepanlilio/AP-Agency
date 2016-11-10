@@ -125,8 +125,8 @@ class RBAgency_Profile {
 											break;
 										case 'radio':
 											inputs[i].checked = false;
-										//case 'checkbox':
-											//inputs[i].checked = false;
+										case 'checkbox':
+											inputs[i].checked = false;
 									}
 								}
 							jQuery(".rbfield").find("select").prop('selectedIndex',0);
@@ -843,7 +843,8 @@ class RBAgency_Profile {
 					
 				}
 				$field_results = $wpdb->get_results($field_sql,ARRAY_A);
-			if( ($atts_arr['att_mode'] == 'ajax' && $atts_arr['att_type'] == 'advanced') || $atts_arr['att_type'] == ""){
+				$searchType =  strpos($_SERVER['REQUEST_URI'], 'basic') >-1 ? 'basic' : 'advanced';
+			if( ($atts_arr['att_mode'] == 'ajax' && $atts_arr['att_type'] == 'advanced') || $searchType == 'advanced' ){
 				echo "<div class=\"customfields-onload\" >";
 				foreach($field_results  as $data){
 					// Set Variables
@@ -1186,6 +1187,9 @@ class RBAgency_Profile {
 				}
 				echo "</div>" ;
 
+			}elseif( ($atts_arr['att_mode'] == 'ajax' && $atts_arr['att_type'] == 'basic') || $searchType == 'basic' ){
+				echo "<div class=\"customfields-onload\">";
+				echo "</div>";
 			}
 
 				/* status The “Status” field should not show up on front-end search. */
@@ -1627,6 +1631,8 @@ class RBAgency_Profile {
 						"sort_by" => NULL,
 						"list_layout" => NULL
 					), $atts));
+
+
 
 				/*
 				 * WHERE
