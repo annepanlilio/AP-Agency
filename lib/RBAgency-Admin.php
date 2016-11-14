@@ -89,6 +89,8 @@ class RBAgency_Admin {
 				// saved search for casting
 				add_submenu_page("rb_agency_menu", __("Client Activity", RBAGENCY_casting_TEXTDOMAIN), __("Client Searches", RBAGENCY_casting_TEXTDOMAIN), 'edit_posts',"rb_agency_casting_searchsaved", array('RBAgency_Admin', 'menu_casting_searchsaved'));
 
+				add_submenu_page("rb_agency_menu", __("Client Types", RBAGENCY_casting_TEXTDOMAIN), __("Client Types", RBAGENCY_casting_TEXTDOMAIN), 'edit_posts',"rb_agency_casting_types", array('RBAgency_Admin', 'menu_casting_types'));
+
 				// job postings
 				add_submenu_page("rb_agency_menu", __("Job Types", RBAGENCY_casting_TEXTDOMAIN), __("Job Types", RBAGENCY_casting_TEXTDOMAIN), 'edit_posts',"rb_agency_casting_jobpostings", array('RBAgency_Admin', 'menu_casting_jobpostings'));
 				add_submenu_page("rb_agency_menu", __("Casting Jobs", RBAGENCY_TEXTDOMAIN), __("Casting Jobs", RBAGENCY_TEXTDOMAIN), 'edit_posts',"rb_agency_castingjobs", array('RBAgency_Admin', 'menu_castingjob'));
@@ -144,6 +146,10 @@ class RBAgency_Admin {
 
 		public static function menu_casting_searchsaved(){
 			rb_agency_casting_searchsaved();
+		}
+
+		public static function menu_casting_types(){
+			include_once(RBAGENCY_PLUGIN_DIR.'view/admin-castingtypes.php');
 		}
 
 		public static function menu_casting_jobpostings(){

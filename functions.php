@@ -6968,4 +6968,59 @@ function rb_get_profile_custom_value($profileID,$customView = ""){
 	}
 	return $result_value_handler;
 }
+
+function switch_language(){
+	global $wpdb;
+	$current_url = "http://".$_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+	if(isset($_GET['sl'])){
+		$selected_lang = isset($_GET['sl'])?$_GET['sl']:"";
+		$sql = "UPDATE ".$wpdb->prefix."options SET option_value = %s WHERE option_name = 'WPLANG'";
+		$updated = $wpdb->query($wpdb->prepare($sql,$selected_lang));
+		if($updated){
+			$request_uri = strpos(site_url(), 'localhost')>-1 ? $_SERVER['REQUEST_URI'] : $_SERVER['REQUEST_URI'];
+			$current_url_arr = explode("?",$current_url);
+			wp_redirect($current_url_arr[0]);
+		}
+	}
+	echo "<style>
+		.language_files li{ float:left; list-style:none; margin-right:5px;}
+		.language_files li a{  text-decoration:none; }
+	</style>";
+	$dir = RBAGENCY_PLUGIN_DIR."assets/translation/";
+	echo "<ul class=\"language_files\">";
+	if (is_dir($dir)){
+	  if ($dh = opendir($dir)){
+	    while (($file = readdir($dh)) !== false){
+	    	
+	      if(strpos($file,".po")>-1){
+	      	$pofileName = str_replace(array("rb-agency-",".po"), "", $file);
+	      	$flag = "";
+			if($pofileName == 'de_DE'){
+	      		$flag = RBAGENCY_PLUGIN_URL."/assets/img/flags/dutch.png";
+	      	}elseif($pofileName == 'en_US'){
+	      		$flag = RBAGENCY_PLUGIN_URL."/assets/img/flags/usa.png";
+	      	}
+	      	echo "<li><a href=\"".$current_url."/?sl=".$pofileName."\" ><img src='".$flag."'></a></li>";
+	      }
+	    }
+	    closedir($dh);
+	  }
+	}
+	echo "</ul>";
+	
+}
+add_shortcode('rb_language_switcher','switch_language');
+
+function rb_agency_delete_casting_type(){
+	global $wpdb;
+	$casting_type_id = $_POST["casting_type_id"];
+
+	$sql = "DELETE FROM ".$wpdb->prefix."agency_casting_types WHERE CastingTypeID = %d";
+	$wpdb->query($wpdb->prepare($sql,$casting_type_id));
+
+	die();
+}
+add_action("wp_ajax_rb_agency_delete_casting_type","rb_agency_delete_casting_type");
+add_action("wp_ajax_nopriv_rb_agency_delete_casting_type","rb_agency_delete_casting_type");
+
 ?>

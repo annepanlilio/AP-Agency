@@ -1741,7 +1741,7 @@
 							$heightraw = 0;
 							$heightfeet = 0;
 							$heightinch = 0;
-							$arr[] = $i;
+							
 							while($i<=90)  {
 								$heightraw = $i;
 								$heightfeet = floor($heightraw/12);
@@ -2051,6 +2051,21 @@
 		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue, cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID AND c.ProfileCustomHideProfileView = 0 WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
 		foreach ($resultsCustom as $resultCustom) {
 
+			$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $resultCustom->ProfileCustomID,$ProfileID),ARRAY_A);
+				$row = $subresult;
+
+				if(!empty($resultCustom->ProfileCustomValue)){
+					$resultCustom->ProfileCustomValue = $resultCustom->ProfileCustomValue;
+				}else{
+					for($idx=0;$idx<10;$idx++){
+						if(!empty($row[$idx]['ProfileCustomValue'])){
+							$resultCustom->ProfileCustomValue = $row[$idx]['ProfileCustomValue'];
+						}					
+						
+					}
+					
+				}
+			
 			if(!in_array($resultCustom->ProfileCustomTitle, $title_to_exclude_arr)){
 
 				// If a value exists...
