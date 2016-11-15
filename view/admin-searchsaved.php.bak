@@ -138,7 +138,12 @@ $siteurl = get_option('siteurl');
 	 */
 
 		$SearchID = $_GET['SearchID'];
-
+		//check for searchmuxcustomthumbnail column
+		$wpdb->get_results("SELECT SearchMuxCustomThumbnail FROM ".table_agency_searchsaved_mux." WHERE SearchID = $SearchID");
+		if($wpdb->num_rows == 0){
+			$queryAlter = "ALTER TABLE " . table_agency_searchsaved_mux ." ADD SearchMuxCustomThumbnail varchar(200) default NULL";
+			$wpdb->query($queryAlter);
+		}
 		$dataSearchSavedMux = $wpdb->get_row("SELECT * FROM " . table_agency_searchsaved_mux ." WHERE SearchID=".$SearchID." ", ARRAY_A ,0);
 		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash, searchsent.SearchMuxCustomThumbnail FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
 		$data =  $wpdb->get_row($query);

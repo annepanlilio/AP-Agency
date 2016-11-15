@@ -25,7 +25,18 @@ $siteurl = get_option('siteurl');
 		$SearchProfileID	= isset($_POST['SearchProfileID'])?$_POST['SearchProfileID']:"";
 		$SearchOptions		= isset($_POST['SearchOptions'])?$_POST['SearchOptions']:"";
 
+		$SearchCastingEmail = isset($_POST["SearchCastingEmail"]) ? $_POST["SearchCastingEmail"] : "";		
 		$SearchProfileID = implode(",", array_unique(array_filter(explode(",",$SearchProfileID))));
+
+		$SearchProfileIDVal = "";
+		if(!empty($SearchProfileID) && !empty($SearchCastingEmail)){	
+			$SearchProfileIDVal = $SearchProfileID.",".$SearchCastingEmail;
+		}elseif(empty($SearchProfileID) && !empty($SearchCastingEmail)){
+			$SearchProfileIDVal = $SearchCastingEmail;
+		}elseif(!empty($SearchProfileID) && empty($SearchCastingEmail)){
+			$SearchProfileIDVal = $SearchProfileID;
+		}
+
 		// What is action?
 		$action = $_POST['action'];
 
@@ -46,7 +57,7 @@ $siteurl = get_option('siteurl');
 					)" . "VALUES (
 						'" . esc_sql($SearchTitle) . "',
 						'" . esc_sql($SearchType) . "',
-						'" . esc_sql($SearchProfileID) . "',
+						'" . esc_sql($SearchProfileIDVal) . "',
 						'" . esc_sql($SearchOptions) . "'
 					)";
 
@@ -179,15 +190,36 @@ $siteurl = get_option('siteurl');
 		</div>
 		<?php
 
-		$profile_list = implode(",",array_unique(array_filter(explode(",",$data->SearchProfileID))));
+		$search_profile_arr = explode(",",$data->SearchProfileID);
+		$searchProfileArr = array();
+		$searchCastingArr = array();
+		foreach($search_profile_arr as $k=>$v){
+			if(strpos($v, '@')>-1){
+				$searchCastingArr[] = "'".$v."'";
+			}else{
+				$searchProfileArr[] =$v;
+			}
+		}
+
+		$profile_list = implode(",",array_unique($searchProfileArr));
 
 		$query ="SELECT * FROM ". table_agency_profile ." profile, "
 				. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN ("
 				.(isset($profile_list)? $profile_list:"''").") GROUP BY profile.ProfileID";
 				//.(isset($profile_list)? $profile_list:"''").")  GROUP BY profile.ProfileContactNameFirst";
 		$results = $wpdb->get_results($query, ARRAY_A);
-		$count = $wpdb->num_rows;
+		$count = $wpdb->num_rows + (count($_SESSION['cartAgentsArray']));
 
+		$arr = array();
+		foreach($_SESSION['cartAgentsArray'] as $k=>$v){
+			if(!empty($v)){
+				$arr[] = "'".$v."'";
+			}
+		}
+		$implodedCastingEmail = "(".implode(",",$arr).")";
+
+		$sql = "SELECT t.*, c.CastingUserLinked,c.CastingContactNameFirst,c.CastingContactNameLast,c.CastingContactDisplay,c.CastingContactCompany FROM ".$wpdb->prefix."agency_casting as c INNER JOIN ".$wpdb->prefix."agency_casting_types as t ON t.CastingTypeID = c.CastingType WHERE c.CastingContactEmail IN $implodedCastingEmail";
+		$resultsCasting = $wpdb->get_results($sql, ARRAY_A);
 		if(empty($data->SearchMuxCustomThumbnail) && isset($_SESSION["profilephotos"])){
 			$arr_thumbnail = (array)unserialize($_SESSION["profilephotos"]);
 		} else {
@@ -242,6 +274,36 @@ $siteurl = get_option('siteurl');
 					}
 					echo "<span>" . $ProfileContactDisplay . "</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
 					echo "</div>\n";
+					}
+
+
+					foreach($resultsCasting as $result){
+						$displayName = "";
+						$resultCastingID = $result["CastingUserLinked"];
+						$resultCastingContactNameFirst = $result["CastingContactNameFirst"];
+						$resultCastingContactNameLast = $result["CastingContactNameLast"];
+						$resultCastingContactDisplay = $result["CastingContactDisplay"];
+						$resultCastingContactCompany = $result["CastingContactCompany"];
+
+						if ($rb_agency_option_profilenaming == 0) {
+							$displayName = $resultCastingContactNameFirst . " ". $resultCastingContactNameLast;
+						} elseif ($rb_agency_option_profilenaming == 1) {
+							$displayName = $resultCastingContactNameFirst . " ". substr($resultCastingContactNameLast, 0, 1);
+						} elseif ($rb_agency_option_profilenaming == 2) {
+							$displayName = $resultCastingContactDisplay;
+						} elseif ($rb_agency_option_profilenaming == 3) {
+							$displayName = "ID-". $resultCastingID;
+						} elseif ($rb_agency_option_profilenaming == 4) {
+							$displayName = $resultCastingContactNameFirst;
+						} elseif ($rb_agency_option_profilenaming == 5) {
+							$displayName = $resultCastingContactNameLast;
+						}
+
+						echo "  <div class=\"casting_agent_".$resultCastingID."\" style=\"position: relative; border: 1px solid #e1e1e1; line-height: 22px; float: left; padding: 10px; width: 125px; margin: 6px; \">";
+						echo "    <div style=\"text-align: center; \"><h3 style=\"text-align:left;\">". $displayName  . "</h3></div>";
+						echo "<img src=\"".site_url()."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg\" style=\"width:100%\"/>";
+						echo "<p>Company:&nbsp;".$resultCastingContactCompany."</p><p>Casting Type:&nbsp;".$result["CastingTypeTitle"]."</p>";
+							echo "</div>";
 					}
 					?>
 				</div> <!-- #searchsaved-profiles -->
@@ -299,7 +361,7 @@ $siteurl = get_option('siteurl');
 				. table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN ("
 				.$profile_list.")  GROUP BY(profile.ProfileID) ";
 		$results = $wpdb->get_results($query, ARRAY_A);
-		$count = $wpdb->num_rows;
+		$count = $wpdb->num_rows + (count($_SESSION['cartAgentsArray']));
 		$arr_thumbnail = (array)unserialize($data->SearchMuxCustomThumbnail);
 		?>
 		<form method="post" action="">
@@ -405,7 +467,7 @@ $siteurl = get_option('siteurl');
 			if (isset($_GET["action"]) && $_GET["action"] == "searchSave") { // Add to Cart
 
 				// Set Casting Cart Session
-				if (isset($_SESSION['cartArray'])) {
+				if (isset($_SESSION['cartArray']) || isset($_SESSION['cartAgentsArray'])) {
 
 					$cartArray = $_SESSION['cartArray'];
 					$cartString = implode(",", array_filter(array_unique($cartArray)));
@@ -429,6 +491,9 @@ $siteurl = get_option('siteurl');
 								<div id="searchsaved-save" class="searchsaved-profiles">
 
 								<?php
+								
+								$cartString = substr($cartString,-1) == "," ? rtrim($cartString,",") : $cartString;
+								$cartString = substr($cartString, 0, 1) == "," ? ltrim($cartString,",") : $cartString;
 								$query = "SELECT * FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$cartString.") GROUP BY profile.ProfileID ORDER BY ProfileContactNameFirst ASC";
 								$results = $wpdb->get_results($query, ARRAY_A);
 								$count = $wpdb->num_rows;
@@ -446,7 +511,7 @@ $siteurl = get_option('siteurl');
 									} elseif ($rb_agency_option_profilenaming == 1) {
 										$ProfileContactDisplay = $ProfileContactNameFirst . " ". substr($ProfileContactNameLast, 0, 1);
 									} elseif ($rb_agency_option_profilenaming == 2) {
-										$ProfileContactDisplay = $data2["ProfileContactDisplay"];
+										$ProfileContactDisplay = $data["ProfileContactDisplay"];
 									} elseif ($rb_agency_option_profilenaming == 3) {
 										$ProfileContactDisplay = "ID-". $ProfileID;
 									} elseif ($rb_agency_option_profilenaming == 4) {
@@ -483,9 +548,48 @@ $siteurl = get_option('siteurl');
 									echo "</div>\n";
 
 								}
+								echo "  <div style=\"clear: both;\"></div>\n";	
 
+								foreach(@$_SESSION["cartAgentsArray"] as $k=>$v){
+									if(!empty($v)){
+										$castingEmail = "'".$v."'";
+										$sql = "SELECT t.*,c.CastingUserLinked,c.CastingContactNameFirst,c.CastingContactNameLast,c.CastingContactDisplay,c.CastingContactCompany FROM ".$wpdb->prefix."agency_casting as c INNER JOIN ".$wpdb->prefix."agency_casting_types as t ON t.CastingTypeID = c.CastingType WHERE c.CastingContactEmail= $castingEmail";
+										
+										$results = $wpdb->get_row($sql,ARRAY_A);
+										
+											
+											$displayName = "";
+											$resultCastingID = $results["CastingUserLinked"];
+											$resultCastingContactNameFirst = $results["CastingContactNameFirst"];
+											$resultCastingContactNameLast = $results["CastingContactNameLast"];
+											$resultCastingContactDisplay = $results["CastingContactDisplay"];
+											$resultCastingContactCompany = $results["CastingContactCompany"];
+
+											if ($rb_agency_option_profilenaming == 0) {
+												$displayName = $resultCastingContactNameFirst . " ". $resultCastingContactNameLast;
+											} elseif ($rb_agency_option_profilenaming == 1) {
+												$displayName = $resultCastingContactNameFirst . " ". substr($resultCastingContactNameLast, 0, 1);
+											} elseif ($rb_agency_option_profilenaming == 2) {
+												$displayName = $resultCastingContactDisplay;
+											} elseif ($rb_agency_option_profilenaming == 3) {
+												$displayName = "ID-". $resultCastingID;
+											} elseif ($rb_agency_option_profilenaming == 4) {
+												$displayName = $resultCastingContactNameFirst;
+											} elseif ($rb_agency_option_profilenaming == 5) {
+												$displayName = $resultCastingContactNameLast;
+											}
+
+											echo "  <div class=\"casting_agent_".$resultCastingID."\" style=\"position: relative; border: 1px solid #e1e1e1; line-height: 22px; float: left; padding: 10px; width: 210px; margin: 6px; \">";
+											echo "    <div style=\"text-align: center; \"><h3 style=\"text-align:left;\">". $displayName  . "</h3></div>";
+											echo "<img src=\"".site_url()."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg\" style=\"width:50%\"/>";
+											echo "<p>Company:&nbsp;".$resultCastingContactCompany."</p><p>Casting Type:&nbsp;".$results["CastingTypeTitle"]."</p>";
+											echo "</div>";
+										
+									}
+								}
 								?>
 							<input type="hidden" name="SearchProfileID" value="<?php echo $cartString; ?>" />
+							<input type="hidden" name="SearchCastingEmail" value="<?php echo implode(",",$_SESSION["cartAgentsArray"]); ?>" />
 							</div>
 						</td>
 					</tr>
