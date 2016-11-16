@@ -166,7 +166,7 @@ class RBAgency_Casting {
 
 				echo "<div class=\"empty-cart\"><a href=\"?page=". $_GET['page'] ."&action=cartEmpty\" class=\"button-secondary\">". __("Empty Cart", RBAGENCY_TEXTDOMAIN) ."</a></div>";
 				echo "<div class=\"in-cart\">". __("Currently", RBAGENCY_TEXTDOMAIN) ." <strong>". $count ."</strong> ". __("in Cart", RBAGENCY_TEXTDOMAIN) ."</div>";
-				echo "<div style=\"clear: both; border-top: 2px solid #c0c0c0;\" class=\"profile\">";
+				echo "<div class=\"casting-agents\">";
 
 				if ($count == 1) {
 					$cartAction = "cartEmpty";
@@ -180,7 +180,15 @@ class RBAgency_Casting {
 					if(isset($_SESSION["profilephotos"]))
 					$arr_thumbnail = (array)unserialize($_SESSION["profilephotos"]);
 					//print_r($results);
+
+				$bfi_params = array(
+								'crop'=>true,
+								'width'=>256,
+								'height'=>256
+							);
+
 				foreach($results as $data) {
+
 					//echo $data["ProfileID"];
 					$ProfileContactNameFirst = $data["ProfileContactNameFirst"];
 					$ProfileContactNameLast = $data["ProfileContactNameLast"];
@@ -201,30 +209,35 @@ class RBAgency_Casting {
 
 
 					$ProfileDateUpdated = $data['ProfileDateUpdated'];
-					echo "  <div style=\"position: relative; border: 1px solid #e1e1e1; line-height: 22px; float: left; padding: 10px; width: 210px; margin: 6px; \">";
-					echo "    <div style=\"text-align: center; \"><h3>". $ProfileContactDisplay  . "</h3></div>";
-					echo "    <div style=\"float: left; width: 100px; height: 100px; overflow: hidden; margin-top: 2px; \">";
+					echo "<div class=\"casting-agent\">";
+					echo "	<div class=\"agent-box\">";
+					echo "    <h3>". $ProfileContactDisplay  . "</h3>";
+					
 					if(isset($arr_thumbnail[$data["ProfileID"]])){
 						$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data["ProfileID"]]));
-						echo "<img class=\"img-".$data['ProfileID']."\" style=\"width: 100px; \" src=\"". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL ."\" /></div>\n";
+						$thumb_src = RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL;
+						$thumb_bfi = bfi_thumb( $thumb_src, $bfi_params );
+						echo "<img id=\"img-".$data['ProfileID']."\" class=\"agent-thumb\" src=\"". $thumb_bfi ."\" />\n";
 					} else {
-						echo "<img class=\"img-".$data['ProfileID']."\" style=\"width: 100px; \" src=\"". RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'] ."\" /></div>\n";
+						$thumb_src = RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $data['ProfileMediaURL'];
+						$thumb_bfi = bfi_thumb( $thumb_src, $bfi_params );
+						echo "<img id=\"img-".$data['ProfileID']."\" class=\"agent-thumb\" src=\"". $thumb_bfi ."\" />\n";
 					}
-					echo "    <div style=\"float: left; width: 100px; height: 100px; overflow: scroll-y; margin-left: 10px; line-height: 11px; font-size: 9px; \">\n";
+					
 
 					if (!empty($data['ProfileDateBirth'])) {
-						echo "<strong>Age:</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."<br />\n";
+						echo "<p class=\"detail\"><strong>Age:</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</p>\n";
 					}
 					// TODO: ADD MORE FIELDS
 
-					echo "    </div>";
-					echo "    <div style=\"position: absolute; z-index: 20; top: 120px; left: 200px; width: 20px; height: 20px; overflow: hidden; \"><a href=\"?page=". $_GET['page'] ."&actiontwo=cartRemove&action=cartAdd&RemoveID=". $data['ProfileID'] ."&\" title=\"". __("Remove from Cart", RBAGENCY_TEXTDOMAIN) ."\"><img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/remove.png\" style=\"width: 20px; \" alt=\"". __("Remove from Cart", RBAGENCY_TEXTDOMAIN) ."\" /></a></div>";
-					echo "    <div style=\"clear: both; \"></div>";
-					echo "	<a id=\"".$data['ProfileID']."\" attr-gallery=\"".$data['ProfileGallery']."\"  href=\"#TB_inline?width=600&height=350&inlineId=profilephotos\" class=\"thickbox\" title=\"Change thumbnail\">Change thumbnail</a>";
+					
+					echo "    <a class=\"remove-agent-casting-cart\" href=\"?page=". $_GET['page'] ."&actiontwo=cartRemove&action=cartAdd&RemoveID=". $data['ProfileID'] ."&\" title=\"". __("Remove from Cart", RBAGENCY_TEXTDOMAIN) ."\"><img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/remove.png\" style=\"width: 20px; \" alt=\"". __("Remove from Cart", RBAGENCY_TEXTDOMAIN) ."\" /></a>";					
+					echo "	<p class=\"detail\"><a id=\"".$data['ProfileID']."\" attr-gallery=\"".$data['ProfileGallery']."\"  href=\"#TB_inline?width=600&height=350&inlineId=profilephotos\" class=\"thickbox\" title=\"Change thumbnail\">Change thumbnail</a></p>";
 					echo " 	<input type=\"hidden\" id=\"thumbnail-".$data['ProfileID']."\"  name=\"thumbnail[".$data['ProfileID']."]\" value=\"\"/>";
 					echo "  </div>";
+					echo "  </div>";
 				}
-				echo "  <div style=\"clear: both;\"></div>\n";	
+				// echo "  <div style=\"clear: both;\"></div>\n";	
 
 				$arr = array();
 				if(!empty($_SESSION["cartAgentsArray"])){
@@ -257,10 +270,14 @@ class RBAgency_Casting {
 									$displayName = $resultCastingContactNameLast;
 								}
 								
-								echo "  <div class=\"casting_agent_".$resultCastingID."\" style=\"position: relative; border: 1px solid #e1e1e1; line-height: 22px; float: left; padding: 10px; width: 210px; margin: 6px; \">";
-								echo "    <div style=\"text-align: center; \"><h3>". $displayName  . "</h3></div>";
-								echo "<img src=\"".site_url()."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg\" style=\"width:50%\"/>";
-								echo "<p>Company:&nbsp;".$resultCastingContactCompany."</p><p>Casting Type:&nbsp;".$results["CastingTypeTitle"]."</p><a href=\"#\" style=\"float:right;\" class=\"remove-agent-casting-cart\" id=\"".$resultCastingID."\"><img src=\"".site_url()."/wp-content/plugins/rb-agency/assets/img/remove.png\" style=\"width: 20px; \" alt=\"Remove from Cart\" data-pin-nopin=\"true\"></a>";
+								echo "<div id=\"casting_agent_".$resultCastingID."\" class=\"casting-agent\">";
+								echo "	<div class=\"agent-box\">";
+								echo "		<h3>". $displayName  . "</h3>";
+								echo "		<img class=\"agent-thumb\" src=\"".site_url()."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg\" />";
+								echo "		<p class=\"detail\"><strong>Company:</strong>&nbsp;".$resultCastingContactCompany."</p>";
+								echo "		<p class=\"detail\"><strong>Casting Type:</strong>&nbsp;".$results["CastingTypeTitle"]."</p>";
+								echo "		<a href=\"#\" class=\"remove-agent-casting-cart\" id=\"".$resultCastingID."\"><img src=\"".site_url()."/wp-content/plugins/rb-agency/assets/img/remove.png\" alt=\"Remove from Cart\" data-pin-nopin=\"true\"></a>";
+								echo "	</div>";
 								echo "</div>";
 							
 						}
@@ -726,6 +743,8 @@ class RBAgency_Casting {
 							$sql = "SELECT t.*,c.CastingID,c.CastingUserLinked,c.CastingContactNameFirst,c.CastingContactNameLast,c.CastingContactDisplay,c.CastingContactCompany FROM ".$wpdb->prefix."agency_casting as c INNER JOIN ".$wpdb->prefix."agency_casting_types as t ON t.CastingTypeID = c.CastingType WHERE c.CastingContactEmail IN $implodedCastingEmail";
 							$resultsCasting = $wpdb->get_results($sql, ARRAY_A);
 
+							$bfi_params = array( 'crop'=>true, 'width'=>150, 'height'=>200 ); //BFI Image Parameters
+
 							foreach($results as $data2) {
 								$ProfileContactNameFirst = $data2["ProfileContactNameFirst"];
 								$ProfileContactNameLast = $data2["ProfileContactNameLast"];
@@ -743,15 +762,19 @@ class RBAgency_Casting {
 								} elseif ($rb_agency_option_profilenaming == 5) {
 									$ProfileContactDisplay = $ProfileContactNameLast;
 								}
-								$profileimage .= "<div class=\"saved-profile\" style=\"float: left; margin: 0 10px 15px 0;\">";// inline css for email
+								$profileimage .= "<div class=\"saved-profile\" style=\"float: left; margin:10px 10px 0\">";// inline css for email
 								$profileimage .= "<div class=\"thumbnail\">\n";
 								if(isset($arr_thumbnail[$data2["ProfileID"]])){
 									$thumbnail = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID =  %d ", $arr_thumbnail[$data2["ProfileID"]]));
+									$image_path = RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL;
+									$image_src = bfi_thumb( $image_path, $bfi_params );
 									$profileimage .= "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
-									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $thumbnail->ProfileMediaURL."\"/></a>";
+									$profileimage .= "<img src=\"". $image_src ."\"/></a>";
 								} else {
+									$image_path = RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL'];
+									$image_src = bfi_thumb( $image_path, $bfi_params );
 									$profileimage .= "<a href=\"". RBAGENCY_PROFILEDIR . $data2['ProfileGallery'] ."/\" target=\"_blank\">";
-									$profileimage .= "<img style=\"max-width:130px; max-height:150px; \" src=\"". RBAGENCY_UPLOADDIR ."". $data2['ProfileGallery'] ."/". $data2['ProfileMediaURL']."\"/></a>";
+									$profileimage .= "<img src=\"". $image_src ."\"/></a>";
 								}
 								$profileimage .= "</div>\n";
 								$profileimage .= "<span>". $ProfileContactDisplay ."</span>"; //stripslashes($data2['ProfileContactNameFirst']) ." ". stripslashes($data2['ProfileContactNameLast']);
@@ -760,9 +783,8 @@ class RBAgency_Casting {
 									$profileimage .= "<br>". rb_agency_get_age($data2['ProfileDateBirth'], array('email_month' =>$detail_month_op,'email_day' =>$detail_day_op,'email_year' =>$detail_year_op)) ."</span>";
 								}
 
-								$profileimage .= "</div>\n";
-							}
-							$profileimage .="</div>";
+								$profileimage .= "</div><!-- .saved-profile -->\n";
+							}							
 
 							$castingInfo = "";
 							foreach($resultsCasting as $result){
@@ -787,12 +809,13 @@ class RBAgency_Casting {
 									$displayName = $resultCastingContactNameLast;
 								}
 
-								$castingInfo .= "  <div class=\"casting_agent_".$resultCastingID."\" style=\"position: relative; border: 1px solid #e1e1e1; line-height: 22px; float: left; padding: 10px; width: 210px; margin: 6px; \">";
-								$castingInfo .= "    <div style=\"text-align: center; \"><h3 style=\"text-align:left;\">". $displayName  . "</h3></div>";
-								$castingInfo .= "<a href=\"".admin_url("admin.php?page=rb_agency_casting_manage&action=editRecord&CastingID=".$result["CastingID"])."\"><img src=\"".site_url()."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg\" style=\"width:50%\"/></a>";
-								$castingInfo .= "<p>Company:&nbsp;".$resultCastingContactCompany."</p><p>Casting Type:&nbsp;".$result["CastingTypeTitle"]."</p>";
+								$castingInfo .= "  <div class=\"saved-agent\" id=\"casting_agent_".$resultCastingID."\"  style=\"float: left; margin:10px 10px 0; width: 150px;\">";	// inline css for email							
+								$castingInfo .= "<a href=\"".admin_url("admin.php?page=rb_agency_casting_manage&action=editRecord&CastingID=".$result["CastingID"])."\"><img src=\"".site_url()."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg\" style=\"max-width: 100%\" /></a>";
+								$castingInfo .= "    <h4 style=\"margin: 0\">". $displayName  . "</h4>";
+								$castingInfo .= "<p class=\"detail\"><strong>Company:</strong>&nbsp;".$resultCastingContactCompany."</p><p class=\"detail\"><strong>Casting Type:</strong>&nbsp;".$result["CastingTypeTitle"]."</p>";
 								$castingInfo .= "</div>";
 							}
+							$castingInfo .="</div><!-- #searchsaved-emailsent -->";
 			// Mail it
 			$headers[]  = 'MIME-Version: 1.0'. "\r\n";
 			$headers[] = 'Content-type: text/html; charset=iso-8859-1'. "\r\n";

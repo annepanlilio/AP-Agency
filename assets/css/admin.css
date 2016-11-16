@@ -200,8 +200,9 @@ input[type=radio]:checked:before { margin-bottom: 2px!important; }
 /* Saved Searches */
 .searchsaved-profiles { overflow: hidden; padding: 0 0 10px 10px; background: #EAEAEA; border: 1px solid #dedede; }
 .agency_page_rb_agency_searchsaved hr { clear: both; }
-.searchsaved-profiles .saved-profile { float: left; margin: 10px 10px 0 0; max-width: 110px; height: 195px; }
-.searchsaved-profiles .saved-profile .thumbnail { overflow: hidden; max-width: 100%; margin-top: 5px; height: 150px; }
+.searchsaved-profiles .saved-profile,
+.searchsaved-profiles .saved-agent { float: left; margin: 10px 10px 0 0; max-width: 150px; }
+.searchsaved-profiles .saved-profile .thumbnail { overflow: hidden; max-width: 100%; }
 .searchsaved-profiles .saved-profile .thumbnail img { max-width: 100%; }
 
 /* Edit Saved Searches */
@@ -231,3 +232,67 @@ input[type=radio]:checked:before { margin-bottom: 2px!important; }
 
 .marked_changed{ border: 2px solid red!important; color:red!important;}
 .marked_changed_txt{ color:red!important; }
+
+
+/*RBAgency Casting Plugin*/
+.casting-agents {
+	clear: both;
+	margin: 0 -7px;
+}
+#casting-cart .casting-agent {
+	width: 50%;	
+	float: left;	
+	padding: 7px;
+	box-sizing: border-box;
+}
+#casting-cart .casting-agent .agent-box {	
+	padding: 5px;
+	position: relative;
+	border: 1px solid #e1e1e1;
+}
+#casting-cart .casting-agent .agent-thumb {
+	max-width: 100%;
+}
+#casting-cart .casting-agent .remove-agent-casting-cart {
+	top: 7px;
+	right: 7px;
+	z-index: 2;	
+	position: absolute;
+}
+#casting-cart .casting-agent .detail {
+	margin: 0;
+}
+/*Search Saved*/
+#saved-agents {
+	clear: both;
+	overflow: hidden;
+	margin-top: 30px;
+}
+#saved-agents .saved-agent {
+	float: left;
+	max-width: 150px;
+}
+#saved-agents .saved-agent .detail {
+	margin-top: 0;
+	font-size: small;	
+}
+#saved-agents .saved-agent-thumb {	
+	max-width: 100%;
+}
+#saved-agents .saved-agent .agent-name {	
+	margin: 0 0 5px;
+}
+/*Email Saved Search*/
+.searchsaved-profiles .saved-agent h4,
+.searchsaved-profiles .saved-profile h4 {
+	margin: 0 0 5px;
+}
+.searchsaved-profiles .saved-agent img,
+.searchsaved-profiles .saved-profile img {
+	max-width: 100%;    
+}
+.searchsaved-profiles .saved-agent .detail,
+.searchsaved-profiles .saved-profile .detail {
+	margin: 0;
+	font-size: small;
+}
