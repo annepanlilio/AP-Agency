@@ -1,4 +1,4 @@
-<?php
+<?php ob_start();
 /*
 Plugin Name: RB Agency
 Text Domain: rb-agency

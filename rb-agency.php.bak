@@ -216,6 +216,7 @@ See license.txt for full details.
 	include_once(RBAGENCY_PLUGIN_DIR.'ext/upload-multi.php');
 	include_once(RBAGENCY_PLUGIN_DIR.'ext/ecard-create.php');
 
+	require_once(RBAGENCY_PLUGIN_DIR."lib/RBAgency-Customfields.php");
 
 // *************************************************************************************************** //
 
