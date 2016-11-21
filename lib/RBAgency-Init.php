@@ -303,7 +303,7 @@ class RBAgency_Init {
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(17, 'Language', 	1, '', 0, 14, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");						
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(18, 'Booking', 	4, '', 0, 15, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(19, 'Date', 		10, '', 0, 0, 0, 1, 1,0, 0, 1, 0, 0, 0, 0)");
-						$results = $wpdb->query($insert);
+						//$results = $wpdb->query($insert);
 
 					}
 
