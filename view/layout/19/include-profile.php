@@ -315,7 +315,11 @@ echo "				<div id=\"resume\" class=\"tab-pane fade\" role=\"tabpanel\">";
 echo "					<div class=\"container\">";
 echo "						<div class=\"digitals\">";
 								//get_profile_media_by_type("Resume", $ProfileID, $ProfileGallery, true);
-								echo !empty($ProfileResume) ? str_replace("\n", "<br>", $ProfileResume) : "";
+								if(!empty($ProfileResume)){
+									$content = apply_filters( 'the_content', $ProfileResume );
+								    $content = str_replace( ']]>', ']]&gt;', $content );
+								    echo $content;
+								}
 echo "							<div class=\"cb\"></div>";
 echo "						</div><!-- .digitals -->";
 echo "					</div><!-- .container -->";
