@@ -108,7 +108,7 @@ echo "						<div id=\"stats\" class=\"rbcol-12 rbcolumn\">\n";
 echo "							<ul>\n";
 
 								if (!empty($ProfileGender) and $display_gender == true) {
-									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID='".$ProfileGender."' "),ARRAY_A,0 	);
+									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=%d ",$ProfileGender),ARRAY_A,0 	);
 									$count = $wpdb->num_rows;
 									if($count > 0){
 										echo "<li class=\"rb_gender\" id=\"rb_gender\"><span class=\"stat-label\">". __("Gender", RBAGENCY_TEXTDOMAIN). ": </span><span class=\"stat-value\">". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</span></li>\n";
