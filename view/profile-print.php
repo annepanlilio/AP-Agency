@@ -58,7 +58,7 @@ global $wpdb;
 			border: none;
 		}
 		#fullpage .box {
-			height: 860px;
+			height: 1030px;
 			overflow: hidden;
 		}
 		#fullpage #print_actions {
