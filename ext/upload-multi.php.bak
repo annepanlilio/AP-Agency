@@ -210,7 +210,9 @@ $ProfileDateBirth = $resultsModelList['ProfileDateBirth'];
 			<?php // echo $ProfileContactDisplay;?>
 		</h2>
 		<ul class="model-details">			
+			<?php if(!empty(rb_agency_get_age($ProfileDateBirth))){ ?>
 			<li><span><?php echo __('Age'); ?>: </span>&nbsp;<?php echo rb_agency_get_age($ProfileDateBirth); ?></li>
+			<?php } ?>
 
 			<?php
 			#Get custom fields
