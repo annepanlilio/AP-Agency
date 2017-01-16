@@ -1800,7 +1800,15 @@ class RBAgency_Profile {
 						$filter2 = "";
 
 						// Loop through all attributes looking for custom
-						foreach ($atts as $key => $val) { //!empty($_POST)?$_POST:$_GET)
+						$request = '';
+						if(isset($_GET['page'])){
+							$request = $_REQUEST;
+						}elseif(isset($_REQUEST)){
+							$request = $_REQUEST;
+						}else{
+							$request = $atts;
+						}
+						foreach ($request as $key => $val) { //!empty($_POST)?$_POST:$_GET)
 							
 							if (substr(strtolower($key),0,15) == "profilecustomid") {
 
