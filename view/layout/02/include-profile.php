@@ -50,6 +50,8 @@ echo " 		<div id=\"rblayout-two\" class=\"rblayout\">\n";
 echo "  		<div class=\"rbcol-5 rbcolumn\">\n";
 echo "				<div id=\"profile-picture\">\n";
 
+						
+
 						// images
 						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1 LIMIT 1";
 						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg, $ProfileID),ARRAY_A);
@@ -70,15 +72,25 @@ echo "  		<div class=\"rbcol-7 rbcolumn\">\n";
 echo "				<div id=\"scroller\">\n";
 echo "					<div id=\"photo-scroller\" class=\"scroller\">";
 							// Image Slider
+							
+							$private_profile_photo = get_user_meta($ProfileUserLinked,'private_profile_photo',true);
+							$private_profile_photo_arr = explode(',',$private_profile_photo);
 
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 							$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 							$countImg  = $wpdb->num_rows;
 							foreach($resultsImg as $dataImg ){
 								if ($countImg > 1) {
-									echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ". $reltarget ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=109&h=150\"  /></a>\n";
+
+									if(!in_array($dataImg['ProfileMediaID'],$private_profile_photo_arr)){
+										echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ". $reltarget ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=109&h=150\"  /></a>\n";
+									}
+									
 								} else {
-									echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ". $reltarget ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=109&h=150\" /></a>\n";
+									if(!in_array($dataImg['ProfileMediaID'],$private_profile_photo_arr)){
+										echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ". $reltarget ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&w=109&h=150\" /></a>\n";
+									}
+									
 								}
 							}
 echo "					</div><!-- #photo-scroller -->"; //
@@ -114,7 +126,7 @@ echo "							<div id=\"stats\">\n";
 												echo "<li class=\"rb_gender\" id=\"rb_gender\"><strong>". __("Gender", RBAGENCY_TEXTDOMAIN). "<span>:</span></strong> ". __($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN). "</li>\n";
 										}
 									}
-
+									
 									// Insert Custom Fields
 									rb_agency_getProfileCustomFields($ProfileID, $ProfileGender);
 									if(function_exists('get_social_media_links')) {

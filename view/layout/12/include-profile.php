@@ -37,12 +37,16 @@ echo "			</div>\n"; // .rbcol-12
 echo "			<div class=\"rbcol-4 rbcolumn\">\n";
 echo "				<div id=\"profile-picture\">\n";
 						// images
-
+						$private_profile_photo = get_user_meta($ProfileUserLinked,'private_profile_photo',true);
+						$private_profile_photo_arr = explode(',',$private_profile_photo);
 						$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 						$resultsImg=  $wpdb->get_results($wpdb->prepare($queryImg),ARRAY_A);
 						$countImg  = $wpdb->num_rows;
 						foreach($resultsImg as $dataImg ){
-							echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
+							if(!in_array($dataImg['ProfileMediaID'],$private_profile_photo_arr)){
+								echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" /></a>\n";
+							}
+							
 						}
 echo "				</div>\n"; // #profile-picture
 echo "			</div>\n"; // .rbcol-4

@@ -150,15 +150,21 @@ Custom Layout: Shake it like a polaroid picture
 	echo "			<div class=\"album\">\n";
 
 			// images
-
+			$private_profile_photo = get_user_meta($ProfileUserLinked,'private_profile_photo',true);
+			$private_profile_photo_arr = explode(',',$private_profile_photo);
 			$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 			$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 			$countImg  = $wpdb->num_rows;
 			foreach($resultsImg as $dataImg ){
-	echo "				<div class=\"content\">\n";
-	echo "					<img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" />\n";
-	echo "					<span>". $ProfileContactDisplay ."</span>\n";
-	echo "				</div>\n";
+
+				if(!in_array($dataImg['ProfileMediaID'],$private_profile_photo_arr)){
+
+					echo "				<div class=\"content\">\n";
+					echo "					<img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" />\n";
+					echo "					<span>". $ProfileContactDisplay ."</span>\n";
+					echo "				</div>\n";
+				}
+	
 			}
 
 

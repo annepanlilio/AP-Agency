@@ -118,15 +118,28 @@ echo "						<div id=\"grid-view\" class=\"grid-view\">"; //
 								}
 echo "						</div><!-- #grid-view -->"; //
 // Scroller View
-echo "						<div id=\"photo-scroller\" class=\"scroller scroller-view\">";								
+echo "						<div id=\"photo-scroller\" class=\"scroller scroller-view\">";	
+
+								$private_profile_photo = get_user_meta($ProfileUserLinked,'private_profile_photo',true);
+								$private_profile_photo_arr = explode(',',$private_profile_photo);							
 								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 								$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
 								$countImg  = $wpdb->num_rows;
 								foreach($resultsImg as $dataImg ){
 									if ($countImg > 1) {
-										echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ". $reltarget ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=480\"  /></a>\n";
+
+										if(!in_array($dataImg['ProfileMediaID'],$private_profile_photo_arr)){
+											echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ". $reltarget ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=480\"  /></a>\n";
+
+										}
+										
 									} else {
-										echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ". $reltarget ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=480\" /></a>\n";
+
+										if(!in_array($dataImg['ProfileMediaID'],$private_profile_photo_arr)){
+											echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ". $reltarget ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=480\" /></a>\n";
+
+										}
+										
 									}
 								}
 echo "						</div><!-- #photo-scroller -->"; //

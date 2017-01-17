@@ -88,6 +88,10 @@ echo '<div class="profiledescription">'.$ProfileDescription.'</div>';
 				<div id="profile-slider" class="flexslider">
 					<ul class="slides" id="img_slde">
 						<?php
+
+						$private_profile_photo = get_user_meta($ProfileUserLinked,'private_profile_photo',true);
+						$private_profile_photo_arr = explode(',',$private_profile_photo);
+
 						// this will be a flag in the future. for enabling
 						// two images in the slider.
 						$option_two_image = 1;
@@ -101,21 +105,26 @@ echo '<div class="profiledescription">'.$ProfileDescription.'</div>';
 						$open = 1;
 						$close = false;
 						foreach($resultsImg as $dataImg ){
+
+
 								// option for two images
 								if($option_two_image){
+									if(!in_array($dataImg['ProfileMediaID'],$private_profile_photo_arr)){
 										if($open==1){
-										$close = false;
-										echo "<li>";
-										}
+												$close = false;
+												echo "<li>";
+												}
 
-									echo "<figure class=\"multi\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=400&h=600&zc=3\" alt=\"". $ProfileContactDisplay ."\" /></a></figure>";
+											echo "<figure class=\"multi\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&a=t&w=400&h=600&zc=3\" alt=\"". $ProfileContactDisplay ."\" /></a></figure>";
 
-										$open++;
-										if($open == 3){
-										$open = 1;
-											$close = true;
-											echo "</li>\n";
-										}
+												$open++;
+												if($open == 3){
+												$open = 1;
+													$close = true;
+													echo "</li>\n";
+												}
+
+									}	
 								} else {
 
 										if($dataImg['ProfileMediaPrimary']==1){
@@ -123,8 +132,12 @@ echo '<div class="profiledescription">'.$ProfileDescription.'</div>';
 									} else {
 										$ProfileMediaSecondry .= "<li><figure><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" title=\"". $ProfileContactDisplay ."\"><img src=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt=\"". $ProfileContactDisplay ."\" /></a></figure></li>\n";
 									}
-									echo $ProfileMediaPrimary; 
-									echo $ProfileMediaSecondry; 
+
+									if(!in_array($dataImg['ProfileMediaID'],$private_profile_photo_arr)){
+										echo $ProfileMediaPrimary; 
+										echo $ProfileMediaSecondry; 
+									}
+									
 								}
 						}
 						if($option_two_image && !$close){

@@ -218,18 +218,24 @@ echo "			<div class=\"rbcol-12 rbcolumn\">\n";
 echo "					<div id=\"photos\" class=\"lightbox-enabled profile-photos\">\n";
 
 							// images
+							$private_profile_photo = get_user_meta($ProfileUserLinked,'private_profile_photo',true);
+							$private_profile_photo_arr = explode(',',$private_profile_photo);
 							//$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType IN(\"Image\")  AND ProfileMediaPrimary = 0 ORDER BY $orderBy";
 							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
 							$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 							$countImg = $wpdb->num_rows;
 							foreach($resultsImg as $dataImg ){
 								if($primary_image_handler != $dataImg['ProfileMediaURL']){
-									echo "<div class=\"photo\">";
-									echo "	<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a>";
-									if($rb_agency_option_profile_thumb_caption ==1) {
-										echo "	<small>".$dataImg['ProfileMediaURL']."</small>\n";
+
+									if(!in_array($dataImg['ProfileMediaID'],$private_profile_photo_arr)){
+										echo "<div class=\"photo\">";
+										echo "	<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=150\" /></a>";
+										if($rb_agency_option_profile_thumb_caption ==1) {
+											echo "	<small>".$dataImg['ProfileMediaURL']."</small>\n";
+										}
+										echo "</div>\n";
 									}
-									echo "</div>\n";
+									
 								}
 							}
 

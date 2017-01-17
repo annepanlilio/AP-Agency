@@ -222,23 +222,36 @@ echo " 				<div class=\"rbcol-12 rbcolumn\">\n";
 echo " 					<div id=\"tab-panels\">\n";
 echo " 						<div class=\"row-photos tab\">\n";
 echo " 							<div class=\"tab-panel\">\n";
+									
+									$private_profile_photo = get_user_meta($ProfileUserLinked,'private_profile_photo',true);
+									$private_profile_photo_arr = explode(',',$private_profile_photo);
 
 									// images
 									foreach($resultsImg as $dataImg ){
 										if ($countImg > 1) {
-											echo "<div class=\"photo\" style=\"float:left;margin-right:19px;\">";
-											echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .");width: 210px;display: block;height: 230px;background-repeat: no-repeat;background-size: 100%;\"></a>";
-											if($rb_agency_option_profile_thumb_caption ==1) {
-												echo "	<br><small>".$dataImg['ProfileMediaURL']."</small>\n";
+
+											if(!in_array($dataImg['ProfileMediaID'],$private_profile_photo_arr)){
+												echo "<div class=\"photo\" style=\"float:left;margin-right:19px;\">";
+												echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .");width: 210px;display: block;height: 230px;background-repeat: no-repeat;background-size: 100%;\"></a>";
+												if($rb_agency_option_profile_thumb_caption ==1) {
+													echo "	<br><small>".$dataImg['ProfileMediaURL']."</small>\n";
+												}
+												echo "</div>\n";
+
 											}
-											echo "</div>\n";
+
+											
 										} else {
-											echo "<div class=\"photo\" style=\"float:left;margin-right:19px;\">";
-											echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .");width: 210px;display: block;height: 230px;background-repeat: no-repeat;background-size: 100%;\"></a>";
-											if($rb_agency_option_profile_thumb_caption ==1) {
-												echo "	<br><small>".$dataImg['ProfileMediaURL']."</small>\n";
+
+											if(!in_array($dataImg['ProfileMediaID'],$private_profile_photo_arr)){
+												echo "<div class=\"photo\" style=\"float:left;margin-right:19px;\">";
+												echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" rel=\"lightbox-profile". $ProfileID ."\" style=\"background-image: url(". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] .");width: 210px;display: block;height: 230px;background-repeat: no-repeat;background-size: 100%;\"></a>";
+												if($rb_agency_option_profile_thumb_caption ==1) {
+													echo "	<br><small>".$dataImg['ProfileMediaURL']."</small>\n";
+												}
+												echo "</div>\n";
 											}
-											echo "</div>\n";
+											
 										}
 									}
 echo " 							</div>\n"; // .tab-panel

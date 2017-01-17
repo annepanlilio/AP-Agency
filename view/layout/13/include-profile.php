@@ -102,6 +102,9 @@ echo "				<div id=\"profile-picture\">\n";
 
 
 						// images
+						
+						$private_profile_photo = get_user_meta($ProfileUserLinked,'private_profile_photo',true);
+						$private_profile_photo_arr = explode(',',$private_profile_photo);
 
 						$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"Image\" AND ProfileMediaPrimary = 1 LIMIT 1";
 
@@ -115,8 +118,11 @@ echo "				<div id=\"profile-picture\">\n";
 						foreach($resultsImg as $dataImg ){
 
 							$primary_image_handler = $dataImg['ProfileMediaURL'];
-
-							echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=340&a=t\"/></a>\n";
+							
+							if(!in_array($dataImg['ProfileMediaID'],$private_profile_photo_arr)){
+								echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ." ><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."&h=340&a=t\"/></a>\n";
+							}
+							
 						
 						}
 

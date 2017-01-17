@@ -111,6 +111,9 @@ if($ProfileIsBooking == 1 || $countLinks > 0){  // Booking Enabled
 	echo "		<div class=\"rbcol-6 rbcolumn\">\n";
 	echo "			<div id=\"photos\" class=\"booking\">\n";
 					
+					$private_profile_photo = get_user_meta($ProfileUserLinked,'private_profile_photo',true);
+					$private_profile_photo_arr = explode(',',$private_profile_photo);
+
 					foreach($resultsImg as $dataImg ){
 
 						$img_url = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
@@ -119,14 +122,20 @@ if($ProfileIsBooking == 1 || $countLinks > 0){  // Booking Enabled
 						$image_dimension = ($img_width > $img_height) ? "&h=460" : "&w=320&h=460"; // Ratio: 1.33
 
 						if ($countImg > 1) {
-							echo "<div class=\"photo\">";
-							echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."".$image_dimension."&a=t\"/></a>";
-							if($rb_agency_option_profile_thumb_caption ==1) {
-								echo "	<small>".__($dataImg['ProfileMediaURL'], RBAGENCY_TEXTDOMAIN)."</small>\n";
+							if(!in_array($dataImg['ProfileMediaID'],$private_profile_photo_arr)){
+								echo "<div class=\"photo\">";
+								echo "<a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."".$image_dimension."&a=t\"/></a>";
+								if($rb_agency_option_profile_thumb_caption ==1) {
+									echo "	<small>".__($dataImg['ProfileMediaURL'], RBAGENCY_TEXTDOMAIN)."</small>\n";
+								}
+								echo "</div>\n";
 							}
-							echo "</div>\n";
+							
 						} else {
-							echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."".$image_dimension."&a=t\"/></a></div>\n";
+							if(!in_array($dataImg['ProfileMediaID'],$private_profile_photo_arr)){
+								echo "<div class=\"photo\"><a href=\"". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" ". $reltype ."><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."".$image_dimension."&a=t\"/></a></div>\n";
+							}
+							
 						}
 					}
 	echo "			</div>\n"; // #photos
