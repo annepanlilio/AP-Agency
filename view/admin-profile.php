@@ -927,6 +927,14 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							}
 						}
 
+						// set private photos
+						$private_photos_arr = array();
+						foreach($_POST['setprivate'] as $k=>$v){
+							$private_photos_arr[] = $v;
+						}
+						$imploded_private_photos = implode(",",$private_photos_arr);
+						update_user_meta($ProfileUserLinked,"private_profile_photo",$imploded_private_photos);
+
 					}// if have_error == false
 
 						/* TODO: ------------ CLEAN THIS UP -------------- */
@@ -2584,6 +2592,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 								$countImg =$wpdb->num_rows;
 								$massDelete = "";
+								$private_profile_photo = get_user_meta($ProfileUserLinked,'private_profile_photo',true);
+								$private_profile_photo_arr = explode(',',$private_profile_photo);
 								echo "<div id='wrapper-sortable'><div id='gallery-sortable' style='list-style:none;'>";
 								foreach ($resultsImg as $dataImg) {
 									if ($dataImg['ProfileMediaPrimary']) {
@@ -2592,17 +2602,20 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										$isCheckedText = " Primary";
 										if ($countImg == 1) {
 											$toDelete = "<a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\" title=\"Delete this Photo\" class=\"rbicon-del icon-small\"><span>Delete</span> &raquo;</a>\n";
-											$massDelete = '<input type="checkbox" name="massgaldel" value="' . $dataImg['ProfileMediaID'] . '"> Select';
+											$massDelete = '<input type="checkbox" name="massgaldel" value="' . $dataImg['ProfileMediaID'] . '"> Select<br>';
+											$privateImage = "<input type=\"checkbox\" name=\"setprivate[]\" value=" . $dataImg['ProfileMediaID'] . " ".(in_array($dataImg['ProfileMediaID'], $private_profile_photo_arr) ? "checked" : "")."> Set Private";
 										} else {
 											$toDelete = "<a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\" title=\"Delete this Photo\" class=\"rbicon-del icon-small\"><span>Delete</span> &raquo;</a>\n";
-											$massDelete = '<input type="checkbox" name="massgaldel" value="' . $dataImg['ProfileMediaID'] . '"> Select';
+											$massDelete = '<input type="checkbox" name="massgaldel" value="' . $dataImg['ProfileMediaID'] . '"> Select<br>';
+											$privateImage = "<input type=\"checkbox\" name=\"setprivate[]\" value=" . $dataImg['ProfileMediaID'] . " ".(in_array($dataImg['ProfileMediaID'], $private_profile_photo_arr) ? "checked" : "")."> Set Private";
 										}
 									} else {
 										$toggleClass = "";
 										$isChecked = "";
 										$isCheckedText = " Set Primary";
 										$toDelete = "<a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\" title=\"Delete this Photo\" class=\"rbicon-del icon-small\"><span>Delete</span> &raquo;</a>\n";
-										$massDelete = '<input type="checkbox" name="massgaldel" value="' . $dataImg['ProfileMediaID'] . '"> Select';
+										$massDelete = '<input type="checkbox" name="massgaldel" value="' . $dataImg['ProfileMediaID'] . '"> Select<br>';
+										$privateImage = "<input type=\"checkbox\" name=\"setprivate[]\" value=" . $dataImg['ProfileMediaID'] . " ".(in_array($dataImg['ProfileMediaID'], $private_profile_photo_arr) ? "checked" : "")."> Set Private";
 									}
 									echo "<div class=\"item gallery-item".$toggleClass." ".(in_array($dataImg["ProfileMediaURL"], $newlyUploadedImages) ? "marked_changed" : "")."\">\n";
 
@@ -2620,7 +2633,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									echo "		<div class=\"item-order\" style='display:none;'>Order: <input type=\"hidden\" name=\"ProfileMediaOrder_" . $dataImg['ProfileMediaID'] . "\" style=\"width: 25px\" value=\"" . $dataImg['ProfileMediaOrder'] . "\" /></div>";
 									echo "  	<div class=\"make-primary\"><input type=\"radio\" name=\"ProfileMediaPrimary\" value=\"" . $dataImg['ProfileMediaID'] . "\" " . $isChecked . " /> " . $isCheckedText . "</div>";
 									echo "		<div>".$massDelete."</div>";
+									echo "<div>".$privateImage."</div>";
 									echo "  </div>\n";
+
 								}
 								echo "</div></div>";
 								?>
