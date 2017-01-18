@@ -163,11 +163,12 @@ input[type=checkbox], input[type=radio] { width: 12px!important; height: 15px!im
 input[type=radio]:checked:before { margin-bottom: 2px!important; }
 
 /* Dashboard Gallery Widget */
-#dashboard_gallery .main .gallery-item { float: left; margin: 10px 5px; padding: 5px; position: relative; font-size: 12px; height:100%;}
+#dashboard_gallery .main .gallery-item { float: left; margin: 10px 5px; padding: 5px; position: relative; font-size: 12px; width:100px; height: 215px;overflow:hidden;}
 #dashboard_gallery .main .gallery-item.primary { background: #666; }
 #dashboard_gallery .main .gallery-item.primary div.make-primary { color: #fff; }
 #dashboard_gallery .main .gallery-item img { max-height: 150px; float: left; display: block; }
 #dashboard_gallery .main .gallery-item .rbicon-del { position: absolute; right: -5px; top: -5px; }
+#dashboard_gallery .main .gallery-item .photo { min-height: 150px; }
 #dashboard_gallery .main .gallery-item > div { display: block; clear: both; }
 #dashboard_gallery .main .gallery-item > div.item-order { padding: 5px; background: #ddd; }
 #dashboard_gallery .main .gallery-item > div.make-primary { padding: 5px 0px; }
