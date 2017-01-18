@@ -6684,10 +6684,10 @@ function rb_load_customfields_search($visibility = 0,$result){
 		foreach($array_customOptions_values as $val){
 			if(in_array($val,explode(",",$ProfileCustomValue))){
 				echo "<div style=\"display:inline-block;\"><label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $result['ProfileCustomID'] ."[]\" />";
-				echo "<span>". $val."</span></label></div>";
+				echo "<span>". $val."</span></label></div><br>";
 			} else {
 				echo "<div style=\"display:inline-block;\"><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $result['ProfileCustomID'] ."[]\" />";
-				echo "<span>". $val."</span></label></div>";
+				echo "<span>". $val."</span></label></div><br>";
 			}
 		}
 		echo "			<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $result['ProfileCustomID'] ."[]\"/>";
@@ -6703,12 +6703,15 @@ function rb_load_customfields_search($visibility = 0,$result){
 		$array_customOptions_values = explode("|",$result['ProfileCustomOptions']);
 
 		foreach($array_customOptions_values as $val){
-			if(in_array($val,explode(",",$ProfileCustomValue))){
+			if(in_array($val,explode(",",$ProfileCustomValue)) && !empty($val)){
 				echo "<div style=\"display:inline-block;\"><label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $result['ProfileCustomID'] ."[]\" />";
 				echo "<span>". $val."</span></label></div>";
 			} else {
-				echo "<div style=\"display:inline-block;\"><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $result['ProfileCustomID'] ."[]\" />";
-				echo "<span>". $val."</span></label></div>";
+				if(!empty($val)){
+					echo "<div style=\"display:inline-block;\"><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $result['ProfileCustomID'] ."[]\" />";
+					echo "<span>". $val."</span></label></div><br>";
+				}
+				
 			}
 		}
 		echo "			<input type=\"hidden\" value=\"\" name=\"ProfileCustomID". $result['ProfileCustomID'] ."[]\"/>";

@@ -2346,9 +2346,18 @@ class RBAgency_Profile {
 
 					// Do we need the custom fields table?
 					if ( isset($sql_where_array['custom']) && !empty($sql_where_array['custom']) ) {
-						$sql .= " FROM ". table_agency_profile ." profile
+						$sql .= ", cmux.ProfileCustomDateValue
+							FROM ". table_agency_profile ." profile
+							LEFT JOIN  ". table_agency_customfield_mux." cmux ON profile.ProfileID = cmux.ProfileID
 							WHERE ". $sql_where_array['standard'] ."
+								AND EXISTS (
+								SELECT count(cmux.ProfileCustomMuxID)  FROM
+								".table_agency_customfield_mux." cmux
+								WHERE profile.ProfileID = cmux.ProfileID
 								". $sql_where_array['custom'] ."
+								GROUP BY cmux.ProfileCustomMuxID
+								LIMIT 1)
+							
 							";
 
 						/*  TODO: ProfileCustomDateValue  <-- do we need this?
