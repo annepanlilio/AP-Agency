@@ -305,10 +305,9 @@ input[type=radio]:checked:before { margin-bottom: 2px!important; }
 }
 .search-result-grid-container .profile-item:nth-child(1n){ float:left;width:16%;margin-right:12px; }
 .search-result-grid-container .profile-item:nth-child(6n){ float:left;width:16%;margin-right:-15px; margin-left:0px; }
-.search-result-grid-container .profile-item .profile-info { text-align:center; font-size:10px; }
-.search-result-grid-container .profile-item .profile-info .profile-fullname { margin-bottom:7px; }
-.search-result-grid-container .profile-item .profile-info p { margin-bottom: 0; }
-.search-result-grid-container .profile-item .profile-image { width:170px; height:240px; overflow: hidden; }
-.search-result-grid-container .profile-item .profile-image img { height: 100%; }
+.search-result-grid-container .profile-item .profile-info { text-align:center; font-size:10px; margin-bottom:35px; }
+.search-result-grid-container .profile-item .profile-info .profile-fullname{ margin-bottom:-15px; }
+.search-result-grid-container .profile-item .profile-info p{ margin-bottom:-15px; }
+.search-result-grid-container .profile-item .profile-image img { width:170px; max-height:240px; }
 
 .view-mode-btns { float:right; }
