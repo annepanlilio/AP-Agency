@@ -1595,7 +1595,7 @@
 					echo "</select>\n";
 
 					if(!in_array($ProfileCustomValue, $arr) && $ProfileCustomType != 9){
-						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "")."\" ".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "style=\"display:none;\"").">";
+						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "")."\" ".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "style=\"display:none;\"")." style=\"display:none;\">";
 					}else{
 						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
 					}
@@ -1653,7 +1653,7 @@
 					}
 					echo "</fieldset>";
 					if(!in_array($ProfileCustomValue, $array_customOptions_values) && !empty($ProfileCustomValue)){
-						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "")."\" ".(!empty($ProfileCustomValue)? "" : "style=\"display:none;\"").">";
+						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "")."\" ".(!empty($ProfileCustomValue)? "" : "style=\"display:none;\"")." style=\"display:none;\">";
 					}else{
 						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
 					}

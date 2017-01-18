@@ -5992,7 +5992,7 @@ function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$Pr
 			}
 			if ($action == "add") {
 
-				if(strpos($DataTypeOptionValue, $GenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
+				if(strpos($DataTypeOptionValue, $GenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1 || empty($DataTypeOptionValue)){
 
 					$checked_profiletypes_arr = [];
 					if($_POST['ProfileType']){
@@ -6020,7 +6020,7 @@ function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$Pr
 											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
 									}
 								}
-			if(strpos($DataTypeOptionValue, $GenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1){
+			if(strpos($DataTypeOptionValue, $GenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1 || empty($DataTypeOptionValue)){
 				do_action('rb_get_profile_type_childs_checkbox_display_profilemanage_display',$child['DataTypeID'],$action,$ProfileType,$fields);
 			}					
 			
