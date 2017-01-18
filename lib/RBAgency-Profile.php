@@ -3472,7 +3472,134 @@ class RBAgency_Profile {
 				$displayHtml .=  "  </form>\n";
 				$displayHtml .=  "</div>";
 
-				return $displayHtml;
+				$displayGridHtml = "";
+				$displayGridHtml .=  "       <form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
+
+				$displayGridHtml .=  "<input type=\"hidden\" name=\"page\" id=\"page\" value=\"rb_agency_search\">";
+				$displayGridHtml .=  "<input type=\"hidden\" name=\"action\" value=\"cartAdd\">";
+				$displayGridHtml .=  "<input type=\"hidden\" name=\"forceCart\" value=\"\">";
+				$displayGridHtml .=  "  <div class=\"boxblock-holder\">\n";
+				$displayGridHtml .=  "		<h2 class=\"title\">".__("Search Results",RBAGENCY_TEXTDOMAIN).": " . $count . "</h2>\n";
+				$displayGridHtml .=  "      <div class=\"search-result-grid-container\">\n";
+
+				/** loop profiles here **/
+				foreach($results as $data){
+
+					// data
+					$primary_image = str_replace(" ", "%20", rb_get_primary_image($data["ProfileID"]));
+					$profileFullName = $data['ProfileContactNameFirst'].' '.$data['ProfileContactNameLast'];
+					$profileContactEmail = $data['ProfileContactEmail'];
+					$profileContactPhoneCell = $data['ProfileContactPhoneCell'];
+					$profileAge = rb_agency_get_age($data['ProfileDateBirth']);
+					$imagePath = RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $primary_image;
+
+					$bfi_params = array(								
+								'width'=>250,
+								'height'=>250,
+								'crop'=>true
+							);
+					// $imageSource = bfi_thumb( $imagePath, $_bfiParams );
+
+					$imageSource = get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $primary_image;
+
+					// display
+					$displayGridHtml .= "   <div class=\"profile-item\">\n";
+					$displayGridHtml .= "   	<div class=\"profile-image\">\n";
+
+					if($primary_image){
+						$displayGridHtml .= "			<img src=\"".$imageSource."&w=180&h=250\" alt=\"\" >\n ";
+					}else{
+						$displayGridHtml .=  "				<div class=\"image no-image\" style=\"padding: 52px;height: 135px;background: #ffffff;\">NO IMAGE</div>\n";
+					}
+					$displayGridHtml .= "		</div>\n";
+					$displayGridHtml .= "			<div class=\"profile-info\">\n";
+					$displayGridHtml .= "				<h3 class=\"profile-fullname\"><input type=\"checkbox\" value=\"".$data['ProfileID']."\" class=\"administrator\" id=\"ProfileID".$data['ProfileID']."\" name=\"ProfileID[]\">".$profileFullName."</h3>\n";
+					$displayGridHtml .= "				<p>".$profileAge."<br><span>".$profileContactPhoneCell."</span><br><a href=\"mailto:".$profileContactEmail."\"> ".$profileContactEmail."</a></p>";
+					// $displayGridHtml .= "				<p>".$profileContactPhoneCell."</p>";
+					// $displayGridHtml .= "				<p><a href=\"mailto:".$profileContactEmail."\"> ".$profileContactEmail."</a></p>";
+					$displayGridHtml .= "			</div>\n";					
+					$displayGridHtml .= "   </div>\n";
+				}
+				/** end: loop profiles **/
+
+				$displayGridHtml .=  "  	</div>\n";
+				$displayGridHtml .=  "  </div>\n";
+
+				if(isset($_SESSION['cartArray'] )){
+					$cartProfiles = $_SESSION['cartArray'];
+					foreach ($cartProfiles as $key) {
+						$displayGridHtml .= "<input type=\"hidden\" name=\"ProfileID[]\" value=\"".$key."\"/> ";
+					}
+				}
+
+				?>
+				<script type="text/javascript">
+					function checkCastingCart(){
+						var no_image = jQuery("input[data-disabled]:checked").length;
+						var selected = jQuery("input:checked").length;
+
+							if(selected <= 0){
+								alert("Please select profiles that you want to add to casting cart")
+								return false;
+							} else {
+								if(no_image > 0){
+									//alert("Profiles without photo cannot be added to casting cart. Please unselect to continue or try another search.");
+											//return false;
+								}
+								return true;
+							}
+							return false;
+					}
+				</script>
+				<?php
+				$displayGridBtnsHtml = "";
+				$displayGridBtnsHtml .=  "  		<input type=\"submit\" onClick=\"return checkCastingCart();\"  value=\"". __('Add to Casting Cart',RBAGENCY_TEXTDOMAIN) ."\" class=\"button-primary\" />\n";
+				$displayGridBtnsHtml .=  "          <a href=\"#\" onClick=\"testPrint(1);\" title=\"Quick Print\" class=\"button-primary\">". __("Quick Print", RBAGENCY_TEXTDOMAIN) ."</a>\n";
+				echo "<script> function testPrint(type){
+
+					var checkboxes = document.getElementsByName('ProfileID[]');
+						var vals = '';
+						for (var i=0, n=checkboxes.length;i<n;i++) {
+							if (checkboxes[i].checked)
+							{
+							vals += ','+checkboxes[i].value;
+							}
+						}
+						if (vals) vals = vals.substring(1);
+						window.open('". get_bloginfo("url") ."/profile-print/?action=quickPrint&cD='+type+'&id='+vals,'mywindow','width=930,height=600,left=0,top=50,screenX=0,screenY=50,scrollbars=yes');
+				}
+					</script>" ;
+				$displayGridBtnsHtml .=  "          <a href=\"#\" onClick=\"testPrint(0); \" title=\"Quick Print - Without Details\" class=\"button-primary\">". __("Quick Print", RBAGENCY_TEXTDOMAIN) ." - ". __("Without Details", RBAGENCY_TEXTDOMAIN) ."</a>\n";
+				$displayGridBtnsHtml .=  "          <a href=\"#\" onClick=\"testPrint(2); \" title=\"Quick Print - One Profile per Page\" class=\"button-primary\">". __("Quick Print", RBAGENCY_TEXTDOMAIN) ." - ". __("One Profile per Page", RBAGENCY_TEXTDOMAIN) ."</a>\n";
+				$displayGridBtnsHtml .=  "     </p>\n";
+				$displayGridBtnsHtml .=  "  </form>\n";
+
+				return "<script type=\"text/javascript\">
+							jQuery(document).ready(function($){
+								$('.view-mode-list-btn').click(function(){
+									$('.view-mode-lists').css('display','block');
+									$('.view-mode-grid').css('display','none');
+								});
+								$('.view-mode-grid-btn').click(function(){
+									$('.view-mode-lists').css('display','none');
+									$('.view-mode-grid').css('display','block');
+								});
+							});
+						</script>
+						<div class=\"view-mode-btns\">
+							<a href=\"#\" class=\"view-mode-list-btn add-new-h2\">List View</a><a href=\"#\" class=\"view-mode-grid-btn add-new-h2\">Grid View</a>
+						</div>
+						<div class=\"view-mode\">
+							<div class=\"view-mode-lists\">"
+							.$displayHtml.
+							"</div>
+							<div class=\"view-mode-grid\" style=\"display:none;\">
+							".$displayGridHtml."
+							<div style=\"clear:both;\"></div>
+							".$displayGridBtnsHtml."
+							</div>
+						</div>";
+
 
 		}
 
