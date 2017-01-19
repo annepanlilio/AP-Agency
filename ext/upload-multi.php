@@ -89,7 +89,7 @@ function profilesphoto_save(){
 
 	$profile_image_src =  RBAGENCY_UPLOADREL . $img;
 
-	echo "  <div class=\"photo\"><img src=\"" . $profile_image_src ."\" width=\"100\" /></div>\n";
+	echo "  <div class=\"photo\"><img src=\"" .site_url()."/". $profile_image_src ."\" width=\"100\" /></div>\n";
 	echo "		<div class=\"item-order\" style='display:none;'>Order: <input type=\"hidden\" name=\"ProfileMediaOrder_" . $ProfileMediaID . "\" style=\"width: 25px\" value=\"" . $pi . "\" /></div>";
 	echo "  	<div class=\"make-primary\"><input type=\"radio\" name=\"ProfileMediaPrimary\" value=\"" . $ProfileMediaID . "\" " . $isChecked . " /> " . $isCheckedText . "</div>";
 	echo "		<div>".$massDelete."</div>";

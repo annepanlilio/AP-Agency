@@ -23,7 +23,11 @@ if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
 	$targetPath = $rootFolder . $image_path;
 	
 	
-	if(!is_dir($targetPath))mkdir($targetPath);
+	chmod($targetPath, 0777); 
+	
+	if(!is_dir($targetPath))
+		mkdir($targetPath);
+		chmod($targetPath, 0777);
 
 	 
 	$randstring = time().rand(1000,999999);
