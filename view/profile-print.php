@@ -42,13 +42,17 @@ global $wpdb;
 		}.profile-print .info {
 			width: 65%;
 			float: left;
+			text-align: left;
+			line-height: normal;
 			word-wrap: break-word;
 		}
 
 		#print_logo {
-			float: left;
-			max-height: 100px;
+			float: left;			
 			width: 50%;
+		}
+		#print_logo img {			
+			max-height: 100px;
 		}
 		#print_actions {
 			float: right;
@@ -57,8 +61,7 @@ global $wpdb;
 		#fullpage table td {
 			border: none;
 		}
-		#fullpage .box {
-			height: 1030px;
+		#fullpage .box {			
 			overflow: hidden;
 		}
 		#fullpage #print_actions {
@@ -70,7 +73,6 @@ global $wpdb;
 		#fullpage .name {
 			font-size: 42px;
 			margin-top: 15px;
-			margin-bottom: 5px;
 		}
 		#fullpage .print_logo {
 			/*width: 100%;
@@ -85,7 +87,6 @@ global $wpdb;
 		#fullpage .profile-pic {
 			width: 55%;
 			float: left;
-			height: 628px;
 			overflow: hidden;
 		}
 		#fullpage .info {
@@ -97,14 +98,30 @@ global $wpdb;
 			clear: both;
 			margin-top: 15px;
 			overflow: hidden;
-		}#fullpage .photos img {
+		}
+		#fullpage .photos img {
 			margin: 10px 10px 0 0;
 			max-width: 129px;
 		}
 
 		#photos .profile-pic {
-			width: 200px;
+			width: 100%
 		}
+		#photos h4 {
+			margin: 0 0 10px;
+		}
+
+
+		#details .info {
+			margin-left: 4%;
+		}
+		#details .info h4 {
+		    margin: 0 0 7px;
+		}
+		#details .profile-print td {
+			width: 33.33333333333333%;
+		}
+
 	</style>
 </head>
 
@@ -119,7 +136,7 @@ if ($_GET['cD'] == "0") {
 }
 ?>
 <body onload="printpage()" style="background: #fff;">
-	<div id="<?php echo $layout_class; ?>">
+	<div id="<?php echo $layout_class; ?>" class="print-wrapper">
 		<?php if ($_GET['cD'] != 2) : ?>
 		<div id="print_logo">
 			<?php
@@ -299,45 +316,50 @@ if ($_GET['cD'] == "0") {
 		}
 
 		if ($hasQuery) {
-		echo "<table class=\"profile-print\">";
-
+		
 			$ii = 0;
 			foreach($results as $data) {
 
-
-				if($_GET['cD'] == "2") {
-					echo "<tr>";
-				} else {
-					$ii++;
-					if ($ii % 3 == 1) {
-					echo "<tr>";
-					}
-				}
-
-				echo "<td>";
-
 				if (1 == 1) {
+
+					if($_GET['cD'] == "2") {
+						echo "<table class=\"profile-print\">";
+						echo "<tr>";
+					} else {
+						$ii++;
+						if ($ii % 3 == 1) {
+							echo "<table class=\"profile-print\">";
+							echo "<tr>";
+						}
+					}
+
+					// echo "<table class=\"profile-print\">";
+					// echo "<tr>";
+
+					echo "<td>";
 
 					echo "<div class=\"box\">";
 
 					/*
-					 * Option 0
+					 * Option 0 - Quick Print
 					 */
 					if ($_GET['cD'] == "0") {
-						echo " <div class=\"profile-pic\"><img src=\"". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" width=\"150\"/></div>\n";
+						echo "	<h4>". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h4>";
+						echo " <div class=\"profile-pic\"><img src=\"". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" width=\"256\"/></div>\n";						
 					}
 
-
 					/*
-					 * Option 1
+					 * Option 1 - Quick Print without Details
 					 */
 					if ($_GET['cD'] == "1") {
 
-						echo " <div class=\"profile-pic\"><img src=\"". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" /></div>\n";
+						echo " <div class=\"profile-pic\">";
+						echo " <img src=\"". RBAGENCY_UPLOADDIR ."". $data["ProfileGallery"] ."/". $data["ProfileMediaURL"] ."\" />";						
+						echo " </div>\n";
 						echo " <div class=\"info\">";
 
 						$ProfileID = $data['ProfileID'];
-						echo "	<h2 style=\"margin-top: 15px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h2>"; 
+						echo "	<h4>". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast']) . "</h4>"; 
 						// Hide private information from print
 						if ($rb_agency_option_adminprint_hidden == 1 && current_user_can('edit_pages')) {
 							if (!empty($data['ProfileContactEmail'])) {
@@ -411,6 +433,7 @@ if ($_GET['cD'] == "0") {
 								}
 							}
 						}
+						echo "</div> <!-- .info -->";
 
 					}// End Private Fields
 
@@ -472,8 +495,8 @@ if ($_GET['cD'] == "0") {
 								}
 								$i++;
 							}
-						echo "</div>";
-						echo "</div>\n";
+						echo "</div><!-- .photos -->";
+						echo "</div><!-- .profile-pic -->\n";
 						echo " <div class=\"info\">";
 
 							$ProfileID = $data['ProfileID'];
@@ -507,36 +530,45 @@ if ($_GET['cD'] == "0") {
 								}
 							}
 
-						echo "</div>";
-						echo "<div style=\"clear:both\"></div>";
-						echo "<p style=\"text-align: center;\">Property of ".$rb_agency_option_agencyname.". All rights reserved.</p>";
+						
+						echo "<div style=\"clear:both\"></div>";						
 					}
 
 
-						echo " </div>";
-						echo " <div style=\"clear: both; text-align: center;\">\n";
-					} else {
-						echo "	<h2 style=\"text-align: center; margin-top: 30px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast'])  . "</h2>"; 
-					}
+						echo "</div><!-- .info -->";
+						echo " <div style=\"clear: both; text-align: center;\"></div>\n";						
 
-					echo " </div>";
-				}// elseif (layout style is another value......) {
+				} else {
+					echo "	<h2 style=\"text-align: center; margin-top: 30px; \">". stripslashes($data['ProfileContactNameFirst']) ." ". stripslashes($data['ProfileContactNameLast'])  . "</h2>"; 
+				}
+
+				echo " </div><!-- .box -->";
 
 				echo "</td>";
 
 				if($_GET['cD'] == "2") {
-					echo "<tr>";
+					echo "</tr>";
+						echo "</table><!-- .profile-print -->";
+						echo "<p style=\"text-align: center;\">Property of ".$rb_agency_option_agencyname.". All rights reserved.</p>";
+						echo "<div style=\"page-break-before: always\"></div>";						
 				} else {
 					if( $ii % 3==0){
 						echo "</tr>";
+						echo "</table><!-- .profile-print -->";						
 					}
-				}
+				}			
 
-			}
+				// echo "</tr>";
+				// echo "</table><!-- .profile-print -->";
+				// echo "<div style=\"page-break-before: always\"></div>";
+
+			}// foreach
+
+		} // if
 			echo "<div style=\"clear: both;\"></div>";
-		echo "</table>";
+		
 
 		?>
-	</div> <!-- #print_wrapper -->
+	</div> <!-- .print-wrappers -->
 </body>
 </html>
