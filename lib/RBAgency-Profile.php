@@ -2353,7 +2353,7 @@ class RBAgency_Profile {
 							WHERE ". $sql_where_array['standard'] ."
 								". $sql_where_array['custom'] ."
 							";
-							
+
 						/*$sql .= ", cmux.ProfileCustomDateValue
 							FROM ". table_agency_profile ." profile
 							LEFT JOIN  ". table_agency_customfield_mux." cmux ON profile.ProfileID = cmux.ProfileID
@@ -2536,7 +2536,17 @@ class RBAgency_Profile {
 			//echo self::$order_by;
 				//echo self::$order_by;
 				if(is_admin()){
-					return self::search_result_admin( $sql, $arr_query );
+					$q = '';
+					if(!isset($_GET['limit'])){
+						$q = $sql;
+						$_SESSION['session_admin_sql'] = $q;
+					}elseif(isset($_GET['limit'])){
+						$q = str_replace('LIMIT 100','',$_SESSION['session_admin_sql']);
+						//unset($_SESSION['session_admin_sql']);
+					}else{
+						$q = $sql;
+					}
+					return self::search_result_admin( $q, $arr_query );
 				} else {
 
 
