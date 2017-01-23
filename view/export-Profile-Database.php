@@ -139,6 +139,12 @@ global $wpdb;
 
 			//$data3["ProfileCustomShowGender"] == $ProfileGender 
 					if(rb_agency_filterfieldGender($PID, $ProfileGender,false)  && $permit_type || $all_permit){
+
+						$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $sub_value["ProfileCustomID"],$ProfileID),ARRAY_A);
+						$row = $subresult;
+						$sub_value['ProfileCustomDateValue'] =  ($row[1]["ProfileCustomDateValue"]!=="1970-01-01"  && $row[1]["ProfileCustomDateValue"]!=="0000-00-00")?$row[0]["ProfileCustomDateValue"]:"";
+						$sub_value['ProfileCustomValue'] = !empty($row[1]["ProfileCustomValue"])?$row[1]["ProfileCustomValue"]:$row[0]["ProfileCustomValue"];
+						
 						$cfield = $wpdb->get_row("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '".$sub_value["ProfileCustomID"]."'", ARRAY_A);
 
 						$ProfileCustomValue = "";

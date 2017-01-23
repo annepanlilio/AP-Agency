@@ -2128,7 +2128,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 											}
 										}
 
-										if(strpos($DataTypeOptionValue, $DataTypeGenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1 || empty($DataTypeOptionValue)){
+										if(@strpos($DataTypeOptionValue, $DataTypeGenderTitle)>-1 || @strpos($DataTypeOptionValue, 'All Gender')>-1 || @empty($DataTypeOptionValue)){
 											
 											do_action('rb_get_profile_type_childs_checkbox_display_profilemanage_display',$data3['DataTypeID'],$action,$ProfileType,$DataTypeGenderTitle,$fields);
 										}
