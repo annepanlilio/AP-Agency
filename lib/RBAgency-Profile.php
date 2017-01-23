@@ -1917,7 +1917,7 @@ class RBAgency_Profile {
 
 									} elseif ($ProfileCustomType["ProfileCustomType"] == 4) {
 										// Textarea
-										$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%') $close_st";
+										$filter2 .= "$open_st ProfileCustomValue = '".$val."' $close_st";
 										$_SESSION[$key] = $val;
 
 									} elseif ($ProfileCustomType["ProfileCustomType"] == 5) {
@@ -2000,7 +2000,7 @@ class RBAgency_Profile {
 									} elseif ($ProfileCustomType["ProfileCustomType"] == 6) {
 										//Radiobutton
 										$val = implode("','",explode(",",$val));
-										$filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%')  $close_st";
+										$filter2 .= "$open_st ProfileCustomValue = '".$val."'  $close_st";
 										$_SESSION[$key] = $val;
 
 									} elseif ($ProfileCustomType["ProfileCustomType"] == 7) {
@@ -2206,8 +2206,10 @@ class RBAgency_Profile {
 			 * ORDER BY
 			 */
 
-				if (isset($sort) && !empty($sort)){
+				if (isset($sort) && !empty($sort) && !isset($_GET['page'])){
 					$filter .= " ORDER BY $sort $dir ";
+				} elseif(isset($sort) && !empty($sort) && isset($_GET['page'])){
+					$filter .= " ORDER BY profile.ProfileContactNameFirst ASC ";
 				}
 
 			/*
