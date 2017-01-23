@@ -2348,7 +2348,13 @@ class RBAgency_Profile {
 
 					// Do we need the custom fields table?
 					if ( isset($sql_where_array['custom']) && !empty($sql_where_array['custom']) ) {
-						$sql .= ", cmux.ProfileCustomDateValue
+
+						$sql .= " FROM ". table_agency_profile ." profile
+							WHERE ". $sql_where_array['standard'] ."
+								". $sql_where_array['custom'] ."
+							";
+							
+						/*$sql .= ", cmux.ProfileCustomDateValue
 							FROM ". table_agency_profile ." profile
 							LEFT JOIN  ". table_agency_customfield_mux." cmux ON profile.ProfileID = cmux.ProfileID
 							WHERE ". $sql_where_array['standard'] ."
@@ -2360,7 +2366,7 @@ class RBAgency_Profile {
 								GROUP BY cmux.ProfileCustomMuxID
 								LIMIT 1)
 							
-							";
+							"; */
 
 						/*  TODO: ProfileCustomDateValue  <-- do we need this?
 						$sql .= ", cmux.ProfileCustomDateValue
