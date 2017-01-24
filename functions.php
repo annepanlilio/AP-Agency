@@ -3802,6 +3802,20 @@ function get_social_media_links($ProfileID = ""){
 				$('#em_' + pid).removeAttr('disabled');
 				$('#em_' + pid).bind('click', sendEmail);
 				$('#ch_' + pid).addClass('pending-profile');
+
+					$.ajax({
+						url: ajaxurl,
+						type: 'post',
+						data: {
+							action: 'ajax_update_password',
+							password: password,
+							profile_id: pid
+						},
+						success: function(data){
+							console.log(data);
+						}
+					});
+
 				});
 
 
@@ -3991,8 +4005,29 @@ function get_social_media_links($ProfileID = ""){
 
 	}
 
-	add_action('wp_ajax_send_mail', 'register_and_send_email');
 
+	function ajax_update_password(){
+
+		global $wpdb;
+
+		$newPassword = $_POST['password'];
+
+		$profileID = $_POST['profile_id'];
+
+		$sql = "SELECT ProfileUserLinked FROM ".$wpdb->prefix."agency_profile WHERE ProfileID = %d";
+
+		$user = $wpdb->get_row($wpdb->prepare($sql,$profileID),ARRAY_A);
+
+		wp_set_password(esc_attr($newPassword),$user['ProfileUserLinked']);
+		
+		die();
+	}
+	add_action('wp_ajax_ajax_update_password','ajax_update_password');
+	add_action('wp_nopriv_ajax_ajax_update_password','ajax_update_password');
+
+
+
+	add_action('wp_ajax_send_mail', 'register_and_send_email');
 	function register_and_send_email(){
 		global $wpdb;
 		$profileid = (int)$_POST['profileid'];
