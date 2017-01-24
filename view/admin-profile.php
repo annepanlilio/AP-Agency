@@ -265,6 +265,19 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 					$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
 				}
 				
+				//check for parentid column and level
+				$sql = "SELECT CustomOrder FROM ".$wpdb->prefix."agency_profile LIMIT 1";
+				$r = $wpdb->get_results($sql);
+				if(count($r) == 0){
+					//create column
+					$q1 = "SELECT * FROM ".table_agency_profile;
+					$rda = $wpdb->get_results($q1,ARRAY_A);
+					$qnumrows = $wpdb->num_rows;
+
+					$queryAlter = "ALTER TABLE " . $wpdb->prefix ."agency_profile ADD CustomOrder INT(10) default $qnumrows";
+					$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+				}
+
 				// Bug Free!
 				if ($have_error == false) {
 					if (function_exists('rb_agency_interact_menu')) {
