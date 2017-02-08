@@ -3452,7 +3452,10 @@ class RBAgency_Profile {
 
 					$cartProfiles = $_SESSION['cartArray'];
 					foreach ($cartProfiles as $key) {
-						$displayHtml .= "<input type=\"hidden\" name=\"ProfileID[]\" value=\"".$key."\"/> ";
+						$val_key = explode(',',$key);
+						$result_key_arry = array_unique($val_key);
+						$result_key = implode(',',$result_key_arry);
+						$displayHtml .= "<input type=\"hidden\" name=\"ProfileID[]\" value=\"".$result_key."\"/>\n";
 					}
 				}
 				?>
