@@ -209,7 +209,7 @@ class RBAgency_Casting {
 
 
 					$ProfileDateUpdated = $data['ProfileDateUpdated'];
-					echo "<div class=\"casting-agent\">";
+					echo "<div class=\"casting-agent casting_agent_".$data["ProfileID"]."\" >";
 					echo "	<div class=\"agent-box\">";
 					echo "    <h3>". $ProfileContactDisplay  . "</h3>";
 					
@@ -231,7 +231,7 @@ class RBAgency_Casting {
 					// TODO: ADD MORE FIELDS
 
 					
-					echo "    <a class=\"remove-agent-casting-cart\" href=\"?page=". $_GET['page'] ."&actiontwo=cartRemove&action=cartAdd&RemoveID=". $data['ProfileID'] ."&\" title=\"". __("Remove from Cart", RBAGENCY_TEXTDOMAIN) ."\"><img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/remove.png\" style=\"width: 20px; \" alt=\"". __("Remove from Cart", RBAGENCY_TEXTDOMAIN) ."\" /></a>";					
+					echo "    <a class=\"remove-agent-casting-cart\" id=\"".$data['ProfileID']."\" href=\"?page=". $_GET['page'] ."&actiontwo=cartRemove&action=cartAdd&RemoveID=". $data['ProfileID'] ."&\" title=\"". __("Remove from Cart", RBAGENCY_TEXTDOMAIN) ."\"><img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/remove.png\" style=\"width: 20px; \" alt=\"". __("Remove from Cart", RBAGENCY_TEXTDOMAIN) ."\" /></a>";					
 					echo "	<p class=\"detail\"><a id=\"".$data['ProfileID']."\" attr-gallery=\"".$data['ProfileGallery']."\"  href=\"#TB_inline?width=600&height=350&inlineId=profilephotos\" class=\"thickbox\" title=\"Change thumbnail\">Change thumbnail</a></p>";
 					echo " 	<input type=\"hidden\" id=\"thumbnail-".$data['ProfileID']."\"  name=\"thumbnail[".$data['ProfileID']."]\" value=\"\"/>";
 					echo "  </div>";
@@ -304,6 +304,14 @@ class RBAgency_Casting {
 								console.log(data);
 								if(data == 'deleted'){
 									$(".casting_agent_"+castingid).remove();
+								}
+								var numCart = $('.casting-agents .casting-agent').length;
+								console.log('total: ' + numCart);
+								
+								if(numCart <= 0){
+									$('.in-cart').html('There are no profiles added to the casting cart.');
+								}else{
+									$('.in-cart').html('Currently <strong>'+numCart+'</strong> in Cart');
 								}
 							}
 				        });
