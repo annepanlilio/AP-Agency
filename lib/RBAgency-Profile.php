@@ -3253,7 +3253,7 @@ class RBAgency_Profile {
 				$displayHtml .=  "        <table cellspacing=\"0\" class=\"widefat fixed\">\n";
 				$displayHtml .=  "        <thead>\n";
 				$displayHtml .=  "            <tr class=\"thead\">\n";
-				$displayHtml .=  "                <th class=\"manage-column column-cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
+				$displayHtml .=  "                <th class=\"manage-column column-cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\" class=\"select-all\"/></th>\n";
 				$displayHtml .=  "                <th class=\"column-ProfileID\" id=\"ProfileID\" scope=\"col\" style=\"width:50px;\"><a href=\"admin.php?page=rb_agency_profiles&sort=ProfileID&dir=". (isset($sortDirection)?$sortDirection:"") ."\">". __("ID", RBAGENCY_TEXTDOMAIN) ."</a></th>\n";
 				$displayHtml .=  "                <th class=\"column-ProfileContact\" id=\"ProfileContact\" scope=\"col\">". __("Contact Information", RBAGENCY_TEXTDOMAIN) ."</th>\n";
 				$displayHtml .=  "                <th class=\"column-ProfileStats\" id=\"ProfileStats\" scope=\"col\">". __("Private Details", RBAGENCY_TEXTDOMAIN) ."</th>\n";
@@ -3263,7 +3263,7 @@ class RBAgency_Profile {
 				$displayHtml .=  "        </thead>\n";
 				$displayHtml .=  "        <tfoot>\n";
 				$displayHtml .=  "            <tr class=\"thead\">\n";
-				$displayHtml .=  "                <th class=\"manage-column column-cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\"/></th>\n";
+				$displayHtml .=  "                <th class=\"manage-column column-cb check-column\" id=\"cb\" scope=\"col\"><input type=\"checkbox\" class=\"select-all\"/></th>\n";
 				$displayHtml .=  "                <th class=\"column-ProfileID\" id=\"ProfileID\" scope=\"col\">". __("ID", RBAGENCY_TEXTDOMAIN) ."</th>\n";
 				$displayHtml .=  "                <th class=\"column-ProfileContact\" id=\"ProfileContact\" scope=\"col\">". __("Contact Information", RBAGENCY_TEXTDOMAIN) ."</th>\n";
 				$displayHtml .=  "                <th class=\"column-ProfileStats\" id=\"ProfileStats\" scope=\"col\">". __("Private Details", RBAGENCY_TEXTDOMAIN) ."</th>\n";
@@ -3309,7 +3309,7 @@ class RBAgency_Profile {
 
 					$displayHtml .=  "        <tr class=\"".$statusClass."\">\n";
 					$displayHtml .=  "            <th class=\"check-column\" scope=\"row\" >\n";
-					$displayHtml .=  "                <input ".$checkboxDisable." type=\"checkbox\" ". $isInactiveDisable." value=\"". $ProfileID ."\" class=\"administrator\" id=\"ProfileID". $ProfileID ."\" name=\"ProfileID[]\" />\n";
+					$displayHtml .=  "                <input ".$checkboxDisable." type=\"checkbox\" ". $isInactiveDisable." value=\"". $ProfileID ."\" class=\"administrator select-profile select-profile-list\" id=\"ProfileID". $ProfileID ."\" name=\"ProfileID[]\" />\n";
 					$displayHtml .=  "            </th>\n";
 					$displayHtml .=  "            <td class=\"ProfileID column-ProfileID\">". $ProfileID ."</td>\n";
 					$displayHtml .=  "            <td class=\"ProfileContact column-ProfileContact\">\n";
@@ -3511,6 +3511,7 @@ class RBAgency_Profile {
 				$displayGridHtml .=  "  <div class=\"boxblock-holder\">\n";
 				$displayGridHtml .=  "		<h2 class=\"title\">".__("Search Results",RBAGENCY_TEXTDOMAIN).": " . $count . "</h2>\n";
 				$displayGridHtml .=  "      <div class=\"search-result-grid-container\">\n";
+				$displayGridHtml .=  "      <br><input type=\"checkbox\" class=\"select-all grid-selAll\"/>Select All<br><br>\n";
 
 				/** loop profiles here **/
 				foreach($results as $data){
@@ -3543,7 +3544,7 @@ class RBAgency_Profile {
 					}
 					$displayGridHtml .= "		</div>\n";
 					$displayGridHtml .= "			<div class=\"profile-info\">\n";
-					$displayGridHtml .= "				<h3 class=\"profile-fullname\"><input type=\"checkbox\" value=\"".$data['ProfileID']."\" class=\"administrator\" id=\"ProfileID".$data['ProfileID']."\" name=\"ProfileID[]\">".$profileFullName."</h3>\n";
+					$displayGridHtml .= "				<h3 class=\"profile-fullname\"><input type=\"checkbox\" value=\"".$data['ProfileID']."\" class=\"administrator select-profile select-profile-grid\" id=\"ProfileID".$data['ProfileID']."\" name=\"ProfileID[]\">".$profileFullName."</h3>\n";
 					$displayGridHtml .= "				<p>".$profileAge."<br><span>".$profileContactPhoneCell."</span><br><a href=\"mailto:".$profileContactEmail."\"> ".$profileContactEmail."</a></p>";
 					// $displayGridHtml .= "				<p>".$profileContactPhoneCell."</p>";
 					// $displayGridHtml .= "				<p><a href=\"mailto:".$profileContactEmail."\"> ".$profileContactEmail."</a></p>";
@@ -3614,6 +3615,47 @@ class RBAgency_Profile {
 									$('.view-mode-lists').css('display','none');
 									$('.view-mode-grid').css('display','block');
 								});
+								
+								
+								jQuery('input[type=\"checkbox\"]','.view-mode').click(function(){
+									
+									if(!$(this).hasClass('select-all')){
+										
+										var selCheck = $(this).attr('id');
+										if ($(this).prop('checked')==true){ 
+											$('input[type=checkbox]#'+selCheck).each(function () {
+												$(this).prop('checked', true);
+											});	
+											var totalChe = $('input.select-profile').not(':checked').length;
+											if( totalChe == 0){
+												$('input.select-all').prop('checked', true);
+											}
+										}else{
+											$('input[type=checkbox]#'+selCheck).each(function () {
+												$(this).prop('checked', false);
+												$('input.select-all').prop('checked', false);
+											});
+										}
+										
+									}
+								});
+								
+								jQuery('input.select-all','.view-mode').click(function(){
+									
+									if ($(this).prop('checked')==true){
+										$('input[type=checkbox]','.view-mode').each(function () {
+											$(this).prop('checked', true);
+										});	
+									}else{
+										$('input[type=checkbox]','.view-mode').each(function () {
+											$(this).prop('checked', false);
+										});
+									}
+									
+									
+								});
+								
+								
 							});
 						</script>
 						<div class=\"view-mode-btns\">
