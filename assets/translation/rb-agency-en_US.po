@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RB Agency\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-03 22:29+0800\n"
-"PO-Revision-Date: 2017-03-03 22:29+0800\n"
+"POT-Creation-Date: 2017-03-03 23:15+0800\n"
+"PO-Revision-Date: 2017-03-03 23:15+0800\n"
 "Last-Translator: Rob Bertholf <rob@bertholf.com>\n"
 "Language-Team: Rob Bertholf <rob@bertholf.com>\n"
 "Language: en_US\n"
@@ -91,20 +91,24 @@ msgstr ""
 msgid "Remove from Cart"
 msgstr ""
 
-#: app/casting.class.php:277
+#: app/casting.class.php:277 app/casting.class.php:823
 msgid "Company"
 msgstr ""
 
-#: app/casting.class.php:278
+#: app/casting.class.php:278 app/casting.class.php:823
 msgid "Casting Type"
 msgstr ""
 
-#: app/casting.class.php:312
+#: app/casting.class.php:312 app/casting.class.php:476
 msgid "There are no profiles added to the casting cart."
 msgstr ""
 
 #: app/casting.class.php:342
 msgid "Loading photos..."
+msgstr ""
+
+#: app/casting.class.php:357
+msgid "No photos found"
 msgstr ""
 
 #: app/casting.class.php:390
@@ -143,6 +147,34 @@ msgstr ""
 
 #: app/casting.class.php:398 view/include-ecard-create.php:12
 msgid "Create e-Cards"
+msgstr ""
+
+#: app/casting.class.php:407
+msgid "Add to existing Job"
+msgstr ""
+
+#: app/casting.class.php:419 app/casting.class.php:449
+#: view/admin-settings.php:4305
+msgid "Submit"
+msgstr ""
+
+#: app/casting.class.php:437
+msgid "Add to saved search"
+msgstr ""
+
+#: app/casting.class.php:866 app/casting.class.php:873
+#, php-format
+msgid ""
+"Email successfully sent from <strong>%s</strong> to <strong>%s</strong><br />"
+msgstr ""
+
+#: app/casting.class.php:867 app/casting.class.php:874
+#, php-format
+msgid "Message sent: <p>%s</p>"
+msgstr ""
+
+#: app/casting.class.php:895
+msgid "Email Messages successfully sent!"
 msgstr ""
 
 #: app/casting.class.php:942
@@ -3187,10 +3219,6 @@ msgstr ""
 
 #: view/admin-settings.php:4246 view/admin-settings.php:4760
 msgid "Add New Record"
-msgstr ""
-
-#: view/admin-settings.php:4305
-msgid "Submit"
 msgstr ""
 
 #: view/admin-settings.php:4343 view/admin-settings.php:4354
