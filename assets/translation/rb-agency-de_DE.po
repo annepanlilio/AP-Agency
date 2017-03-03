@@ -2,1827 +2,4083 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RB Agency\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-28 02:40-1000\n"
-"PO-Revision-Date: 2016-05-19 10:17+0800\n"
+"POT-Creation-Date: 2017-03-03 22:02+0800\n"
+"PO-Revision-Date: 2017-03-03 22:14+0800\n"
 "Last-Translator: Rob Bertholf <rob@bertholf.com>\n"
 "Language-Team: Rob Bertholf <rob@bertholf.com>\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2\n"
-"X-Poedit-Basepath: C:/Dropbox/Users/Rob/Scripts/RB Plugin/rb-agency\n"
+"X-Poedit-Basepath: ../..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: de_DE\n"
-"X-Generator: Poedit 1.8.4\n"
-"X-Poedit-SearchPath-0: C:/Dropbox/Users/Rob/Scripts/RB Plugin/rb-agency\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:99
-msgid "RB Agency Updates"
-msgstr "RB Agency Updates"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:366
-msgid "Male"
-msgstr "Männlich"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:368
-msgid "Female"
-msgstr "Weiblich"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/functions.php:397
-msgid "No Profiles Found"
-msgstr "Keine gefundene Profile"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:364
-#: Plugin\rb-agency/rb-agency.php:477
-msgid "Settings"
-msgstr "Einstellungen"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:373
-msgid "RB Agency"
-msgstr "RB Agency"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:386
-#: Plugin\rb-agency/rb-agency.php:388
-msgid "Generate Client List"
-msgstr "Generieren Sie Kundenliste"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:434
-msgid "Any Profile Type"
-msgstr "Alle Profiltyp"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:439
-msgid "Only"
-msgstr "Nur"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:442
-msgid "Starting Age"
-msgstr "Ab Alter"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:443
-msgid "Ending Age"
-msgstr "Ending Alter"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
-msgid "Gender"
-msgstr "Geschlecht"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
-msgid "Both Male &amp; Female"
-msgstr "Beide Männer & Frauen"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
-msgid "Female Only"
-msgstr "nur für Frauen"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:444
-msgid "Male Only"
-msgstr "Männlich Nur"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:446
-msgid "Insert Profile List"
-msgstr "Legen Profilliste"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:447
-msgid "Insert Search Form"
-msgstr "Legen Suchformular"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:456
-msgid "My Post Section Title"
-msgstr "My Post Sektion Titel"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:471
-msgid "Agency"
-msgstr "Agentur"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:472
-msgid "Overview"
-msgstr "Überblick"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:473
-msgid "Manage Profiles"
-msgstr "Profile verwalten"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:473
-msgid "Manage Profile"
-msgstr "Profil verwalten"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:474
-msgid "Search Profiles"
-msgstr "Suchprofile"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:475
-msgid "Saved Searches"
-msgstr "Gespeicherte Suche"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:476
-msgid "Tools & Reports"
-msgstr "Tools & Berichte"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:476
-msgid "Run Reports"
-msgstr "Berichte ausführen"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:477
-msgid "Edit Settings"
-msgstr "Einstellungen bearbeiten"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:565
-msgid "Almost done..."
-msgstr "Fast fertig..."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:565
-msgid "One More Step"
-msgstr "Noch ein Schritt"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/rb-agency.php:565
-msgid "Please click here to complete the uninstallation process"
-msgstr "Bitte klicken Sie hier, um die Installation abzuschließen"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:49
-msgid "New Casting added successfully!"
-msgstr "New Casting erfolgreich hinzugefügt!"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:49
-#: Plugin\rb-agency/admin/client.php:107
-msgid "Update and add media"
-msgstr "Aktualisieren Sie und fügen Medien"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:51
-#: Plugin\rb-agency/admin/client.php:109
-msgid "Error creating record, please ensure you have filled out all required fields."
-msgstr "Das Fehlerprotokoll erstellen, stellen Sie sicher, Sie alle erforderlichen Felder ausgefüllt haben."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/casting.php:467
-#: Plugin\rb-agency/admin/client.php:1427
-#: Plugin\rb-agency/admin/searchsaved.php:394
-#: Plugin\rb-agency/admin/taxonomy.php:220
-#: Plugin\rb-agency/admin/taxonomy.php:263
-msgid "Delete"
-msgstr "Löschen"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:107
-msgid "New Client added successfully!"
-msgstr "Neuer Client erfolgreich hinzugefügt!"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:405
-msgid "Client updated successfully!"
-msgstr "Client erfolgreich aktualisiert!"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:407
-msgid "Error updating record, please ensure you have filled out all required fields."
-msgstr "Das Fehlerprotokoll zu aktualisieren, benutzen Sie bitte sicher, dass Sie alle erforderlichen Felder ausgefüllt haben."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:419
-#: Plugin\rb-agency/admin/client.php:460
-msgid "Client deleted successfully!"
-msgstr "Client erfolgreich gelöscht!"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:457
-msgid "No valid record found."
-msgstr "Kein gültiger Eintrag gefunden."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:468
-msgid "Back to Client List"
-msgstr "Zurück zur Referenzliste"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:518
-msgid "Edit Client"
-msgstr "edit Client"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:519
-msgid "Make changes in the form below to edit a Client."
-msgstr "Nehmen Sie Änderungen in der folgenden Form eines Clients zu bearbeiten."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:519
-#: Plugin\rb-agency/admin/client.php:530
-msgid "Required fields are marked"
-msgstr "erforderliche Felder sind markiert"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:529
-msgid "Add New Client"
-msgstr "Kunde hinzufügen"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:530
-msgid "Fill in the form below to add a new Client."
-msgstr "Füllen Sie untenstehendes Formular ein neuer Client hinzuzufügen."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:535
-msgid "Contact Information"
-msgstr "Kontakt Informationen"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:548
-msgid "Gallery Folder"
-msgstr "Galerie-Ordner"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:552
-msgid "Folder"
-msgstr "Mappe"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:552
-msgid "Exists"
-msgstr "existiert"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/client.php:555
-msgid "No Folder Exists"
-msgstr "Keine Ordner vorhanden"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/search.php:456
-msgid "Add to Casting Cart"
-msgstr "In den Casting Wagen"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:56
-msgid "Database Version"
-msgstr "Datenbank-Version:"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:60
-msgid "Stylesheet"
+#: assets/css/jquery-ui/jquery-ui.min.js:10
+msgid "'"
 msgstr ""
 
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:64
-msgid "Agency Name"
-msgstr "Agenturname"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:68
-msgid "Agency Email"
-msgstr "Agentur per E-Mail"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:72
-msgid "Path to Logo"
-msgstr "Pfad zum Logo"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:76
-msgid "Email Header"
-msgstr "E-Mail-Header"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:82
-msgid "Profile Layout Style"
-msgstr "Profil Layout Style"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:93
-msgid "Image Gallery Type"
-msgstr "Bildergalerie Art"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:104
-msgid "Image Gallery Sort Order"
-msgstr "Bildergalerie Sortierung"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:114
-msgid "Unit Type"
-msgstr "Gerätetyp"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:124
-msgid "Privacy Settings"
-msgstr "Datenschutzeinstellungen"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:135
-msgid "Show Fields"
-msgstr "Felder anzeigen"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/settings.php:148
-msgid "Save Changes"
-msgstr "Änderungen speichern"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:14
-#: Plugin\rb-agency/admin/taxonomy.php:35
-#: Plugin\rb-agency/admin/taxonomy.php:55
-#: Plugin\rb-agency/admin/taxonomy.php:122
-msgid "Cheatin&#8217; uh?"
-msgstr ""
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:75
-#: Plugin\rb-agency/admin/taxonomy.php:85
-msgid "Edit Tag"
-msgstr "Tag bearbeiten"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:94
-#: Plugin\rb-agency/admin/taxonomy.php:300
-msgid "Tag name"
-msgstr "Verlinke den Namen"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:98
-#: Plugin\rb-agency/admin/taxonomy.php:306
-msgid "Tag slug"
-msgstr "Tag slug"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:100
-#: Plugin\rb-agency/admin/taxonomy.php:308
-msgid "The &#8220;slug&#8221; is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens."
-msgstr "Die &#8220;slug&#8221; ist die URL-freundliche Version des Namens. Es ist in der Regel nur Kleinbuchstaben und enthält nur Buchstaben, Zahlen und Bindestriche."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:105
-msgid "The description is not prominent by default, however some themes may show it."
-msgstr "Die Beschreibung ist nicht prominent standardmäßig jedoch einige Themen es zeigen."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:156
-msgid "Tag added."
-msgstr "Tag hinzugefügt."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:157
-msgid "Tag deleted."
-msgstr "Tag gelöscht."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:158
-msgid "Tag updated."
-msgstr "Tag aktualisiert."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:159
-msgid "Tag not added."
-msgstr "Tag hinzugefügt."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:160
-msgid "Tag not updated."
-msgstr "Tag nicht aktualisiert."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:161
-msgid "Tags deleted."
-msgstr "Stichworte gelöscht."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:167
-#, php-format
-msgid "Search results for &#8220;%s&#8221;"
-msgstr "Suchergebnisse für &#8220;%s&#8221;"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:179
-msgid "Search Tags"
-msgstr "Suche Tags"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:207
-msgid "&laquo;"
-msgstr ""
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:208
-msgid "&raquo;"
-msgstr ""
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:219
-#: Plugin\rb-agency/admin/taxonomy.php:262
-msgid "Bulk Actions"
-msgstr "Bulk-Aktionen"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:280
-msgid "Popular Tags"
-msgstr "Beliebte Schlagworte"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:293
-msgid "Add a New Tag"
-msgstr ""
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:302
-msgid "The name is how the tag appears on your site."
-msgstr "Der Name ist wie der Tag auf Ihrer Website erscheint."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB Plugin\rb-agency/admin/taxonomy.php:314
-msgid "The description is not prominent by default; however, some themes may show it."
-msgstr "Die Beschreibung ist nicht prominent standardmäßig ; Allerdings zeigen einige Themen kann."
-
-#: C:\Dropbox\Users\Rob\Scripts\RB
-#: Plugin\rb-agency/theme/include-client-layout0.php:24
-#: Plugin\rb-agency/theme/include-client-layout1.php:24
-#: Plugin\rb-agency/theme/include-client-layout2.php:43
-msgid "Share"
-msgstr "Aktie"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB
-#: Plugin\rb-agency/theme/include-client-layout0.php:99
-#: Plugin\rb-agency/theme/include-client-layout1.php:99
-#: Plugin\rb-agency/theme/include-client-layout2.php:118
-msgid "Contact"
-msgstr "Kontakt"
-
-#: C:\Dropbox\Users\Rob\Scripts\RB
-#: Plugin\rb-agency/theme/include-client-layout0.php:112
-#: Plugin\rb-agency/theme/include-client-layout1.php:112
-#: Plugin\rb-agency/theme/include-client-layout2.php:131
-msgid "Access Dashboard"
-msgstr "Zugang Armaturenbrett"
-
-#: Plugin\rb-agency/view/admin-settings.php:3815
-msgid "Use S2member Plugin"
-msgstr "Verwenden Sie S2Member Plugin"
-
-#: Plugin\rb-agency/view/admin-settings.php:3827
-msgid "Paypal Button"
-msgstr "PayPal-Button"
-
-#: Plugin\rb-agency/view/admin-settings.php:3830
-msgid "Amount"
-msgstr "Menge"
-
-#: Plugin\rb-agency/view/admin-settings.php:3832
-msgid "Description"
-msgstr "Beschreibung"
-
-#: Plugin\rb-agency/view/admin-settings.php:3834
-msgid "Insert the generated paypal button from s2member plugin. <i><b>(To generate button, go to s2member (Pro) > Paypal Buttons)</b></i>"
-msgstr "Legen Sie die erzeugte Paypal-Button aus s2member Plugin. <i><b>(Taste zu erzeugen, gehe s2member (Pro) > Paypal Buttons) </ b></ i>"
-
-#: Plugin\rb-agency/view/admin-settings.php:3841
-msgid "Registration Notifications"
-msgstr "Registrierung Benachrichtigungen"
-
-#: Plugin\rb-agency/view/admin-settings.php:3843
-msgid "Insert message after registration."
-msgstr "Legen Nachricht nach der Anmeldung."
-
-#: Plugin\rb-agency/view/admin-settings.php:3845
-msgid "Insert email notification that willl be send after registration."
-msgstr "Legen Nachricht nach der Anmeldung."
-
-#: Plugin\rb-agency/view/admin-settings.php:3847
-msgid "Insert message that willl appear after finishing steps 1-3."
-msgstr "Legen Nachricht, die nach Abschluss der Schritte 1-3 erscheint."
-
-#: Plugin\rb-agency/view/admin-settings.php:3849
-msgid "Insert message that willl appear after payment."
-msgstr "Legen Nachricht, die nach der Zahlung angezeigt."
-
-#: Plugin\rb-agency/view/admin-settings.php:3921
-msgid "Message that will appear at the top of confirming availability page."
-msgstr "Nachricht, die an der Spitze der Bestätigung Verfügbarkeit Seite erscheint."
-
-#: Plugin\rb-agency/view/admin-settings.php:1159
-msgid "Notification after registration"
-msgstr "Mitteilung nach Anmeldung"
-
-#: Plugin\rb-agency/view/admin-settings.php:1162
-msgid "If password is self-generated"
-msgstr "Wenn Passwort ist selbsterzeugten"
-
-#: Plugin\rb-agency/view/admin-settings.php:1169
-msgid "If password is auto-generated(sent via email)"
-msgstr "Wenn Passwort automatisch generiert wird (per E-Mail gesendet)"
-
-msgid "Welcome to RB Agency!"
-msgstr "Willkommen bei RB Agency!"
-
-msgid "We have added some resources below to help you get started."
-msgstr "Wir haben einige Ressourcen unten kannst du den Einstieg zu erleichtern."
-
-msgid "Quick Links"
-msgstr "Nützliche Links"
-
-msgid "Create New Male"
-msgstr "Create New Männlich"
-
-msgid "Create New Female"
-msgstr "Create New Female"
-
-msgid "Quick Search"
-msgstr "Schnelle Suche"
-
-msgid "First Name"
-msgstr "Vorname"
-
-msgid "Last Name"
-msgstr "Familienname"
-
-msgid "Empty Form"
-msgstr "leeres Formular"
-
-msgid "Go to Advanced Search"
-msgstr "Zum Erweiterte Suche"
-
-msgid "Recently Updated Profiles"
-msgstr "Kürzlich aktualisierte Profile"
-
-msgid "Recently Viewed Profiles"
-msgstr "Kürzlich angesehene Profile"
-
-msgid "Last viewed"
-msgstr "Zuletzt angesehen"
-
-msgid "Views"
-msgstr "Ansichten"
-
-msgid "Create New Profile"
-msgstr "Neues Profil erstellen"
-
-msgid "Filter Profiles"
-msgstr "Filterprofile"
-
-msgid "First Name:"
-msgstr "Vorname:"
-
-msgid "Last Name:"
-msgstr "Familienname:"
-
-msgid "Category:"
-msgstr "Kategorie:"
-
-msgid "Status"
-msgstr ""
-
-msgid "Locatio"
-msgstr "Ort"
-
-msgid "Any Category"
-msgstr "jede Kategorie"
-
-msgid "Any Status"
-msgstr "jeder Stand"
-
-msgid "Any Location"
-msgstr "jeder Ort"
-
-msgid "Any Gender"
-msgstr "Irgendein Geschlecht"
-
-msgid "Filter"
-msgstr ""
-
-msgid "Clear Filters"
-msgstr "Filter löschen"
-
-msgid "Age"
-msgstr "Alter"
-
-msgid "City"
-msgstr "Stadt"
-
-msgid "State"
-msgstr "Bundesland"
-
-msgid "Category"
-msgstr "Kategorie"
-
-msgid "Images"
-msgstr "Bilder"
-
-msgid "Private"
-msgstr "Privat"
-
-msgid "Last Viewed Date"
-msgstr "Zuletzt gesehen Datum"
-
-msgid "Currently \" . $items . \" Profiles"
-msgstr "Zur Zeit \" . $items . \" Profile"
-
-msgid "Next"
-msgstr "Nächster"
-
-msgid "Previous"
-msgstr "Früher"
-
-msgid "Delete Profiles"
-msgstr "Profile löschen"
-
-msgid "Any"
-msgstr "Irgendein"
-
-msgid "Min"
-msgstr ""
-
-msgid "Max"
-msgstr ""
-
-msgid "From"
-msgstr "Von"
-
-msgid "To"
-msgstr "Nach"
-
-msgid "Birthdate"
-msgstr "Geburtsdatum"
-
-msgid "Country"
-msgstr "Land"
-
-msgid "Any Country"
-msgstr "Irgendein Land"
-
-msgid "Any State"
-msgstr "Irgendein Bundesland"
-
-msgid "Zip"
-msgstr "Reißverschluss"
-
-msgid "Initial Setup"
-msgstr "Ersteinrichtung"
-
-msgid "If you are doing the initial instal of RB Agency you this section will help you get your data inplace"
-msgstr "Wenn Sie die anfängliche instal von RB Agency tun werden Sie in diesem Abschnitt helfen Ihnen, Ihre Daten an Ort und Stelle erhalten"
-
-msgid "Data Integrity"
-msgstr "Datenintegrität"
-
-msgid "Once your data is in place use the tools below to check your records"
-msgstr "Sobald Ihre Daten an Ort und Stelle ist, die Werkzeuge verwenden unten Ihre Aufzeichnungen zu überprüfen"
-
-msgid "Export Data"
-msgstr "Daten exportieren"
-
-msgid "Export databases"
-msgstr "Export-Datenbanken"
-
-msgid "Check for Abnormalities"
-msgstr "Prüfen Sie, ob Abnormitäten"
-
-msgid "Search profile records for fields which seem invalid"
-msgstr "Suchprofil-Datensätze für Felder, die ungültige sim"
-
-msgid "Rename Profile Folder Names"
-msgstr "Profil umbenennen Ordnernamen"
-
-msgid "If you created model profiles while under \"First Last\" and wish to switch to Display names, IDs, or First L, you will have to rename the existing folders so that they do not have the models name in it."
-msgstr "Wenn Sie Modellprofile erstellt werden, während unter \"First Last\" und wollen wechseln Namen anzeigen, IDs oder First L, sehen Sie die vorhandenen Ordner umbenennen müssen, damit sie nicht die Modelle Namen in ihm."
-
-msgid "Resize Photos"
-msgstr "Resize Fotos"
-
-msgid "Ensure files are not larger than approved size"
-msgstr "Stellen Sie sicher, Dateien nicht größer als genehmigt Größe"
-
-msgid "Orphaned Profile Images"
-msgstr "Verwaiste Profil Bilder"
-
-msgid "If for any reason you are getting blank images appear it may be because images were added in the database but have been removed via FTP.  Use this tool to remove all images in the databse which do not physically exist."
-msgstr "Wenn aus irgendeinem Grund Sie leere Bilder werden immer angezeigt werden es sein kann, weil Bilder in der Datenbank hinzugefügt wurden, sondern haben über FTP entfernt. Mit diesem Tool können Sie alle Bilder in der Datenbank zu entfernen, die nicht physisch vorhanden sind."
-
-msgid "FTP Blank Folder Check"
-msgstr "FTP-Blank-Ordner-Prüfung"
-
-msgid "Check for any empty folders which do no have models assigned using this tool"
-msgstr "Prüfen Sie, ob leere Ordner, die keine Modelle mit diesem Werkzeug zugewiesen haben"
-
-msgid "Profile Data Migration"
-msgstr "Profil Datenmigration"
-
-msgid "Search profile records for fields migration"
-msgstr "Suchprofil -Datensätze für Felder Migration"
-
-msgid "Profile Management"
-msgstr "Profilverwaltung"
-
-msgid "The following reports will help you manage your profile information"
-msgstr "Die folgenden Berichte helfen Ihnen, Ihre Profilinformationen verwalten"
-
-msgid "Inactive Users"
-msgstr "Inaktive Benutzer"
-
-msgid "Profile Search"
-msgstr "Profil"
-
-msgid "You may search for profiles by using this tool"
-msgstr "Sie können mit Hilfe dieses Werkzeugs für Profile suchen"
-
-msgid "Dummy Profiles with Sample Media"
-msgstr "Dummy-Profile mit der Probe Medien"
-
-msgid "You may add dummy profiles by using this tool"
-msgstr "Sie können mit Hilfe dieses Werkzeugs Dummy-Profile hinzufügen"
-
-msgid "Importing Records"
-msgstr "Importieren von Datensätzen"
-
-msgid "The following tools will help import records."
-msgstr "Die folgenden Tools werden Daten importieren helfen."
-
-msgid "Download this template and load your profile data into this file to import into the database."
-msgstr "Diese Vorlage herunterladen und laden Sie Ihre Profildaten in diese Datei in die Datenbank zu importieren."
-
-msgid "Check for Profile Data Migration"
-msgstr "Überprüfen Sie für Profile Data Migration"
-
-msgid "Check Inactive Users"
-msgstr "Überprüfen Inaktive Benutzer"
-
-msgid "Find profiles who are currently set as inactive.  Use this tool to set multiple users to active"
-msgstr "Finden Sie Profile, die derzeit als inaktiv gesetzt sind. Mit diesem Tool können mehrere Benutzer aktiv zu setzen"
-
-msgid "Generate Dummy Profiles with Media Content"
-msgstr "Generieren Sie Dummy-Profile mit Medieninhalten"
-
-msgid "Step 1"
-msgstr "Schritt 1"
-
-msgid "Export Now"
-msgstr "Jetzt exportieren"
-
-msgid "Step 4"
-msgstr "Schritt 4"
-
-msgid "Create folders for all profiles"
-msgstr "Erstellen Sie Ordner für alle Profile"
-
-msgid "Check that all profiles have folders created on the server."
-msgstr "Überprüfen Sie, ob alle Profile haben Ordner auf dem Server erstellt."
-
-msgid "Step 2"
-msgstr "Schritt 2"
-
-msgid "Import Data"
-msgstr "Daten importieren"
-
-msgid "Upload the model profiles into the database."
-msgstr "Laden Sie die Modellprofile in die Datenbank."
-
-msgid "Step 5"
-msgstr "Schritt 5"
-
-msgid "Scan Folders for Images/Media"
-msgstr "Scanordner für Bilder / Medien"
-
-msgid "First upload images directly to folders via FTP then use this tool to sync the images & media to the database."
-msgstr "Erste Bilder direkt auf Ordner per FTP dann dieses Tool verwenden, um die Bilder und Medien in der Datenbank zu synchronisieren."
-
-msgid "Step 3"
-msgstr "Schritt 3"
-
-msgid "Generate folder names for profiles"
-msgstr "Generieren Sie Ordnernamen für Profile"
-
-msgid "Check that all profiles have folder names generated."
-msgstr "Überprüfen Sie, ob alle Profile Ordnernamen generiert haben."
-
-msgid "Step 6"
-msgstr "Schritt 6"
-
-msgid "Set Primary Profile Image"
-msgstr "Richten Sie den primären Profilbild"
-
-msgid "Identify which image is the primary image for each profile."
-msgstr "Identifizieren Sie, welches Bild das Primärbild für jedes Profil ist."
-
-msgid "Settings &raquo; Overview"
-msgstr "Einstellungen &raquo; Überblick"
-
-msgid "Settings &raquo; Configuration"
-msgstr "Einstellungen &raquo; Konfiguration"
-
-msgid "Settings &raquo; Style"
-msgstr "Einstellungen &raquo; Stil"
-
-msgid "Settings &raquo; Data &raquo; Gender"
-msgstr "Einstellungen &raquo; Data &raquo; Geschlecht"
-
-msgid "Settings &raquo; Data &raquo; Profile Types"
-msgstr "Einstellungen &raquo; Data &raquo; Profiltypen"
-
-msgid "Settings &raquo; Data &raquo; Custom Fields"
-msgstr "Einstellungen &raquo; Data &raquo; Benutzerdefinierte Felder"
-
-msgid "Settings &raquo; Data &raquo; Media Types"
-msgstr "Einstellungen &raquo; Data &raquo; Medientypen"
-
-msgid "Settings &raquo; Subscription"
-msgstr "Einstellungen &raquo; Abonnement"
-
-msgid "Settings &raquo; Uninstall"
-msgstr "Einstellungen &raquo; Deinstallieren"
-
+#: app/admin-settings.class.php:14 view/admin-settings.php:109
+#: view/admin-settings.php:141 view/partial/admin-menu.php:109
 msgid "Configuration"
 msgstr "Konfiguration"
 
-msgid "Diagnostics"
-msgstr "Diagnose"
+#: app/admin-settings.class.php:16 lib/RBAgency-Admin.php:102
+#: view/admin-overview.php:49 view/admin-settings.php:111
+#: view/admin-settings.php:145 view/admin-settings.php:163
+#: view/partial/admin-menu.php:98
+msgid "Settings"
+msgstr "Einstellungen"
 
-msgid "The following settings modify the core RB Agency settings."
-msgstr "Die folgenden Einstellungen, die Kern RB Agency Einstellungen ändern."
+#: app/admin-settings.class.php:16 app/admin-settings.class.php:17
+#: view/admin-settings.php:111 view/admin-settings.php:112
+#: view/admin-settings.php:146 view/admin-settings.php:164
+msgid ""
+"Access this area to manage all of the core settings including layout types, "
+"privacy settings and more"
+msgstr ""
+"Zugriff auf diesen Bereich alle Kerneinstellungen einschließlich Layout-"
+"Typen zu verwalten, die Datenschutzeinstellungen und vieles mehr"
 
-msgid "Features"
-msgstr "Eigenschaften"
-
-msgid "Access this area to manage all of the core settings including layout types, privacy settings and more"
-msgstr "Zugriff auf diesen Bereich alle Kerneinstellungen einschließlich Layout-Typen zu verwalten, die Datenschutzeinstellungen und vieles mehr"
-
+#: app/admin-settings.class.php:17 view/admin-settings.php:112
+#: view/admin-settings.php:149 view/admin-settings.php:150
+#: view/partial/admin-menu.php:110
 msgid "Style"
 msgstr "Stil"
 
-msgid "Manage the stylesheet (CSS) controlling the category and profile layouts"
-msgstr "Verwalten Sie das Stylesheet (CSS) Steuerung der Kategorie und Profil-Layouts"
+#: app/admin-settings.class.php:22 view/admin-settings.php:117
+msgid "Diagnostics"
+msgstr "Diagnose"
 
-msgid "Profile Types"
-msgstr "Profiltypen"
-
-msgid "Custom Fields"
-msgstr "Benutzerdefinierte Felder"
-
-msgid "Manage Locations"
-msgstr "Standorte verwalten"
-
-msgid "Locations"
-msgstr "Standorte"
-
-msgid "Customize Profile Fields"
-msgstr "Benutzerdefinierte Profilfelder"
-
-msgid "You have full control over all drop downs and ability to add new custom fields of your own."
-msgstr "Sie haben die volle Kontrolle über alle Dropdown-Menüs und die Fähigkeit, neue benutzerdefinierte Felder Ihrer eigenen hinzuzufügen."
-
-msgid "Profile Categories"
-msgstr "Profil Kategorien"
-
-msgid "Choose custom category types to classify profiles"
-msgstr "Wählen Sie benutzerdefinierte Kategorietypen zu klassifizieren Profile"
-
-msgid "Media Categories"
-msgstr "Medien Kategorien"
-
-msgid "Manage your media categories"
-msgstr "Verwalten Sie Ihre Medienkategorien"
-
-msgid "Add public and private custom fields"
-msgstr "In öffentlichen und privaten benutzerdefinierte Felder"
-
-msgid "Manage your Locations"
-msgstr "Verwalten Sie Ihre Standorte"
-
-msgid "Manage preset Gender choices"
-msgstr "Verwalten voreingestellten Geschlecht Entscheidungen"
-
-msgid "Settings for s2member plugin"
-msgstr "Einstellungen für s2member Plugin"
-
-msgid "Uninstall"
-msgstr "Deinstallieren"
-
-msgid "Uninstall RB Agency software and completely remove all data"
-msgstr "Deinstallieren RB Agency Software und entfernen Sie alle Daten vollständig"
-
-msgid "Interactive Settings"
-msgstr ""
-
-msgid "These settings modify the behavior of the RB Agency Interactive plugin."
-msgstr ""
-
-msgid "Subscription Rates"
-msgstr ""
-
-msgid "Show Sidebar on Member Management/Login Pages"
-msgstr ""
-
-msgid "Hide Toolbar on All Pages"
-msgstr ""
-
-msgid "Login Settings (Model/Talent)"
-msgstr ""
-
-msgid "Do Not Override Login Screen"
-msgstr ""
-
-msgid "Redirect to /profile-login/"
-msgstr ""
-
-msgid "Redirect to homepage"
-msgstr ""
-
-msgid "Redirect for Login"
-msgstr ""
-
-msgid "Redirect to /profile-member/account/"
-msgstr ""
-
-msgid "Redirect first time users"
-msgstr ""
-
-msgid "Redirect users after login(excluding new users)"
-msgstr ""
-
-msgid "Redirect to /profile-member/account/(default)"
-msgstr ""
-
-msgid "Switch Sidebar"
-msgstr ""
-
-msgid "Use default interact sidebar"
-msgstr ""
-
-msgid "Use theme widget sidebar"
-msgstr ""
-
-msgid "Login Settings (Casting Agent)"
-msgstr ""
-
-msgid "Redirect users after login"
-msgstr ""
-
-msgid "Redirect to /casting-dashboard/(default)"
-msgstr ""
-
-msgid "Redirect to custom( e.g. /welcome/ ):"
-msgstr ""
-
-msgid "Registration Process (Model/ Talent)"
-msgstr ""
-
-msgid "Email Confirmation"
-msgstr ""
-
-msgid "Password Auto-Generated (sent via email)"
-msgstr ""
-
-msgid "Password Self-Generated"
-msgstr ""
-
-msgid "Show User Registration when creating Profiles"
-msgstr ""
-
-msgid "Show Username field (if email confirmation is set to \"password auto-generated\""
-msgstr ""
-
-msgid "Show Username & Password fields (if email confirmation is set to \"password self-generated\""
-msgstr ""
-
-msgid "New Profile Registration"
-msgstr ""
-
-msgid "Users may register profiles (uncheck to prevent self registration)"
-msgstr ""
-
-msgid "Delete Options"
-msgstr ""
-
-msgid "No"
-msgstr ""
-
-msgid "Yes (Allow users to permanently delete their profile)"
-msgstr ""
-
-msgid "Archive Only (Allow users to hide their profile)"
-msgstr ""
-
-msgid "New Profile Approval"
-msgstr ""
-
-msgid "Manually Approved"
-msgstr ""
-
-msgid "Automatically Approved"
-msgstr ""
-
-msgid "Default State For Registered Users"
-msgstr ""
-
-msgid "Active"
-msgstr ""
-
-msgid "Active - Not Visible On Website"
-msgstr ""
-
-msgid "Inactive"
-msgstr ""
-
-msgid "Archive"
-msgstr ""
-
-msgid "Pending Approval"
-msgstr ""
-
-msgid "Registration Process (Casting Agent)"
-msgstr ""
-
-msgid "Membership Subscription"
-msgstr ""
-
-msgid "Notifications"
-msgstr ""
-
-msgid "(Display Upsell Messages for Subscription)"
-msgstr ""
-
-msgid "Embed Overview Page ID"
-msgstr ""
-
-msgid "Embed Registration Page ID"
-msgstr ""
-
-msgid "PayPal Email Address"
-msgstr ""
-
-msgid "Website Details"
-msgstr ""
-
-msgid "Header Email"
-msgstr ""
-
-msgid "Remove Updates on Dashboard"
-msgstr ""
-
-msgid "Change the status to \"pending approval\" whenever a profile is updated"
-msgstr ""
-
-msgid "Default Profile Status"
-msgstr ""
-
-msgid "Send email to Models/Talents"
-msgstr ""
-
-msgid "allow casting agent to contact talent directly"
-msgstr ""
-
-msgid "only admin can send Job invites"
-msgstr ""
-
-msgid "Models/Profiles Terms of Conditions Link"
-msgstr ""
-
-msgid "Casting Terms of Conditions Link"
-msgstr ""
-
-msgid "404 Profile Link"
-msgstr ""
-
-msgid "Internationalization"
-msgstr ""
-
-msgid "Default Country"
-msgstr ""
-
-msgid "Server Timezone"
-msgstr ""
-
-msgid "Imperial"
-msgstr ""
-
-msgid "Metric"
-msgstr ""
-
-msgid "Profile List Options"
-msgstr ""
-
-msgid "Display Options"
-msgstr ""
-
-msgid "Show Model Count"
-msgstr ""
-
-msgid "Show Sort Options"
-msgstr ""
-
-msgid "Expanded Model Details"
-msgstr ""
-
-msgid "Show Age (Year)"
-msgstr ""
-
-msgid "Show Age (Month)"
-msgstr ""
-
-msgid "Show Age (Day)"
-msgstr ""
-
-msgid "Show City"
-msgstr ""
-
-msgid "Show State"
-msgstr ""
-
-msgid "Show Email Address in Search Results"
-msgstr ""
-
-msgid "Show Contact Number in Search Results"
-msgstr ""
-
-msgid "Show Email Address in Listing"
-msgstr ""
-
-msgid "Show Contact Number in Listing"
-msgstr ""
-
-msgid "Enable Model Favorites"
-msgstr ""
-
-msgid "Show Sidebar"
-msgstr ""
-
-msgid "Show Casting Cart"
-msgstr ""
-
-msgid "Show Thumbs Slide"
-msgstr ""
-
-msgid "Show Print and Download PDF Link"
-msgstr ""
-
-msgid "Show Manage Your Subscription"
-msgstr ""
-
-msgid "Show Social Buttons"
-msgstr ""
-
-msgid "Show Country as Code"
-msgstr ""
-
-msgid "Show as State Code"
-msgstr ""
-
-msgid "Sort by Date"
-msgstr ""
-
-msgid "Show Profile Ratings"
-msgstr ""
-
-msgid "Include Sorting by Profile Ratings"
-msgstr ""
-
-msgid "Profile Default Sort"
-msgstr ""
-
-msgid "Search Results Sort"
-msgstr ""
-
-msgid "Auto-Generated ID"
-msgstr ""
-
-msgid "Default"
-msgstr ""
-
-msgid "Custom Order"
-msgstr ""
-
-msgid "Profile Rating"
-msgstr ""
-
-msgid "Profiles Per Page"
-msgstr ""
-
-msgid "Profiles Per Row"
-msgstr ""
-
-msgid "Profile List Style"
-msgstr ""
-
-msgid "Name Under Image"
-msgstr ""
-
-msgid "Name Over Image"
-msgstr ""
-
-msgid "Name Under Image with Color"
-msgstr ""
-
-msgid "Voice Over (no image)"
-msgstr ""
-
-msgid "Landscape"
-msgstr ""
-
-msgid "Favorite and Casting Display"
-msgstr ""
-
-msgid "Image Overlay"
-msgstr ""
-
-msgid "Favorite and Casting Effect"
-msgstr ""
-
-msgid "No effect"
-msgstr ""
-
-msgid "Fade"
-msgstr ""
-
-msgid "Slide"
-msgstr ""
-
-msgid "Profile Search Options"
-msgstr ""
-
-msgid "Maximum Records Returned"
-msgstr ""
-
-msgid "Search Fields"
-msgstr ""
-
-msgid "Show Name Search Fields"
-msgstr ""
-
-msgid "Show Type Search Fields"
-msgstr ""
-
-msgid "Show Location Search Fields"
-msgstr ""
-
-msgid "Show Gender Search Fields"
-msgstr ""
-
-msgid "Show Age Search Fields"
-msgstr ""
-
-msgid "Show Display Name"
-msgstr ""
-
-msgid "Show Birthdate Fields"
-msgstr ""
-
-msgid "Hide Advanced Search button in Basic form &amp; search result"
-msgstr ""
-
-msgid "Do not retain search values in searches"
-msgstr ""
-
-msgid "Admin Casting Cart Options"
-msgstr ""
-
-msgid "Show Hidden Contact Details in Quick Print"
-msgstr ""
-
-msgid "Display Age"
-msgstr ""
-
-msgid "Admin Printing"
+#: app/admin-settings.class.php:24
+msgid "No Diagnostic has been run.  Please run now."
 msgstr ""
 
-msgid "Casting cart Email"
+#: app/admin-settings.class.php:52 app/admin-settings.class.php:65
+#: app/admin-settings.class.php:78 app/admin-settings.class.php:90
+#: app/admin-settings.class.php:104 app/admin-settings.class.php:118
+msgid "Method Variable called"
 msgstr ""
 
-msgid "Image Resizing"
+#: app/casting.class.php:167
+msgid "Empty Cart"
 msgstr ""
 
-msgid "Use TimThumb"
+#: app/casting.class.php:168 app/casting.class.php:314
+msgid "Currently"
 msgstr ""
 
-msgid "Image Handling"
+#: app/casting.class.php:168 app/casting.class.php:314
+msgid "in Cart"
 msgstr ""
 
-msgid "Resize Images"
+#: app/casting.class.php:174
+msgid "There are currently no profiles in the casting cart"
 msgstr ""
 
-msgid "Maximum Width"
-msgstr ""
-
-msgid "Maximum Height"
-msgstr ""
-
-msgid "Profile Thumbnails"
-msgstr ""
-
-msgid "Width"
-msgstr ""
-
-msgid "Height"
-msgstr ""
-
-msgid "Image Compression"
-msgstr ""
-
-msgid "Maximum Quality"
-msgstr ""
-
-msgid "Very High Quality"
-msgstr ""
-
-msgid "High Quality"
-msgstr ""
-
-msgid "Medium Quality"
-msgstr ""
-
-msgid "Low Quality"
-msgstr ""
-
-msgid "Profile Thumbnails Caption"
-msgstr ""
-
-msgid "Show Image Caption"
-msgstr ""
-
-msgid "Profile View Options"
-msgstr ""
-
-msgid "Enable Under Dev Layout"
-msgstr ""
-
-msgid "Enable Custom Layout"
-msgstr ""
-
-msgid "Enable Pop-up Layout"
-msgstr ""
-
-msgid "Profile View Mode"
-msgstr ""
-
-msgid "Pop up"
-msgstr ""
-
-msgid "Slide Down Panel"
-msgstr ""
-
-msgid "Model list public. Must be logged to view profile information"
-msgstr ""
-
-msgid "Model list and profile information public"
-msgstr ""
-
-msgid "Must be logged in to view model list, profile information, and search forms."
-msgstr ""
-
-msgid "Must be logged in to view Profile Listing and Search"
-msgstr ""
-
-msgid "Profile Name Format"
-msgstr ""
-
-msgid "First Last"
-msgstr ""
-
-msgid "First L"
-msgstr ""
-
-msgid "First"
-msgstr ""
-
-msgid "Last"
-msgstr ""
-
-msgid "Display Name"
-msgstr "Anzeigen Name"
-
-msgid "Auto Generated Record ID"
-msgstr ""
-
-msgid "Slimbox2"
-msgstr ""
-
-msgid "No Gallery"
-msgstr ""
-
-msgid "Show most recently uploaded first"
-msgstr ""
-
-msgid "Show chronological order"
-msgstr ""
-
-msgid "Profile Media Links"
-msgstr ""
-
-msgid "Open in a new window"
-msgstr ""
-
-msgid "Force Download"
-msgstr ""
-
-msgid "Show Gender"
-msgstr ""
-
-msgid "EasyTxt Integration"
-msgstr ""
-
-msgid "URL"
-msgstr ""
-
-msgid "API Key"
-msgstr ""
-
-msgid "API Secret"
-msgstr ""
-
-msgid "Casting Dashboard Setting"
-msgstr ""
-
-msgid "Buttons to Display"
-msgstr ""
-
-msgid "Post a New Job"
-msgstr ""
-
-msgid "View Your Job Postings"
-msgstr ""
-
-msgid "View Your Applicants"
-msgstr ""
-
-msgid "Cart and Favorite Icon Setting"
-msgstr ""
-
-msgid "Cart Icon URL"
-msgstr ""
-
-msgid "Leave blank for default"
-msgstr ""
-
-msgid "Favorite Icon URL"
-msgstr ""
-
-msgid "Card Photo Settings"
-msgstr ""
-
-msgid "Logo URL"
-msgstr ""
-
-msgid "full url(include http:// ) / exact Height: 100px width: 200px;"
-msgstr ""
-
-msgid "Model Card Layout"
-msgstr ""
-
-msgid "Layout 0"
-msgstr ""
-
-msgid "Layout 1"
-msgstr ""
-
-msgid "Subscription Tiers"
-msgstr ""
-
-msgid "Subscription Tier"
-msgstr ""
-
-msgid "Subscription Tier name is required"
-msgstr ""
-
-msgid "Error creating %s, please ensure you have filled out all required fields"
-msgstr ""
-
-msgid "%s <strong>added</strong> successfully! You may now %s Load Information to the record"
-msgstr ""
-
-msgid "%s <strong>updated</strong> successfully"
-msgstr ""
-
-msgid "Edit %s"
-msgstr ""
+#: app/casting.class.php:229 ext/upload-multi.php:216
+#: lib/RBAgency-Profile.php:479 lib/RBAgency-Profile.php:494
+#: lib/RBAgency-Profile.php:2657 lib/RBAgency-Profile.php:3368
+#: theme/include-profile-search.php:134 theme/include-profile-search.php:207
+#: view/admin-profile.php:4516 view/admin-profile.php:4539
+#: view/layout/00/include-profile.php:114
+#: view/layout/01/include-profile.php:125 view/layout/11/include-profile.php:96
+#: view/layout/16/include-profile.php:177 view/layout/17/include-profile.php:65
+#: view/profile-print.php:378 view/profile-print.php:506
+msgid "Age"
+msgstr "Alter"
 
-msgid "Create New  %s"
+#: app/casting.class.php:234 app/casting.class.php:279
+msgid "Remove from Cart"
 msgstr ""
 
-msgid "Make changes in the form below to edit a "
+#: app/casting.class.php:277
+msgid "Company"
 msgstr ""
 
-msgid "Title"
+#: app/casting.class.php:278
+msgid "Casting Type"
 msgstr ""
 
-msgid "Text"
+#: app/casting.class.php:312
+msgid "There are no profiles added to the casting cart."
 msgstr ""
 
-msgid "Package Rate"
+#: app/casting.class.php:342
+msgid "Loading photos..."
 msgstr ""
 
-msgid "Subscription Duration"
+#: app/casting.class.php:390
+msgid "Cart Actions"
 msgstr ""
 
-msgid "Update Record"
+#: app/casting.class.php:392
+msgid "Save Search & Email"
 msgstr ""
 
-msgid "Create Record"
+#: app/casting.class.php:393
+msgid "Mass Email"
 msgstr ""
 
-msgid "All Records"
+#: app/casting.class.php:394 app/casting.class.php:395
+#: app/casting.class.php:396 lib/RBAgency-Profile.php:3484
+#: lib/RBAgency-Profile.php:3499 lib/RBAgency-Profile.php:3500
+#: lib/RBAgency-Profile.php:3588 lib/RBAgency-Profile.php:3603
+#: lib/RBAgency-Profile.php:3604
+msgid "Quick Print"
 msgstr ""
 
-msgid "Rate/Term"
+#: app/casting.class.php:395 lib/RBAgency-Profile.php:3499
+#: lib/RBAgency-Profile.php:3603
+msgid "Without Details"
 msgstr ""
 
-msgid "There aren't any records loaded yet"
+#: app/casting.class.php:396 lib/RBAgency-Profile.php:3500
+#: lib/RBAgency-Profile.php:3604
+msgid "One Profile per Page"
 msgstr ""
 
-msgid "Casting Agent"
+#: app/casting.class.php:397
+msgid "Create Casting Job"
 msgstr ""
 
-msgid "Casting Agents"
+#: app/casting.class.php:398 view/include-ecard-create.php:12
+msgid "Create e-Cards"
 msgstr ""
 
-msgid "Manage Clients"
+#: app/casting.class.php:942
+msgid "Compose Email"
 msgstr ""
 
-msgid "Approve Clients"
+#: app/casting.class.php:959
+msgid "Send Email"
 msgstr ""
-
-msgid "Approve Profiles"
-msgstr ""
-
-msgid "Client Searches"
-msgstr ""
-
-msgid "Job Types"
-msgstr ""
-
-msgid "Casting Jobs"
-msgstr ""
-
-msgid "Casting Calendar"
-msgstr ""
-
-msgid "Tools &amp; Reports"
-msgstr ""
-
-msgid "Tools"
-msgstr ""
-
-msgid "Create New "
-msgstr ""
-
-msgid "Approve profiles"
-msgstr ""
-
-msgid "days ago"
-msgstr ""
-
-msgid "day ago"
-msgstr ""
-
-msgid "secs ago"
-msgstr ""
-
-msgid "sec ago"
-msgstr ""
-
-msgid "mins ago"
-msgstr ""
-
-msgid "min ago"
-msgstr ""
-
-msgid "hrs ago"
-msgstr ""
-
-msgid "hr ago"
-msgstr ""
-
-msgid "weeks ago"
-msgstr ""
-
-msgid "week ago"
-msgstr ""
-
-msgid "months ago"
-msgstr ""
-
-msgid "month ago"
-msgstr ""
-
-msgid "years ago"
-msgstr ""
-
-msgid "year ago"
-msgstr ""
-
-msgid "decades ago"
-msgstr ""
-
-msgid "decade ago"
-msgstr ""
-
-msgid "Type"
-msgstr ""
-
-msgid "Diagnostic Checks:"
-msgstr ""
-
-msgid "Next, Select Print Format"
-msgstr "Als nächstes wählen Sie das Druckformat"
-
-msgid "Next, Select PDF Format"
-msgstr "Als nächstes wählen Sie PDF- Format"
-
-msgid "Sorry, there is no available polaroid images for this profile."
-msgstr ""
-
-msgid "Select Print Format"
-msgstr "Wählen Sie das Druckformat"
-
-msgid "Four Polaroids Per Page"
-msgstr "Vier Polaroids pro Seite"
-
-msgid "One Polaroid Per Page"
-msgstr "Ein Polaroid pro Seite"
-
-msgid "Print Polaroids"
-msgstr "Drucken Polaroids"
-
-msgid "Download PDF Polaroids"
-msgstr "PDF herunterladen Polaroids"
-
-msgid "Print Large Photos"
-msgstr "Drucken Große Fotos"
-
-msgid "Print Medium Size Photos"
-msgstr "Drucken Medium Size Fotos"
-
-msgid "Print Large Photos Without Model Info"
-msgstr "Drucken von Fotos ohne große Model Info"
-
-msgid "Print Medium Size Photos Without Model Info"
-msgstr "Drucken Medium Size Fotos Ohne Model Info"
-
-msgid "Download PDF"
-msgstr "Herunterladen PDF"
-
-msgid "Print Pictures"
-msgstr "Drucken Bilder"
-
-msgid "Reset"
-msgstr ""
-
-msgid "Select Division"
-msgstr ""
-
-msgid "Men"
-msgstr ""
-
-msgid "Women"
-msgstr ""
-
-msgid "Teen Girls"
-msgstr ""
-
-msgid "Teen Boys"
-msgstr ""
-
-msgid "Boys"
-msgstr ""
-
-msgid "Girls"
-msgstr ""
-
-msgid "Select Division First"
-msgstr ""
-
-msgid "Print Photos"
-msgstr "Drucken Fotos"
-
-msgid "View Polaroids"
-msgstr "Aussicht Polaroids"
-
-msgid "View Slideshow"
-msgstr ""
-
-msgid "Download %d Comp Card"
-msgstr ""
-
-msgid "Download Headshot"
-msgstr "Herunterladen Kopfschuss"
-
-msgid "Listen to %s Voice Demo"
-msgstr ""
-
-msgid "Watch Video Slate"
-msgstr "Uhr Video Slate"
-
-msgid "Watch Video Monologue"
-msgstr "Uhr Video Monologue"
-
-msgid "Watch Demo Reel"
-msgstr "Uhr Demo Reel"
-
-msgid "View Casting Cart"
-msgstr ""
-
-msgid "Download VoiceDemo"
-msgstr ""
-
-msgid "Download CompCard"
-msgstr ""
-
-msgid "Download Resume"
-msgstr "Herunterladen Fortsetzen"
-
-msgid "Previous page"
-msgstr ""
-
-msgid "Next Page"
-msgstr ""
-
-msgid "Watch Video"
-msgstr ""
-
-msgid "View Shortlist"
-msgstr ""
-
-msgid "Watch ShowReel"
-msgstr ""
-
-msgid "Print Resume PDF"
-msgstr ""
-
-msgid "Click Here"
-msgstr ""
-
-msgid "Resume &#8595;"
-msgstr ""
-
-msgid "Print Resume"
-msgstr ""
-
-msgid "Download Comp Card"
-msgstr "Herunterladen Comp Card"
-
-msgid "Listen to Voice Demo"
-msgstr "Hören nach Stimme Demo"
-
-msgid "Available for:"
-msgstr ""
-
-msgid "SoundCloud"
-msgstr "SoundCloud"
 
+#: app/common.class.php:633 view/layout/00/include-profile.php:211
+#: view/layout/01/include-profile.php:230
+#: view/layout/02/include-profile.php:216
+#: view/layout/11/include-profile.php:190
+#: view/layout/12/include-profile.php:242
+#: view/layout/16/include-profile.php:278
 msgid "Please select photos to print. Maximum is 100 photos only"
 msgstr "Bitte wählen Sie Fotos zu drucken. Maximal 100 Fotos nur"
 
-msgid "View Photos"
-msgstr "Aussicht Fotos"
-
-msgid "Resume"
+#: ext/BFI_Thumb.php:145
+msgid ""
+"The server does not have ImageMagick or GD installed and/or enabled! Any of "
+"these libraries are required for WordPress to be able to resize images. "
+"Please contact your server administrator to enable this before continuing."
 msgstr ""
 
-msgid "Comp Card"
+#: ext/BFI_Thumb.php:273
+msgid "Image rotate failed."
 msgstr ""
 
-msgid "Model Card"
+#: ext/BFI_Thumb.php:296
+msgid "Image opacity change failed."
 msgstr ""
 
-msgid "Headshot"
+#: ext/BFI_Thumb.php:383
+msgid "Image color change failed."
 msgstr ""
 
-msgid "Go Back to My Account"
+#: ext/BFI_Thumb.php:400
+msgid "Image grayscale failed."
 msgstr ""
 
-msgid "Sort List"
-msgstr "Sortieren Liste"
-
-msgid "Name"
-msgstr "Name"
-
-msgid "Date Joined"
-msgstr "Datum Beigetreten"
-
-msgid "Ratings"
-msgstr "Bewertungen"
-
-msgid "Sort Options"
-msgstr "Sortieren Optionen"
-
-msgid "Total Results"
-msgstr "Gesamt Ergebnisse"
-
-msgid "Displaying"
-msgstr "Anzeige"
-
-msgid "of"
-msgstr "von"
-
-msgid " records"
-msgstr "aufzeichnungen"
-
-msgid "Print"
-msgstr "Drucken"
-
-msgid "Watch"
-msgstr "Uhr"
-
-msgid "or"
-msgstr "oder"
-
-msgid "Youngest to Oldest"
-msgstr "Jüngster nach Älteste"
-
-msgid "Oldest to Youngest"
-msgstr "Älteste nach Jüngster"
-
-msgid "Ascending"
-msgstr "Aufsteigend"
-
-msgid "Descending"
-msgstr "Absteigend"
-
-msgid "Highest to Lowest"
-msgstr "Höchste nach Unterste"
-
-msgid "Lowest to Highest"
-msgstr "Unterste nach Höchste"
-
-msgid "View Resume"
-msgstr "Aussicht Fortsetzen"
-
-msgid "View Comp Card"
-msgstr "Aussicht Comp Card"
-
-msgid "View Model Card"
-msgstr "Aussicht Model Card"
-
-msgid "View Headshot"
-msgstr "Aussicht Kopfschuss"
-
-msgid "Download Model Card"
-msgstr "Herunterladen Model Card"
-
-msgid "Go Back to My Dashboard"
-msgstr "Zurück zu Meine Übersicht"
-
-msgid "Loading..."
+#: ext/BFI_Thumb.php:417
+msgid "Image negate failed."
 msgstr ""
 
-msgid "Select State"
+#: ext/upload-multi.php:233 view/layout/10/include-profile.php:139
+msgid "Click Here"
 msgstr ""
 
-msgid "Basic Search"
+#: ext/upload-multi.php:244
+msgid "View Profile"
 msgstr ""
 
-msgid "No search criteria selected, please initiate your search."
+#: ext/upload-multi.php:509 lib/RBAgency-Admin.php:421
+#: lib/RBAgency-Profile.php:435 lib/RBAgency-Profile.php:452
+#: lib/RBAgency-Profile.php:2669 lib/RBAgency-Profile.php:3394
+#: lib/RBAgency-Profile.php:3396 theme/include-profile-search.php:123
+#: theme/include-profile-search.php:192 view/admin-profile.php:2411
+#: view/admin-profile.php:4465 view/admin-profile.php:4515
+#: view/admin-profile.php:4538 view/admin-settings.php:191
+#: view/admin-settings.php:192 view/admin-settings.php:2126
+#: view/admin-settings.php:2222 view/admin-settings.php:2231
+#: view/admin-settings.php:4018 view/admin-settings.php:4031
+#: view/admin-settings.php:4345 view/admin-settings.php:4356
+#: view/layout/00/include-profile.php:119
+#: view/layout/01/include-profile.php:130
+#: view/layout/02/include-profile.php:126
+#: view/layout/03/include-profile.php:265 view/layout/04/include-profile.php:55
+#: view/layout/05/include-profile.php:104
+#: view/layout/06/include-profile.php:127 view/layout/07/include-profile.php:60
+#: view/layout/09/include-profile.php:120 view/layout/10/include-profile.php:70
+#: view/layout/11/include-profile.php:101 view/layout/12/include-profile.php:60
+#: view/layout/13/include-profile.php:172
+#: view/layout/15/include-profile.php:116
+#: view/layout/16/include-profile.php:182 view/layout/17/include-profile.php:69
+#: view/layout/18/include-profile.php:150 view/partial/admin-menu.php:111
+#: view/profile-print.php:515 view/profile-print.php:517
+msgid "Gender"
+msgstr "Geschlecht"
+
+#: functions.php:306
+msgid "Permalinks"
 msgstr ""
 
-msgid "Go Back to Basic Search"
+#: functions.php:306
+msgid ""
+"are not configured.  This will cause RB Agency not to function properly."
 msgstr ""
 
-msgid "Go Back to Advanced Search"
+#: functions.php:625
+msgid " ago"
 msgstr ""
 
+#: functions.php:1195 lib/RBAgency-Profile.php:4829
+msgid "No Featured Profiles"
+msgstr ""
+
+#: functions.php:1628
+msgid "There are no custom fields loaded"
+msgstr ""
+
+#: functions.php:1628
+msgid "Setup Custom Fields"
+msgstr ""
+
+#: functions.php:1732 functions.php:1737 functions.php:6482 functions.php:6487
+#: functions.php:6819 functions.php:6825 lib/RBAgency-Profile.php:482
+#: lib/RBAgency-Profile.php:497 lib/RBAgency-Profile.php:904
+#: lib/RBAgency-Profile.php:913 lib/RBAgency-Profile.php:4541
+#: lib/RBAgency-Profile.php:4550 theme/include-profile-search.php:136
+#: theme/include-profile-search.php:210
+msgid "Min"
+msgstr ""
+
+#: functions.php:1734 functions.php:1739 functions.php:6484 functions.php:6489
+#: functions.php:6821 functions.php:6827 lib/RBAgency-Profile.php:486
+#: lib/RBAgency-Profile.php:501 lib/RBAgency-Profile.php:908
+#: lib/RBAgency-Profile.php:917 lib/RBAgency-Profile.php:4545
+#: lib/RBAgency-Profile.php:4554 theme/include-profile-search.php:138
+#: theme/include-profile-search.php:212
+msgid "Max"
+msgstr ""
+
+#: functions.php:3333 view/admin-profile.php:1629
+msgid "Social Media Links"
+msgstr ""
+
+#: functions.php:3497 view/profile-admincart.php:23
+#: view/profile-cardphotos.php:30 view/profile-contact.php:26
+#: view/profile-print.php:306
+msgid "Error, query failed"
+msgstr ""
+
+#: functions.php:3508
+msgid "Profiles List"
+msgstr ""
+
+#: functions.php:3620
+msgid "Search User"
+msgstr ""
+
+#: functions.php:3623 theme/include-profile-search.php:146
+#: view/admin-profile.php:4481 view/admin-search.php:156
+#: view/profile-search.php:65
 msgid "Advanced Search"
 msgstr ""
 
+#: functions.php:4646
+msgid "Wrong username or password."
+msgstr ""
+
+#: functions.php:4648
+msgid "Login successful, redirecting..."
+msgstr ""
+
+#: functions.php:4829
+msgid "Sign in"
+msgstr ""
+
+#: functions.php:4833 theme/include-login-casting.php:25
+#: theme/include-login.php:31 theme/include-login.php:51
+#: view/admin-profile.php:1433
+msgid "Username"
+msgstr ""
+
+#: functions.php:4836 theme/include-login-casting.php:28
+#: theme/include-login.php:34 theme/include-login.php:52
+#: view/admin-profile.php:1440
+msgid "Password"
+msgstr ""
+
+#: functions.php:4836 theme/include-login-casting.php:28
+#: theme/include-login.php:34
+msgid "forgot password"
+msgstr ""
+
+#: functions.php:4839 theme/include-login-casting.php:36
+#: theme/include-login.php:42
+msgid "Sign In"
+msgstr ""
+
+#: functions.php:5166 view/admin-profile.php:4678 view/admin-profile.php:4688
+msgid "View"
+msgstr ""
+
+#: functions.php:5168
+msgid "Download"
+msgstr ""
+
+#: functions.php:5231 functions.php:5233 functions.php:6785
+#: view/layout/00/include-profile.php:123
+#: view/layout/05/include-profile.php:109
+#: view/layout/06/include-profile.php:131 view/layout/07/include-profile.php:64
+#: view/layout/10/include-profile.php:76 view/layout/12/include-profile.php:66
+#: view/layout/17/include-profile.php:73
+msgid "cm"
+msgstr ""
+
+#: functions.php:5239 functions.php:5241 functions.php:6787
+#: view/layout/00/include-profile.php:133
+#: view/layout/01/include-profile.php:139
+#: view/layout/05/include-profile.php:119
+#: view/layout/06/include-profile.php:141 view/layout/07/include-profile.php:74
+#: view/layout/10/include-profile.php:86 view/layout/11/include-profile.php:110
+#: view/layout/12/include-profile.php:76 view/layout/16/include-profile.php:191
+#: view/layout/17/include-profile.php:83
+msgid "kg"
+msgstr ""
+
+#: functions.php:5252 view/layout/00/include-profile.php:128
+#: view/layout/05/include-profile.php:114
+#: view/layout/06/include-profile.php:136 view/layout/07/include-profile.php:69
+#: view/layout/10/include-profile.php:81 view/layout/12/include-profile.php:71
+#: view/layout/17/include-profile.php:78
+msgid "ft"
+msgstr ""
+
+#: functions.php:5252 functions.php:5254 view/layout/00/include-profile.php:128
+#: view/layout/05/include-profile.php:114
+#: view/layout/06/include-profile.php:136 view/layout/07/include-profile.php:69
+#: view/layout/10/include-profile.php:81 view/layout/12/include-profile.php:71
+#: view/layout/17/include-profile.php:78
+msgid "in"
+msgstr ""
+
+#: functions.php:5257 view/layout/00/include-profile.php:135
+#: view/layout/01/include-profile.php:141
+#: view/layout/05/include-profile.php:121
+#: view/layout/06/include-profile.php:143 view/layout/07/include-profile.php:76
+#: view/layout/10/include-profile.php:88 view/layout/11/include-profile.php:112
+#: view/layout/12/include-profile.php:78 view/layout/16/include-profile.php:193
+#: view/layout/17/include-profile.php:85
+msgid "lb"
+msgstr ""
+
+#: functions.php:5410
+msgid " "
+msgstr ""
+
+#: functions.php:5577
+msgid "A widget that displays the authors name "
+msgstr ""
+
+#: functions.php:5581
+msgid "RB Login Widget"
+msgstr ""
+
+#: functions.php:5636
+msgid "My Dashboard"
+msgstr ""
+
+#: functions.php:5663
+msgid "Login | Register as Model/Talent"
+msgstr ""
+
+#: functions.php:5663
+msgid "Login | Register as Casting Agent/Producer"
+msgstr ""
+
+#: functions.php:5668 lib/RBAgency-Extends.php:547 lib/RBAgency-Extends.php:647
+msgid "Title:"
+msgstr ""
+
+#: functions.php:5672
+msgid "Link Text for Model/Talent"
+msgstr ""
+
+#: functions.php:5676
+msgid "Link Text for Casting Agent/Producer"
+msgstr ""
+
+#: functions.php:5828
+msgid "Hi there,"
+msgstr ""
+
+#: functions.php:5829
+msgid "Congratulations! Your account is approved."
+msgstr ""
+
+#: functions.php:5839
+#, php-format
+msgid "If you have any problems, please contact us at %s."
+msgstr ""
+
+#: functions.php:5840
+msgid "Regards,"
+msgstr ""
+
+#: functions.php:5841
+msgid " Team"
+msgstr ""
+
+#: functions.php:5857
+#, php-format
+msgid "%s Congratulations! Your account is approved."
+msgstr ""
+
+#: functions.php:6088 view/admin-profile.php:4677 view/admin-profile.php:4687
+#: view/admin-settings.php:1565 view/admin-settings.php:1881
+#: view/admin-settings.php:2311 view/admin-settings.php:4058
+#: view/admin-settings.php:4372 view/admin-settings.php:4881
+msgid "Edit this Record"
+msgstr ""
+
+#: functions.php:6088 view/admin-profile.php:1254 view/admin-profile.php:4677
+#: view/admin-profile.php:4687 view/admin-settings.php:1565
+#: view/admin-settings.php:1881 view/admin-settings.php:2311
+#: view/admin-settings.php:4058 view/admin-settings.php:4372
+#: view/admin-settings.php:4881
+msgid "Edit"
+msgstr ""
+
+#: functions.php:6089 view/admin-settings.php:1566 view/admin-settings.php:1882
+#: view/admin-settings.php:2312 view/admin-settings.php:4059
+#: view/admin-settings.php:4373 view/admin-settings.php:4882
+msgid "You are about to delete this "
+msgstr ""
+
+#: functions.php:6089 view/admin-profile.php:4679 view/admin-profile.php:4689
+#: view/admin-settings.php:1566 view/admin-settings.php:1882
+#: view/admin-settings.php:2312 view/admin-settings.php:4059
+#: view/admin-settings.php:4373 view/admin-settings.php:4882
+msgid "Cancel"
+msgstr ""
+
+#: functions.php:6089 view/admin-profile.php:4679 view/admin-profile.php:4689
+#: view/admin-settings.php:1566 view/admin-settings.php:1882
+#: view/admin-settings.php:2312 view/admin-settings.php:4059
+#: view/admin-settings.php:4373 view/admin-settings.php:4882
+msgid "to stop"
+msgstr ""
+
+#: functions.php:6089 view/admin-profile.php:4679 view/admin-profile.php:4689
+#: view/admin-settings.php:1566 view/admin-settings.php:1882
+#: view/admin-settings.php:2312 view/admin-settings.php:4059
+#: view/admin-settings.php:4373 view/admin-settings.php:4882
+msgid "OK"
+msgstr ""
+
+#: functions.php:6089 view/admin-profile.php:4679 view/admin-profile.php:4689
+#: view/admin-settings.php:1566 view/admin-settings.php:1882
+#: view/admin-settings.php:2312 view/admin-settings.php:4059
+#: view/admin-settings.php:4373 view/admin-settings.php:4882
+msgid "to delete"
+msgstr ""
+
+#: functions.php:6089 view/admin-profile.php:4679 view/admin-profile.php:4689
+#: view/admin-settings.php:1566 view/admin-settings.php:1882
+#: view/admin-settings.php:2312 view/admin-settings.php:4059
+#: view/admin-settings.php:4373 view/admin-settings.php:4882
+msgid "Delete this Record"
+msgstr ""
+
+#: functions.php:6089 view/admin-profile.php:4679 view/admin-profile.php:4689
+#: view/admin-searchsaved.php:863 view/admin-settings.php:1566
+#: view/admin-settings.php:1584 view/admin-settings.php:1882
+#: view/admin-settings.php:1898 view/admin-settings.php:2312
+#: view/admin-settings.php:2509 view/admin-settings.php:4059
+#: view/admin-settings.php:4180 view/admin-settings.php:4373
+#: view/admin-settings.php:4401 view/admin-settings.php:4882
+msgid "Delete"
+msgstr "Löschen"
+
+#: functions.php:6789
+msgid "Inches/Feet"
+msgstr ""
+
+#: functions.php:6793
+msgid "In Inches"
+msgstr ""
+
+#: functions.php:6795
+msgid "In Pounds"
+msgstr ""
+
+#: functions.php:6797
+msgid "In Inches/Feet"
+msgstr ""
+
+#: functions.php:6999
+msgid "You may also want to check out:"
+msgstr ""
+
+#: functions.php:7100 lib/RBAgency-Profile.php:440 lib/RBAgency-Profile.php:457
+#: view/admin-profile.php:4467
+msgid "Any Gender"
+msgstr "Irgendein Geschlecht"
+
+#: lib/RBAgency-Admin.php:66
+msgid "Agency"
+msgstr "Agentur"
+
+#: lib/RBAgency-Admin.php:70 view/partial/admin-menu.php:94
+#: view/partial/admin-menu.php:108
+msgid "Overview"
+msgstr "Überblick"
+
+#: lib/RBAgency-Admin.php:71 view/admin-overview.php:28
+#: view/partial/admin-menu.php:95
+msgid "Manage Profiles"
+msgstr "Profile verwalten"
+
+#: lib/RBAgency-Admin.php:76
+msgid "Approve Pending Profiles"
+msgstr ""
+
+#: lib/RBAgency-Admin.php:76
+msgid "Approve Profiles"
+msgstr ""
+
+#: lib/RBAgency-Admin.php:79
+msgid "Search &amp; Send Profiles"
+msgstr ""
+
+#: lib/RBAgency-Admin.php:79 lib/RBAgency-Profile.php:1221
+#: theme/include-profile-search.php:144 theme/include-profile-search.php:230
+#: view/admin-overview.php:38 view/partial/admin-menu.php:96
+msgid "Search Profiles"
+msgstr "Suchprofile"
+
+#: lib/RBAgency-Admin.php:80 view/admin-overview.php:47
+msgid "Saved Searches"
+msgstr "Gespeicherte Suche"
+
+#: lib/RBAgency-Admin.php:85
+msgid "Manage Clients"
+msgstr ""
+
+#: lib/RBAgency-Admin.php:87
+msgid "Approve Pending Clients"
+msgstr ""
+
+#: lib/RBAgency-Admin.php:87
+msgid "Approve Clients"
+msgstr ""
+
+#: lib/RBAgency-Admin.php:90
+msgid "Client Activity"
+msgstr ""
+
+#: lib/RBAgency-Admin.php:90
+msgid "Client Searches"
+msgstr ""
+
+#: lib/RBAgency-Admin.php:92
+msgid "Client Types"
+msgstr ""
+
+#: lib/RBAgency-Admin.php:95
+msgid "Job Types"
+msgstr ""
+
+#: lib/RBAgency-Admin.php:96
+msgid "Casting Jobs"
+msgstr ""
+
+#: lib/RBAgency-Admin.php:97
+msgid "Casting Calendar"
+msgstr ""
+
+#: lib/RBAgency-Admin.php:101 view/admin-overview.php:48
+msgid "Tools &amp; Reports"
+msgstr ""
+
+#: lib/RBAgency-Admin.php:102
+msgid "Edit Settings"
+msgstr "Einstellungen bearbeiten"
+
+#: lib/RBAgency-Admin.php:175
+msgid "RB Agency"
+msgstr "RB Agency"
+
+#: lib/RBAgency-Admin.php:367 lib/RBAgency-Admin.php:368
+#: lib/RBAgency-Admin.php:434
+msgid "Insert Profile Grid"
+msgstr ""
+
+#: lib/RBAgency-Admin.php:411
+msgid "Any"
+msgstr "Irgendein"
+
+#: lib/RBAgency-Admin.php:416
+msgid "Only"
+msgstr "Nur"
+
+#: lib/RBAgency-Admin.php:419
+msgid "Starting Age"
+msgstr "Ab Alter"
+
+#: lib/RBAgency-Admin.php:420
+msgid "Ending Age"
+msgstr "Ending Alter"
+
+#: lib/RBAgency-Admin.php:435
+msgid "Insert Search Form"
+msgstr "Legen Suchformular"
+
+#: lib/RBAgency-Admin.php:461
+msgid "RB Agency Updates"
+msgstr "RB Agency Updates"
+
+#: lib/RBAgency-Extends.php:401 lib/RBAgency-Extends.php:434
+msgid "Go Back to Advanced Search"
+msgstr ""
+
+#: lib/RBAgency-Extends.php:403 lib/RBAgency-Extends.php:436
+msgid "Go Back to Basic Search"
+msgstr ""
+
+#: lib/RBAgency-Extends.php:500
+msgid "RB Agency: Featured"
+msgstr ""
+
+#: lib/RBAgency-Extends.php:501
+msgid "Displays featured profiles"
+msgstr ""
+
+#: lib/RBAgency-Extends.php:551 lib/RBAgency-Extends.php:651
+msgid "Type:"
+msgstr ""
+
+#: lib/RBAgency-Extends.php:558
+msgid "Count:"
+msgstr ""
+
+#: lib/RBAgency-Extends.php:598
+msgid "RB Agency: Search Form"
+msgstr ""
+
+#: lib/RBAgency-Extends.php:599
+msgid "Displays profile profiles"
+msgstr ""
+
+#: lib/RBAgency-Init.php:706
+msgid "Almost done..."
+msgstr "Fast fertig..."
+
+#: lib/RBAgency-Init.php:706
+msgid "please uninstall on plugins page."
+msgstr ""
+
+#: lib/RBAgency-Init.php:706
+msgid "Please click here to complete the uninstallation process"
+msgstr "Bitte klicken Sie hier, um die Installation abzuschließen"
+
+#: lib/RBAgency-Profile.php:193 lib/RBAgency-Profile.php:214
+#: theme/include-profile-search.php:101 theme/include-profile-search.php:173
+#: view/admin-profile.php:1414 view/admin-profile.php:4513
+#: view/admin-profile.php:4536 view/admin-settings.php:594
+msgid "First Name"
+msgstr "Vorname"
+
+#: lib/RBAgency-Profile.php:204 lib/RBAgency-Profile.php:218
+#: theme/include-profile-search.php:105 theme/include-profile-search.php:177
+#: view/admin-profile.php:1421 view/admin-profile.php:4514
+#: view/admin-profile.php:4537 view/admin-settings.php:595
+msgid "Last Name"
+msgstr "Familienname"
+
+#: lib/RBAgency-Profile.php:236 lib/RBAgency-Profile.php:242
+#: lib/RBAgency-Profile.php:2666 view/admin-profile.php:1390
+#: view/admin-settings.php:596 view/admin-settings.php:838
+msgid "Display Name"
+msgstr "Anzeigen Name"
+
+#: lib/RBAgency-Profile.php:250
+msgid "Email"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:255 view/admin-profile.php:1521
+#: view/layout/04/include-profile.php:62
+msgid "Phone"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:286 lib/RBAgency-Profile.php:344
+#: theme/include-profile-search.php:109 theme/include-profile-search.php:181
+#: view/admin-settings.php:1466 view/admin-settings.php:1540
+#: view/admin-settings.php:1549 view/admin-settings.php:4014
+#: view/admin-settings.php:4027
+msgid "Type"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:518 lib/RBAgency-Profile.php:539
+#: lib/RBAgency-Profile.php:3371 view/admin-profile.php:1500
+#: view/admin-settings.php:598 view/profile-print.php:381
+msgid "Birthdate"
+msgstr "Geburtsdatum"
+
+#: lib/RBAgency-Profile.php:521 lib/RBAgency-Profile.php:542
+#: lib/RBAgency-Profile.php:1174
+msgid "From"
+msgstr "Von"
+
+#: lib/RBAgency-Profile.php:526 lib/RBAgency-Profile.php:547
+msgid "To"
+msgstr "Nach"
+
+#: lib/RBAgency-Profile.php:568 lib/RBAgency-Profile.php:632
+#: theme/include-profile-search.php:217 view/admin-profile.php:1575
+#: view/admin-profile.php:4517 view/admin-profile.php:4540
+msgid "City"
+msgstr "Stadt"
+
+#: lib/RBAgency-Profile.php:581 lib/RBAgency-Profile.php:639
+#: lib/RBAgency-Profile.php:3361 view/admin-profile.php:1532
+#: view/profile-print.php:375
+msgid "Country"
+msgstr "Land"
+
+#: lib/RBAgency-Profile.php:584 lib/RBAgency-Profile.php:642
+msgid "Any Country"
+msgstr "Irgendein Land"
+
+#: lib/RBAgency-Profile.php:602 lib/RBAgency-Profile.php:655
+#: lib/RBAgency-Profile.php:3365 theme/include-profile-search.php:221
+#: view/admin-profile.php:1552 view/admin-profile.php:4518
+#: view/admin-profile.php:4541
+msgid "State"
+msgstr "Bundesland"
+
+#: lib/RBAgency-Profile.php:605 lib/RBAgency-Profile.php:658
+msgid "Any State"
+msgstr "Irgendein Bundesland"
+
+#: lib/RBAgency-Profile.php:623 lib/RBAgency-Profile.php:671
+#: theme/include-profile-search.php:225 view/admin-profile.php:1583
+msgid "Zip"
+msgstr "Reißverschluss"
+
+#: lib/RBAgency-Profile.php:1178
+msgid "to"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:1198 view/admin-profile.php:2163
+#: view/admin-profile.php:4439
+msgid "Status"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:1206 view/admin-profile.php:4441
+msgid "Any Status"
+msgstr "jeder Stand"
+
+#: lib/RBAgency-Profile.php:1207 view/admin-profile.php:2165
+#: view/admin-profile.php:4442 view/admin-settings.php:1209
+#: view/admin-settings.php:1246
+msgid "Active"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:1208 view/admin-profile.php:4443
+msgid "Active - Not Visible on Front End"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:1209 view/admin-profile.php:2167
+#: view/admin-profile.php:4444 view/admin-settings.php:1211
+#: view/admin-settings.php:1247
+msgid "Inactive"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:1210 view/admin-profile.php:2168
+#: view/admin-profile.php:4445
+msgid "Archived"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:1211 view/admin-profile.php:2170
+#: view/admin-profile.php:4446 view/admin-settings.php:1213
+#: view/admin-settings.php:1249
+msgid "Pending Approval"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:1222 theme/include-profile-search.php:145
+msgid "Empty Form"
+msgstr "leeres Formular"
+
+#: lib/RBAgency-Profile.php:1234
+msgid "Go Back to My Dashboard"
+msgstr "Zurück zu Meine Übersicht"
+
+#: lib/RBAgency-Profile.php:1245 lib/RBAgency-Profile.php:1259
 msgid "Go to Basic Search"
 msgstr ""
 
+#: lib/RBAgency-Profile.php:1250 lib/RBAgency-Profile.php:1252
+#: lib/RBAgency-Profile.php:1263 lib/RBAgency-Profile.php:1265
+msgid "Go to Advanced Search"
+msgstr "Zum Erweiterte Suche"
+
+#: lib/RBAgency-Profile.php:2650
+msgid "Sort By"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:2654
+msgid "Sort List"
+msgstr "Sortieren Liste"
+
+#: lib/RBAgency-Profile.php:2660
+msgid "Name"
+msgstr "Name"
+
+#: lib/RBAgency-Profile.php:2663 view/admin-settings.php:599
+msgid "Date Joined"
+msgstr "Datum Beigetreten"
+
+#: lib/RBAgency-Profile.php:2675
+msgid "Ratings"
+msgstr "Bewertungen"
+
+#: lib/RBAgency-Profile.php:2698
+msgid "Sort Options"
+msgstr "Sortieren Optionen"
+
+#: lib/RBAgency-Profile.php:2811
+msgid "Total Results"
+msgstr "Gesamt Ergebnisse"
+
+#: lib/RBAgency-Profile.php:2932
+msgid "Displaying"
+msgstr "Anzeige"
+
+#: lib/RBAgency-Profile.php:2932
+msgid "of"
+msgstr "von"
+
+#: lib/RBAgency-Profile.php:2932
+msgid " records"
+msgstr "aufzeichnungen"
+
+#: lib/RBAgency-Profile.php:2954
+msgid "Print"
+msgstr "Drucken"
+
+#: lib/RBAgency-Profile.php:2955 view/layout/00/include-profile.php:430
+#: view/layout/01/include-profile.php:449
+#: view/layout/02/include-profile.php:413
+#: view/layout/11/include-profile.php:409
+#: view/layout/12/include-profile.php:428
+#: view/layout/16/include-profile.php:497
+msgid "Download PDF"
+msgstr "Herunterladen PDF"
+
+#: lib/RBAgency-Profile.php:3145
+msgid "Search Again"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:3193
+msgid "No Profiles Found"
+msgstr "Keine gefundene Profile"
+
+#: lib/RBAgency-Profile.php:3257 lib/RBAgency-Profile.php:3267
+msgid "ID"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:3258 lib/RBAgency-Profile.php:3268
+#: view/admin-profile.php:1344
+msgid "Contact Information"
+msgstr "Kontakt Informationen"
+
+#: lib/RBAgency-Profile.php:3259 lib/RBAgency-Profile.php:3269
+msgid "Private Details"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:3260 lib/RBAgency-Profile.php:3270
+msgid "Public Details"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:3261 lib/RBAgency-Profile.php:3271
+msgid "Headshot"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:3374 view/admin-profile.php:1515
+#: view/profile-print.php:384
+msgid "Website"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:3377 view/profile-print.php:387
+msgid "Phone Home"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:3380 view/profile-print.php:390
+msgid "Phone Cell"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:3384 view/profile-print.php:393
+msgid "Phone Work"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:3410 view/admin-profile.php:1759
+#: view/profile-print.php:510
+msgid "Classification"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:3436
+msgid "No profiles found with this criteria!"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:3443
+msgid "There aren't any Profiles loaded yet!"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:3483 lib/RBAgency-Profile.php:3587
+msgid "Add to Casting Cart"
+msgstr "In den Casting Wagen"
+
+#: lib/RBAgency-Profile.php:3512 view/profile-search.php:60
+msgid "Search Results"
+msgstr ""
+
+#: lib/RBAgency-Profile.php:4876 view/profile-category.php:261
+msgid "No Categories Found"
+msgstr ""
+
+#: theme/include-login-casting.php:21 theme/include-login.php:22
+msgid "Members Sign in"
+msgstr ""
+
+#: theme/include-login-casting.php:31 theme/include-login.php:37
+msgid "Keep me signed in"
+msgstr ""
+
+#: theme/include-login-casting.php:57 theme/include-login.php:74
+msgid "Not a member"
+msgstr ""
+
+#: theme/include-login-casting.php:59
+msgid "Client - Register here"
+msgstr ""
+
+#: theme/include-login-casting.php:61 theme/include-login.php:77
+msgid "Create your free profile page"
+msgstr ""
+
+#: theme/include-login-casting.php:62
+msgid "List Auditions & Jobs Free"
+msgstr ""
+
+#: theme/include-login-casting.php:63
+msgid "Contact People in the talent Directory"
+msgstr ""
+
+#: theme/include-login-casting.php:66 theme/include-login.php:80
+msgid "Register Now"
+msgstr ""
+
+#: theme/include-login.php:53
+msgid "Remember Me"
+msgstr ""
+
+#: theme/include-login.php:54
+msgid "Log In"
+msgstr ""
+
+#: theme/include-login.php:75
+msgid "Talent"
+msgstr ""
+
+#: theme/include-login.php:75
+msgid "Register here"
+msgstr ""
+
+#: theme/include-login.php:78
+msgid "Apply to Auditions & Jobs"
+msgstr ""
+
+#: theme/include-profile-search.php:111 theme/include-profile-search.php:183
+msgid "Any Profile Type"
+msgstr "Alle Profiltyp"
+
+#: theme/include-profile-search.php:125 theme/include-profile-search.php:194
+msgid "All Gender"
+msgstr ""
+
+#: theme/include-profile-search.php:232 view/profile-search.php:63
+msgid "Basic Search"
+msgstr ""
+
+#: update.php:155
+msgid ""
+"Oops!! Something went wrong.<br/>Please try again or <a href='http://www."
+"gravityforms.com'>contact us</a>."
+msgstr ""
+
+#: upgrade.php:43
+msgid "Cant load types"
+msgstr ""
+
+#: view/404-profile.php:6
+msgid "Woops! The profile you are looking for no longer exists!"
+msgstr ""
+
+#: view/404-profile.php:8
+msgid "Please use the search facility below to try find the right person."
+msgstr ""
+
+#: view/admin-overview.php:20
+msgid "Welcome to RB Agency!"
+msgstr "Willkommen bei RB Agency!"
+
+#: view/admin-overview.php:21
+msgid "We have added some resources below to help you get started."
+msgstr ""
+"Wir haben einige Ressourcen unten kannst du den Einstieg zu erleichtern."
+
+#: view/admin-overview.php:22
+msgid "Quick Links"
+msgstr "Nützliche Links"
+
+#: view/admin-overview.php:34 view/admin-profile.php:4362
+msgid "Create New "
+msgstr ""
+
+#: view/admin-overview.php:41 view/admin-profile.php:4389
+msgid "No Gender Found. <a href=\""
+msgstr ""
+
+#: view/admin-overview.php:45
+msgid "Approve profiles"
+msgstr ""
+
+#: view/admin-overview.php:76
+msgid "Quick Search"
+msgstr "Schnelle Suche"
+
+#: view/admin-overview.php:101
+msgid "Recently Updated Profiles"
+msgstr "Kürzlich aktualisierte Profile"
+
+#: view/admin-overview.php:115
+msgid "Updated"
+msgstr ""
+
+#: view/admin-overview.php:120 view/admin-overview.php:152
+msgid "There are currently no profiles added"
+msgstr "Derzeit gibt es keine Profile hinzugefügt"
+
+#: view/admin-overview.php:130
+msgid "Recently Viewed Profiles"
+msgstr "Kürzlich angesehene Profile"
+
+#: view/admin-overview.php:143 view/admin-profile.php:4521
+#: view/admin-profile.php:4544
+msgid "Views"
+msgstr "Ansichten"
+
+#: view/admin-overview.php:146
+msgid "Last viewed"
+msgstr "Zuletzt angesehen"
+
+#: view/admin-overview.php:173
+msgid "Diagnostic Checks:"
+msgstr ""
+
+#: view/admin-profile.php:90 view/admin-profile.php:4602
+msgid " must have a display name identified"
+msgstr ""
+
+#: view/admin-profile.php:190
+msgid "A username is required for registration.<br />"
+msgstr ""
+
+#: view/admin-profile.php:194
+msgid "Sorry, that username already exists!<br />"
+msgstr ""
+
+#: view/admin-profile.php:198
+msgid ""
+"A password is required for registration and must have 6 characters.<br />"
+msgstr ""
+
+#: view/admin-profile.php:204 view/admin-profile.php:240
+msgid "You must enter a valid email address.<br />"
+msgstr ""
+
+#: view/admin-profile.php:208 view/admin-profile.php:212
+#: view/admin-profile.php:244
+msgid "Sorry, that email address is already used!<br />"
+msgstr ""
+
+#: view/admin-profile.php:455
+msgid "New Profile added successfully!"
+msgstr ""
+
+#: view/admin-profile.php:455
+msgid "Update and add media"
+msgstr "Aktualisieren Sie und fügen Medien"
+
+#: view/admin-profile.php:461
+msgid ""
+"Error creating record, please ensure you have filled out all required fields."
+msgstr ""
+"Das Fehlerprotokoll erstellen, stellen Sie sicher, Sie alle erforderlichen "
+"Felder ausgefüllt haben."
+
+#: view/admin-profile.php:753 view/admin-profile.php:806
+msgid "Please upload an image file only"
+msgstr ""
+
+#: view/admin-profile.php:769
+msgid "Please upload a mp3 file only"
+msgstr ""
+
+#: view/admin-profile.php:778
+msgid "Please upload PDF/MSword/RTF files only"
+msgstr ""
+
+#: view/admin-profile.php:787
+msgid "Please upload PDF/MSWord/RTF/Image files only"
+msgstr ""
+
+#: view/admin-profile.php:796
+msgid "Please upload jpeg or png files only"
+msgstr ""
+
+#: view/admin-profile.php:844
+msgid "Please upload "
+msgstr ""
+
+#: view/admin-profile.php:955
+msgid "Profile updated successfully"
+msgstr ""
+
+#: view/admin-profile.php:963
+msgid ""
+"Error updating record, please ensure you have filled out all required fields."
+msgstr ""
+"Das Fehlerprotokoll zu aktualisieren, benutzen Sie bitte sicher, dass Sie "
+"alle erforderlichen Felder ausgefüllt haben."
+
+#: view/admin-profile.php:1023
+msgid "No Valid Record Found."
+msgstr ""
+
+#: view/admin-profile.php:1040 view/admin-profile.php:1090
+msgid "Profile deleted successfully!"
+msgstr ""
+
+#: view/admin-profile.php:1087
+msgid "No valid record found."
+msgstr "Kein gültiger Eintrag gefunden."
+
+#: view/admin-profile.php:1255
+msgid "Make changes in the form below to edit a"
+msgstr ""
+
+#: view/admin-profile.php:1315
+msgid "Add New "
+msgstr ""
+
+#: view/admin-profile.php:1316
+msgid "Fill in the form below to add a new"
+msgstr ""
+
+#: view/admin-profile.php:1329
+msgid "Back to "
+msgstr ""
+
+#: view/admin-profile.php:1330 view/admin-settings.php:1441
+#: view/admin-settings.php:1454 view/admin-settings.php:1782
+#: view/admin-settings.php:1796 view/admin-settings.php:2081
+#: view/admin-settings.php:2090 view/admin-settings.php:3098
+#: view/admin-settings.php:3105 view/admin-settings.php:3190
+#: view/admin-settings.php:3204 view/admin-settings.php:3210
+#: view/admin-settings.php:3342 view/admin-settings.php:3371
+#: view/admin-settings.php:3399 view/admin-settings.php:3436
+#: view/admin-settings.php:3464
+msgid "Required fields are marked"
+msgstr "erforderliche Felder sind markiert"
+
+#: view/admin-profile.php:1399
+msgid "Gallery Folder"
+msgstr "Galerie-Ordner"
+
+#: view/admin-profile.php:1403
+msgid "Folder"
+msgstr "Mappe"
+
+#: view/admin-profile.php:1403
+msgid "Exists"
+msgstr "existiert"
+
+#: view/admin-profile.php:1407
+msgid "No Folder Exists"
+msgstr "Keine Ordner vorhanden"
+
+#: view/admin-profile.php:1448
+msgid "Send Login details?"
+msgstr ""
+
+#: view/admin-profile.php:1461
+msgid "Profile Description"
+msgstr ""
+
+#: view/admin-profile.php:1492
+msgid "Private Information"
+msgstr ""
+
+#: view/admin-profile.php:1507
+msgid "Email Address"
+msgstr ""
+
+#: view/admin-profile.php:1541
+msgid "Select country"
+msgstr ""
+
+#: view/admin-profile.php:1557
+msgid "Select state"
+msgstr ""
+
+#: view/admin-profile.php:1569
+msgid "Street"
+msgstr ""
+
+#: view/admin-profile.php:1672
+msgid "Select Social Media"
+msgstr ""
+
+#: view/admin-profile.php:1733
+msgid "Account Information"
+msgstr ""
+
+#: view/admin-profile.php:2157 view/admin-profile.php:2397
+#: view/admin-profile.php:2435
+msgid "No items to select"
+msgstr ""
+
+#: view/admin-profile.php:2157
+msgid "Setup Options"
+msgstr ""
+
+#: view/admin-profile.php:2166 view/admin-settings.php:1210
+msgid "Active - Not Visible On Website"
+msgstr ""
+
+#: view/admin-profile.php:2175
+msgid "Promotion"
+msgstr ""
+
+#: view/admin-profile.php:2181 view/admin-profile.php:4524
+#: view/admin-settings.php:4017 view/admin-settings.php:4030
+msgid "Custom Order"
+msgstr ""
+
+#: view/admin-profile.php:2195
+msgid "Rate Profile"
+msgstr ""
+
+#: view/admin-profile.php:2286
+msgid "Set this Profile to Private"
+msgstr ""
+
+#: view/admin-profile.php:2306
+msgid "WordPress User"
+msgstr ""
+
+#: view/admin-profile.php:2315
+msgid "Date Registered"
+msgstr ""
+
+#: view/admin-profile.php:2322
+msgid "Enable Booking"
+msgstr ""
+
+#: view/admin-profile.php:2333
+msgid "Date Updated"
+msgstr ""
+
+#: view/admin-profile.php:2339 view/layout/03/include-profile.php:152
+msgid "Profile Views"
+msgstr ""
+
+#: view/admin-profile.php:2345
+msgid "Profile Viewed Last"
+msgstr ""
+
+#: view/admin-profile.php:2372
+msgid "Public Information"
+msgstr ""
+
+#: view/admin-profile.php:2475
+msgid "Resume Editor"
+msgstr ""
+
+#: view/admin-profile.php:2508 view/admin-profile.php:3626
+#: view/admin-profile.php:4107 view/admin-settings.php:1498
+#: view/admin-settings.php:1818 view/admin-settings.php:2179
+#: view/admin-settings.php:3960
+msgid "Update Record"
+msgstr ""
+
+#: view/admin-profile.php:2529
+msgid "New image/s has been uploaded!"
+msgstr ""
+
+#: view/admin-profile.php:2561 view/admin-profile.php:2592
+#: view/admin-profile.php:3677 view/admin-profile.php:3708
+msgid "Error removing"
+msgstr ""
+
+#: view/admin-profile.php:2561 view/admin-profile.php:2592
+#: view/admin-profile.php:3677 view/admin-profile.php:3708
+msgid "File did not exist."
+msgstr ""
+
+#: view/admin-profile.php:2563 view/admin-profile.php:2587
+#: view/admin-profile.php:2594 view/admin-profile.php:3679
+#: view/admin-profile.php:3703 view/admin-profile.php:3710
+msgid "successfully removed"
+msgstr ""
+
+#: view/admin-profile.php:2673 view/admin-profile.php:3785
+msgid "There are no images loaded for this profile yet."
+msgstr ""
+
+#: view/admin-profile.php:2784
+msgid "New video/s has been uploaded!"
+msgstr ""
+
+#: view/admin-profile.php:2821
+msgid "Media link <b>"
+msgstr ""
+
+#: view/admin-profile.php:2823 view/admin-profile.php:2830
+msgid "Media file <b>"
+msgstr ""
+
+#: view/admin-profile.php:2843
+msgid ""
+"The following files (pdf, audio file, etc.) are associated with this record"
+msgstr ""
+
+#: view/admin-profile.php:3009 view/admin-profile.php:3012
+msgid "VoiceDemo"
+msgstr ""
+
+#: view/admin-profile.php:3189 view/admin-profile.php:3521
+msgid "Video Slate"
+msgstr ""
+
+#: view/admin-profile.php:3190 view/admin-profile.php:3522
+msgid "Video Monologue"
+msgstr ""
+
+#: view/admin-profile.php:3191 view/admin-profile.php:3523
+msgid "Demo Reel"
+msgstr ""
+
+#: view/admin-profile.php:3192 view/admin-profile.php:3524
+#: view/layout/15/include-profile.php:130
+#: view/layout/16/include-profile.php:135
+msgid "SoundCloud"
+msgstr "SoundCloud"
+
+#: view/admin-profile.php:3193 view/admin-profile.php:3525
+msgid "IMDB"
+msgstr ""
+
+#: view/admin-profile.php:3385
+msgid "There are no additional media linked"
+msgstr ""
+
+#: view/admin-profile.php:3460
+msgid "Upload Images"
+msgstr ""
+
+#: view/admin-profile.php:3471
+msgid "Upload new media using the forms below"
+msgstr ""
+
+#: view/admin-profile.php:3507
+msgid "Link to Videos"
+msgstr ""
+
+#: view/admin-profile.php:3512
+msgid "Paste the video URL below"
+msgstr ""
+
+#: view/admin-profile.php:3550
+msgid "Link to URLs"
+msgstr ""
+
+#: view/admin-profile.php:3555
+msgid "Specify the URL of a custom link."
+msgstr ""
+
+#: view/admin-profile.php:3587
+msgid "Link to Other Accounts"
+msgstr ""
+
+#: view/admin-profile.php:3833
+msgid "Custom Display Settings"
+msgstr ""
+
+#: view/admin-profile.php:4111 view/admin-settings.php:1504
+#: view/admin-settings.php:1824 view/admin-settings.php:2185
+#: view/admin-settings.php:3966
+msgid "Create Record"
+msgstr ""
+
+#: view/admin-profile.php:4352
+msgid "Create New Profile"
+msgstr "Neues Profil erstellen"
+
+#: view/admin-profile.php:4354
+msgid "Currently "
+msgstr ""
+
+#: view/admin-profile.php:4404
+msgid "Filter Profiles"
+msgstr "Filterprofile"
+
+#: view/admin-profile.php:4422
+msgid "First Name:"
+msgstr "Vorname:"
+
+#: view/admin-profile.php:4423
+msgid "Last Name:"
+msgstr "Familienname:"
+
+#: view/admin-profile.php:4425
+msgid "Category:"
+msgstr "Kategorie:"
+
+#: view/admin-profile.php:4427
+msgid "Any Category"
+msgstr "jede Kategorie"
+
+#: view/admin-profile.php:4449
+msgid "Location"
+msgstr ""
+
+#: view/admin-profile.php:4451
+msgid "Any Location"
+msgstr "jeder Ort"
+
+#: view/admin-profile.php:4474
+msgid "Filter"
+msgstr ""
+
+#: view/admin-profile.php:4479
+msgid "Clear Filters"
+msgstr "Filter löschen"
+
+#: view/admin-profile.php:4519 view/admin-profile.php:4542
+msgid "Category"
+msgstr "Kategorie"
+
+#: view/admin-profile.php:4520 view/admin-profile.php:4543
+msgid "Images"
+msgstr "Bilder"
+
+#: view/admin-profile.php:4522 view/admin-settings.php:3509
+#: view/admin-settings.php:3669
+msgid "Private"
+msgstr "Privat"
+
+#: view/admin-profile.php:4526
+msgid "Last Viewed Date"
+msgstr "Zuletzt gesehen Datum"
+
+#: view/admin-profile.php:4545
+msgid "Last Viewed"
+msgstr ""
+
+#: view/admin-profile.php:4679 view/admin-profile.php:4689
+msgid "You are about to delete the profile for "
+msgstr ""
+
+#: view/admin-profile.php:4746
+msgid "Delete Profiles"
+msgstr "Profile löschen"
+
+#: view/admin-reports.php:28
+msgid "Interactive Reporting"
+msgstr ""
+
+#: view/admin-reports.php:29
+msgid "Run reports on membership and other usage."
+msgstr ""
+
+#: view/admin-reports.php:32 view/admin-reports.php:33
+msgid "Recent Payments"
+msgstr ""
+
+#: view/admin-reports.php:34
+msgid "Payments and membership renewals"
+msgstr ""
+
+#: view/admin-reports.php:42
+msgid "Initial Setup"
+msgstr "Ersteinrichtung"
+
+#: view/admin-reports.php:43
+msgid ""
+"If you are doing the initial instal of RB Agency you this section will help "
+"you get your data inplace"
+msgstr ""
+"Wenn Sie die anfängliche instal von RB Agency tun werden Sie in diesem "
+"Abschnitt helfen Ihnen, Ihre Daten an Ort und Stelle erhalten"
+
+#: view/admin-reports.php:46
+msgid "Optmized Database"
+msgstr ""
+
+#: view/admin-reports.php:47
+msgid "Add database indexes"
+msgstr ""
+
+#: view/admin-reports.php:48
+msgid "Add indexes to the database to decrease load time"
+msgstr ""
+
+#: view/admin-reports.php:56
+msgid "Data Integrity"
+msgstr "Datenintegrität"
+
+#: view/admin-reports.php:57
+msgid "Once your data is in place use the tools below to check your records"
+msgstr ""
+"Sobald Ihre Daten an Ort und Stelle ist, die Werkzeuge verwenden unten Ihre "
+"Aufzeichnungen zu überprüfen"
+
+#: view/admin-reports.php:60 view/admin-reports.php:61
+msgid "Export Data"
+msgstr "Daten exportieren"
+
+#: view/admin-reports.php:62
+msgid "Export databases"
+msgstr "Export-Datenbanken"
+
+#: view/admin-reports.php:66 view/admin-reports.php:67
+msgid "Check for Abnormalities"
+msgstr "Prüfen Sie, ob Abnormitäten"
+
+#: view/admin-reports.php:68
+msgid "Search profile records for fields which seem invalid"
+msgstr "Suchprofil-Datensätze für Felder, die ungültige sim"
+
+#: view/admin-reports.php:72
+msgid "Rename Profile Folder Names"
+msgstr "Profil umbenennen Ordnernamen"
+
+#: view/admin-reports.php:73
+msgid "Rename Folders"
+msgstr ""
+
+#: view/admin-reports.php:74
+msgid ""
+"If you created model profiles while under \"First Last\" and wish to switch "
+"to Display names, IDs, or First L, you will have to rename the existing "
+"folders so that they do not have the models name in it."
+msgstr ""
+"Wenn Sie Modellprofile erstellt werden, während unter \"First Last\" und "
+"wollen wechseln Namen anzeigen, IDs oder First L, sehen Sie die vorhandenen "
+"Ordner umbenennen müssen, damit sie nicht die Modelle Namen in ihm."
+
+#: view/admin-reports.php:78 view/admin-reports.php:79
+msgid "Resize Photos"
+msgstr "Resize Fotos"
+
+#: view/admin-reports.php:80
+msgid "Ensure files are not larger than approved size"
+msgstr "Stellen Sie sicher, Dateien nicht größer als genehmigt Größe"
+
+#: view/admin-reports.php:80
+msgid "Configure Sizes"
+msgstr ""
+
+#: view/admin-reports.php:84
+msgid "Orphaned Profile Images"
+msgstr "Verwaiste Profil Bilder"
+
+#: view/admin-reports.php:85
+msgid "Remove Orphan Images From Database"
+msgstr ""
+
+#: view/admin-reports.php:86
+msgid ""
+"If for any reason you are getting blank images appear it may be because "
+"images were added in the database but have been removed via FTP.  Use this "
+"tool to remove all images in the databse which do not physically exist."
+msgstr ""
+"Wenn aus irgendeinem Grund Sie leere Bilder werden immer angezeigt werden es "
+"sein kann, weil Bilder in der Datenbank hinzugefügt wurden, sondern haben "
+"über FTP entfernt. Mit diesem Tool können Sie alle Bilder in der Datenbank "
+"zu entfernen, die nicht physisch vorhanden sind."
+
+#: view/admin-reports.php:90
+msgid "FTP Blank Folder Check"
+msgstr "FTP-Blank-Ordner-Prüfung"
+
+#: view/admin-reports.php:91
+msgid "Scan for Orphan Folders"
+msgstr ""
+
+#: view/admin-reports.php:92
+msgid ""
+"Check for any empty folders which do no have models assigned using this tool"
+msgstr ""
+"Prüfen Sie, ob leere Ordner, die keine Modelle mit diesem Werkzeug "
+"zugewiesen haben"
+
+#: view/admin-reports.php:96
+msgid "Profile Data Migration"
+msgstr "Profil Datenmigration"
+
+#: view/admin-reports.php:97
+msgid "Check for Profile Data Migration"
+msgstr "Überprüfen Sie für Profile Data Migration"
+
+#: view/admin-reports.php:98
+msgid "Search profile records for fields migration"
+msgstr "Suchprofil -Datensätze für Felder Migration"
+
+#: view/admin-reports.php:106
+msgid "Profile Management"
+msgstr "Profilverwaltung"
+
+#: view/admin-reports.php:107
+msgid "The following reports will help you manage your profile information"
+msgstr ""
+"Die folgenden Berichte helfen Ihnen, Ihre Profilinformationen verwalten"
+
+#: view/admin-reports.php:110
+msgid "Inactive Users"
+msgstr "Inaktive Benutzer"
+
+#: view/admin-reports.php:111
+msgid "Check Inactive Users"
+msgstr "Überprüfen Inaktive Benutzer"
+
+#: view/admin-reports.php:112
+msgid ""
+"Find profiles who are currently set as inactive.  Use this tool to set "
+"multiple users to active"
+msgstr ""
+"Finden Sie Profile, die derzeit als inaktiv gesetzt sind. Mit diesem Tool "
+"können mehrere Benutzer aktiv zu setzen"
+
+#: view/admin-reports.php:116 view/admin-reports.php:117
+msgid "Profile Search"
+msgstr "Profil"
+
+#: view/admin-reports.php:118
+msgid "You may search for profiles by using this tool"
+msgstr "Sie können mit Hilfe dieses Werkzeugs für Profile suchen"
+
+#: view/admin-reports.php:122
+msgid "Dummy Profiles with Sample Media"
+msgstr "Dummy-Profile mit der Probe Medien"
+
+#: view/admin-reports.php:123
+msgid "Generate Dummy Profiles with Media Content"
+msgstr "Generieren Sie Dummy-Profile mit Medieninhalten"
+
+#: view/admin-reports.php:124
+msgid "You may add dummy profiles by using this tool"
+msgstr "Sie können mit Hilfe dieses Werkzeugs Dummy-Profile hinzufügen"
+
+#: view/admin-reports.php:131
+msgid "Importing Records"
+msgstr "Importieren von Datensätzen"
+
+#: view/admin-reports.php:132
+msgid "The following tools will help import records."
+msgstr "Die folgenden Tools werden Daten importieren helfen."
+
+#: view/admin-reports.php:134
+msgid "Step 1"
+msgstr "Schritt 1"
+
+#: view/admin-reports.php:135 view/admin-reports.php:205
+msgid "Export Now"
+msgstr "Jetzt exportieren"
+
+#: view/admin-reports.php:136
+msgid ""
+"Download this template and load your profile data into this file to import "
+"into the database."
+msgstr ""
+"Diese Vorlage herunterladen und laden Sie Ihre Profildaten in diese Datei in "
+"die Datenbank zu importieren."
+
+#: view/admin-reports.php:140
+msgid "Step 2"
+msgstr "Schritt 2"
+
+#: view/admin-reports.php:141
+msgid "Import Data"
+msgstr "Daten importieren"
+
+#: view/admin-reports.php:142
+msgid "Upload the model profiles into the database."
+msgstr "Laden Sie die Modellprofile in die Datenbank."
+
+#: view/admin-reports.php:158
+msgid "Step 3"
+msgstr "Schritt 3"
+
+#: view/admin-reports.php:159 view/admin-reports.php:370
+msgid "Generate folder names for profiles"
+msgstr "Generieren Sie Ordnernamen für Profile"
+
+#: view/admin-reports.php:160 view/admin-reports.php:371
+msgid "Check that all profiles have folder names generated."
+msgstr "Überprüfen Sie, ob alle Profile Ordnernamen generiert haben."
+
+#: view/admin-reports.php:164
+msgid "Step 4"
+msgstr "Schritt 4"
+
+#: view/admin-reports.php:165
+msgid "Create folders for all profiles"
+msgstr "Erstellen Sie Ordner für alle Profile"
+
+#: view/admin-reports.php:166
+msgid "Check that all profiles have folders created on the server."
+msgstr "Überprüfen Sie, ob alle Profile haben Ordner auf dem Server erstellt."
+
+#: view/admin-reports.php:170
+msgid "Step 5"
+msgstr "Schritt 5"
+
+#: view/admin-reports.php:171
+msgid "Scan Folders for Images/Media"
+msgstr "Scanordner für Bilder / Medien"
+
+#: view/admin-reports.php:172
+msgid ""
+"First upload images directly to folders via FTP then use this tool to sync "
+"the images & media to the database."
+msgstr ""
+"Erste Bilder direkt auf Ordner per FTP dann dieses Tool verwenden, um die "
+"Bilder und Medien in der Datenbank zu synchronisieren."
+
+#: view/admin-reports.php:176
+msgid "Step 6"
+msgstr "Schritt 6"
+
+#: view/admin-reports.php:177
+msgid "Set Primary Profile Image"
+msgstr "Richten Sie den primären Profilbild"
+
+#: view/admin-reports.php:178
+msgid "Identify which image is the primary image for each profile."
+msgstr "Identifizieren Sie, welches Bild das Primärbild für jedes Profil ist."
+
+#: view/admin-reports.php:185
+msgid "Step 7"
+msgstr ""
+
+#: view/admin-reports.php:186
+msgid "Generate Logins / Passwords"
+msgstr ""
+
+#: view/admin-reports.php:187
+msgid ""
+"You may generate login and password for profiles which has been uploaded via "
+"importer, using this tool"
+msgstr ""
+
+#: view/admin-reports.php:202
+msgid "Import Casting Jobs Data"
+msgstr ""
+
+#: view/admin-reports.php:206
+msgid "Download casting jobs data."
+msgstr ""
+
+#: view/admin-reports.php:372
+msgid "Total Number of Folders Created: <strong>"
+msgstr ""
+
+#: view/admin-reports.php:1216 view/admin-settings.php:762
+msgid "Resize Images"
+msgstr ""
+
+#: view/admin-reports.php:1319
+msgid "\"Export Database\""
+msgstr ""
+
+#: view/admin-reports.php:1329
+msgid " Export Database"
+msgstr ""
+
+#: view/admin-reports.php:1357
+msgid ""
+"<b>Warning :</b> One-Time Export may take up some time to finish and may not "
+"work at all times, depending on the server's capacity."
+msgstr ""
+
+#: view/admin-reports.php:1470
+msgid "Import CSV / XLS"
+msgstr ""
+
+#: view/admin-reports.php:1677
+msgid "Removing Dummy Profiles..."
+msgstr ""
+
+#: view/admin-reports.php:1797
+msgid "Installing Dummies..."
+msgstr ""
+
+#: view/admin-reports.php:2180
+msgid "Generate Login / Passwords"
+msgstr ""
+
+#: view/admin-reports.php:2186
+msgid "Activate/Install Rb Agency Interact plugin to use this feature"
+msgstr ""
+
+#: view/admin-search.php:100 view/profile-search.php:130
+msgid "Please enter at least one value to search."
+msgstr ""
+
+#: view/admin-search.php:133
+msgid "Casting Cart"
+msgstr ""
+
+#: view/admin-searchsaved.php:165
+msgid "Search Saved"
+msgstr ""
+
+#: view/admin-searchsaved.php:178
 msgid "Click the following link (or copy and paste it into your browser)"
 msgstr ""
+
+#: view/admin-settings.php:41
+msgid "Settings &raquo; Overview"
+msgstr "Einstellungen &raquo; Überblick"
+
+#: view/admin-settings.php:47
+msgid "Settings &raquo; Configuration"
+msgstr "Einstellungen &raquo; Konfiguration"
+
+#: view/admin-settings.php:53
+msgid "Settings &raquo; Style"
+msgstr "Einstellungen &raquo; Stil"
+
+#: view/admin-settings.php:59
+msgid "Settings &raquo; Data &raquo; Gender"
+msgstr "Einstellungen &raquo; Data &raquo; Geschlecht"
+
+#: view/admin-settings.php:65
+msgid "Settings &raquo; Data &raquo; Profile Types"
+msgstr "Einstellungen &raquo; Data &raquo; Profiltypen"
+
+#: view/admin-settings.php:71
+msgid "Settings &raquo; Data &raquo; Custom Fields"
+msgstr "Einstellungen &raquo; Data &raquo; Benutzerdefinierte Felder"
+
+#: view/admin-settings.php:77
+msgid "Settings &raquo; Data &raquo; Media Types"
+msgstr "Einstellungen &raquo; Data &raquo; Medientypen"
+
+#: view/admin-settings.php:83
+msgid "Settings &raquo; Subscription"
+msgstr "Einstellungen &raquo; Abonnement"
+
+#: view/admin-settings.php:90
+msgid "Settings &raquo; Uninstall"
+msgstr "Einstellungen &raquo; Deinstallieren"
+
+#: view/admin-settings.php:95
+msgid "Settings &raquo; Data &raquo; Social Media"
+msgstr ""
+
+#: view/admin-settings.php:142
+msgid "The following settings modify the core RB Agency settings."
+msgstr "Die folgenden Einstellungen, die Kern RB Agency Einstellungen ändern."
+
+#: view/admin-settings.php:144
+msgid "Features"
+msgstr "Eigenschaften"
+
+#: view/admin-settings.php:151
+msgid ""
+"Manage the stylesheet (CSS) controlling the category and profile layouts"
+msgstr ""
+"Verwalten Sie das Stylesheet (CSS) Steuerung der Kategorie und Profil-Layouts"
+
+#: view/admin-settings.php:159 view/admin-settings.php:162
+#: view/admin-settings.php:163 view/admin-settings.php:1046
+msgid "Interactive Settings"
+msgstr ""
+
+#: view/admin-settings.php:160
+msgid "These settings modify the behavior of the RB Agency Interactive plugin."
+msgstr ""
+
+#: view/admin-settings.php:168 view/admin-settings.php:169
+msgid "Subscription Rates"
+msgstr ""
+
+#: view/admin-settings.php:170
+msgid "Manage the subscription rate tiers and descriptions"
+msgstr ""
+
+#: view/admin-settings.php:178
+msgid "Customize Profile Fields"
+msgstr "Benutzerdefinierte Profilfelder"
+
+#: view/admin-settings.php:179
+msgid ""
+"You have full control over all drop downs and ability to add new custom "
+"fields of your own."
+msgstr ""
+"Sie haben die volle Kontrolle über alle Dropdown-Menüs und die Fähigkeit, "
+"neue benutzerdefinierte Felder Ihrer eigenen hinzuzufügen."
+
+#: view/admin-settings.php:181 view/admin-settings.php:182
+msgid "Profile Categories"
+msgstr "Profil Kategorien"
+
+#: view/admin-settings.php:183
+msgid "Choose custom category types to classify profiles"
+msgstr "Wählen Sie benutzerdefinierte Kategorietypen zu klassifizieren Profile"
+
+#: view/admin-settings.php:186 view/admin-settings.php:187
+#: view/admin-settings.php:2223 view/admin-settings.php:2232
+#: view/admin-settings.php:2756 view/partial/admin-menu.php:113
+msgid "Custom Fields"
+msgstr "Benutzerdefinierte Felder"
+
+#: view/admin-settings.php:188
+msgid "Add public and private custom fields"
+msgstr "In öffentlichen und privaten benutzerdefinierte Felder"
+
+#: view/admin-settings.php:193
+msgid "Manage preset Gender choices"
+msgstr "Verwalten voreingestellten Geschlecht Entscheidungen"
+
+#: view/admin-settings.php:196 view/admin-settings.php:197
+#: view/partial/admin-menu.php:114
+msgid "Media Categories"
+msgstr "Medien Kategorien"
+
+#: view/admin-settings.php:198
+msgid "Manage your media categories"
+msgstr "Verwalten Sie Ihre Medienkategorien"
+
+#: view/admin-settings.php:201 view/admin-settings.php:202
+msgid "Locations"
+msgstr "Standorte"
+
+#: view/admin-settings.php:203
+msgid "Manage your Locations"
+msgstr "Verwalten Sie Ihre Standorte"
+
+#: view/admin-settings.php:210
+msgid "S2member"
+msgstr ""
+
+#: view/admin-settings.php:211
+msgid "Settings for s2member plugin"
+msgstr "Einstellungen für s2member Plugin"
+
+#: view/admin-settings.php:213 view/admin-settings.php:223
+msgid "s2member"
+msgstr ""
+
+#: view/admin-settings.php:220 view/admin-settings.php:223
+msgid "Casting Settings"
+msgstr ""
+
+#: view/admin-settings.php:221
+msgid "Settings for casting agent"
+msgstr ""
+
+#: view/admin-settings.php:230 view/admin-settings.php:233
+msgid "Uninstall"
+msgstr "Deinstallieren"
+
+#: view/admin-settings.php:231
+msgid "Uninstall RB Agency software and completely remove all data"
+msgstr ""
+"Deinstallieren RB Agency Software und entfernen Sie alle Daten vollständig"
+
+#: view/admin-settings.php:362
+msgid "Website Details"
+msgstr ""
+
+#: view/admin-settings.php:365
+msgid "Agency Name"
+msgstr "Agenturname"
+
+#: view/admin-settings.php:369
+msgid "Agency Email"
+msgstr "Agentur per E-Mail"
+
+#: view/admin-settings.php:373
+msgid "Path to Logo"
+msgstr "Pfad zum Logo"
+
+#: view/admin-settings.php:377
+msgid "Header Email"
+msgstr ""
+
+#: view/admin-settings.php:381
+msgid "Show Fields"
+msgstr "Felder anzeigen"
+
+#: view/admin-settings.php:384
+msgid "Remove Updates on Dashboard"
+msgstr ""
+
+#: view/admin-settings.php:389
+msgid "Default Profile Status"
+msgstr ""
+
+#: view/admin-settings.php:391
+msgid "Change the status to \"pending approval\" whenever a profile is updated"
+msgstr ""
+
+#: view/admin-settings.php:397
+msgid "Enable Agency email to receive notifications"
+msgstr ""
+
+#: view/admin-settings.php:399
+msgid "If enabled, agency email can also receive emails from any users."
+msgstr ""
+
+#: view/admin-settings.php:405
+msgid "Send email to Models/Talents"
+msgstr ""
+
+#: view/admin-settings.php:407
+msgid "allow casting agent to contact talent directly"
+msgstr ""
+
+#: view/admin-settings.php:408
+msgid "only admin can send Job invites"
+msgstr ""
+
+#: view/admin-settings.php:415
+msgid "Models/Profiles Terms of Conditions Link"
+msgstr ""
+
+#: view/admin-settings.php:423
+msgid "Casting Terms of Conditions Link"
+msgstr ""
+
+#: view/admin-settings.php:430
+msgid "404 Profile Link"
+msgstr ""
+
+#: view/admin-settings.php:438
+msgid "Booking Link"
+msgstr ""
+
+#: view/admin-settings.php:446
+msgid "Internationalization"
+msgstr ""
+
+#: view/admin-settings.php:449
+msgid "Default Country"
+msgstr ""
+
+#: view/admin-settings.php:460
+msgid "Server Timezone"
+msgstr ""
+
+#: view/admin-settings.php:493
+msgid "Unit Type"
+msgstr "Gerätetyp"
+
+#: view/admin-settings.php:496
+msgid "Imperial"
+msgstr ""
+
+#: view/admin-settings.php:497
+msgid "Metric"
+msgstr ""
+
+#: view/admin-settings.php:507
+msgid "Job Display Options"
+msgstr ""
+
+#: view/admin-settings.php:510 view/admin-settings.php:528
+#: view/admin-settings.php:952
+msgid "Display Options"
+msgstr ""
+
+#: view/admin-settings.php:512
+msgid "Hide \"View This Job\" button"
+msgstr ""
+
+#: view/admin-settings.php:513
+msgid "Hide \"Tweet\" button"
+msgstr ""
+
+#: view/admin-settings.php:514
+msgid "Hide \"Share\" button"
+msgstr ""
+
+#: view/admin-settings.php:515
+msgid "Hide \"Apply To This Job\" button"
+msgstr ""
+
+#: view/admin-settings.php:516
+msgid "Hide \"View Details\" "
+msgstr ""
+
+#: view/admin-settings.php:517
+msgid "Remove Link on Job Title"
+msgstr ""
+
+#: view/admin-settings.php:525
+msgid "Profile List Options"
+msgstr ""
+
+#: view/admin-settings.php:530
+msgid "Show Model Count"
+msgstr ""
+
+#: view/admin-settings.php:532
+msgid "Show Sort Options"
+msgstr ""
+
+#: view/admin-settings.php:533
+msgid "Show Sort Options Label"
+msgstr ""
+
+#: view/admin-settings.php:537
+msgid "Show Age"
+msgstr ""
+
+#: view/admin-settings.php:540
+msgid "Show Name"
+msgstr ""
+
+#: view/admin-settings.php:543
+msgid "Show Date Joined"
+msgstr ""
+
+#: view/admin-settings.php:546 view/admin-settings.php:706
+msgid "Show Display Name"
+msgstr ""
+
+#: view/admin-settings.php:549 view/admin-settings.php:955
+msgid "Show Gender"
+msgstr ""
+
+#: view/admin-settings.php:553
+msgid "Expanded Model Details"
+msgstr ""
+
+#: view/admin-settings.php:554
+msgid "Show Age (Year)"
+msgstr ""
+
+#: view/admin-settings.php:555
+msgid "Show Age (Month)"
+msgstr ""
+
+#: view/admin-settings.php:556
+msgid "Show Age (Day)"
+msgstr ""
+
+#: view/admin-settings.php:557
+msgid "Show City"
+msgstr ""
+
+#: view/admin-settings.php:558
+msgid "Show State"
+msgstr ""
+
+#: view/admin-settings.php:559
+msgid "Show Email Address in Search Results"
+msgstr ""
+
+#: view/admin-settings.php:560
+msgid "Show Contact Number in Search Results"
+msgstr ""
+
+#: view/admin-settings.php:561
+msgid "Show Email Address in Listing"
+msgstr ""
+
+#: view/admin-settings.php:562
+msgid "Show Contact Number in Listing"
+msgstr ""
+
+#: view/admin-settings.php:565
+msgid "Enable Model Favorites"
+msgstr ""
+
+#: view/admin-settings.php:568
+msgid "Show Sidebar"
+msgstr ""
+
+#: view/admin-settings.php:571
+msgid "Show Casting Cart"
+msgstr ""
+
+#: view/admin-settings.php:574
+msgid "Show Thumbs Slide"
+msgstr ""
+
+#: view/admin-settings.php:576
+msgid "Show Print and Download PDF Link"
+msgstr ""
+
+#: view/admin-settings.php:578
+msgid "Show Manage Your Subscription"
+msgstr ""
+
+#: view/admin-settings.php:580
+msgid "Show Social Buttons"
+msgstr ""
+
+#: view/admin-settings.php:581
+msgid "Show Country as Code"
+msgstr ""
+
+#: view/admin-settings.php:582
+msgid "Show as State Code"
+msgstr ""
+
+#: view/admin-settings.php:583
+msgid "Sort by Date"
+msgstr ""
+
+#: view/admin-settings.php:584
+msgid "Show Profile Ratings"
+msgstr ""
+
+#: view/admin-settings.php:585
+msgid "Include Sorting by Profile Ratings"
+msgstr ""
+
+#: view/admin-settings.php:591
+msgid "Profile Default Sort"
+msgstr ""
+
+#: view/admin-settings.php:597
+msgid "Auto-Generated ID"
+msgstr ""
+
+#: view/admin-settings.php:603
+msgid "Ascending"
+msgstr "Aufsteigend"
+
+#: view/admin-settings.php:604
+msgid "Descending"
+msgstr "Absteigend"
+
+#: view/admin-settings.php:611
+msgid "Search Results Sort"
+msgstr ""
+
+#: view/admin-settings.php:614 view/admin-settings.php:659
+#: view/admin-settings.php:671 view/admin-settings.php:812
+msgid "Default"
+msgstr ""
+
+#: view/admin-settings.php:616
+msgid "Profile Rating"
+msgstr ""
+
+#: view/admin-settings.php:623
+msgid "Profiles Per Page"
+msgstr ""
+
+#: view/admin-settings.php:627
+msgid "Profiles Per Row"
+msgstr ""
+
+#: view/admin-settings.php:630
+msgid "1"
+msgstr ""
+
+#: view/admin-settings.php:631
+msgid "2"
+msgstr ""
+
+#: view/admin-settings.php:632
+msgid "3"
+msgstr ""
+
+#: view/admin-settings.php:633
+msgid "4"
+msgstr ""
+
+#: view/admin-settings.php:634
+msgid "5"
+msgstr ""
+
+#: view/admin-settings.php:635
+msgid "6"
+msgstr ""
+
+#: view/admin-settings.php:636
+msgid "7"
+msgstr ""
+
+#: view/admin-settings.php:637
+msgid "8"
+msgstr ""
+
+#: view/admin-settings.php:638
+msgid "9"
+msgstr ""
+
+#: view/admin-settings.php:639
+msgid "10"
+msgstr ""
+
+#: view/admin-settings.php:646
+msgid "Profile List Style"
+msgstr ""
+
+#: view/admin-settings.php:649
+msgid "Name Under Image"
+msgstr ""
+
+#: view/admin-settings.php:650
+msgid "Name Over Image"
+msgstr ""
+
+#: view/admin-settings.php:651
+msgid "Name Under Image with Color"
+msgstr ""
+
+#: view/admin-settings.php:656
+msgid "Profile List Layout"
+msgstr ""
+
+#: view/admin-settings.php:660
+msgid "Voice Over (no image)"
+msgstr ""
+
+#: view/admin-settings.php:661
+msgid "Landscape"
+msgstr ""
+
+#: view/admin-settings.php:668
+msgid "Favorite and Casting Display"
+msgstr ""
+
+#: view/admin-settings.php:672
+msgid "Image Overlay"
+msgstr ""
+
+#: view/admin-settings.php:677
+msgid "Favorite and Casting Effect"
+msgstr ""
+
+#: view/admin-settings.php:680
+msgid "No effect"
+msgstr ""
+
+#: view/admin-settings.php:681
+msgid "Fade"
+msgstr ""
+
+#: view/admin-settings.php:682
+msgid "Slide"
+msgstr ""
+
+#: view/admin-settings.php:692
+msgid "Profile Search Options"
+msgstr ""
+
+#: view/admin-settings.php:695
+msgid "Maximum Records Returned"
+msgstr ""
+
+#: view/admin-settings.php:699
+msgid "Search Fields"
+msgstr ""
+
+#: view/admin-settings.php:701
+msgid "Show Name Search Fields"
+msgstr ""
+
+#: view/admin-settings.php:702
+msgid "Show Type Search Fields"
+msgstr ""
+
+#: view/admin-settings.php:703
+msgid "Show Location Search Fields"
+msgstr ""
+
+#: view/admin-settings.php:704
+msgid "Show Gender Search Fields"
+msgstr ""
+
+#: view/admin-settings.php:705
+msgid "Show Age Search Fields"
+msgstr ""
+
+#: view/admin-settings.php:708
+msgid "Show Birthdate Fields"
+msgstr ""
+
+#: view/admin-settings.php:709
+msgid "Hide Advanced Search button in Basic form &amp; search result"
+msgstr ""
+
+#: view/admin-settings.php:710
+msgid "Do not retain search values in searches"
+msgstr ""
+
+#: view/admin-settings.php:719
+msgid "Admin Casting Cart Options"
+msgstr ""
+
+#: view/admin-settings.php:722
+msgid "Admin Printing"
+msgstr ""
+
+#: view/admin-settings.php:724
+msgid "Show Hidden Contact Details in Quick Print"
+msgstr ""
+
+#: view/admin-settings.php:729
+msgid "Casting cart Email"
+msgstr ""
+
+#: view/admin-settings.php:731
+msgid "Display Age"
+msgstr ""
+
+#: view/admin-settings.php:753
+msgid "Image Resizing"
+msgstr ""
+
+#: view/admin-settings.php:755
+msgid "Use TimThumb"
+msgstr ""
+
+#: view/admin-settings.php:759
+msgid "Image Handling"
+msgstr ""
+
+#: view/admin-settings.php:764
+msgid "Maximum Width"
+msgstr ""
+
+#: view/admin-settings.php:765
+msgid "Maximum Height"
+msgstr ""
+
+#: view/admin-settings.php:769
+msgid "Profile Thumbnails"
+msgstr ""
+
+#: view/admin-settings.php:771
+msgid "Width"
+msgstr ""
+
+#: view/admin-settings.php:772 view/layout/00/include-profile.php:123
+#: view/layout/00/include-profile.php:128
+#: view/layout/01/include-profile.php:134
+#: view/layout/05/include-profile.php:109
+#: view/layout/05/include-profile.php:114
+#: view/layout/06/include-profile.php:131
+#: view/layout/06/include-profile.php:136 view/layout/07/include-profile.php:64
+#: view/layout/07/include-profile.php:69 view/layout/10/include-profile.php:76
+#: view/layout/10/include-profile.php:81 view/layout/11/include-profile.php:105
+#: view/layout/12/include-profile.php:66 view/layout/12/include-profile.php:71
+#: view/layout/16/include-profile.php:186 view/layout/17/include-profile.php:73
+#: view/layout/17/include-profile.php:78
+msgid "Height"
+msgstr ""
+
+#: view/admin-settings.php:776
+msgid "Image Compression"
+msgstr ""
+
+#: view/admin-settings.php:779
+msgid "Maximum Quality"
+msgstr ""
+
+#: view/admin-settings.php:780
+msgid "Very High Quality"
+msgstr ""
+
+#: view/admin-settings.php:781
+msgid "High Quality"
+msgstr ""
+
+#: view/admin-settings.php:782
+msgid "Medium Quality"
+msgstr ""
+
+#: view/admin-settings.php:783
+msgid "Low Quality"
+msgstr ""
+
+#: view/admin-settings.php:788
+msgid "Profile Thumbnails Caption"
+msgstr ""
+
+#: view/admin-settings.php:790
+msgid "Show Image Caption"
+msgstr ""
+
+#: view/admin-settings.php:798
+msgid "Profile View Options"
+msgstr ""
+
+#: view/admin-settings.php:801
+msgid "Profile View Control"
+msgstr ""
+
+#: view/admin-settings.php:803
+msgid "Enable Under Dev Layout"
+msgstr ""
+
+#: view/admin-settings.php:804
+msgid "Enable Custom Layout"
+msgstr ""
+
+#: view/admin-settings.php:805
+msgid "Enable Pop-up Layout"
+msgstr ""
+
+#: view/admin-settings.php:809
+msgid "Profile View Mode"
+msgstr ""
+
+#: view/admin-settings.php:813
+msgid "Pop up"
+msgstr ""
+
+#: view/admin-settings.php:814
+msgid "Slide Down Panel"
+msgstr ""
+
+#: view/admin-settings.php:819
+msgid "Privacy Settings"
+msgstr "Datenschutzeinstellungen"
+
+#: view/admin-settings.php:823
+msgid "Model list public. Must be logged to view profile information"
+msgstr ""
+
+#: view/admin-settings.php:824
+msgid "Model list and profile information public"
+msgstr ""
+
+#: view/admin-settings.php:825
+msgid ""
+"Must be logged in to view model list, profile information, and search forms."
+msgstr ""
+
+#: view/admin-settings.php:826
+msgid "Must be logged in to view Profile Listing and Search"
+msgstr ""
+
+#: view/admin-settings.php:831
+msgid "Profile Name Format"
+msgstr ""
+
+#: view/admin-settings.php:834
+msgid "First Last"
+msgstr ""
+
+#: view/admin-settings.php:835
+msgid "First L"
+msgstr ""
+
+#: view/admin-settings.php:836
+msgid "First"
+msgstr ""
+
+#: view/admin-settings.php:837
+msgid "Last"
+msgstr ""
+
+#: view/admin-settings.php:839
+msgid "Auto Generated Record ID"
+msgstr ""
+
+#: view/admin-settings.php:844
+msgid "Profile Layout Style"
+msgstr "Profil Layout Style"
+
+#: view/admin-settings.php:880
+msgid "Layout "
+msgstr ""
+
+#: view/admin-settings.php:909
+msgid "Image Gallery Type"
+msgstr "Bildergalerie Art"
+
+#: view/admin-settings.php:912
+msgid "Slimbox2"
+msgstr ""
+
+#: view/admin-settings.php:913
+msgid "No Gallery"
+msgstr ""
+
+#: view/admin-settings.php:918
+msgid "Image Gallery Sort Order"
+msgstr "Bildergalerie Sortierung"
+
+#: view/admin-settings.php:921
+msgid "Show most recently uploaded first"
+msgstr ""
+
+#: view/admin-settings.php:922
+msgid "Show chronological order"
+msgstr ""
+
+#: view/admin-settings.php:923
+msgid "Show first upload first"
+msgstr ""
+
+#: view/admin-settings.php:928
+msgid "Profile Media Links"
+msgstr ""
+
+#: view/admin-settings.php:932
+msgid "Open in a new window"
+msgstr ""
+
+#: view/admin-settings.php:933
+msgid "Force Download"
+msgstr ""
+
+#: view/admin-settings.php:940
+msgid "Profile Media Display Option"
+msgstr ""
+
+#: view/admin-settings.php:943
+msgid "Social Media Icon Display"
+msgstr ""
+
+#: view/admin-settings.php:944
+msgid "Social Media Link Display"
+msgstr ""
+
+#: view/admin-settings.php:965
+msgid "EasyTxt Integration"
+msgstr ""
+
+#: view/admin-settings.php:968
+msgid "URL"
+msgstr ""
+
+#: view/admin-settings.php:974
+msgid "API Key"
+msgstr ""
+
+#: view/admin-settings.php:980
+msgid "API Secret"
+msgstr ""
+
+#: view/admin-settings.php:1023 view/admin-settings.php:1315
+#: view/admin-settings.php:1659
+msgid "Save Changes"
+msgstr "Änderungen speichern"
+
+#: view/admin-settings.php:1052
+msgid "Database Version"
+msgstr "Datenbank-Version:"
+
+#: view/admin-settings.php:1056
+msgid "Display"
+msgstr ""
+
+#: view/admin-settings.php:1058
+msgid "Show Sidebar on Member Management/Login Pages"
+msgstr ""
+
+#: view/admin-settings.php:1065
+msgid "Hide Toolbar on All Pages"
+msgstr ""
+
+#: view/admin-settings.php:1075
+msgid "Login Settings (Model/Talent)"
+msgstr ""
+
+#: view/admin-settings.php:1078
+msgid "Redirect for Login"
+msgstr ""
+
+#: view/admin-settings.php:1080
+msgid "Do Not Override Login Screen"
+msgstr ""
+
+#: view/admin-settings.php:1081
+msgid "Redirect to /profile-login/"
+msgstr ""
+
+#: view/admin-settings.php:1082
+msgid "Redirect to homepage"
+msgstr ""
+
+#: view/admin-settings.php:1085
+msgid "Redirect first time users"
+msgstr ""
+
+#: view/admin-settings.php:1087
+msgid "Redirect to /profile-member/account/"
+msgstr ""
+
+#: view/admin-settings.php:1088 view/admin-settings.php:1096
+#: view/admin-settings.php:1122
+msgid "Redirect to custom( e.g. /welcome/ ):"
+msgstr ""
+
+#: view/admin-settings.php:1093
+msgid "Redirect users after login(excluding new users)"
+msgstr ""
+
+#: view/admin-settings.php:1095
+msgid "Redirect to /profile-member/account/(default)"
+msgstr ""
+
+#: view/admin-settings.php:1102 view/admin-settings.php:1127
+msgid "Switch Sidebar"
+msgstr ""
+
+#: view/admin-settings.php:1104 view/admin-settings.php:1129
+msgid "Use default interact sidebar"
+msgstr ""
+
+#: view/admin-settings.php:1105 view/admin-settings.php:1130
+msgid "Use theme widget sidebar"
+msgstr ""
+
+#: view/admin-settings.php:1115
+msgid "Login Settings (Casting Agent)"
+msgstr ""
+
+#: view/admin-settings.php:1119
+msgid "Redirect users after login"
+msgstr ""
+
+#: view/admin-settings.php:1121
+msgid "Redirect to /casting-dashboard/(default)"
+msgstr ""
+
+#: view/admin-settings.php:1146
+msgid "Registration Process (Model/ Talent)"
+msgstr ""
+
+#: view/admin-settings.php:1149
+msgid "Email Confirmation"
+msgstr ""
+
+#: view/admin-settings.php:1152
+msgid "Password Auto-Generated (sent via email)"
+msgstr ""
+
+#: view/admin-settings.php:1153
+msgid "Password Self-Generated"
+msgstr ""
+
+#: view/admin-settings.php:1159
+msgid "Show User Registration when creating Profiles"
+msgstr ""
+
+#: view/admin-settings.php:1162
+msgid ""
+"Show Username field (if email confirmation is set to \"password auto-"
+"generated\")"
+msgstr ""
+
+#: view/admin-settings.php:1163
+msgid ""
+"Show Username & Password fields (if email confirmation is set to \"password "
+"self-generated\")"
+msgstr ""
+
+#: view/admin-settings.php:1169
+msgid "New Profile Registration"
+msgstr ""
+
+#: view/admin-settings.php:1171
+msgid "Users may register profiles (uncheck to prevent self registration)"
+msgstr ""
+
+#: view/admin-settings.php:1186
+msgid "Delete Options"
+msgstr ""
+
+#: view/admin-settings.php:1188
+msgid "No"
+msgstr ""
+
+#: view/admin-settings.php:1189
+msgid "Yes (Allow users to permanently delete their profile)"
+msgstr ""
+
+#: view/admin-settings.php:1190
+msgid "Archive Only (Allow users to hide their profile)"
+msgstr ""
+
+#: view/admin-settings.php:1196 view/admin-settings.php:1233
+msgid "New Profile Approval"
+msgstr ""
+
+#: view/admin-settings.php:1199 view/admin-settings.php:1236
+msgid "Manually Approved"
+msgstr ""
+
+#: view/admin-settings.php:1200 view/admin-settings.php:1237
+msgid "Automatically Approved"
+msgstr ""
+
+#: view/admin-settings.php:1206 view/admin-settings.php:1243
+msgid "Default State For Registered Users"
+msgstr ""
+
+#: view/admin-settings.php:1212 view/admin-settings.php:1248
+msgid "Archive"
+msgstr ""
+
+#: view/admin-settings.php:1220
+msgid "Allow User to Upload Photos"
+msgstr ""
+
+#: view/admin-settings.php:1230
+msgid "Registration Process (Casting Agent)"
+msgstr ""
+
+#: view/admin-settings.php:1267
+msgid "Notification after registration"
+msgstr "Mitteilung nach Anmeldung"
+
+#: view/admin-settings.php:1271
+msgid "If password is self-generated"
+msgstr "Wenn Passwort ist selbsterzeugten"
+
+#: view/admin-settings.php:1280
+msgid "If password is auto-generated(sent via email)"
+msgstr "Wenn Passwort automatisch generiert wird (per E-Mail gesendet)"
+
+#: view/admin-settings.php:1294
+msgid "Membership Subscription"
+msgstr ""
+
+#: view/admin-settings.php:1297
+msgid "Notifications"
+msgstr ""
+
+#: view/admin-settings.php:1299
+msgid "(Display Upsell Messages for Subscription)"
+msgstr ""
+
+#: view/admin-settings.php:1303
+msgid "Embed Overview Page ID"
+msgstr ""
+
+#: view/admin-settings.php:1307
+msgid "Embed Registration Page ID"
+msgstr ""
+
+#: view/admin-settings.php:1311
+msgid "PayPal Email Address"
+msgstr ""
+
+#: view/admin-settings.php:1330
+msgid "Subscription Tiers"
+msgstr ""
+
+#: view/admin-settings.php:1331
+msgid "Subscription Tier"
+msgstr ""
+
+#: view/admin-settings.php:1344 view/admin-settings.php:1690
+#: view/admin-settings.php:1958 view/admin-settings.php:3039
+msgid " name is required"
+msgstr ""
+
+#: view/admin-settings.php:1353 view/admin-settings.php:1368
+#: view/admin-settings.php:1700 view/admin-settings.php:1714
+#: view/admin-settings.php:1967 view/admin-settings.php:1991
+#: view/admin-settings.php:3102 view/admin-settings.php:3207
+#, php-format
+msgid ""
+"Error creating %s, please ensure you have filled out all required fields"
+msgstr ""
+
+#: view/admin-settings.php:1361 view/admin-settings.php:1707
+#: view/admin-settings.php:1984
+#, php-format
+msgid ""
+"%s <strong>added</strong> successfully! You may now %s Load Information to "
+"the record"
+msgstr ""
+
+#: view/admin-settings.php:1379 view/admin-settings.php:1721
+#: view/admin-settings.php:2020
+#, php-format
+msgid "%s <strong>updated</strong> successfully"
+msgstr ""
+
+#: view/admin-settings.php:1395 view/admin-settings.php:1418
+#: view/admin-settings.php:1736 view/admin-settings.php:1760
+#: view/admin-settings.php:2036 view/admin-settings.php:2059
+#: view/admin-settings.php:3364 view/admin-settings.php:3396
+msgid " <strong>"
+msgstr ""
+
+#: view/admin-settings.php:1440 view/admin-settings.php:1781
+#: view/admin-settings.php:2080 view/admin-settings.php:3202
+#: view/admin-settings.php:3208 view/admin-settings.php:3340
+#: view/admin-settings.php:3434
+#, php-format
+msgid "Edit %s"
+msgstr ""
+
+#: view/admin-settings.php:1441 view/admin-settings.php:1782
+#: view/admin-settings.php:2081 view/admin-settings.php:3098
+#: view/admin-settings.php:3105 view/admin-settings.php:3190
+#: view/admin-settings.php:3371 view/admin-settings.php:3399
+#, php-format
+msgid "Fill in the form below to add a new record %s"
+msgstr ""
+
+#: view/admin-settings.php:1453
+#, php-format
+msgid "Create New  %s"
+msgstr ""
+
+#: view/admin-settings.php:1454 view/admin-settings.php:1796
+#: view/admin-settings.php:2090 view/admin-settings.php:3204
+#: view/admin-settings.php:3210 view/admin-settings.php:3342
+#: view/admin-settings.php:3436 view/admin-settings.php:3464
+msgid "Make changes in the form below to edit a "
+msgstr ""
+
+#: view/admin-settings.php:1462 view/admin-settings.php:1539
+#: view/admin-settings.php:1548 view/admin-settings.php:1808
+#: view/admin-settings.php:1859 view/admin-settings.php:1865
+#: view/admin-settings.php:2097 view/admin-settings.php:2220
+#: view/admin-settings.php:2229 view/admin-settings.php:4013
+#: view/admin-settings.php:4026 view/admin-settings.php:4342
+#: view/admin-settings.php:4353 view/admin-settings.php:4854
+#: view/admin-settings.php:4863
+msgid "Title"
+msgstr ""
+
+#: view/admin-settings.php:1472 view/admin-settings.php:1542
+msgid "Text"
+msgstr ""
+
+#: view/admin-settings.php:1476
+msgid "Package Rate"
+msgstr ""
+
+#: view/admin-settings.php:1480
+msgid "Subscription Duration"
+msgstr ""
+
+#: view/admin-settings.php:1509 view/admin-settings.php:1829
+#: view/admin-settings.php:2190 view/admin-settings.php:3982
+#: view/admin-settings.php:4312
+msgid "All Records"
+msgstr ""
+
+#: view/admin-settings.php:1541 view/admin-settings.php:1550
+msgid "Rate/Term"
+msgstr ""
+
+#: view/admin-settings.php:1551
+msgid "Price"
+msgstr ""
+
+#: view/admin-settings.php:1577 view/admin-settings.php:1890
+#: view/admin-settings.php:2404 view/admin-settings.php:4173
+#: view/admin-settings.php:4394 view/admin-settings.php:4899
+msgid "There aren't any records loaded yet"
+msgstr ""
+
+#: view/admin-settings.php:1641
+msgid "Stylesheet"
+msgstr ""
+
+#: view/admin-settings.php:1644 view/admin-settings.php:1651
+msgid "Header"
+msgstr ""
+
+#: view/admin-settings.php:1648
+msgid "Extra HTML"
+msgstr ""
+
+#: view/admin-settings.php:1655
+msgid "Footer"
+msgstr ""
+
+#: view/admin-settings.php:1675
+msgid "Gender Types"
+msgstr ""
+
+#: view/admin-settings.php:1676
+msgid "Gender Type"
+msgstr ""
+
+#: view/admin-settings.php:1794 view/admin-settings.php:2089
+#: view/admin-settings.php:3096 view/admin-settings.php:3103
+#: view/admin-settings.php:3188 view/admin-settings.php:3369
+#: view/admin-settings.php:3397 view/admin-settings.php:3468
+#, php-format
+msgid "Create New %s"
+msgstr ""
+
+#: view/admin-settings.php:1910 view/partial/admin-menu.php:112
+msgid "Profile Types"
+msgstr "Profiltypen"
+
+#: view/admin-settings.php:1911 view/admin-settings.php:4020
+#: view/admin-settings.php:4033
+msgid "Profile Type"
+msgstr ""
+
+#: view/admin-settings.php:2101
+msgid "Parent"
+msgstr ""
+
+#: view/admin-settings.php:2161 view/admin-settings.php:2221
+#: view/admin-settings.php:2230
+msgid "Slug"
+msgstr ""
+
+#: view/admin-settings.php:2167 view/admin-settings.php:4346
+#: view/admin-settings.php:4357 view/admin-settings.php:4778
+#: view/admin-settings.php:4828 view/admin-settings.php:4856
+#: view/admin-settings.php:4865
+msgid "Order"
+msgstr ""
+
+#: view/admin-settings.php:2519
+msgid "Define Country"
+msgstr ""
+
+#: view/admin-settings.php:2527
+msgid "Country title is required"
+msgstr ""
+
+#: view/admin-settings.php:2531
+msgid "Country code is required"
+msgstr ""
+
+#: view/admin-settings.php:2536
+msgid ""
+"Error creating country, please ensure you have filled out all required fields"
+msgstr ""
+
+#: view/admin-settings.php:2613
+msgid "Country Title"
+msgstr ""
+
+#: view/admin-settings.php:2614
+msgid "Country Code"
+msgstr ""
+
+#: view/admin-settings.php:2615 view/admin-settings.php:2711
+msgid "Action"
+msgstr ""
+
+#: view/admin-settings.php:2624
+msgid "<a id=\"country"
+msgstr ""
+
+#: view/admin-settings.php:2631
+msgid "Insert State"
+msgstr ""
+
+#: view/admin-settings.php:2641
+msgid "Please select country"
+msgstr ""
+
+#: view/admin-settings.php:2645
+msgid "State title is required"
+msgstr ""
+
+#: view/admin-settings.php:2649
+msgid "State code is required"
+msgstr ""
+
+#: view/admin-settings.php:2654
+msgid ""
+"Error creating state, please ensure you have filled out all required fields"
+msgstr ""
+
+#: view/admin-settings.php:2709
+msgid "State Title"
+msgstr ""
+
+#: view/admin-settings.php:2710
+msgid "State Code"
+msgstr ""
+
+#: view/admin-settings.php:2718
+msgid "<a id=\"state"
+msgstr ""
+
+#: view/admin-settings.php:2757
+msgid "Custom Field"
+msgstr ""
+
+#: view/admin-settings.php:2896
+#, php-format
+msgid ""
+"%s <strong>Restored.</strong> successfully restored custom fields preset "
+"values!"
+msgstr ""
+
+#: view/admin-settings.php:3081
+msgid " Duplicate option name not allowed"
+msgstr ""
+
+#: view/admin-settings.php:3095 view/admin-settings.php:3201
+#, php-format
+msgid "Error creating %s"
+msgstr ""
+
+#: view/admin-settings.php:3187
+#, php-format
+msgid "%s <strong>added</strong> successfully!"
+msgstr ""
+
+#: view/admin-settings.php:3339
+#, php-format
+msgid "%s <strong>edited</strong> successfully"
+msgstr ""
+
+#: view/admin-settings.php:3508 view/admin-settings.php:3668
+msgid "Public"
+msgstr ""
+
+#: view/admin-settings.php:3508
+msgid "Visible on Profile & Search, Profile Management, Admin CRM"
+msgstr ""
+
+#: view/admin-settings.php:3509
+msgid "Visible in Profile Management & Admin CRM"
+msgstr ""
+
+#: view/admin-settings.php:3510 view/admin-settings.php:3670
+msgid "Restricted"
+msgstr ""
+
+#: view/admin-settings.php:3510 view/admin-settings.php:3670
+msgid "Only visible in Admin CRM"
+msgstr ""
+
+#: view/admin-settings.php:3668
+msgid "Visible on Registration, Profile Management, Admin CRM"
+msgstr ""
+
+#: view/admin-settings.php:3669
+msgid "Visible in Registration, Profile Management & Admin CRM"
+msgstr ""
+
+#: view/admin-settings.php:4015 view/admin-settings.php:4028
+msgid "Options"
+msgstr ""
+
+#: view/admin-settings.php:4016 view/admin-settings.php:4029
+msgid "Visibility"
+msgstr ""
+
+#: view/admin-settings.php:4019 view/admin-settings.php:4032
+msgid "Custom View"
+msgstr ""
+
+#: view/admin-settings.php:4196
+msgid "<strong>Updated</strong> successfully!"
+msgstr ""
+
+#: view/admin-settings.php:4238 view/admin-settings.php:4809
+msgid "Edit Record"
+msgstr ""
+
+#: view/admin-settings.php:4246 view/admin-settings.php:4760
+msgid "Add New Record"
+msgstr ""
+
+#: view/admin-settings.php:4305
+msgid "Submit"
+msgstr ""
+
+#: view/admin-settings.php:4343 view/admin-settings.php:4354
+msgid "File Type"
+msgstr ""
+
+#: view/admin-settings.php:4344 view/admin-settings.php:4355
+#: view/admin-settings.php:4768 view/admin-settings.php:4817
+#: view/admin-settings.php:4855 view/admin-settings.php:4864
+msgid "Link Type"
+msgstr ""
+
+#: view/admin-settings.php:4521
+msgid "Use S2member Plugin"
+msgstr "Verwenden Sie S2Member Plugin"
+
+#: view/admin-settings.php:4533
+msgid "Paypal Button"
+msgstr "PayPal-Button"
+
+#: view/admin-settings.php:4534
+msgid "Subscription Title"
+msgstr ""
+
+#: view/admin-settings.php:4536
+msgid "Amount"
+msgstr "Menge"
+
+#: view/admin-settings.php:4538
+msgid "Description"
+msgstr "Beschreibung"
+
+#: view/admin-settings.php:4540
+msgid ""
+"Insert the generated paypal button from s2member plugin. <i><b>(To generate "
+"button, go to s2member (Pro) > Paypal Buttons)</b></i>"
+msgstr ""
+"Legen Sie die erzeugte Paypal-Button aus s2member Plugin. <i><b>(Taste zu "
+"erzeugen, gehe s2member (Pro) > Paypal Buttons) </ b></ i>"
+
+#: view/admin-settings.php:4547
+msgid "Registration Notifications"
+msgstr "Registrierung Benachrichtigungen"
+
+#: view/admin-settings.php:4549
+msgid "Insert message after registration."
+msgstr "Legen Nachricht nach der Anmeldung."
+
+#: view/admin-settings.php:4551
+msgid "Insert email notification that willl be send after registration."
+msgstr "Legen Nachricht nach der Anmeldung."
+
+#: view/admin-settings.php:4553
+msgid "Insert message that willl appear after finishing steps 1-3."
+msgstr "Legen Nachricht, die nach Abschluss der Schritte 1-3 erscheint."
+
+#: view/admin-settings.php:4555
+msgid "Insert message that willl appear after payment."
+msgstr "Legen Nachricht, die nach der Zahlung angezeigt."
+
+#: view/admin-settings.php:4615
+msgid "You've been submitted for a job."
+msgstr ""
+
+#: view/admin-settings.php:4616
+msgid ""
+" We are simply confirming that you are 'Available' or 'Not Available' for "
+"the job dates."
+msgstr ""
+
+#: view/admin-settings.php:4627
+msgid "Message that will appear at the top of confirming availability page."
+msgstr ""
+"Nachricht, die an der Spitze der Bestätigung Verfügbarkeit Seite erscheint."
+
+#: view/admin-settings.php:4655
+msgid "Social Media Label is required!"
+msgstr ""
+
+#: view/admin-settings.php:4671
+msgid "Social Media Icon required!"
+msgstr ""
+
+#: view/admin-settings.php:4678
+msgid "Unable to upload icon!"
+msgstr ""
+
+#: view/admin-settings.php:4693
+msgid "Record successfully added!"
+msgstr ""
+
+#: view/admin-settings.php:4715 view/admin-settings.php:4725
+msgid "Record successfully updated!"
+msgstr ""
+
+#: view/admin-settings.php:4736
+msgid "Error deleting record!"
+msgstr ""
+
+#: view/admin-settings.php:4738
+msgid " successfully deleted!"
+msgstr ""
+
+#: view/admin-settings.php:4752
+msgid "Record successfully deleted!"
+msgstr ""
+
+#: view/admin-settings.php:4764 view/admin-settings.php:4813
+msgid "Label"
+msgstr ""
+
+#: view/admin-settings.php:4770 view/admin-settings.php:4819
+msgid "--Select Type--"
+msgstr ""
+
+#: view/admin-settings.php:4782 view/admin-settings.php:4832
+msgid "Social Media Icon"
+msgstr ""
+
+#: view/admin-settings.php:4909
+msgid "Delete Selected"
+msgstr ""
+
+#: view/admin-sidebutton.php:13
+msgid "Casting Dashboard Setting"
+msgstr ""
+
+#: view/admin-sidebutton.php:16
+msgid "Buttons to Display"
+msgstr ""
+
+#: view/admin-sidebutton.php:20
+msgid "Post a New Job"
+msgstr ""
+
+#: view/admin-sidebutton.php:21
+msgid "View Your Job Postings"
+msgstr ""
+
+#: view/admin-sidebutton.php:22
+msgid "View Your Applicants"
+msgstr ""
+
+#: view/admin-sidebutton.php:33
+msgid "Cart and Favorite Icon Setting"
+msgstr ""
+
+#: view/admin-sidebutton.php:37
+msgid "Cart Icon URL"
+msgstr ""
+
+#: view/admin-sidebutton.php:39 view/admin-sidebutton.php:46
+msgid "Leave blank for default"
+msgstr ""
+
+#: view/admin-sidebutton.php:44
+msgid "Favorite Icon URL"
+msgstr ""
+
+#: view/admin-sidebutton.php:59
+msgid "Card Photo Settings"
+msgstr ""
+
+#: view/admin-sidebutton.php:62
+msgid "Logo URL"
+msgstr ""
+
+#: view/admin-sidebutton.php:66
+msgid "full url(include http:// ) / exact Height: 100px width: 200px;"
+msgstr ""
+
+#: view/admin-sidebutton.php:69
+msgid "Model Card Layout"
+msgstr ""
+
+#: view/admin-sidebutton.php:73
+msgid "Layout 0"
+msgstr ""
+
+#: view/admin-sidebutton.php:74
+msgid "Layout 1"
+msgstr ""
+
+#: view/admin-sidebutton.php:91
+msgid "Email Settings"
+msgstr ""
+
+#: view/admin-sidebutton.php:94
+msgid "Notify Admin"
+msgstr ""
+
+#: view/admin-sidebutton.php:99
+msgid "If new user registered"
+msgstr ""
+
+#: view/casting-pending.php:35
+#, php-format
+msgid "<h3>Thanks for joining %s!</h3>"
+msgstr ""
+
+#: view/exportDatabase.php:51
+msgid "You do not have sufficient permissions to manage plugins for this site."
+msgstr ""
+
+#: view/include-ecard-create.php:139
+msgid "Download e-Cards"
+msgstr ""
+
+#: view/layout/00/include-profile.php:133
+#: view/layout/00/include-profile.php:135
+#: view/layout/01/include-profile.php:139
+#: view/layout/01/include-profile.php:141
+#: view/layout/05/include-profile.php:119
+#: view/layout/05/include-profile.php:121
+#: view/layout/06/include-profile.php:141
+#: view/layout/06/include-profile.php:143 view/layout/07/include-profile.php:74
+#: view/layout/07/include-profile.php:76 view/layout/10/include-profile.php:86
+#: view/layout/10/include-profile.php:88 view/layout/11/include-profile.php:110
+#: view/layout/11/include-profile.php:112 view/layout/12/include-profile.php:76
+#: view/layout/12/include-profile.php:78 view/layout/16/include-profile.php:191
+#: view/layout/16/include-profile.php:193 view/layout/17/include-profile.php:83
+#: view/layout/17/include-profile.php:85
+msgid "Weight"
+msgstr ""
+
+#: view/layout/00/include-profile.php:144
+#: view/layout/03/include-profile.php:274
+#: view/layout/05/include-profile.php:131
+#: view/layout/10/include-profile.php:139 view/layout/17/include-profile.php:92
+msgid "Contact: "
+msgstr ""
+
+#: view/layout/00/include-profile.php:230
+#: view/layout/01/include-profile.php:249
+#: view/layout/02/include-profile.php:229
+#: view/layout/11/include-profile.php:209
+#: view/layout/12/include-profile.php:255
+#: view/layout/16/include-profile.php:297
+msgid "Next, Select Print Format"
+msgstr "Als nächstes wählen Sie das Druckformat"
+
+#: view/layout/00/include-profile.php:230
+#: view/layout/01/include-profile.php:249
+#: view/layout/02/include-profile.php:229
+#: view/layout/11/include-profile.php:209
+#: view/layout/16/include-profile.php:297
+msgid "or"
+msgstr "oder"
+
+#: view/layout/00/include-profile.php:231
+#: view/layout/01/include-profile.php:250
+#: view/layout/02/include-profile.php:230
+#: view/layout/11/include-profile.php:210
+#: view/layout/16/include-profile.php:298
+msgid "Next, Select PDF Format"
+msgstr "Als nächstes wählen Sie PDF- Format"
+
+#: view/layout/00/include-profile.php:285
+#: view/layout/01/include-profile.php:304
+#: view/layout/02/include-profile.php:281
+msgid "Sorry, there is no available polaroid images for this profile."
+msgstr ""
+
+#: view/layout/00/include-profile.php:315
+#: view/layout/00/include-profile.php:376
+#: view/layout/00/include-profile.php:454
+#: view/layout/01/include-profile.php:334
+#: view/layout/01/include-profile.php:395
+#: view/layout/01/include-profile.php:473
+#: view/layout/02/include-profile.php:302
+#: view/layout/02/include-profile.php:357
+#: view/layout/02/include-profile.php:432
+#: view/layout/11/include-profile.php:294
+#: view/layout/11/include-profile.php:355
+#: view/layout/11/include-profile.php:433
+#: view/layout/12/include-profile.php:324
+#: view/layout/12/include-profile.php:375
+#: view/layout/16/include-profile.php:382
+#: view/layout/16/include-profile.php:443
+#: view/layout/16/include-profile.php:521
+msgid "Select Print Format"
+msgstr "Wählen Sie das Druckformat"
+
+#: view/layout/00/include-profile.php:326
+#: view/layout/01/include-profile.php:345
+#: view/layout/02/include-profile.php:313
+#: view/layout/11/include-profile.php:305
+#: view/layout/12/include-profile.php:335
+#: view/layout/16/include-profile.php:393
+msgid "Four Polaroids Per Page"
+msgstr "Vier Polaroids pro Seite"
+
+#: view/layout/00/include-profile.php:333
+#: view/layout/01/include-profile.php:352
+#: view/layout/02/include-profile.php:320
+#: view/layout/11/include-profile.php:312
+#: view/layout/12/include-profile.php:342
+#: view/layout/16/include-profile.php:400
+msgid "One Polaroid Per Page"
+msgstr "Ein Polaroid pro Seite"
+
+#: view/layout/00/include-profile.php:343
+#: view/layout/01/include-profile.php:362
+#: view/layout/02/include-profile.php:331
+#: view/layout/06/include-profile.php:158
+#: view/layout/11/include-profile.php:322
+#: view/layout/12/include-profile.php:353
+#: view/layout/16/include-profile.php:410
+#: view/layout/partial/include-profile-actions-16.php:49
+#: view/layout/partial/include-profile-actions.php:55
+msgid "Print Polaroids"
+msgstr "Drucken Polaroids"
+
+#: view/layout/00/include-profile.php:344
+#: view/layout/01/include-profile.php:363
+#: view/layout/02/include-profile.php:332
+#: view/layout/11/include-profile.php:323
+#: view/layout/12/include-profile.php:354
+#: view/layout/16/include-profile.php:411
+msgid "Download PDF Polaroids"
+msgstr "PDF herunterladen Polaroids"
+
+#: view/layout/00/include-profile.php:386
+#: view/layout/00/include-profile.php:464
+#: view/layout/01/include-profile.php:405
+#: view/layout/01/include-profile.php:483
+#: view/layout/02/include-profile.php:367
+#: view/layout/02/include-profile.php:442
+#: view/layout/11/include-profile.php:365
+#: view/layout/11/include-profile.php:443
+#: view/layout/12/include-profile.php:385
+#: view/layout/16/include-profile.php:453
+#: view/layout/16/include-profile.php:531
+msgid "Print Large Photos"
+msgstr "Drucken Große Fotos"
+
+#: view/layout/00/include-profile.php:393
+#: view/layout/00/include-profile.php:471
+#: view/layout/01/include-profile.php:412
+#: view/layout/01/include-profile.php:490
+#: view/layout/02/include-profile.php:374
+#: view/layout/02/include-profile.php:449
+#: view/layout/11/include-profile.php:372
+#: view/layout/11/include-profile.php:450
+#: view/layout/12/include-profile.php:392
+#: view/layout/16/include-profile.php:460
+#: view/layout/16/include-profile.php:538
+msgid "Print Medium Size Photos"
+msgstr "Drucken Medium Size Fotos"
+
+#: view/layout/00/include-profile.php:401
+#: view/layout/00/include-profile.php:479
+#: view/layout/01/include-profile.php:420
+#: view/layout/01/include-profile.php:498
+#: view/layout/02/include-profile.php:382
+#: view/layout/02/include-profile.php:457
+#: view/layout/11/include-profile.php:380
+#: view/layout/11/include-profile.php:458
+#: view/layout/12/include-profile.php:400
+#: view/layout/16/include-profile.php:468
+#: view/layout/16/include-profile.php:546
+msgid "Print Large Photos Without Model Info"
+msgstr "Drucken von Fotos ohne große Model Info"
+
+#: view/layout/00/include-profile.php:408
+#: view/layout/00/include-profile.php:486
+#: view/layout/01/include-profile.php:427
+#: view/layout/01/include-profile.php:505
+#: view/layout/02/include-profile.php:389
+#: view/layout/02/include-profile.php:464
+#: view/layout/11/include-profile.php:387
+#: view/layout/11/include-profile.php:465
+#: view/layout/12/include-profile.php:407
+#: view/layout/16/include-profile.php:475
+#: view/layout/16/include-profile.php:553
+msgid "Print Medium Size Photos Without Model Info"
+msgstr "Drucken Medium Size Fotos Ohne Model Info"
+
+#: view/layout/00/include-profile.php:504
+#: view/layout/01/include-profile.php:524
+#: view/layout/02/include-profile.php:484
+#: view/layout/11/include-profile.php:484
+#: view/layout/12/include-profile.php:427
+#: view/layout/16/include-profile.php:572
+msgid "Print Pictures"
+msgstr "Drucken Bilder"
+
+#: view/layout/03/include-profile.php:407
+msgid ""
+"The following files (pdf, audio file, etc.) are associated with this profile"
+msgstr ""
+
+#: view/layout/05/include-profile.php:176
+msgid "Reset"
+msgstr ""
+
+#: view/layout/06/include-profile.php:85
+msgid "Select Division"
+msgstr ""
+
+#: view/layout/06/include-profile.php:86
+msgid "Men"
+msgstr ""
+
+#: view/layout/06/include-profile.php:87
+msgid "Women"
+msgstr ""
+
+#: view/layout/06/include-profile.php:88
+msgid "Teen Girls"
+msgstr ""
+
+#: view/layout/06/include-profile.php:89
+msgid "Teen Boys"
+msgstr ""
+
+#: view/layout/06/include-profile.php:90
+msgid "Boys"
+msgstr ""
+
+#: view/layout/06/include-profile.php:91
+msgid "Girls"
+msgstr ""
+
+#: view/layout/06/include-profile.php:96
+msgid "Select Division First"
+msgstr ""
+
+#: view/layout/06/include-profile.php:157
+#: view/layout/partial/include-profile-actions-16.php:37
+#: view/layout/partial/include-profile-actions.php:43
+msgid "Print Photos"
+msgstr "Drucken Fotos"
+
+#: view/layout/06/include-profile.php:159
+#: view/layout/partial/include-profile-actions-16.php:48
+#: view/layout/partial/include-profile-actions.php:54
+msgid "View Polaroids"
+msgstr "Aussicht Polaroids"
+
+#: view/layout/06/include-profile.php:160
+msgid "View Slideshow"
+msgstr ""
+
+#: view/layout/06/include-profile.php:161
+msgid "View in Lightbox"
+msgstr ""
+
+#: view/layout/06/include-profile.php:172
+#: view/layout/10/include-profile.php:105
+msgid "Print Resume"
+msgstr ""
+
+#: view/layout/06/include-profile.php:190
+#, php-format
+msgid "Download %d Comp Card"
+msgstr ""
+
+#: view/layout/06/include-profile.php:199
+#: view/layout/07/include-profile.php:444
+#: view/layout/10/include-profile.php:125
+msgid "Download Headshot"
+msgstr "Herunterladen Kopfschuss"
+
+#: view/layout/06/include-profile.php:214
+#, php-format
+msgid "Listen to %s Voice Demo"
+msgstr ""
+
+#: view/layout/06/include-profile.php:224
+#: view/layout/partial/include-profile-actions-16.php:106
+#: view/layout/partial/include-profile-actions.php:126
+msgid "Watch Video Slate"
+msgstr "Uhr Video Slate"
+
+#: view/layout/06/include-profile.php:233
+#: view/layout/partial/include-profile-actions-16.php:116
+#: view/layout/partial/include-profile-actions.php:136
+msgid "Watch Video Monologue"
+msgstr "Uhr Video Monologue"
+
+#: view/layout/06/include-profile.php:242
+#: view/layout/partial/include-profile-actions-16.php:127
+#: view/layout/partial/include-profile-actions-16.php:130
+#: view/layout/partial/include-profile-actions-16.php:132
+#: view/layout/partial/include-profile-actions.php:147
+#: view/layout/partial/include-profile-actions.php:150
+#: view/layout/partial/include-profile-actions.php:152
+msgid "Watch Demo Reel"
+msgstr "Uhr Demo Reel"
+
+#: view/layout/06/include-profile.php:253
+msgid "View Casting Cart"
+msgstr ""
+
+#: view/layout/06/include-profile.php:267
+msgid "Previous"
+msgstr "Früher"
+
+#: view/layout/06/include-profile.php:268
+msgid "Back to"
+msgstr ""
+
+#: view/layout/06/include-profile.php:268
+msgid "Division"
+msgstr ""
+
+#: view/layout/06/include-profile.php:269
+msgid "Next"
+msgstr "Nächster"
+
+#: view/layout/07/include-profile.php:453
+msgid "Download VoiceDemo"
+msgstr ""
+
+#: view/layout/07/include-profile.php:461
+msgid "Download CompCard"
+msgstr ""
+
+#: view/layout/07/include-profile.php:469
+msgid "Download Resume"
+msgstr "Herunterladen Fortsetzen"
+
+#: view/layout/08/include-profile.php:93
+msgid "Previous page"
+msgstr ""
+
+#: view/layout/08/include-profile.php:94
+msgid "Next Page"
+msgstr ""
+
+#: view/layout/08/include-profile.php:126
+msgid "Watch Video"
+msgstr ""
+
+#: view/layout/09/include-profile.php:150
+msgid "Resume &#8595;"
+msgstr ""
+
+#: view/layout/10/include-profile.php:115
+msgid "Download Comp Card"
+msgstr "Herunterladen Comp Card"
+
+#: view/layout/10/include-profile.php:134
+msgid "Listen to Voice Demo"
+msgstr "Hören nach Stimme Demo"
+
+#: view/layout/15/include-profile.php:140
+msgid "Available for:"
+msgstr ""
+
+#: view/layout/16/include-profile.php:62
+msgid "Voice Demos"
+msgstr ""
+
+#: view/layout/17/include-profile.php:163
+msgid "Book "
+msgstr ""
+
+#: view/layout/partial/include-profile-actions-16.php:15
+#: view/layout/partial/include-profile-actions.php:21
+msgid "Go Back to My Account"
+msgstr ""
+
+#: view/layout/partial/include-profile-actions-16.php:36
+#: view/layout/partial/include-profile-actions.php:42
+msgid "View Photos"
+msgstr "Aussicht Fotos"
+
+#: view/layout/partial/include-profile-actions-16.php:59
+#: view/layout/partial/include-profile-actions.php:65
+msgid "View Resume"
+msgstr "Aussicht Fortsetzen"
+
+#: view/layout/partial/include-profile-actions-16.php:69
+#: view/layout/partial/include-profile-actions.php:75
+msgid "View Comp Card"
+msgstr "Aussicht Comp Card"
+
+#: view/layout/partial/include-profile-actions-16.php:82
+#: view/layout/partial/include-profile-actions.php:89
+msgid "View Model Card"
+msgstr "Aussicht Model Card"
+
+#: view/layout/partial/include-profile-actions-16.php:84
+#: view/layout/partial/include-profile-actions.php:91
+msgid "Download Model Card"
+msgstr "Herunterladen Model Card"
+
+#: view/layout/partial/include-profile-actions-16.php:94
+#: view/layout/partial/include-profile-actions.php:103
+msgid "View Headshot"
+msgstr "Aussicht Kopfschuss"
+
+#: view/partial/admin-diagnostic.php:43
+msgid "WordPress Environment Check"
+msgstr ""
+
+#: view/partial/admin-diagnostic.php:48
+msgid "PHP Version"
+msgstr ""
+
+#: view/partial/admin-diagnostic.php:58
+msgid "RB Agency requires PHP 5 or above."
+msgstr ""
+
+#: view/partial/admin-diagnostic.php:64
+msgid "MySQL Version"
+msgstr ""
+
+#: view/partial/admin-diagnostic.php:75
+msgid "RB Agency requires MySQL 5 or above."
+msgstr ""
+
+#: view/partial/admin-diagnostic.php:81
+msgid "WordPress Version"
+msgstr ""
+
+#: view/partial/admin-diagnostic.php:92
+#, php-format
+msgid "RB Agency requires WordPress v%s or greater."
+msgstr ""
+
+#: view/partial/admin-diagnostic.php:102
+msgid "RB Agency Check"
+msgstr ""
+
+#: view/partial/admin-diagnostic.php:107
+msgid "RB Agency Version"
+msgstr ""
+
+#: view/partial/admin-diagnostic.php:117
+#, php-format
+msgid ""
+"New version %s available. Automatic upgrade available on the %splugins page%s"
+msgstr ""
+
+#: view/partial/admin-diagnostic.php:123
+msgid "Folder is Writable"
+msgstr ""
+
+#: view/partial/admin-diagnostic.php:138
+msgid "Uploads folder is not writable! Contact your web host."
+msgstr ""
+
+#: view/partial/admin-diagnostic.php:145
+msgid "Stylesheet Exists"
+msgstr ""
+
+#: view/partial/admin-diagnostic.php:160
+msgid ""
+"File does not exist.  Go to <a href='admin.php?"
+"page=rb_agency_settings&ConfigID=2'>Agency > Settings > Styles</a> and "
+"initialize the file."
+msgstr ""
+
+#: view/partial/admin-menu.php:97
+msgid "Tools"
+msgstr ""
+
+#: view/partial/admin-menu.php:115
+msgid "Social Media"
+msgstr ""
+
+#: view/partial/admin-menu.php:116
+msgid "Manage Locations"
+msgstr "Standorte verwalten"
+
+#: view/profile-admincart.php:102
+msgid "No search results found.  Please check link again."
+msgstr ""
+
+#: view/profile-category.php:227
+msgid "Directory"
+msgstr ""
+
+#: view/profile-contact.php:194 view/profile-view.php:361
+msgid "Inactive Profile"
+msgstr ""
+
+#: view/profile-contact.php:204
+msgid "Invalid Profile"
+msgstr ""
+
+#: view/profile-search.php:135
+msgid "No search criteria selected, please initiate your search."
+msgstr ""
+
+#: view/profile-view.php:49 view/profile-view.php:401
+msgid "Profile not found"
+msgstr ""
+
+#~ msgid "Male"
+#~ msgstr "Männlich"
+
+#~ msgid "Female"
+#~ msgstr "Weiblich"
+
+#~ msgid "Generate Client List"
+#~ msgstr "Generieren Sie Kundenliste"
+
+#~ msgid "Both Male &amp; Female"
+#~ msgstr "Beide Männer & Frauen"
+
+#~ msgid "Female Only"
+#~ msgstr "nur für Frauen"
+
+#~ msgid "Male Only"
+#~ msgstr "Männlich Nur"
+
+#~ msgid "Insert Profile List"
+#~ msgstr "Legen Profilliste"
+
+#~ msgid "My Post Section Title"
+#~ msgstr "My Post Sektion Titel"
+
+#~ msgid "Manage Profile"
+#~ msgstr "Profil verwalten"
+
+#~ msgid "Tools & Reports"
+#~ msgstr "Tools & Berichte"
+
+#~ msgid "Run Reports"
+#~ msgstr "Berichte ausführen"
+
+#~ msgid "One More Step"
+#~ msgstr "Noch ein Schritt"
+
+#~ msgid "New Casting added successfully!"
+#~ msgstr "New Casting erfolgreich hinzugefügt!"
+
+#~ msgid "New Client added successfully!"
+#~ msgstr "Neuer Client erfolgreich hinzugefügt!"
+
+#~ msgid "Client updated successfully!"
+#~ msgstr "Client erfolgreich aktualisiert!"
+
+#~ msgid "Client deleted successfully!"
+#~ msgstr "Client erfolgreich gelöscht!"
+
+#~ msgid "Back to Client List"
+#~ msgstr "Zurück zur Referenzliste"
+
+#~ msgid "Edit Client"
+#~ msgstr "edit Client"
+
+#~ msgid "Make changes in the form below to edit a Client."
+#~ msgstr ""
+#~ "Nehmen Sie Änderungen in der folgenden Form eines Clients zu bearbeiten."
+
+#~ msgid "Add New Client"
+#~ msgstr "Kunde hinzufügen"
+
+#~ msgid "Fill in the form below to add a new Client."
+#~ msgstr "Füllen Sie untenstehendes Formular ein neuer Client hinzuzufügen."
+
+#~ msgid "Email Header"
+#~ msgstr "E-Mail-Header"
+
+#~ msgid "Edit Tag"
+#~ msgstr "Tag bearbeiten"
+
+#~ msgid "Tag name"
+#~ msgstr "Verlinke den Namen"
+
+#~ msgid "Tag slug"
+#~ msgstr "Tag slug"
+
+#~ msgid ""
+#~ "The &#8220;slug&#8221; is the URL-friendly version of the name. It is "
+#~ "usually all lowercase and contains only letters, numbers, and hyphens."
+#~ msgstr ""
+#~ "Die &#8220;slug&#8221; ist die URL-freundliche Version des Namens. Es ist "
+#~ "in der Regel nur Kleinbuchstaben und enthält nur Buchstaben, Zahlen und "
+#~ "Bindestriche."
+
+#~ msgid ""
+#~ "The description is not prominent by default, however some themes may show "
+#~ "it."
+#~ msgstr ""
+#~ "Die Beschreibung ist nicht prominent standardmäßig jedoch einige Themen "
+#~ "es zeigen."
+
+#~ msgid "Tag added."
+#~ msgstr "Tag hinzugefügt."
+
+#~ msgid "Tag deleted."
+#~ msgstr "Tag gelöscht."
+
+#~ msgid "Tag updated."
+#~ msgstr "Tag aktualisiert."
+
+#~ msgid "Tag not added."
+#~ msgstr "Tag hinzugefügt."
+
+#~ msgid "Tag not updated."
+#~ msgstr "Tag nicht aktualisiert."
+
+#~ msgid "Tags deleted."
+#~ msgstr "Stichworte gelöscht."
+
+#~ msgid "Search results for &#8220;%s&#8221;"
+#~ msgstr "Suchergebnisse für &#8220;%s&#8221;"
+
+#~ msgid "Search Tags"
+#~ msgstr "Suche Tags"
+
+#~ msgid "Bulk Actions"
+#~ msgstr "Bulk-Aktionen"
+
+#~ msgid "Popular Tags"
+#~ msgstr "Beliebte Schlagworte"
+
+#~ msgid "The name is how the tag appears on your site."
+#~ msgstr "Der Name ist wie der Tag auf Ihrer Website erscheint."
+
+#~ msgid ""
+#~ "The description is not prominent by default; however, some themes may "
+#~ "show it."
+#~ msgstr ""
+#~ "Die Beschreibung ist nicht prominent standardmäßig ; Allerdings zeigen "
+#~ "einige Themen kann."
+
+#~ msgid "Share"
+#~ msgstr "Aktie"
+
+#~ msgid "Contact"
+#~ msgstr "Kontakt"
+
+#~ msgid "Access Dashboard"
+#~ msgstr "Zugang Armaturenbrett"
+
+#~ msgid "Create New Male"
+#~ msgstr "Create New Männlich"
+
+#~ msgid "Create New Female"
+#~ msgstr "Create New Female"
+
+#~ msgid "Locatio"
+#~ msgstr "Ort"
+
+#~ msgid "Currently \" . $items . \" Profiles"
+#~ msgstr "Zur Zeit \" . $items . \" Profile"
+
+#~ msgid "Watch"
+#~ msgstr "Uhr"
+
+#~ msgid "Youngest to Oldest"
+#~ msgstr "Jüngster nach Älteste"
+
+#~ msgid "Oldest to Youngest"
+#~ msgstr "Älteste nach Jüngster"
+
+#~ msgid "Highest to Lowest"
+#~ msgstr "Höchste nach Unterste"
+
+#~ msgid "Lowest to Highest"
+#~ msgstr "Unterste nach Höchste"
