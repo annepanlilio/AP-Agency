@@ -21,7 +21,7 @@ class RBAgency_AdminSettings {
 					<div class="welcome-panel-column" style="margin-left: 50px;">
 						<h3><?php echo __("Diagnostics", RBAGENCY_TEXTDOMAIN ) ?>:</h3>
 							<?php
-							echo "No Diagnostic has been run.  Please run now.";
+							echo __("No Diagnostic has been run.  Please run now.",RBAGENCY_TEXTDOMAIN);
 							// Diagnostic Tests
 							//require_once(WP_PLUGIN_DIR . "/" . basename(dirname(__FILE__)) . "/diagnostic.php");
 
@@ -49,7 +49,7 @@ class RBAgency_AdminSettings {
 	 */
 		static function Style() {
 
-			echo 'Method Variable called';
+			echo __('Method Variable called',RBAGENCY_TEXTDOMAIN);
 
 
 
@@ -62,7 +62,7 @@ class RBAgency_AdminSettings {
 	 */
 		static function DataGender() {
 
-			echo 'Method Variable called';
+			echo __('Method Variable called',RBAGENCY_TEXTDOMAIN);
 
 
 
@@ -75,7 +75,7 @@ class RBAgency_AdminSettings {
 	 */
 		static function DataProfileType() {
 
-			echo 'Method Variable called';
+			echo __('Method Variable called',RBAGENCY_TEXTDOMAIN);
 
 
 
@@ -87,7 +87,7 @@ class RBAgency_AdminSettings {
 	 */
 		static function DataCustomFields() {
 
-			echo 'Method Variable called';
+			echo __('Method Variable called',RBAGENCY_TEXTDOMAIN);
 
 
 
@@ -101,7 +101,7 @@ class RBAgency_AdminSettings {
 	 */
 		static function DataMediaType() {
 
-			echo 'Method Variable called';
+			echo __('Method Variable called',RBAGENCY_TEXTDOMAIN);
 
 
 
@@ -115,7 +115,7 @@ class RBAgency_AdminSettings {
 	 */
 		static function DataMediaType() {
 
-			echo 'Method Variable called';
+			echo __('Method Variable called',RBAGENCY_TEXTDOMAIN);
 
 			if( isset($_REQUEST['action']) && !empty($_REQUEST['action']) ) {
 				if($_REQUEST['action'] == 'douninstall') {

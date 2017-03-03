@@ -226,7 +226,7 @@ class RBAgency_Casting {
 					
 
 					if (!empty($data['ProfileDateBirth'])) {
-						echo "<p class=\"detail\"><strong>Age:</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</p>\n";
+						echo "<p class=\"detail\"><strong>".__("Age",RBAGENCY_TEXTDOMAIN).":</strong> ". rb_agency_get_age($data['ProfileDateBirth']) ."</p>\n";
 					}
 					// TODO: ADD MORE FIELDS
 
@@ -274,9 +274,9 @@ class RBAgency_Casting {
 								echo "	<div class=\"agent-box\">";
 								echo "		<h3>". $displayName  . "</h3>";
 								echo "		<img class=\"agent-thumb\" src=\"".site_url()."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg\" />";
-								echo "		<p class=\"detail\"><strong>Company:</strong>&nbsp;".$resultCastingContactCompany."</p>";
-								echo "		<p class=\"detail\"><strong>Casting Type:</strong>&nbsp;".$results["CastingTypeTitle"]."</p>";
-								echo "		<a href=\"#\" class=\"remove-agent-casting-cart\" id=\"".$resultCastingID."\"><img src=\"".site_url()."/wp-content/plugins/rb-agency/assets/img/remove.png\" alt=\"Remove from Cart\" data-pin-nopin=\"true\"></a>";
+								echo "		<p class=\"detail\"><strong>".__("Company",RBAGENCY_TEXTDOMAIN).":</strong>&nbsp;".$resultCastingContactCompany."</p>";
+								echo "		<p class=\"detail\"><strong>".__("Casting Type",RBAGENCY_TEXTDOMAIN).":</strong>&nbsp;".$results["CastingTypeTitle"]."</p>";
+								echo "		<a href=\"#\" class=\"remove-agent-casting-cart\" id=\"".$resultCastingID."\"><img src=\"".site_url()."/wp-content/plugins/rb-agency/assets/img/remove.png\" alt=\"".__("Remove from Cart",RBAGENCY_TEXTDOMAIN)."\" data-pin-nopin=\"true\"></a>";
 								echo "	</div>";
 								echo "</div>";
 							
@@ -309,9 +309,9 @@ class RBAgency_Casting {
 								console.log('total: ' + numCart);
 								
 								if(numCart <= 0){
-									$('.in-cart').html('There are no profiles added to the casting cart.');
+									$('.in-cart').html('<?php _e('There are no profiles added to the casting cart.',RBAGENCY_TEXTDOMAIN);?>');
 								}else{
-									$('.in-cart').html('Currently <strong>'+numCart+'</strong> in Cart');
+									$('.in-cart').html('<?php _e('Currently',RBAGENCY_TEXTDOMAIN);?> <strong>'+numCart+'</strong> <?php _e('in Cart' );?> ');
 								}
 							}
 				        });
@@ -339,7 +339,7 @@ class RBAgency_Casting {
 							jQuery('a[class^=thickbox]').on('click', function(){
 								var id = jQuery(this).attr("id");
 								var profile_gallery = "<?php echo get_bloginfo('url').'/wp-content/plugins/rb-agency/ext/timthumb.php?src='.RBAGENCY_UPLOADDIR;?>"+jQuery(this).attr("attr-gallery")+"/";
-									jQuery("#profilephotos").empty().html("<center>Loading photos...</center>");
+									jQuery("#profilephotos").empty().html("<center><?php _e("Loading photos...",RBAGENCY_TEXTDOMAIN);?></center>");
 									jQuery.ajax({
 										type: 'POST',
 										dataType: 'json',
