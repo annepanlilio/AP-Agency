@@ -17,12 +17,6 @@ class RBAgency_Init {
 
 		public static function init(){
 
-			/*
-			 * Internationalization
-			 */
-
-				// Identify Folder for PO files
-				load_plugin_textdomain( RBAGENCY_TEXTDOMAIN, false, basename( dirname( __FILE__ ) ) . '/assets/translation/' );
 
 				// Register Settings
 				add_action('admin_init', array('RBAgency_Init', 'do_register_settings'));
