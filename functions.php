@@ -5660,7 +5660,7 @@ class RBLogin_Widget extends WP_Widget {
 	function form( $instance ) {
 
 		//Set up some default widget settings.
-		$defaults = array( 'title' => __('', 'rblogin'), 'mt-li' => __('Login | Register as Model/Talent', 'rblogin'), 'ap-li' => __('Login | Register as Casting Agent/Producer', 'rblogin') );
+		$defaults = array( 'title' => '', 'mt-li' => __('Login | Register as Model/Talent', 'rblogin'), 'ap-li' => __('Login | Register as Casting Agent/Producer', 'rblogin') );
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
 		<div class="widget-content">
