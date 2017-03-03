@@ -354,7 +354,7 @@ class RBAgency_Casting {
 												jQuery("#TB_ajaxContent").append("<div class=\"\" style=\"width:120px;height:120px;float:left;margin:5px;padding:5px; border:1px solid #ccc;\"><img src=\""+profile_gallery+data[i].ProfileMediaURL+"&h=120&w=120&a=t\" style=\"z-index: -33;float: left;\"/><input style=\"float: left;margin-top: -20px;margin-left: 5px;z-index: 12;\" type=\"radio\" name=\"photo\" value=\""+data[i].ProfileID+"\" attr-media-id=\""+data[i].ProfileMediaID+"\" attr-media=\""+data[i].ProfileMediaURL+"\"/></div>");
 											};
 											if(data.length <= 0){
-												jQuery("#TB_ajaxContent").html("<center>No photos found.</center>");
+												jQuery("#TB_ajaxContent").html("<center><?php _e('No photos found',RBAGENCY_TEXTDOMAIN);?>.</center>");
 											}
 											jQuery("input[name=photo]").on("click",function(){
 													jQuery("img[class=img-"+id).attr("src",profile_gallery+jQuery(this).attr("attr-media"));
@@ -404,7 +404,7 @@ class RBAgency_Casting {
 
 
 				echo "<div class=\"boxblock\" style=\"width:100%\" >";
-					echo "<h3>Add to existing Job</h3>";
+					echo "<h3>".__("Add to existing Job",RBAGENCY_TEXTDOMAIN)."</h3>";
 					echo "<div class=\"innerr\" style=\"padding: 10px;\">";
 					echo "<form class=\"castingtext\" method=\"post\" action=\"?page=rb_agency_castingjobs&action=informTalent&Job_ID=\">";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
@@ -416,7 +416,7 @@ class RBAgency_Casting {
 									echo "<option attrid=\"".$key->Job_ID."\" value=\"".$key->Job_ID."-".$key->Job_UserLinked."\">".$key->Job_Title."</option>";
 								}
 								echo "<select>";
-							echo "&nbsp;<input type=\"submit\" class=\"button-primary button\" name=\"addtoexisting\" value=\"Submit\"/>";
+							echo "&nbsp;<input type=\"submit\" class=\"button-primary button\" name=\"addtoexisting\" value=\"".__("Submit",RBAGENCY_TEXTDOMAIN)."\"/>";
 							echo "</div>";
 						echo "</div>";
 						echo "<script type=\"text/javascript\">";
@@ -434,7 +434,7 @@ class RBAgency_Casting {
 					echo "</div><!-- .inner -->";
 				echo "</div><!-- .boxblock -->";
 				echo "<div class=\"boxblock\" style=\"width:100%\" >";
-					echo "<h3>Add to saved search</h3>";
+					echo "<h3>".__("Add to saved search",RBAGENCY_TEXTDOMAIN)."</h3>";
 					echo "<div class=\"innerr\" style=\"padding: 10px;\">";
 					echo "<form class=\"savedsearchtext\" method=\"post\" action=\"?page=rb_agency_searchsaved&action=edit&SearchID=\">";
 					echo "<div class=\"rbfield rbtext rbsingle \" id=\"\">";
@@ -446,7 +446,7 @@ class RBAgency_Casting {
 									echo "<option attrid=\"".$key->SearchID."\" value=\"".$key->SearchID."\">".$key->SearchTitle."</option>";
 								}
 								echo "<select>";
-							echo "&nbsp;<input type=\"submit\" class=\"button-primary button\" name=\"addtoexisting\" value=\"Submit\"/>";
+							echo "&nbsp;<input type=\"submit\" class=\"button-primary button\" name=\"addtoexisting\" value=\"".__("Submit",RBAGENCY_TEXTDOMAIN)."\"/>";
 							echo "</div>";
 						echo "</div>";
 						echo "<script type=\"text/javascript\">";
@@ -473,7 +473,7 @@ class RBAgency_Casting {
 
 			} else {
 
-				echo "<p>There are no profiles added to the casting cart.</p>\n";
+				echo "<p>".__("There are no profiles added to the casting cart.",RBAGENCY_TEXTDOMAIN)."</p>\n";
 
 			}
 
@@ -820,7 +820,7 @@ class RBAgency_Casting {
 								$castingInfo .= "  <div class=\"saved-agent\" id=\"casting_agent_".$resultCastingID."\"  style=\"float: left; margin:10px 10px 0; width: 150px;\">";	// inline css for email							
 								$castingInfo .= "<a href=\"".admin_url("admin.php?page=rb_agency_casting_manage&action=editRecord&CastingID=".$result["CastingID"])."\"><img src=\"".site_url()."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg\" style=\"max-width: 100%\" /></a>";
 								$castingInfo .= "    <h4 style=\"margin: 0\">". $displayName  . "</h4>";
-								$castingInfo .= "<p class=\"detail\"><strong>Company:</strong>&nbsp;".$resultCastingContactCompany."</p><p class=\"detail\"><strong>Casting Type:</strong>&nbsp;".$result["CastingTypeTitle"]."</p>";
+								$castingInfo .= "<p class=\"detail\"><strong>".__("Company",RBAGENCY_TEXTDOMAIN).":</strong>&nbsp;".$resultCastingContactCompany."</p><p class=\"detail\"><strong>".__("Casting Type",RBAGENCY_TEXTDOMAIN).":</strong>&nbsp;".$result["CastingTypeTitle"]."</p>";
 								$castingInfo .= "</div>";
 							}
 							$castingInfo .="</div><!-- #searchsaved-emailsent -->";
@@ -863,15 +863,15 @@ class RBAgency_Casting {
 				if(!empty($SearchMuxFromEmail)){
 					$email_error .= "<div style=\"margin:15px;\">";
 					$email_error .= "<div id=\"message\" class=\"updated\">";
-					$email_error .= "Email successfully sent from <strong>". $SearchMuxFromEmail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
-					$email_error .= "Message sent: <p>". stripcslashes(make_clickable($SearchMuxMessage)) ."</p>";
+					$email_error .= sprintf(__("Email successfully sent from <strong>%s</strong> to <strong>%s</strong><br />",RBAGENCY_TEXTDOMAIN),  $SearchMuxFromEmail, $SearchMuxToEmail );
+					$email_error .= sprintf(__("Message sent: <p>%s</p>", RBAGENCY_TEXTDOMAIN ), stripcslashes( make_clickable( $SearchMuxMessage )  );
 					$email_error .= "</div>";
 					$email_error .= "</div>";
 				} else {
 					$email_error .= "<div style=\"margin:15px;\">";
 					$email_error .= "<div id=\"message\" class=\"updated\">";
-					$email_error .= "Email successfully sent from <strong>". $rb_agency_option_agencyemail ."</strong> to <strong>". $SearchMuxToEmail ."</strong><br />";
-					$email_error .= "Message sent: <p>". stripcslashes(make_clickable($SearchMuxMessage)) ."</p>";
+					$email_error .= sprintf(__("Email successfully sent from <strong>%s</strong> to <strong>%s</strong><br />", RBAGENCY_TEXTDOMAIN), $rb_agency_option_agencyemail ,$SearchMuxToEmail );
+					$email_error .= sprintf(__("Message sent: <p>%s</p>", RBAGENCY_TEXTDOMAIN ), stripcslashes( make_clickable( $SearchMuxMessage ) ) );
 					$email_error .= "</div>";
 					$email_error .= "</div>";
 				}
@@ -892,7 +892,7 @@ class RBAgency_Casting {
 			// Process Form
 			$isSent = RBAgency_Casting::cart_send_process();
 			if(isset($isSent)){
-				echo "          <div id=\"message\" class=\"updated\"><p>Email Messages successfully sent!</p></div>";
+				echo "          <div id=\"message\" class=\"updated\"><p>".__("Email Messages successfully sent!", RBAGENCY_TEXTDOMAIN)."</p></div>";
 			}
 		}
 
