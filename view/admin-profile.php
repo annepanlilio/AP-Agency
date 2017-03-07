@@ -4542,6 +4542,7 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 	echo "        <th class=\"column\" scope=\"col\">".__("Category",RBAGENCY_TEXTDOMAIN)."</th>\n";
 	echo "        <th class=\"column\" scope=\"col\">".__("Images",RBAGENCY_TEXTDOMAIN)."</th>\n";
 	echo "        <th class=\"column\" scope=\"col\">".__("Views",RBAGENCY_TEXTDOMAIN)."</th>\n";
+	echo "        <th class=\"column\" scope=\"col\">".__("Private",RBAGENCY_TEXTDOMAIN)."</th>\n";
 	echo "        <th class=\"column\" scope=\"col\">".__("Last Viewed",RBAGENCY_TEXTDOMAIN)."</th>\n";
 	echo "    </tr>\n";
 	echo " </tfoot>\n";
