@@ -123,8 +123,97 @@
 
 		$newrules['logout'] = 'index.php?type=rblogout';
 
+		$newrules = apply_filters('rb_agency_permalink_rules', $newrules );
 
 		return $newrules + $rules;
+	}
+
+	
+	/**
+	 * Translation rules
+	 */
+	add_filter("rb_agency_permalink_rules","rb_custom_permalink_rules", 10, 1);
+	function rb_custom_permalink_rules( $newrules ){
+		
+
+		if( function_exists('pll_current_language') ){
+		 	$current_lang = pll_current_language();
+		 	$default_lang = pll_default_language();
+
+		 	foreach ($newrules  as $key => $rules) {
+
+		 			$newrules[ $key ] = "{$rules}&rbpage=true&lang={$default_lang}";
+					$rules = str_replace('$matches[2]', '$matches[3]', $rules );
+					$rules = str_replace('$matches[1]', '$matches[2]', $rules );
+					$newrules[ "(.*)/{$key}" ] = str_replace( "index.php?", 'index.php?lang=$matches[1]&rbpage=true&', $rules );
+
+			}
+
+		}		
+		
+		return $newrules; 
+	}
+
+	add_action('template_redirect','rb_agency_redirect_language_url' );
+	function rb_agency_redirect_language_url(){
+
+		$is_rbpage = get_query_var('rbpage');
+		$lang_code = get_query_var('lang');
+		if( ! empty( $is_rbpage ) ){
+			if( function_exists('pll_current_language') ){
+			 	$current_lang = pll_current_language();
+			 	$default_lang = pll_default_language();
+			 	if( $default_lang == $current_lang && strpos( $_SERVER["REQUEST_URI"], "/{$default_lang}/" ) > -1 ){
+			 		$uri = site_url( str_replace("/{$default_lang}/", "./", $_SERVER["REQUEST_URI"] ) );
+			 		wp_redirect( $uri );
+			 		exit();
+			 	}else if(  $default_lang != $current_lang && strpos( $_SERVER["REQUEST_URI"], "/{$current_lang}/" ) <= -1 ){
+			 		$uri = site_url( "/{$default_lang}/". $_SERVER["REQUEST_URI"] );
+			 		wp_redirect( $uri );
+			 		exit();
+			 	}
+			}
+		}
+	}
+
+	add_filter('rb_agency_query_vars','rb_agency_core_pages_identity', 10 ,1 );
+	function rb_agency_core_pages_identity( $query_vars ){
+		$query_vars[ ] = 'rbpage';
+		$query_vars[ ] = 'lang';
+		return $query_vars;
+	}
+
+	add_filter('pll_translation_url','rb_agency_pll_the_language_link', 10, 2 );
+	function rb_agency_pll_the_language_link( $url, $lang ){
+		$is_rbpage = get_query_var('rbpage');
+		if( ! empty( $is_rbpage ) ){
+			if( function_exists('pll_current_language') ){
+				$current_lang = pll_current_language();
+			 	$default_lang = pll_default_language();
+			 	
+			 	if( $default_lang == $lang ){
+			 		if( strpos( $_SERVER["REQUEST_URI"],"/{$lang}/") <= -1 ){
+				 		$url = site_url( "/{$lang}/".$_SERVER["REQUEST_URI"] );
+				 	}
+
+				 	if( $current_lang != $default_lang ){
+					 	$url = str_replace("/{$current_lang}/", "", $url );
+					}
+
+				 	return $url;
+
+				}elseif( $default_lang != $lang ){
+					
+						$url = str_replace("/{$lang}/", "/", $_SERVER["REQUEST_URI"]);
+				 		$url = site_url( "/{$lang}/{$url}" );
+				}
+				
+			}
+		}
+
+		$url = str_replace("//", "/", $url );
+
+		return $url;
 	}
 
 
@@ -146,6 +235,8 @@
 
 		// pagination
 		$query_vars[] = 'paging';
+
+		$query_vars = apply_filters('rb_agency_query_vars', $query_vars );
 
 		return $query_vars;
 	}
@@ -170,6 +261,8 @@
 		$query_vars[] = 'ref';
 
 		$query_vars[] = 'jID';
+
+		$query_vars = apply_filters('rb_agency_filter_query_vars', $query_vars );
 
 		return $query_vars;
 	}
@@ -250,7 +343,6 @@
 				// TODO: Custom /logout/ uri to catch the user and redirect to a login form.
 				rb_logout_user();
 
-			
 			} elseif(get_query_var('type') == 'modelpolaroid'){
 
 				//model polaroid
@@ -287,7 +379,7 @@
 
 		}
 
-		echo "<p><strong>$message</strong></p></div>";
+		echo "<p><strong>".__( $message, RBAGENCY_TEXTDOMAIN )."</strong></p></div>";
 	}
 
 	/**
@@ -779,7 +871,7 @@
 
 				} else {
 
-					$label_m = "<span ".$month_style.">" .(($months<12)?$months:11) . " mo(s)</span>";
+					$label_m = "<span ".$month_style.">" .(($months<12)?$months:11) . " ".__("mo(s)",RBAGENCY_TEXTDOMAIN)."</span>";
 
 				}
 
@@ -793,7 +885,7 @@
 
 				}else{
 
-					$label_d = "<span ".$day_style.">" . (($days<31)?$days:30) ." day(s)</span>";
+					$label_d = "<span ".$day_style.">" . (($days<31)?$days:30) ." ".__("day(s)",RBAGENCY_TEXTDOMAIN)."</span>";
 
 				}
 
@@ -2139,7 +2231,7 @@
 
 		if($count > 0){
 			$data = current($results);
-			return $data["GenderTitle"];
+			return rb_i18n( $data["GenderTitle"] );
 		} else {
 			return 0;
 		}
@@ -2209,7 +2301,7 @@
 							$label = "(ft/in)";
 						}
 					}
-					$measurements_label = "<span class=\"label\">". $label ."</span>";
+					$measurements_label = "<span class=\"label\">". rb_i18n( $label ) ."</span>";
 				} else {
 					$measurements_label = "";
 				}
@@ -6258,10 +6350,10 @@ function rb_get_profile_type_childs_checkbox_ajax($parentID,$ConfigID="",$args =
 			$childTitle = stripslashes($child['DataTypeTitle']);
 			//echo $args['att_mode'];
 			//echo $args['att_type'];
-			if($args['mode'] == 'ajax' && ($args['type'] == 'advanced' || $args['type'] == 'basic') ){ 
+			if( isset( $args['mode'] ) && $args['mode'] == 'ajax' && ($args['type'] == 'advanced' || $args['type'] == 'basic') ){ 
 				echo "<div class=\"type-child\"><label class=\"CDataTypeID".$child['DataTypeParentID']."\">";
 			}else{
-				if($_GET['page'] == 'rb_agency_search'){
+				if( isset( $_GET['page'] ) && $_GET['page'] == 'rb_agency_search'){
 
 				}else{
 
@@ -7248,4 +7340,17 @@ function rb_agency_delete_casting_type(){
 add_action("wp_ajax_rb_agency_delete_casting_type","rb_agency_delete_casting_type");
 add_action("wp_ajax_nopriv_rb_agency_delete_casting_type","rb_agency_delete_casting_type");
 
+
+function rb_i18n( $text ){
+	
+	if( function_exists('pll_register_string') ){
+		pll_register_string( RBAGENCY_TEXTDOMAIN, $text );
+	}
+
+	if( function_exists('pll__') ){
+		return pll__( $text );
+	}
+
+	return $text;
+}
 ?>
