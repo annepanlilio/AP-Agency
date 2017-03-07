@@ -3306,7 +3306,7 @@
 
 	}
 
-function get_social_media_links($ProfileID = ""){
+function get_social_media_links($ProfileID = "", $return = false){
 		global $wpdb;
 		$social_media_arr = array();
 		$icons = array();
@@ -3358,20 +3358,17 @@ function get_social_media_links($ProfileID = ""){
 				}
 			}
 
-
 			$output .= "</ul>";
 
-
 			if($_have_social == true){
-				echo $output;
+				if($return){
+					return $output;	
+				} else {
+					echo $output;	
+				}				
 			}else{
 				echo ' ';
 			}
-
-
-
-
-
 	}
 
 	function old_get_social_media_links($ProfileID = ""){
