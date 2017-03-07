@@ -98,6 +98,9 @@ class RBAgency_App {
 				wp_register_style( 'rbagency-fontawesome', RBAGENCY_PLUGIN_URL .'ext/fontawesome/css/font-awesome.min.css');
 				wp_enqueue_style( 'rbagency-fontawesome' );
 
+				wp_register_style( 'bootstrap-4', RBAGENCY_PLUGIN_URL .'assets/css/bootstrap.min.css');
+				wp_enqueue_style( 'bootstrap-4' );
+
 				if($rb_agency_option_layoutprofileviewmode == 1){
 					wp_register_style( 'rba-magnific-popup', RBAGENCY_PLUGIN_URL .'assets/css/magnific-popup.css');
 					wp_enqueue_style( 'rba-magnific-popup' );
