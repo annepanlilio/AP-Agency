@@ -1,6 +1,23 @@
 /* Profile Layout Nine */
+body {
+	color: #76838f;
+}
+h1, h2, h3, h4, h5, h6 {
+	color: #37474f;
+}
+p:last-of-type {
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+.profile-social-media-icons li {
+	margin: 0 7px;
+	display: inline-block;
+}
+.profile-social-media-icons img {
+	width: 24px;
+}
+
 #rbprofile { padding-top: 30px; }
-.rblayout { padding: 0 15px; }
 #rblayout-nine {padding-bottom: 60px; overflow: visible; }
 #scroller {margin-bottom: 60px; position: static; width: auto; }
 #photo-scroller {width: 100%; height: 350px;font-size: 0; }
@@ -8,6 +25,19 @@
 #rbprofile #info { overflow: hidden; }
 #rblayout-nine #links,
 #rblayout-nine #files { text-align: center; }
+
+.rb-section { padding-top: 45px; padding-bottom: 45px; }
+.rb-section header { padding-bottom: 30px; }
+.rb-section header h1,
+.rb-section header h2,
+.rb-section header h3,
+.rb-section header h4,
+.rb-section header h5,
+.rb-section header h6 {
+	padding-bottom: 0;
+	margin-bottom: 0;
+}
+.rblayout .rb-section:nth-child(odd) { background: #f3f7f9; }
 
 /*scroller overrides*/
 #photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_buttonLeft,
@@ -20,9 +50,8 @@
 #photo-scroller .mCSB_scrollTools.mCSB_scrollTools_horizontal {margin: 0 15px; }
 
 #rblayout-nine #info {text-align: center; }
-#rblayout-nine #info #name {text-transform: uppercase; margin: 15px 0px; }
 #rblayout-nine #stats li {display: inline-block; padding: 0 5px; }
-#rbprofile #rblayout-nine #stats li { margin-bottom: 5px; }
+#rbprofile #rblayout-nine #stats li { margin-bottom: 10px; }
 #rblayout-nine #stats li br { display: none; }
 #rblayout-nine #resultsGoHereAddtoCart {font-size: 12px; background: #eee; color: #333; padding: 5px; border-radius: 3px; display: none; }
 
@@ -42,6 +71,28 @@
 }
 #videos .profile-video {
 	width: 100%;	
+}
+
+#files .resume a {
+	padding: 9px 15px;
+	border-radius: 3px;
+	background-color: #e4eaec;
+	border: 1px solid transparent;
+}
+#files .resume a:hover {
+	text-decoration: none;
+	border: 1px solid #ccd5db;
+}
+
+#voice-demo {
+	text-align: center;
+}
+#voice-demo .voicedemo h6 {
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+#voice-demo .voicedemo audio {
+	margin-top: 10px;
 }
 
 @media only screen and (min-width : 768px) {

@@ -14,7 +14,6 @@ Text:   Profile View with Scrolling Thumbnails and Primary Image
 	wp_register_style( 'scroller-style', RBAGENCY_PLUGIN_URL .'view/layout/09/css/jquery.mCustomScrollbar.min.css' );
 	wp_enqueue_style( 'scroller-style' );
 
-
 	wp_register_style( 'fancybox-style', RBAGENCY_PLUGIN_URL .'ext/fancybox/jquery.fancybox.css' );
 	wp_enqueue_style( 'fancybox-style' );
 
@@ -86,9 +85,11 @@ echo "				</div><!-- #scroller -->\n";
 
 echo "				<div class=\"rbclear\"></div>\n";
 
-echo "				<div id=\"info\">\n";
-echo "					<div id=\"name\"><h2>". $ProfileContactDisplay ."</h2></div>\n";
-
+echo "				<div id=\"info\" class=\"rb-section container-fluid\">\n";
+echo "					<div class=\"row\">\n";
+echo "						<header>\n";
+echo "							<h2>". $ProfileContactDisplay ."</h2>\n";
+echo "						</header>\n";
 
 echo '
 <style>
@@ -110,9 +111,8 @@ display:block;
 							// Social Link
 							rb_agency_getSocialLinks();
 
-echo "						<div id=\"stats\" class=\"rbcol-12 rbcolumn\">\n";
+echo "						<div id=\"stats\" class=\"col-md-12\">\n";
 echo "							<ul>\n";
-
 								if (!empty($ProfileGender) and $display_gender == true) {
 									$fetchGenderData = $wpdb->get_row($wpdb->prepare("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender." WHERE GenderID=%d ",$ProfileGender),ARRAY_A,0 	);
 									$count = $wpdb->num_rows;
@@ -123,18 +123,27 @@ echo "							<ul>\n";
 
 								// Insert Custom Fields
 								$title_to_exclude = array("");
-								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=false, null);								
+								rb_agency_getProfileCustomFields($ProfileID, $ProfileGender, $table=false, null, $label_tag="span", $value_tag="strong");
 
 echo "							</ul>\n";
 echo "						</div>\n";
+echo "					</div> <!-- .row -->\n";//End Info
 echo "				</div> <!-- #info -->\n";//End Info
 
 					// Links
-					echo "<div id=\"links\">";
-					echo "<div class=\"row\">";
-					get_social_media_links($ProfileID);
-					echo "</div> <!-- .row -->";
-					echo "</div> <!-- #links -->";
+					$profileSocialLinks = get_social_media_links($ProfileID, true);
+					
+					if($profileSocialLinks) {
+echo "					<div id=\"links\" class=\"rb-section container-fluid\">";
+echo "						<div class=\"row\">";
+echo "							<header>\n";
+echo "								<h3>".__("Social Media Links",RBAGENCY_TEXTDOMAIN)."</h3>";
+echo "							</header>\n";
+echo								$profileSocialLinks;
+echo "						</div> <!-- .row -->";
+echo "					</div> <!-- #links -->";
+					}
+					
 
 					// Files
 					$queryResume = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"" . $ProfileID . "\" AND ProfileMediaType IN('Resume')";
@@ -142,10 +151,12 @@ echo "				</div> <!-- #info -->\n";//End Info
 					$countResume = $wpdb->num_rows;
 
 					if($countResume > 0) {						
-						echo "<div id=\"files\">";
+						echo "<div id=\"files\" class=\"rb-section container-fluid\">";
 						echo "<div class=\"row\">";
 						echo "<div class=\"col-md-12\">";
-						echo "<h3>Files</h3>";
+echo "					<header>\n";
+echo "						<h3>Files</h3>";
+echo "					</header>\n";
 						foreach ($resultsResume as $dataResume) {
 							echo "<div class=\"media-file resume\"><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataResume['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataResume['ProfileMediaTitle'] . "\">".__("Resume &#8595;",RBAGENCY_TEXTDOMAIN)."</a></div>";
 						}
@@ -163,32 +174,35 @@ echo "				</div> <!-- #info -->\n";//End Info
 					$countVoice = $wpdb->num_rows;
 					
 					if($countVoice > 0) {						
-						echo "<div id=\"files\">";
+						echo "<div id=\"voice-demo\" class=\"rb-section container-fluid\">";
 						echo "<div class=\"row\">";
 						echo "<div class=\"col-md-12\">";
-						echo "\n\n";
-						echo "<h3>Voice Demo</h3>";
+echo "						<header>\n";
+echo "							<h3>Voice Demo</h3>";
+echo "						</header>\n";
 						
 						foreach ($resultsVoice as $dataVoice) {
 							
-								$audiofile = RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataVoice['ProfileMediaURL'];
-							echo "<div class=\"media-file voicedemo\" style=\"text-align: center;margin: 10px auto;width:300px;\">";
+							$audiofile = RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataVoice['ProfileMediaURL'];
+							echo "<div class=\"media-file voicedemo\">";
 								
 								$key_voice = 'voicedemo_' . $dataVoice['ProfileMediaID'];
 								$key_voice_caption = 'voicedemocaption_' . $dataVoice['ProfileMediaID'];
 								$voiceTitle = get_option($key_voice,'Voice Demo');
 								$voiceCaption = get_option($key_voice_caption,'Voice Demo Caption');
-								echo  $voiceTitle;
-								echo "<p>".$voiceCaption."</p>";
-								if(defined("SC_AUDIO_PLUGIN_VERSION")){
-									echo do_shortcode('[sc_embed_player_template1 fileurl="'.site_url($audiofile).'"]');
-								}else{
-									echo '<audio><source src="'.site_url($audiofile).'" /></audio><br>';
-								}
+								echo  "<h6>".$voiceTitle."</h6>";
+								echo "<small>".$voiceCaption."</small><br />";
+
+								// if(defined("SC_AUDIO_PLUGIN_VERSION")){
+								// 	echo do_shortcode('[sc_embed_player fileurl="'.site_url($audiofile).'"]');
+								// } else {
+								// 	echo '<audio><source src="'.site_url($audiofile).'" type="audio/mpeg"/></audio>';
+								// }
+
+								echo '<audio controls><source src="'.site_url($audiofile).'" type="audio/mpeg"/></audio>';								
 								
 								//echo $audiofile;	
 							
-							echo "\n\n";
 							echo "</div>";
 							
 						}
@@ -204,24 +218,28 @@ echo "				</div> <!-- #info -->\n";//End Info
 					$countMedia = $wpdb->num_rows;
 
 					if($countMedia > 0) {
-						echo "<div id=\"videos\">";
-						echo "<div class=\"row\">";
-						echo "<div class=\"col-md-12\"><h3>Videos</h3></div>";
-						foreach ($resultsMedia  as $dataMedia) {
-							$vid_url = $dataMedia['ProfileMediaURL'];
-							$clean_title = stripslashes($dataMedia['ProfileMediaTitle']);
-							$vidTitleCaption = explode('<br>',$clean_title);
-							if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
-								$embed_string = substr($vid_url, strpos($vid_url, "="));
-								$outVideoMedia .= "<div class=\"profile-video\">
-								<div style=\"margin: 5px;\">".$vidTitleCaption[0]."</div>
-								<div class=\"video-wrapper\"><iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/".$embed_string."\" frameborder=\"0\" allowfullscreen></iframe></div></div>";
-							}
-						}
-						echo $outVideoMedia;
+echo "					<div id=\"videos\" class=\"rb-section container-fluid\">";
+echo "						<div class=\"row\">";
+echo "							<header>\n";
+echo "								<h3>Videos</h3>";
+echo "							</header>\n";
+echo "							<div class=\"col-md-12\">\n";
+									foreach ($resultsMedia  as $dataMedia) {
+										$vid_url = $dataMedia['ProfileMediaURL'];
+										$clean_title = stripslashes($dataMedia['ProfileMediaTitle']);
+										$vidTitleCaption = explode('<br>',$clean_title);
+										if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
+											$embed_string = substr($vid_url, strpos($vid_url, "="));
+											$outVideoMedia .= "<div class=\"profile-video\">
+											<div style=\"margin: 5px;\">".$vidTitleCaption[0]."</div>
+											<div class=\"video-wrapper\"><iframe width=\"640\" height=\"360\" src=\"https://www.youtube.com/embed/".$embed_string."\" frameborder=\"0\" allowfullscreen></iframe></div></div>";
+										}
+									}
+									echo $outVideoMedia;
 
-						echo "</div><!-- .row -->";
-						echo "</div><!-- #videos -->";
+echo "							</div><!-- .col-md-12 -->";
+echo "						</div><!-- .row -->";
+echo "					</div><!-- #videos -->";
 					}
 echo "<br>";
 echo '<div class="profiledescription">'.(!empty($ProfileDescription) ? $ProfileDescription : "").'</div>';
