@@ -202,7 +202,7 @@ class RBAgency_Admin {
 			if ($file == RBAGENCY_PLUGIN_NAME .'/'. RBAGENCY_PLUGIN_NAME .'.php' ) {
 
 				// Create Link for Settings Page
-				$settings_link = '<a href="' . admin_url("admin.php?page=rb_agency_settings") . '">Settings</a>';
+				$settings_link = '<a href="' . admin_url("admin.php?page=rb_agency_settings") . '">'.__('Settings',RBAGENCY_TEXTDOMAIN).'</a>';
 
 				// Add link to List
 				array_unshift($links, $settings_link);
@@ -219,7 +219,7 @@ class RBAgency_Admin {
 				function menu_addlinkto_adminbar_menu($wp_toolbar) {
 					$wp_toolbar->add_node(array(
 						'id' => 'rb-agency-toolbar-settings',
-						'title' => 'RB Agency Settings',
+						'title' => __('RB Agency Settings',RBAGENCY_TEXTDOMAIN),
 						'href' =>  get_admin_url().'admin.php?page=rb_agency_settings',
 						'meta' => array('target' => 'rb-agency-toolbar-settings')
 					));
@@ -241,7 +241,7 @@ class RBAgency_Admin {
 				function prepare_tool($wp_toolbar){
 					$arr = array(
 						'id' => 'rb-agency-edit-profile',
-						'title' => 'Edit this Profile',
+						'title' => __('Edit this Profile',RBAGENCY_TEXTDOMAIN),
 						'href' => admin_url('admin.php?page=rb_agency_profiles&action=editRecord&ProfileID='.get_current_viewingID()),
 						'meta' => array('target' => 'rb-agency-edit-profile')
 					);
@@ -424,7 +424,7 @@ class RBAgency_Admin {
 			</script>
 			<?php
 			echo "<table>\n";
-			echo "	<tr><td>Type:</td><td><select id=\"rb_agency_type\" name=\"rb_agency_type\">\n";
+			echo "	<tr><td>".__("Type:",RBAGENCY_TEXTDOMAIN)."</td><td><select id=\"rb_agency_type\" name=\"rb_agency_type\">\n";
 					global $wpdb;
 					$profileDataTypes = $wpdb->get_results("SELECT * FROM ". table_agency_data_type ."",ARRAY_A);
 					echo "<option value=\"\">". __("Any", RBAGENCY_TEXTDOMAIN) ."</option>\n";
@@ -441,10 +441,10 @@ class RBAgency_Admin {
 			echo "<select id=\"rb_agency_gender\" name=\"rb_agency_gender\">";
 			$query= "SELECT GenderID, GenderTitle FROM " .  table_agency_data_gender . " GROUP BY GenderTitle ";
 
-				echo "<option value=\"\">All Gender</option>";
+				echo "<option value=\"\">".__("All Gender",RBAGENCY_TEXTDOMAIN)."</option>";
 				$queryShowGender = $wpdb->get_results($query,ARRAY_A);
 				foreach($queryShowGender as $dataShowGender){
-					echo "<option value=\"".$dataShowGender["GenderID"]."\" >".$dataShowGender["GenderTitle"]."</option>";
+					echo "<option value=\"".$dataShowGender["GenderID"]."\" >".__( $dataShowGender["GenderTitle"], RBAGENCY_TEXTDOMAIN)."</option>";
 				}
 			echo "</select>";
 			echo "</td></tr>\n";
@@ -516,7 +516,8 @@ class RBAgency_Admin {
 
 					echo "<div class=\"feed-searchsocial\">\n";
 					if (isset($maxitems) && $maxitems == 0) {
-						echo "No Connection\n";
+						echo __("No Connection",RBAGENCY_TEXTDOMAIN);
+						echo "\n";
 					} else {
 
 						// Loop through each feed item and display each item as a hyperlink.
@@ -532,6 +533,6 @@ class RBAgency_Admin {
 					}
 					echo "</div>\n";
 					echo "<hr />\n";
-					echo "Need help? Check out RB Agency <a href=\"http://rbplugin.com\" target=\"_blank\" title=\"RB Agency Documentation\">Documentation</a>.<br />";
+					echo __("Need help? Check out RB Agency <a href=\"http://rbplugin.com\" target=\"_blank\" title=\"RB Agency Documentation\">Documentation</a>.<br />", RBAGENCY_TEXTDOMAIN );
 				}
 			}

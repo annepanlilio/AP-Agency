@@ -305,9 +305,9 @@ class RBAgency_Profile {
 										echo "<div><label>";
 													$t = trim(str_replace(' ','_',$r['DataTypeTitle']));													
 														echo '<input type="checkbox" name="profiletype[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" profile_title="'.$r['DataTypeTitle'].'"  class="DataTypeIDClassCheckbox" checked disabled/>&nbsp;'.
-														trim($r['DataTypeTitle'])
+														rb_i18n( trim($r['DataTypeTitle']) )
 														.'&nbsp;';
-														echo '<input type="hidden" name="profiletype[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" profile_title="'.$r['DataTypeTitle'].'"  class="DataTypeIDClassCheckbox" checked/>';
+														echo '<input type="hidden" name="profiletype[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" profile_title="'.rb_i18n( $r['DataTypeTitle'] ).'"  class="DataTypeIDClassCheckbox" checked/>';
 													
 													
 										echo "</label></div>"; 
@@ -327,7 +327,7 @@ class RBAgency_Profile {
 									echo "<div><label>";
 													$t = trim(str_replace(' ','_',$r['DataTypeTitle']));
 													echo '<input type="checkbox" name="profiletype[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" class="DataTypeIDClassCheckbox"/>&nbsp;'.
-														trim($r['DataTypeTitle'])
+														rb_i18n( trim($r['DataTypeTitle']) )
 														.'&nbsp;<br/>';
 										echo "</label></div>"; 
 
@@ -361,7 +361,7 @@ class RBAgency_Profile {
 										echo "<div><label>";
 														$t = trim(str_replace(' ','_',$r['DataTypeTitle']));
 														echo '<input type="checkbox" name="profiletype[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" class="DataTypeIDClassCheckbox"/>&nbsp;'.
-															trim($r['DataTypeTitle'])
+															rb_i18n( trim($r['DataTypeTitle']) )
 															.'&nbsp;<br/>';
 											echo "</label></div>"; 
 
@@ -441,7 +441,7 @@ class RBAgency_Profile {
 															// Pul Genders from Database
 															foreach ($results2 as $key) {
 																	
-																	echo "<option value=\"". $key["GenderID"] ."\"".selected(isset($_REQUEST['gender'])?$_REQUEST['gender']:"", $key["GenderID"],false).">". $key["GenderTitle"] ."</option>\n";
+																	echo "<option value=\"". $key["GenderID"] ."\"".selected(isset($_REQUEST['gender'])?$_REQUEST['gender']:"", $key["GenderID"],false).">". rb_i18n( $key["GenderTitle"] ) ."</option>\n";
 															}
 							echo "						</select>\n";
 							echo "					</div>\n";
@@ -458,7 +458,7 @@ class RBAgency_Profile {
 																// Pul Genders from Database
 																foreach ($results2 as $key) {
 																		if(isset($key["GenderID"]))
-																		echo "<option value=\"". $key["GenderID"] ."\"".selected(isset($_REQUEST['gender'])?$_REQUEST['gender']:"", $key["GenderID"],false).">". $key["GenderTitle"] ."</option>\n";
+																		echo "<option value=\"". $key["GenderID"] ."\"".selected(isset($_REQUEST['gender'])?$_REQUEST['gender']:"", $key["GenderID"],false).">". rb_i18n( $key["GenderTitle"] ) ."</option>\n";
 																}
 								echo "						</select>\n";
 								echo "					</div>\n";
@@ -971,7 +971,7 @@ class RBAgency_Profile {
 											echo "</div>\n";
 							 */
 								echo "<div class=\"rbfield rbtext rbsingle profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
-								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". stripslashes($ProfileCustomTitle) ."</label>\n";
+								echo "<label for=\"ProfileCustomID". $ProfileCustomID ."\">". rb_i18n( stripslashes($ProfileCustomTitle) ) ."</label>\n";
 								echo "<div><input type=\"text\" name=\"ProfileCustomID". $ProfileCustomID ."\" value=\"".(isset($_POST["ProfileCustomID".$ProfileCustomID])?$_POST["ProfileCustomID".$ProfileCustomID]:"")."\" /></div>";
 								echo "</div>\n";
 
@@ -980,7 +980,7 @@ class RBAgency_Profile {
 						 */
 						} elseif($ProfileCustomType == 5) {
 								echo "<div class=\"rbfield rbcheckbox rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
-								echo "<label>". stripslashes($ProfileCustomTitle) ."</label>\n";
+								echo "<label>".rb_i18n( stripslashes($ProfileCustomTitle) )."</label>\n";
 								echo "<div>\n";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
 								foreach($array_customOptions_values as $val){
@@ -991,17 +991,17 @@ class RBAgency_Profile {
 										$dataArr = @$_POST["ProfileCustomID". $ProfileCustomID];
 										if(in_array($val,$dataArr,true)){
 											echo "<div ><label><input type=\"checkbox\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />\n";
-											echo "<span> ". $val."</span></label></div>\n";
+											echo "<span> ". rb_i18n( $val )."</span></label></div>\n";
 										} else {
 											if($val !=""){
 												echo "<div><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />\n";
-												echo "<span> ". $val."</span></label></div>\n";
+												echo "<span> ". rb_i18n( $val )."</span></label></div>\n";
 											}
 										}
 									} else {
 										if($val !=""){
 											echo "<div><label><input type=\"checkbox\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />\n";
-											echo "<span> ". $val."</span></label></div>\n";
+											echo "<span> ".rb_i18n( $val )."</span></label></div>\n";
 										}
 									}
 								}
@@ -1015,7 +1015,7 @@ class RBAgency_Profile {
 						 */
 						} elseif($ProfileCustomType == 6) {
 								echo "<div class=\"rbfield rbradio rbmulti profilecustomid_". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
-								echo "<label>". $ProfileCustomTitle ."</label>\n";
+								echo "<label>". rb_i18n( $ProfileCustomTitle ) ."</label>\n";
 								echo "<div>\n";
 								$array_customOptions_values = explode("|", $ProfileCustomOptions);
 
@@ -1028,17 +1028,17 @@ class RBAgency_Profile {
 
 										if(in_array($val,$dataArr,true) && $val !=""){
 											echo "<div><label><input type=\"radio\" checked=\"checked\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />\n";
-											echo "<span> ". $val."</span></label></div>\n";
+											echo "<span> ". rb_i18n( $val )."</span></label></div>\n";
 										} else {
 											if($val !=""){
 												echo "<div><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />\n";
-												echo "<span> ". $val."</span></label></div>\n";
+												echo "<span> ".rb_i18n( $val )."</span></label></div>\n";
 											}
 										}
 									} else {
 										if($val !=""){
 											echo "<div><label><input type=\"radio\" value=\"". $val."\"  name=\"ProfileCustomID". $ProfileCustomID ."[]\" />\n";
-											echo "<span> ". $val."</span></label></div>\n";
+											echo "<span> ".rb_i18n( $val )."</span></label></div>\n";
 										}
 									}
 								}
@@ -1079,7 +1079,7 @@ class RBAgency_Profile {
 										}
 									}
 
-									echo "<label>". $ProfileCustomTitle . $measurements_label ."</label>\n";
+									echo "<label>". rb_i18n( $ProfileCustomTitle ) . rb_i18n( $measurements_label ) ."</label>\n";
 
 								/*
 								 * Handle Array
@@ -1099,7 +1099,7 @@ class RBAgency_Profile {
 
 									echo "<div>\n";
 										echo "<div>\n";
-										echo "<label>Min</label>\n";
+										echo "<label>".__("Min",RBAGENCY_TEXTDOMAIN)."</label>\n";
 										echo "<select name=\"ProfileCustomID". $ProfileCustomID ."[]\">\n";
 										if (empty($ProfileCustomValue)) {
 											echo "  <option value=\"\">--</option>\n";
@@ -1113,14 +1113,14 @@ class RBAgency_Profile {
 												$heightraw = $i;
 												$heightfeet = floor($heightraw/12);
 												$heightinch = $heightraw - floor($heightfeet*12);
-												echo " <option value=\"". $i ."\" ". selected(isset($ProfileCustomValue) && !empty($ProfileCustomValue)?$ProfileCustomValue:$min_val, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
+												echo " <option value=\"". $i ."\" ". selected(isset($ProfileCustomValue) && !empty($ProfileCustomValue)?$ProfileCustomValue:$min_val, $i) .">". $heightfeet .__(" ft ",RBAGENCY_TEXTDOMAIN). $heightinch .__(" in",RBAGENCY_TEXTDOMAIN)."</option>\n";
 												$i++;
 											}
 										echo " </select>\n";
 										echo "</div>\n";
 
 										echo "<div>\n";
-										echo "<label>Max</label>\n";
+										echo "<label>".__("Max",RBAGENCY_TEXTDOMAIN)."</label>\n";
 										echo "<select name=\"ProfileCustomID". $ProfileCustomID ."[]\">\n";
 											if (empty($ProfileCustomValue)) {
 												echo "  <option value=\"\">--</option>\n";
@@ -1134,7 +1134,7 @@ class RBAgency_Profile {
 												$heightraw = $i;
 												$heightfeet = floor($heightraw/12);
 												$heightinch = $heightraw - floor($heightfeet*12);
-												echo " <option value=\"". $i ."\" ". selected(isset($ProfileCustomValue) && !empty($ProfileCustomValue)?$ProfileCustomValue:$max_val, $i) .">". $heightfeet ." ft ". $heightinch ." in</option>\n";
+												echo " <option value=\"". $i ."\" ". selected(isset($ProfileCustomValue) && !empty($ProfileCustomValue)?$ProfileCustomValue:$max_val, $i) .">". $heightfeet .__(" ft ",RBAGENCY_TEXTDOMAIN). $heightinch .__(" in",RBAGENCY_TEXTDOMAIN)."</option>\n";
 												$i++;
 											}
 										echo " </select>\n";
@@ -1144,14 +1144,14 @@ class RBAgency_Profile {
 									echo "<div>\n";
 										// for other search
 										echo "<div>\n";
-										echo "<label for=\"ProfileCustomID".$ProfileCustomID."_min first\">Min</label><input value=\""
+										echo "<label for=\"ProfileCustomID".$ProfileCustomID."_min first\">".__("Min",RBAGENCY_TEXTDOMAIN)."</label><input value=\""
 										.(!is_array($min_val) && $min_val != "Array" ? $min_val : "")
 										."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID"
 										.$ProfileCustomID."[]\" />\n";
 										echo "</div>\n";
 
 										echo "<div><label for=\"ProfileCustomID".(isset($data1['ProfileCustomID'])?$data1['ProfileCustomID']:"")
-										."_max second\">Max</label><input value=\"".(isset($max_val)?$max_val:"") ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" />\n";
+										."_max second\">".__("Max",RBAGENCY_TEXTDOMAIN)."</label><input value=\"".(isset($max_val)?$max_val:"") ."\" class=\"stubby\" type=\"text\" name=\"ProfileCustomID".$ProfileCustomID."[]\" />\n";
 										echo "</div>\n";
 									echo "</div>\n";
 								}
@@ -1168,7 +1168,7 @@ class RBAgency_Profile {
 								@list($from,$to) = isset($_POST["ProfileCustomID".$ProfileCustomID])?$_POST["ProfileCustomID".$ProfileCustomID]:array("",""); // @explode(",",@$_POST["ProfileCustomID".$ProfileCustomID]);
 
 								echo "<div class=\"rbfield rbselect rbmulti rbdate profilecustomid_". $ProfileCustomID ."\" data-id=\"". $ProfileCustomID ."\" id=\"profilecustomid_". $ProfileCustomID ."\">\n";
-									echo "<label>". $ProfileCustomTitle ."</label>\n";
+									echo "<label>".rb_i18n( $ProfileCustomTitle )."</label>\n";
 									echo "<div>\n";
 											echo "<div>\n";
 											echo "		<label for=\"ProfileCustomLabel_min\" >". __("From", RBAGENCY_TEXTDOMAIN) . "&nbsp;&nbsp;</label>\n";
@@ -2785,7 +2785,7 @@ class RBAgency_Profile {
 
 					foreach ($resultsPType as $PTypekey) {
 						if($ctr < 3) {
-							$all_html.= "<li id=\"". $PTypekey["DataTypeID"] ."\"><a href=\"/". $PTypekey["DataTypeTag"] ."/\" title=\"". $PTypekey["DataTypeTitle"] ."\">". $PTypekey["DataTypeTitle"] ."</a></li>\n";
+							$all_html.= "<li id=\"". $PTypekey["DataTypeID"] ."\"><a href=\"/". $PTypekey["DataTypeTag"] ."/\" title=\"". rb_i18n( $PTypekey["DataTypeTitle"]) ."\">". rb_i18n( $PTypekey["DataTypeTitle"] ) ."</a></li>\n";
 						}
 						if($ctr == 2) {
 							$all_html.= "<li class=\"more-types\">";
@@ -2793,7 +2793,7 @@ class RBAgency_Profile {
 							$all_html.= "	<ul>";
 						}
 						if($ctr > 2) {
-							$all_html.= "		<li id=\"". $PTypekey["DataTypeID"] ."\"><a href=\"/". $PTypekey["DataTypeTag"] ."/\" title=\"". $PTypekey["DataTypeTitle"] ."\">". $PTypekey["DataTypeTitle"] ."</a></li>\n";
+							$all_html.= "		<li id=\"". $PTypekey["DataTypeID"] ."\"><a href=\"/". $PTypekey["DataTypeTag"] ."/\" title=\"". rb_i18n( $PTypekey["DataTypeTitle"] ) ."\">". rb_i18n( $PTypekey["DataTypeTitle"] ) ."</a></li>\n";
 						}
 						if($ctr+1 == $result_count){
 							$all_html.= "	</ul>";
@@ -2939,11 +2939,11 @@ class RBAgency_Profile {
 						$all_html.="<div class=\"rb-cart-links\">";
 
 						if($rb_agency_options_arr['rb_agency_option_profilelist_castingcart'] == 1){
-							$all_html.="<a href=\"".get_bloginfo("url")."/profile-casting/\" class=\"link-casting-cart\">View Casting Cart</a> <span class=\"link-separate\">|</span> ";
+							$all_html.="<a href=\"".get_bloginfo("url")."/profile-casting/\" class=\"link-casting-cart\">".__("View Casting Cart",RBAGENCY_TEXTDOMAIN)."</a> <span class=\"link-separate\">|</span> ";
 						}
 
 						if($rb_agency_options_arr['rb_agency_option_profilelist_favorite'] == 1){
-							$all_html.="<a href=\"".get_bloginfo("url")."/profile-favorites/\" class=\"link-favorite\">View Favorites</a>";
+							$all_html.="<a href=\"".get_bloginfo("url")."/profile-favorites/\" class=\"link-favorite\">".__("View Favorites",RBAGENCY_TEXTDOMAIN)."</a>";
 						}
 
 						$all_html.="</div>";
@@ -2980,7 +2980,7 @@ class RBAgency_Profile {
 						<script>
 							// change the title of play button
 							jQuery(document).ready(function($){
-								jQuery("li.voicedemo a.play-button").attr("title","Voice Demo");
+								jQuery("li.voicedemo a.play-button").attr("title","'.__("Voice Demo",RBAGENCY_TEXTDOMAIN).'");
 								'. $_titleattr .'
 							});
 						</script>
@@ -3042,7 +3042,7 @@ class RBAgency_Profile {
 						$queryPType = "SELECT DataTypeID, DataTypeTitle, DataTypeTag FROM ". table_agency_data_type ." ORDER BY DataTypeTitle";
 						$resultsPType = $wpdb->get_results($queryPType,ARRAY_A);
 						foreach ($resultsPType as $PTypekey) {
-							$all_html.= "<a href=\"/". $PTypekey["DataTypeTag"] ."/\" title=\"". $PTypekey["DataTypeTitle"] ."\">". $PTypekey["DataTypeTitle"] ."</a>\n";
+							$all_html.= "<a href=\"/". $PTypekey["DataTypeTag"] ."/\" title=\"". rb_i18n( $PTypekey["DataTypeTitle"] ) ."\">". rb_i18n( $PTypekey["DataTypeTitle"] ) ."</a>\n";
 						}
 						$all_html.="</div>";
 					}
@@ -3235,7 +3235,7 @@ class RBAgency_Profile {
 			 */
 				$displayHtml = "";
 				$displayHtml .=  "  <div class=\"boxblock-holder\">\n";
-				$displayHtml .=  "<h2 class=\"title\">Search Results: " . $count . "</h2>\n";
+				$displayHtml .=  "<h2 class=\"title\">".__("Search Results",RBAGENCY_TEXTDOMAIN).": " . $count . "</h2>\n";
 				unset($arr_query["limit"]);
 				unset($arr_query["perpage"]);
 
@@ -3244,7 +3244,11 @@ class RBAgency_Profile {
 					//$sessionString = http_build_query($_SESSION);
 					//$sessionString = http_build_query($query_built);
 					$sessionString = '';
-					$displayHtml .=  "<div id=\"message\" class=\"error\"><p>Search exceeds ". $rb_agency_option_persearch ." records first ". $rb_agency_option_persearch ." displayed below.  <a href='". admin_url("admin.php?page=". $_GET['page']) ."&". (isset($sessionString)?$sessionString:"") ."&limit=none&".$query_built."'><strong>Click here</strong></a> to expand to all records (NOTE: This may take some time)</p></div>\n";
+					$displayHtml .= sprintf(__( "Search exceeds %s records first  %s displayed below.  <a href='%s'><strong>Click here</strong></a> to expand to all records (NOTE: This may take some time)",RBAGENCY_TEXTDOMAIN), 
+						$rb_agency_option_persearch,
+						$rb_agency_option_persearch,
+						admin_url("admin.php?page=". $_GET['page']) ."&". (isset($sessionString)?$sessionString:"") ."&limit=none&".$query_built
+						 );
 				}
 				$displayHtml .=  "       <form method=\"post\" action=\"". admin_url("admin.php?page=". $_GET['page']) ."\">\n";
 				$displayHtml .=  "        <input type=\"hidden\" name=\"page\" id=\"page\" value=\"". $_GET['page'] ."\" />\n";

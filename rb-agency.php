@@ -236,22 +236,26 @@ See license.txt for full details.
 /*
  * Internationalization
  */
+	
+	add_action('init', 'rb_agency_translation_init' );
+	add_action('admin_init', 'rb_agency_translation_init' );
+	function rb_agency_translation_init(){
+		$load_from_assets = apply_filters('rb_agency_languages_from_assets', true );
 
-	$load_from_assets = apply_filters('rb_agency_load_from_assets', true );
+		if( $load_from_assets ){
+			// Identify Folder for PO files
+			load_plugin_textdomain( RBAGENCY_TEXTDOMAIN, false, basename( dirname( __FILE__ ) ) . '/assets/translation/' );
+		}else{
+			// Load language files in WP_LANG_DIR to avoid getting overwritten on plugin update
+			$language_domain = apply_filters("um_language_textdomain", RBAGENCY_TEXTDOMAIN );
+			$language_locale = ( get_locale() != '' ) ? get_locale() : 'en_US';
+			$language_locale = apply_filters("rb_agency_language_locale", $language_locale );
 
-	if( $load_from_assets ){
-		// Identify Folder for PO files
-		load_plugin_textdomain( RBAGENCY_TEXTDOMAIN, false, basename( dirname( __FILE__ ) ) . '/assets/translation/' );
-	}else{
-		// Load language files in WP_LANG_DIR to avoid getting overwritten on plugin update
-		$language_domain = apply_filters("um_language_textdomain", RBAGENCY_TEXTDOMAIN );
-		$language_locale = ( get_locale() != '' ) ? get_locale() : 'en_US';
-		$language_locale = apply_filters("rb_agency_language_locale", $language_locale );
+			$language_file = WP_LANG_DIR . '/plugins/' . $language_domain . '/'. $language_domain .'-'. $language_locale . '.mo';
+			$language_file = apply_filters("rb_agency_language_file", $language_file );
 
-		$language_file = WP_LANG_DIR . '/plugins/' . $language_domain . '/'. $language_domain .'-'. $language_locale . '.mo';
-		$language_file = apply_filters("rb_agency_language_file", $language_file );
-
-		load_textdomain( $language_domain, $language_file );
+			load_textdomain( $language_domain, $language_file );
+		}
 	}
 
 // *************************************************************************************************** //

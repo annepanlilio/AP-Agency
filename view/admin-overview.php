@@ -31,7 +31,7 @@ get_currentuserinfo();
 							$queryGenderCount = $wpdb->num_rows;
 
 							foreach($queryGenderResult as $fetchGender){
-								echo "<a class=\"button-primary\" href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New ".ucfirst($fetchGender["GenderTitle"])."", RBAGENCY_TEXTDOMAIN) ."</a><br/>\n";
+								echo "<a class=\"button-primary\" href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New",RBAGENCY_TEXTDOMAIN)." ".ucfirst( $fetchGender["GenderTitle"] ) ."</a><br/>\n";
 							}
 
 							// echo "<li><a href='?page=rb_agency_search' class=\"button-primary\">". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "</a> - ". __("Find profiles", RBAGENCY_TEXTDOMAIN) . ".</li>";

@@ -1479,13 +1479,13 @@ elseif ($ConfigID == 12) {
 	echo "    <tr valign=\"top\">\n";
 	echo "        <th scope=\"row\">". __("Subscription Duration", RBAGENCY_TEXTDOMAIN) ." *:</th>\n";
 	echo "        <td><select id=\"SubscriptionRateTerm\" name=\"SubscriptionRateTerm\">\n";
-	echo "				<option value=\"1\"". selected(1, $SubscriptionRateTerm) .">1 Month</option>\n";
-	echo "				<option value=\"2\"". selected(2, $SubscriptionRateTerm) .">2 Months</option>\n";
-	echo "				<option value=\"3\"". selected(3, $SubscriptionRateTerm) .">3 Months</option>\n";
-	echo "				<option value=\"6\"". selected(6, $SubscriptionRateTerm) .">6 Months</option>\n";
-	echo "				<option value=\"12\"". selected(12, $SubscriptionRateTerm) .">1 Year</option>\n";
-	echo "				<option value=\"24\"". selected(24, $SubscriptionRateTerm) .">2 Years</option>\n";
-	echo "				<option value=\"36\"". selected(36, $SubscriptionRateTerm) .">3 Years</option>\n";
+	echo "				<option value=\"1\"". selected(1, $SubscriptionRateTerm) .">".__("1 Month", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+	echo "				<option value=\"2\"". selected(2, $SubscriptionRateTerm) .">".__("2 Months", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+	echo "				<option value=\"3\"". selected(3, $SubscriptionRateTerm) .">".__("3 Months", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+	echo "				<option value=\"6\"". selected(6, $SubscriptionRateTerm) .">".__("6 Months", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+	echo "				<option value=\"12\"". selected(12, $SubscriptionRateTerm) .">".__("1 Year", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+	echo "				<option value=\"24\"". selected(24, $SubscriptionRateTerm) .">".__("2 Years", RBAGENCY_TEXTDOMAIN) ."</option>\n";
+	echo "				<option value=\"36\"". selected(36, $SubscriptionRateTerm) .">".__("3 Years", RBAGENCY_TEXTDOMAIN) ."</option>\n";
 	echo "          </select></td>\n";
 	echo "    </tr>\n";
 	echo "  </tbody>\n";
@@ -1613,7 +1613,8 @@ elseif ($ConfigID == 2) {
 				}
 
 				// Open File
-				$rb_agency_stylesheet_file = fopen($rb_agency_stylesheet,"r") or exit("Unable to open file to read!");
+				$rb_agency_stylesheet_file = fopen($rb_agency_stylesheet,"r") 
+				or exit( __( "Unable to open file to read!", RBAGENCY_TEXTDOMAIN ) );
 
 				// Initialize Stgring
 				$rb_agency_stylesheet_string = "";
@@ -1687,7 +1688,7 @@ elseif ($ConfigID == 3) {
 		$error = "";
 		$have_error = false;
 		if(trim($GenderTitle) == ""){
-			$error .= "<b><i>". __(LabelSingular ." name is required", RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
+			$error .= "<b><i>". __( sprintf("%s name is required", LabelSingular )  , RBAGENCY_TEXTDOMAIN) . ".</i></b><br>";
 			$have_error = true;
 		}
 
@@ -1757,7 +1758,7 @@ elseif ($ConfigID == 3) {
 				$delete = "DELETE FROM " . table_agency_data_gender . " WHERE GenderID = %d";
 				$results = $wpdb->query($wpdb->prepare($delete,$GenderID));
 
-				echo "<div id=\"message\" class=\"updated\"><p>". __(LabelSingular ." <strong>". $dataDelete['GenderTitle'] ."</strong> deleted successfully", RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
+				echo "<div id=\"message\" class=\"updated\"><p>". __( sprintf( "%s <strong>%s</strong> deleted successfully", LabelSingular,$dataDelete['GenderTitle'] ), RBAGENCY_TEXTDOMAIN) ."!</p></div>\n";
 
 			}// is there record?
 		}// it was numeric
