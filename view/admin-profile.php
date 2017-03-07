@@ -4707,7 +4707,9 @@ function extractNumber(obj, decimalPlaces, allowNegative)
 			}
 
 		echo "        <td class=\"ProfileDateViewLast column-ProfileDateViewLast\" attr_lastview=\"".strtotime($ProfileDateViewLast)."\" attr_timezone=\"". $rb_agency_option_locationtimezone."\">\n";
-		echo "           " . rb_agency_makeago(rb_agency_convertdatetime($ProfileDateViewLast), $rb_agency_option_locationtimezone);
+		//echo "           " . rb_agency_makeago(rb_agency_convertdatetime($ProfileDateViewLast), $rb_agency_option_locationtimezone);
+		echo human_time_diff(date('U',strtotime($ProfileDateViewLast)), current_time('timestamp') ) . ' ago'; 
+		
 		echo "        </td>\n";
 		echo "    </tr>\n";
 	}
