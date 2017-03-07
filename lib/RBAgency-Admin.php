@@ -19,6 +19,19 @@ class RBAgency_Admin {
 			/*
 			 * Admin Related
 			 */
+
+			add_filter( 'option_page_capability_rb-agency-settings-group',array('RBAgency_Admin', 'rb_agency_settings_group_capability' ));
+			
+			$editor = get_role('editor');
+			$editor->add_cap('rb_agency_settings_group_options');
+
+			$admin = get_role('administrator');
+			$admin->add_cap('rb_agency_settings_group_options');
+
+ 
+	
+			
+			
 			if ( is_admin() ){
 
 				// Add Primary Menus
@@ -52,6 +65,12 @@ class RBAgency_Admin {
 			}
 
 		}
+		
+		public static function rb_agency_settings_group_capability($cap){
+			return 'rb_agency_settings_group_options';
+		}
+		
+
 
 	// *************************************************************************************************** //
 
@@ -99,7 +118,7 @@ class RBAgency_Admin {
 			}
 
 				add_submenu_page("rb_agency_menu", __("Tools &amp; Reports", RBAGENCY_TEXTDOMAIN), __("Tools &amp; Reports", RBAGENCY_TEXTDOMAIN), 'edit_posts',"rb_agency_reports", array('RBAgency_Admin', 'menu_reports'));
-				add_submenu_page("rb_agency_menu", __("Edit Settings", RBAGENCY_TEXTDOMAIN), __("Settings", RBAGENCY_TEXTDOMAIN), 'edit_posts',"rb_agency_settings", array('RBAgency_Admin', 'menu_settings'));
+				add_submenu_page("rb_agency_menu", __("Edit Settings", RBAGENCY_TEXTDOMAIN), __("Settings", RBAGENCY_TEXTDOMAIN), 'rb_agency_settings_group_options',"rb_agency_settings", array('RBAgency_Admin', 'menu_settings'));
 
 		}
 
