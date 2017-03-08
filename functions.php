@@ -701,7 +701,16 @@
 
 			// Prepare Text
 			// TODO: Add multi lingual
-			$periods = array("sec", "min", "hr", "day", "week", "month", "year", "decade");
+			$periods = array(
+				__("sec",	RBAGENCY_TEXTDOMAIN), 
+				__("min",	RBAGENCY_TEXTDOMAIN), 
+				__("hr",	RBAGENCY_TEXTDOMAIN), 
+				__("day",	RBAGENCY_TEXTDOMAIN), 
+				__("week",	RBAGENCY_TEXTDOMAIN), 
+				__("month",	RBAGENCY_TEXTDOMAIN), 
+				__("year",	RBAGENCY_TEXTDOMAIN), 
+				__("decade",RBAGENCY_TEXTDOMAIN)
+			);
 
 			$lengths = array("60","60","24","7","4.35","12","10");
 
@@ -714,7 +723,7 @@
 
 				if($difference != 1) $periods[$j].= "s";
 
-				$text = $difference." ".__($periods[$j] ." ago",RBAGENCY_TEXTDOMAIN);
+				$text = $difference." ".$periods[$j]." ".__("ago",RBAGENCY_TEXTDOMAIN);
 
 				if ($j > 10)  {exit; }
 
