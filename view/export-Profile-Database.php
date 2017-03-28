@@ -36,7 +36,7 @@ global $wpdb;
 			$rowNumber = 1;
 			/*Getting headers*/
 			$headings = array();
-            $headings = array('ProfileContactDisplay','ProfileContactNameFirst','ProfileContactNameLast','ProfileGender','ProfileDateBirth','ProfileContactEmail','ProfileContactWebsite','ProfileContactPhoneHome','ProfileContactPhoneCell','ProfileContactPhoneWork','ProfileLocationStreet','ProfileLocationCity','ProfileLocationState','ProfileLocationZip','ProfileLocationCountry','ProfileType','ProfileIsActive');
+            $headings = array('ProfileContactDisplay','ProfileContactNameFirst','ProfileContactNameLast','ProfileGender','ProfileDateBirth','ProfileContactEmail','ProfileContactWebsite','ProfileContactPhoneHome','ProfileContactPhoneCell','ProfileContactPhoneWork','ProfileLocationStreet','ProfileLocationCity','ProfileLocationState','ProfileLocationZip','ProfileLocationCountry','ProfileType','ProfileIsActive','ProfileIsPromoted','isPrivate');
             $head_count = count($headings);
             foreach ($custom_fields_name as $key => $value) {
         		if($value != "ProfileID"){
@@ -48,23 +48,26 @@ global $wpdb;
            if(isset($_POST["export-profile"]) && $_POST["export-profile"] == "template"){
         		$limit_template = "LIMIT 1";
             }elseif(isset($_POST["export-profile"]) && $_POST["export-profile"] != "template" && !empty($_POST["export-profile"]) ){
-            	if(strpos('-', $_POST["export-profile"])>-1){
-            		$limit_values = explode("-",$_POST["export-profile"]);
-            		$limit_offset = $limit_values[0];
-        			$limit_template = " LIMIT ".$limit_offset.", 100";
-            	}else{
+				
+            	if(strpos($_POST["export-profile"], '-' )===false){
+            		
             		$limit_offset = $_POST["export-profile"];
         			$limit_template = " LIMIT ".$limit_offset;
+            	}else{
+					$limit_values = explode("-",$_POST["export-profile"]);
+            		$limit_offset = $limit_values[0];
+        			$limit_template = " LIMIT ".$limit_offset.", 100";
+					
             	}
             	
             	// $limit_offset = ( intval($limit_values[0]) < 100) ? $limit_values[0] : $limit_values[0];
             	
             }
-            
             $objPHPExcel->getActiveSheet()->fromArray(array($headings),NULL,'A'.$rowNumber);
 			/*Profile data*/
 			$row_data = array();
-			$row_data = $wpdb->get_results('SELECT ProfileID,ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive FROM '. table_agency_profile." ORDER BY ProfileContactDisplay ASC $limit_template", ARRAY_A);
+			$row_data = $wpdb->get_results('SELECT ProfileID,ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive,ProfileIsPromoted,isPrivate FROM '. table_agency_profile." ORDER BY ProfileContactDisplay ASC $limit_template", ARRAY_A);
+			
 			$profile_data_id = $wpdb->get_results("SELECT ProfileID FROM ". table_agency_profile, ARRAY_A);
 
 			foreach ($row_data as $key => $data) 
