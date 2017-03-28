@@ -1395,7 +1395,7 @@ elseif ($ConfigID == 80) {
 		global $wpdb;
 
 		$custom_fields_rb_agency = $wpdb->get_results("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0  ORDER BY ProfileCustomOrder", ARRAY_A);
-		$fields_array = array( 0 => array('ProfileContactDisplay','ProfileContactNameFirst','ProfileContactNameLast','ProfileGender','ProfileDateBirth','ProfileContactEmail','ProfileContactWebsite','ProfileContactPhoneHome','ProfileContactPhoneCell','ProfileContactPhoneWork','ProfileLocationStreet','ProfileLocationCity','ProfileLocationState','ProfileLocationZip','ProfileLocationCountry','ProfileType','ProfileIsActive'));
+		$fields_array = array( 0 => array('ProfileContactDisplay','ProfileContactNameFirst','ProfileContactNameLast','ProfileGender','ProfileDateBirth','ProfileContactEmail','ProfileContactWebsite','ProfileContactPhoneHome','ProfileContactPhoneCell','ProfileContactPhoneWork','ProfileLocationStreet','ProfileLocationCity','ProfileLocationState','ProfileLocationZip','ProfileLocationCountry','ProfileType','ProfileIsActive','ProfileIsPromoted','isPrivate'));
 
 		$count = count($fields_array[0]);
 
@@ -2482,7 +2482,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 			$pos = 0;
 
 			foreach ($arr_headers as $key ) {
-					if(substr($key, 0, 7) != "Profile" && substr($key,0,2) != "ID"){
+					if(substr($key, 0, 7) != "Profile" && substr($key,0,2) != "ID" && $key != "isPrivate"){
 						$key = str_replace("'",'',$key);
 						echo '<tr><th><label>'.str_replace("_"," ",stripcslashes($key)).'</label></th>';
 						echo '<td><select name = "select'.$pos.'">';
@@ -2531,7 +2531,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 		$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int) $rb_agency_options_arr['rb_agency_option_profilenaming']:1;
 
 		// We already created a dynamic profile fields validation
-		$p_table_fields = "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast DESC,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive";
+		$p_table_fields = "ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast DESC,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive,ProfileIsPromoted,isPrivate";
 		$c_table_fields = "ProfileCustomID,ProfileID,ProfileCustomValue";
 
 
@@ -2552,7 +2552,9 @@ class RBAgencyCSVXLSImpoterPlugin {
 				"ProfileLocationZip",
 				"ProfileLocationCountry",
 				"ProfileType",
-				"ProfileIsActive"
+				"ProfileIsActive",
+				"ProfileIsPromoted",
+				"isPrivate"
 		);
 
 		$custom_fields = $wpdb->get_results("SELECT ProfileCustomTitle FROM ". table_agency_customfields." ORDER BY ProfileCustomID ASC", ARRAY_A);
@@ -2678,7 +2680,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 
 
 
-														if(substr($key, 0, 7) == "Profile"){
+														if(substr($key, 0, 7) == "Profile" || $key == 'isPrivate'){
 
 															$p_table_fields  .= $key;
 

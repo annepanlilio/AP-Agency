@@ -1813,6 +1813,7 @@
 			echo "  <tr valign=\"top rbfunc\" data-val=\"".htmlentities($ProfileCustomValue)."\" class=\"".$isTextArea."\">\n";
 			echo "    <th scope=\"row\"><div class=\"box\">". stripcslashes($data3['ProfileCustomTitle'])." ".$measurements_label."</div></th>\n";
 			echo "    <td>\n";
+			//echo "    $ProfileCustomType\n";
 
 				if ($ProfileCustomType == 1) { //TEXT
 						$updated_text = get_user_meta($user['ProfileUserLinked'], "updated_ProfileCustomID".$data3['ProfileCustomID'], true);
@@ -2005,6 +2006,11 @@
 					$updated_radio = get_user_meta($user['ProfileUserLinked'], "updated_ProfileCustomID".$data3['ProfileCustomID'], true);
 
 					$array_customOptions_values = explode("|",$data3['ProfileCustomOptions']);
+					
+					//hook fixed for radio type custom fields
+					if(!empty($row[0]['ProfileCustomValue'])){
+						$ProfileCustomValue = $row[0]['ProfileCustomValue'];
+					}
 
 					foreach($array_customOptions_values as $val){
 						if(!empty($val)){
@@ -2052,7 +2058,11 @@
 					if($data3['ProfileCustomOptions']==3){
 						$arr = array();
 						if($rb_agency_option_unittype == 1){
-							//
+							
+							//fixed height issue on custom field
+							if(!empty($row[0]['ProfileCustomValue'])){
+								$ProfileCustomValue = $row[0]['ProfileCustomValue'];
+							}
 							echo "<select id=\"". $data3['ProfileCustomID']."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" ".(!empty($updated_select) ? "class=\"marked_changed select-dropdown\"" : "class=\"select-dropdown\"").">\n";
 							echo "  <option value=\"\">--</option>\n";
 							//
