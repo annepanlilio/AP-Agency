@@ -2595,7 +2595,6 @@ class RBAgencyCSVXLSImpoterPlugin {
 				array_push($arr_import_data, $arr);
 			}
 		}
-
 		//check if it is a date
 		function checkIfDate($date) {
 			$tempDate = explode('-', $date);
@@ -2723,7 +2722,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 														foreach ($arr_import_headers as $key ) {
 
 															//echo $key."=".$vv[$key];
-																if(substr($key, 0, 7) != "Profile"){
+																if(substr($key, 0, 7) != "Profile" &&  $key != "isPrivate"){
 																	if(isset($_REQUEST['select'.$pos])){
 																		$select_id = esc_html($_REQUEST['select'.$pos]);
 																		if(strpos($vv[$key], ' ft ') !== FALSE){
@@ -2745,12 +2744,18 @@ class RBAgencyCSVXLSImpoterPlugin {
 																		}
 
 																		$add_to_c_table = $wpdb->prepare("INSERT INTO ". table_agency_customfield_mux ." ($c_table_fields) values(%d,%d,%s)",$select_id,$last_inserted_id,$vv[$key]);
+																		
+																		
+																		
+																		//echo "<br/> -- $add_to_c_table <br/>";
 																		$wpdb->query($add_to_c_table);
 																		$pos++;
 																	}
 																}
 														}
 													}
+													
+													
 
 
 															//$ProfileGalleryCurrent = generate_foldername($last_inserted_id, $vv['ProfileContactNameFirst'], $vv['ProfileContactNameLast'], $vv['ProfileContactDisplay']);
