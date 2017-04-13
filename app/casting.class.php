@@ -864,7 +864,7 @@ class RBAgency_Casting {
 					$email_error .= "<div style=\"margin:15px;\">";
 					$email_error .= "<div id=\"message\" class=\"updated\">";
 					$email_error .= sprintf(__("Email successfully sent from <strong>%s</strong> to <strong>%s</strong><br />",RBAGENCY_TEXTDOMAIN),  $SearchMuxFromEmail, $SearchMuxToEmail );
-					$email_error .= sprintf(__("Message sent: <p>%s</p>", RBAGENCY_TEXTDOMAIN ), stripcslashes( make_clickable( $SearchMuxMessage )  );
+					$email_error .= sprintf(__("Message sent: <p>%s</p>", RBAGENCY_TEXTDOMAIN ), stripcslashes( make_clickable( $SearchMuxMessage )  ));
 					$email_error .= "</div>";
 					$email_error .= "</div>";
 				} else {

@@ -229,6 +229,7 @@ input[type=radio]:checked:before { margin-bottom: 2px!important; }
 #casting-cart .in-cart { float: left; font-family:Georgia; font-size:13px; font-style: italic; color: #777; margin-top: 10px; }
 #casting-cart .empty-cart { float: right; margin-bottom: 10px; }
 #cart-actions .button-primary { margin-bottom: 5px; }
+#admin-search-profiles { width: 100%; }
 
 
 .marked_changed{ border: 2px solid red!important; color:red!important;}
@@ -313,3 +314,10 @@ input[type=radio]:checked:before { margin-bottom: 2px!important; }
 .search-result-grid-container .profile-item .profile-image img { height: 100%; }
 
 .view-mode-btns { float:right; }
+
+@media (min-width:768px){
+	#admin-search-profiles { width: 75%; }
+}
+@media (min-width:992px){
+	#admin-search-profiles { width: 50%; }
+}
