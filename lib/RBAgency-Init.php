@@ -142,6 +142,7 @@ class RBAgency_Init {
 					ProfileContactLinkFacebook VARCHAR(255),
 					ProfileContactLinkYoutube VARCHAR(255),
 					ProfileContactLinkFlickr VARCHAR(255),
+                    ProfileRating VARCHAR(20),
 					ProfileDateCreated TIMESTAMP DEFAULT NOW(),
 					ProfileDateUpdated TIMESTAMP,
 					ProfileDateViewLast TIMESTAMP,
