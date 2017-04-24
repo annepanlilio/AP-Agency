@@ -177,7 +177,7 @@ class RBAgency_Profile {
 			 */
 
 				echo "	<div id=\"profile-search-form-condensed\" class=\"rbform ".$add_class_for_form." form-". (isset($search_layout)?$search_layout:"") ."\">\n";
-				echo "		<form method=\"post\" enctype=\"multipart/form-data\" action=\"". (isset($rb_agency_searchurl)?$rb_agency_searchurl:"") ."\">\n";
+				echo "		<form method=\"post\" action=\"". (isset($rb_agency_searchurl)?$rb_agency_searchurl:"") ."\">\n";
 				echo "			<input type=\"hidden\" name=\"form_action\" value=\"search_profiles\" />\n";
 				echo "			<input type=\"hidden\" name=\"form_mode\" value=\"". (isset($type)?$type:0) ."\" />\n";
 
@@ -2541,11 +2541,13 @@ class RBAgency_Profile {
 						$q = $sql;
 						$_SESSION['session_admin_sql'] = $q;
 					}elseif(isset($_GET['limit'])){
-						$q = str_replace('LIMIT 100','',$_SESSION['session_admin_sql']);
+					   $q = substr($_SESSION['session_admin_sql'], 0,-8);  
+						//$q = str_replace('LIMIT 50','',$_SESSION['session_admin_sql']); 
 						//unset($_SESSION['session_admin_sql']);
 					}else{
 						$q = $sql;
 					}
+                    
 					return self::search_result_admin( $q, $arr_query );
 				} else {
 
@@ -3222,7 +3224,7 @@ class RBAgency_Profile {
 				$rb_agency_option_unittype =  $rb_agency_options_arr['rb_agency_option_unittype'];
 				$rb_agency_option_persearch = (int)$rb_agency_options_arr['rb_agency_option_persearch'];
 				$rb_agency_option_agencyemail = (int)$rb_agency_options_arr['rb_agency_option_agencyemail'];
-				if ($rb_agency_option_persearch < 0) {$rb_agency_option_persearch = 100; }
+				if ($rb_agency_option_persearch < 0) {$rb_agency_option_persearch = 50; }
 
 			/*
 			 * process query
