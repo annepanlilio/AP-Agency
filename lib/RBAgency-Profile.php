@@ -1865,7 +1865,8 @@ class RBAgency_Profile {
 
 									if ($ProfileCustomType["ProfileCustomType"] == 1) {
 										// Text
-										$filter2 .= "$open_st ProfileCustomValue = '".$val."' $close_st";
+										//$filter2 .= "$open_st ProfileCustomValue = '".$val."' $close_st";
+                                        $filter2 .= "$open_st ProfileCustomValue LIKE ('%".$val."%')  $close_st";
 										$_SESSION[$key] = $val;
 
 									} elseif ($ProfileCustomType["ProfileCustomType"] == 3 || $ProfileCustomType["ProfileCustomType"] == 9) {
