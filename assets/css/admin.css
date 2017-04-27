@@ -183,7 +183,7 @@ input[type=radio]:checked:before { margin-bottom: 2px!important; }
 
 /* Welcome */
 #rbquick-links { padding-bottom: 15px; }
-#rbquick-links a { margin-top: 5px; }
+#rbquick-links a,.inside-x a { width: 30%;text-align: center; margin: 6px;}
 
 .welcome-panel-column#welcome-video { margin-right: 15px; margin-bottom:30px; float:right; width:40% }
 
