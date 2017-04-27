@@ -25,27 +25,27 @@ get_currentuserinfo();
 						if (current_user_can("manage_options")) {
 
 							// echo "<li><a href='?page=rb_agency_profiles' class=\"button-primary\">". __("Manage Profiles", RBAGENCY_TEXTDOMAIN) . "</a> - ". __("Manage existing profiles", RBAGENCY_TEXTDOMAIN) . ".</li>";
-							echo "<a href='?page=rb_agency_profiles' class=\"button-primary\">". __("Manage Profiles", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
+							echo "<a href='?page=rb_agency_profiles' class=\"button-primary\">". __("Manage Profiles", RBAGENCY_TEXTDOMAIN) . "</a>";
 
 							$queryGenderResult =$wpdb->get_results("SELECT GenderID, GenderTitle FROM ".table_agency_data_gender, ARRAY_A);
 							$queryGenderCount = $wpdb->num_rows;
 
 							foreach($queryGenderResult as $fetchGender){
-								echo "<a class=\"button-primary\" href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New",RBAGENCY_TEXTDOMAIN)." ".ucfirst( $fetchGender["GenderTitle"] ) ."</a><br/>\n";
+								echo "<a class=\"button-primary\" href=\"". admin_url("admin.php?page=rb_agency_profiles&action=add&ProfileGender=".$fetchGender["GenderID"])."\">". __("Create New",RBAGENCY_TEXTDOMAIN)." ".ucfirst( $fetchGender["GenderTitle"] ) ."</a>";
 							}
 
 							// echo "<li><a href='?page=rb_agency_search' class=\"button-primary\">". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "</a> - ". __("Find profiles", RBAGENCY_TEXTDOMAIN) . ".</li>";
-							echo "<a href='?page=rb_agency_search' class=\"button-primary\">". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
+							echo "<a href='?page=rb_agency_search' class=\"button-primary\">". __("Search Profiles", RBAGENCY_TEXTDOMAIN) . "</a>";
 
 							if($queryGenderCount < 1){
-								echo "". __("No Gender Found. <a href=\"". admin_url("admin.php?page=rb_agency_settings&ampConfigID=5")."\">Create New Gender</a><br/>", RBAGENCY_TEXTDOMAIN) ."\n";
+								echo "". __("No Gender Found. <a href=\"". admin_url("admin.php?page=rb_agency_settings&ampConfigID=5")."\">Create New Gender</a>", RBAGENCY_TEXTDOMAIN);
 							}
 
 							if(function_exists('rb_agency_interact_menu')){
-							echo "<a href='?page=rb_agency_interact_approvemembers' class=\"button-primary\">". __("Approve profiles", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
+							echo "<a href='?page=rb_agency_interact_approvemembers' class=\"button-primary\">". __("Approve profiles", RBAGENCY_TEXTDOMAIN) . "</a>";
 							}
-							echo "<a href='?page=rb_agency_searchsaved' class=\"button-primary\">". __("Saved Searches", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
-							echo "<a href='?page=rb_agency_reports' class=\"button-primary\">". __("Tools &amp; Reports", RBAGENCY_TEXTDOMAIN) . "</a><br/>";
+							echo "<a href='?page=rb_agency_searchsaved' class=\"button-primary\">". __("Saved Searches", RBAGENCY_TEXTDOMAIN) . "</a>";
+							echo "<a href='?page=rb_agency_reports' class=\"button-primary\">". __("Tools &amp; Reports", RBAGENCY_TEXTDOMAIN) . "</a>";
 							echo "<a href='?page=rb_agency_settings' class=\"button-primary\">". __("Settings", RBAGENCY_TEXTDOMAIN) . "</a>";
 						}
 						?>
@@ -72,8 +72,8 @@ get_currentuserinfo();
 			<div id="normal-sortables" class="meta-box-sortables ui-sortable">
 
 				<div id="dashboard_right_now" class="postbox">
-					<div class="handlediv" title="Click to toggle"><br></div>
-					<h3 class="hndle" ><span><?php echo __("Quick Search", RBAGENCY_TEXTDOMAIN ) ?></span></h3>
+                    <button type="button" class="handlediv button-link" aria-expanded="true"><span class="screen-reader-text">Toggle panel: <?php echo __("Quick Search", RBAGENCY_TEXTDOMAIN ) ?></span><span class="toggle-indicator" aria-hidden="true"></span></button>
+					<h2 class="hndle ui-sortable-handle" ><span><?php echo __("Quick Search", RBAGENCY_TEXTDOMAIN ) ?></span></h2>
 					<div class="inside" style="padding: 35px;">
 						<ul>
 						<li style="width:100%;">
@@ -97,8 +97,8 @@ get_currentuserinfo();
 			<div id="side-sortables" class="meta-box-sortables ui-sortable">
 
 				<div id="dashboard_recent_drafts" class="postbox" style="display: block;">
-					<div class="handlediv" title="Click to toggle"><br></div>
-					<h3 class="hndle"><span><?php echo __("Recently Updated Profiles", RBAGENCY_TEXTDOMAIN ) ?></span></h3>
+					<button type="button" class="handlediv button-link" aria-expanded="true"><span class="screen-reader-text">Toggle panel: <?php echo __("Recently Updated Profiles", RBAGENCY_TEXTDOMAIN ) ?></span><span class="toggle-indicator" aria-hidden="true"></span></button>
+					<h2 class="hndle ui-sortable-handle"><span><?php echo __("Recently Updated Profiles", RBAGENCY_TEXTDOMAIN ) ?></span></h2>
 					<div class="inside">
 						<ul>
 						<?php
@@ -126,8 +126,8 @@ get_currentuserinfo();
 				</div>
 
 				<div id="dashboard_recent_drafts" class="postbox" style="display: block;">
-					<div class="handlediv" title="Click to toggle"><br></div>
-					<h3 class="hndle"><span><?php echo __("Recently Viewed Profiles", RBAGENCY_TEXTDOMAIN ) ?></span></h3>
+					<button type="button" class="handlediv button-link" aria-expanded="true"><span class="screen-reader-text">Toggle panel: <?php echo __("Recently Updated Profiles", RBAGENCY_TEXTDOMAIN ) ?></span><span class="toggle-indicator" aria-hidden="true"></span></button>
+					<h2 class="hndle"><span><?php echo __("Recently Viewed Profiles", RBAGENCY_TEXTDOMAIN ) ?></span></h2>
 					<div class="inside">
 						<ul>
 						<?php
