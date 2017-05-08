@@ -5614,7 +5614,7 @@ function rb_load_customfields_search($visibility = 0,$result){
 								}
 							echo " </select>\n";
                        echo "</div>"; 
-                       echo "<div><label for=\"ProfileCustomLabel_min\">". __("Min", RBAGENCY_TEXTDOMAIN) . ":</label>\n";
+                       echo "<div><label for=\"ProfileCustomLabel_min\">". __("Max", RBAGENCY_TEXTDOMAIN) . ":</label>\n";
 							echo "<select name=\"ProfileCustomID". $result['ProfileCustomID'] ."\">\n";
 								if (empty($ProfileCustomValue)) {
 							     echo "<option value=\"\">--</option>\n";
