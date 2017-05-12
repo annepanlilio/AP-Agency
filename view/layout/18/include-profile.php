@@ -98,6 +98,10 @@ echo "				<div class=\"rbclear\"></div>\n";
 echo "				<div id=\"info-links\">\n";
 echo "						<div id=\"name\" class=\"rbcol-12 rbcolumn\">";
 echo "							<h2>". $ProfileContactDisplay ."</h2>";
+								$dateOfBirth = $ProfileDateBirth;
+								$today = date("Y-m-d");
+								$diff = date_diff(date_create($dateOfBirth), date_create($today));
+echo "							<p style=\"margin-bottom: 10px; color: #666\">". $ProfileLocationCity .", ".$diff->format('%y')."</p>";
 
 
 
