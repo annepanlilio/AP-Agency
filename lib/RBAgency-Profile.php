@@ -338,7 +338,7 @@ class RBAgency_Profile {
         												type: "POST",
         												url: "<?php echo admin_url('admin-ajax.php') ?>",
         												data: {
-        													action: "rb_get_customfields_search_ajax",
+        													action: "rb_get_gender_by_preselected_datatype",
         													'profile_types': $(".DataTypeIDClassCheckbox:checked").val(),
         													'gender': jQuery(this).val(),
         													'search_type': "<?php echo $atts_arr['att_type']; ?>"
@@ -405,7 +405,7 @@ class RBAgency_Profile {
 												type: "POST",
 												url: "<?php echo admin_url('admin-ajax.php') ?>",
 												data: {
-													action: "rb_get_customfields_search_ajax",
+													action: "rb_get_gender_by_preselected_datatype",
 													'profile_types': $(".DataTypeIDClassCheckbox:checked").val(),
 													'gender': jQuery(this).val(),
 													'search_type': "<?php echo $atts_arr['att_type']; ?>"
