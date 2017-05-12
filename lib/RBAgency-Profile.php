@@ -28,7 +28,7 @@ class RBAgency_Profile {
 	 * @param array $location	Where is it located? (0: Public, 1: Admin, 2)
 	 * @param string $mode		Form field should be show when select fields
 	 */
-		public static function search_form($atts ='', $args = '', $type = 0, $location = 0, $mode = "normal",$profile_type = "",$atts_arr = array()){
+		public static function search_form($atts ='', $args = '', $type = "", $location = 0, $mode = "",$profile_type = "",$atts_arr = array()){
 			/*
 			 * Setup Requirements
 			 */
@@ -57,7 +57,7 @@ class RBAgency_Profile {
 					// Public Facing
 					$rb_agency_searchurl = get_bloginfo("wpurl") ."/search-results/";
 					if ($type == 0) {
-						$search_layout = "simple";
+						$search_layout = "basic";
 					} else {
 						$search_layout = "full";
 					}
@@ -65,7 +65,7 @@ class RBAgency_Profile {
 					// Admin Back-end
 					$rb_agency_searchurl = admin_url("admin.php?page=rb_agency_search");
 					if ($type == 0) {
-						$search_layout = "simple";
+						$search_layout = "basic";
 					} else {
 						$search_layout = "admin";
 					}
@@ -80,6 +80,7 @@ class RBAgency_Profile {
 					//wp_enqueue_script( 'search_profile_js', RBAGENCY_PLUGIN_URL .'assets/js/search_profile_js.js', array( 'jquery' ) );
 				}
 				$add_class_for_form = "" ;
+                
 				if($mode == "normal")
 				{
 					$add_form_class	 = "show_fields_normally" ;
