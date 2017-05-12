@@ -80,6 +80,24 @@ input.stubby { width: 80px; }
 .boxblock table .rbtextarea textarea { width: 218px; height: 100px; }
 .boxblock #submitbox { overflow: hidden; margin-top: 15px; }
 
+.rb_meta_box {
+    width: 50%;
+    display: block;
+    overflow: hidden;
+    float: left;
+}
+.rb_meta_box_title {
+    font-weight: bold;
+    margin: 15px 0;
+}
+.rb_meta_box label {
+    width: 150px;
+    display: inline-block;
+}
+.form-control {
+    margin: 5px 0;
+}
+
 /* Profile Page */
 .profileimage { position: relative; width: 100px; float: left; padding: 5px; margin: 0px 10px 10px 0; height: 170px; overflow: hidden; }
 .profileimage .primary { font-size: 12px; }
