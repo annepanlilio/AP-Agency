@@ -1,7 +1,7 @@
 # RB Agency
 Model and Talent Agency CRM management and scheduling tool.
 
-### Current Version 2.4.9
+### Current Version 2.4.10
 
 ## Installation
 
@@ -9,6 +9,14 @@ Extract the zip file and just drop the contents in the wp-content/plugins/ direc
 
 
 ## Change Log
+
+### 2.4.10
+* new - age displayed in custom layout 18
+* fixed - metric unit form field type issue in search form
+* fixed - generating gallery folder issue
+* fixed - search issue for comma separated values
+* fixed - search profile results limit issue
+* fixed - admin search profiles
 
 ### 2.4.9
 * fixed - city is not showing up when state field is not populated.
