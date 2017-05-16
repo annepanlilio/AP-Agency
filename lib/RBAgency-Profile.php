@@ -298,12 +298,12 @@ class RBAgency_Profile {
 									   $t = trim(str_replace(' ','_',$r['DataTypeTitle']));
 									   if($profile_type>0){
 									       if($profile_type==$r['DataTypeID']){
-									           echo "<input id='hidden-profileType' type='hidden' name='profiletypes[]' value='".$r['DataTypeID']."'/>";
+									           echo "<input id='hidden-profileType' type='hidden' name='profiletype[]' value='".$r['DataTypeID']."'/>";
 									       }
                                        }else{
 										echo "<div><label>";
                                                         $checked = $profile_type == $r["DataTypeID"] ? "checked=checked":"";
-														echo '<input '.$checked.' type="checkbox" name="profiletypes[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" class="DataTypeIDClassCheckbox"/>&nbsp;'.
+														echo '<input '.$checked.' type="checkbox" name="profiletype[]" value="'.$r['DataTypeID'].'" id="'.$r['DataTypeID'].'" myparent="'.$r['DataTypeParentID'].'" class="DataTypeIDClassCheckbox"/>&nbsp;'.
 															rb_i18n( trim($r['DataTypeTitle']) )
 															.'&nbsp;<br/>';
 											echo "</label></div>"; 
@@ -1468,7 +1468,7 @@ class RBAgency_Profile {
 						$arr = array();
 						if(!empty($_POST['profiletype'])){ //if search form trigger
 							foreach($_POST['profiletype'] as $k=>$v){
-								$arr[] = " FIND_IN_SET('".$_POST['profiletype'][$k]."', profile.ProfileType) ";
+								$arr[] = " FIND_IN_SET('".$v."', profile.ProfileType) ";
 							}
 						}else{//if shortcode probably..
 							# Fixed for search result and pagination
@@ -2715,6 +2715,7 @@ class RBAgency_Profile {
 			/*
 			 * process query
 			 */
+            
 				$results = $wpdb->get_results($sql,ARRAY_A);
 				$count = count($results);
 			/*
