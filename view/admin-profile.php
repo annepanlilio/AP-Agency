@@ -114,6 +114,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 	if (is_array($ProfileType)) {
 		$ProfileType = implode(",", $ProfileType);
 	}
+    
 	$ProfileIsActive = isset($_POST['ProfileIsActive'])?$_POST['ProfileIsActive']:""; // 0 Inactive | 1 Active | 2 Archived | 3 Pending Approval
 	$ProfileIsFeatured = isset($_POST['ProfileIsFeatured'])?$_POST['ProfileIsFeatured']:"";
 	$ProfileIsPromoted = isset($_POST['ProfileIsPromoted'])?$_POST['ProfileIsPromoted']:"";
@@ -433,6 +434,14 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD ProfileIsBooking boolean NOT NULL default 0";
 							$wpdb->query($queryAlter);
 						}
+                        //create if not exists CustomOrder
+                        //$wpdb->get_results("SELECT CustomOrder FROM ".table_agency_profile." WHERE ProfileID = $ProfileID");
+                        $cOrderrow = $wpdb->get_results("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
+                        WHERE table_name = '".table_agency_profile."' AND column_name = 'CustomOrder'"  );
+						if(empty($cOrderrow)){
+							$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder int NOT NULL default 0";
+							$wpdb->query($queryAlter);
+						}
 						//check for Profile-Description column
 						$sql = "SELECT ProfileDescription FROM ". table_agency_profile ." LIMIT 1";
 						$r = $wpdb->get_results($sql);
@@ -502,7 +511,16 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							CustomOrder='" . esc_attr($CustomOrder) . "',
 							ProfileResume = '".$ProfileResume."'
 							WHERE ProfileID=$ProfileID";
+                            
 						$results = $wpdb->query($update);
+                        if (false === $results) {
+                           error_log($wpdb->last_error);
+                          
+                           exit($wpdb->last_error);
+                        }
+                        
+                        
+                        
 							update_user_meta(isset($_REQUEST['wpuserid'])?$_REQUEST['wpuserid']:"", 'rb_agency_interact_profiletype', $ProfileType);
 							update_user_meta(isset($_REQUEST['wpuserid'])?$_REQUEST['wpuserid']:"", 'rb_agency_interact_pgender', esc_attr($ProfileGender));
 							//clear first the user meta social media name and links
