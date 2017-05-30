@@ -184,31 +184,31 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 				}
 		}
 	}
-	if (isset($_POST['action']) && $_POST["action"] == "editRecord") {
-		//set customfields value to sessions
-				$_SESSION['profileCustomValue'] = [];
-				foreach($_POST as $k=>$v){
-					if(substr($k,0,15) == 'ProfileCustomID' ){
-						$ProfileCustomValue = $v;
-						if(is_array($ProfileCustomValue)){
-							$ProfileCustomValue = implode(',',$ProfileCustomValue);
-						}else{
-							$ProfileCustomValue = $v;
-						}
-						$_SESSION['profileCustomValue'][$k] = $ProfileCustomValue;						
-					}					
-				}
-		if($ProfileContactEmail != $_POST['HiddenContactEmail']){
-			if (!is_email($ProfileContactEmail)) {
-				$errorValidation['ProfileContactEmail']= __("You must enter a valid email address.<br />", RBAGENCY_TEXTDOMAIN);
-				$have_error = true;
-			}
-			if (rb_check_exists($ProfileContactEmail,'ProfileContactEmail','text')) {
-				$errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", RBAGENCY_TEXTDOMAIN);
-				$have_error = true;
-			}
-		}
-	}
+	//if (isset($_POST['action']) && $_POST["action"] == "editRecord") {
+//		//set customfields value to sessions
+//		$_SESSION['profileCustomValue'] = [];
+//				foreach($_POST as $k=>$v){
+//					if(substr($k,0,15) == 'ProfileCustomID' ){
+//						$ProfileCustomValue = $v;
+//						if(is_array($ProfileCustomValue)){
+//							$ProfileCustomValue = implode(',',$ProfileCustomValue);
+//						}else{
+//							$ProfileCustomValue = $v;
+//						}
+//						$_SESSION['profileCustomValue'][$k] = $ProfileCustomValue;						
+//					}					
+//				}
+//		if($ProfileContactEmail != $_POST['HiddenContactEmail']){
+//			if (!is_email($ProfileContactEmail)) {
+//				$errorValidation['ProfileContactEmail']= __("You must enter a valid email address.<br />", RBAGENCY_TEXTDOMAIN);
+//				$have_error = true;
+//			}
+//			if (rb_check_exists($ProfileContactEmail,'ProfileContactEmail','text')) {
+//				$errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", RBAGENCY_TEXTDOMAIN);
+//				$have_error = true;
+//			}
+//		}
+//	}
 	// Get Post State
 	$action = $_POST['action'];
 	switch ($action) {
@@ -235,6 +235,12 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 					$queryAlter = "ALTER TABLE " . $wpdb->prefix ."agency_profile ADD CustomOrder INT(10) default $qnumrows";
 					$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
 				}
+                    $prow = $wpdb->get_results("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
+                        WHERE table_name = '".table_agency_profile."' AND column_name = 'ProfileRating'"  );
+						if(empty($prow)){
+							$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD ProfileRating VARCHAR(20) NOT NULL";
+							$wpdb->query($queryAlter);
+						}
 				// Bug Free!
 				if ($have_error == false) {
 					if (function_exists('rb_agency_interact_menu')) {
@@ -405,6 +411,29 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 		// *************************************************************************************************** //
 		// Edit Record
 		case 'editRecord':
+            $_SESSION['profileCustomValue'] = [];
+    				foreach($_POST as $k=>$v){
+    					if(substr($k,0,15) == 'ProfileCustomID' ){
+    						$ProfileCustomValue = $v;
+    						if(is_array($ProfileCustomValue)){
+    							$ProfileCustomValue = implode(',',$ProfileCustomValue);
+    						}else{
+    							$ProfileCustomValue = $v;
+    						}
+    						$_SESSION['profileCustomValue'][$k] = $ProfileCustomValue;						
+    					}					
+    				}
+    		if($ProfileContactEmail != $_POST['HiddenContactEmail']){
+    			if (!is_email($ProfileContactEmail)) {
+    				$errorValidation['ProfileContactEmail']= __("You must enter a valid email address.<br />", RBAGENCY_TEXTDOMAIN);
+    				$have_error = true;
+    			}
+    			if (rb_check_exists($ProfileContactEmail,'ProfileContactEmail','text')) {
+    				$errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", RBAGENCY_TEXTDOMAIN);
+    				$have_error = true;
+    			}
+    		}
+            
 			if (!empty($ProfileContactNameFirst) && !empty($ProfileID)) {
 				if($have_error == false){
 						// no need to pending this account because your the admin.
@@ -442,6 +471,14 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD CustomOrder int NOT NULL default 0";
 							$wpdb->query($queryAlter);
 						}
+                        
+                        $prow = $wpdb->get_results("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
+                        WHERE table_name = '".table_agency_profile."' AND column_name = 'ProfileRating'"  );
+						if(empty($prow)){
+							$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD ProfileRating VARCHAR(20) NOT NULL";
+							$wpdb->query($queryAlter);
+						}
+                        
 						//check for Profile-Description column
 						$sql = "SELECT ProfileDescription FROM ". table_agency_profile ." LIMIT 1";
 						$r = $wpdb->get_results($sql);
@@ -515,8 +552,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 						$results = $wpdb->query($update);
                         if (false === $results) {
                            error_log($wpdb->last_error);
-                          
-                           exit($wpdb->last_error);
+                           echo $wpdb->last_error;
+                           exit();
                         }
                         
                         
@@ -1088,7 +1125,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$ProfileIsFeatured = stripslashes($data['ProfileIsFeatured']);
 			$ProfileIsPromoted = stripslashes($data['ProfileIsPromoted']);
 			$ProfileIsBooking = stripslashes($data['ProfileIsBooking']);
-			$ProfileIsPrivate = stripslashes($data['ProfileIsPrivate']);
+			//$ProfileIsPrivate = stripslashes($data['ProfileIsPrivate']);
 			$ProfileStatHits = stripslashes($data['ProfileStatHits']);
 			$ProfileDateViewLast = stripslashes($data['ProfileDateViewLast']);
 			$ProfileDateCreated = stripslashes($data['ProfileDateCreated']);
@@ -1133,7 +1170,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$ProfileLanguage = $_POST['ProfileLanguage'];
 			$ProfileDateUpdated = $_POST['ProfileDateUpdated'];
 			$ProfileDateViewLast = $_POST['ProfileDateViewLast'];
-			$ProfileType = $_POST['ProfileType'];
+			$ProfileType = $_POST['ProfileType']; 
 			if (is_array($ProfileType)) {
 				$ProfileType = implode(",", $ProfileType);
 			}
@@ -1142,7 +1179,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 			$ProfileIsFeatured = $_POST['ProfileIsFeatured'];
 			$ProfileIsPromoted = $_POST['ProfileIsPromoted'];
 			$ProfileIsBooking = $_POST['ProfileIsBooking'];
-			$ProfileIsPrivate = $_POST['ProfileIsPrivate'];
+			//$ProfileIsPrivate = $_POST['ProfileIsPrivate'];
 			$ProfileStatHits = $_POST['ProfileStatHits'];
 			$CustomOrder = $_POST['CustomOrder'];
 			// Get Primary Image
@@ -1298,11 +1335,11 @@ function rb_display_manage($ProfileID, $errorValidation) {
 					</div>
 					<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 							<script type="text/javascript">
-								jQuery(document).ready(function(){
-									jQuery( ".datepicker-bd" ).datepicker();
-									jQuery(".datepicker-bd").datepicker("option","dateFormat","yy-mm-dd");
-									jQuery(".datepicker-bd").datepicker("setDate", "<?php echo $ProfileDateBirth != '0000-00-00' ? $ProfileDateBirth : ''; ?>");
-								});
+								//jQuery(document).ready(function(){
+//									jQuery( ".datepicker-bd" ).datepicker();
+//									jQuery(".datepicker-bd").datepicker("option","dateFormat","yy-mm-dd");
+//									jQuery(".datepicker-bd").datepicker("setDate", "<?php echo $ProfileDateBirth != '0000-00-00' ? $ProfileDateBirth : ''; ?>");
+//								});
 							</script>
 					<div id="dashboard_private_information" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
@@ -1546,167 +1583,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							<?php
 							if(isset($_GET['action']) && $_GET['action'] == "editRecord"){
 							?>
-							<script type="text/javascript">
-								jQuery(document).ready(function($){
-									//onload
-									var profileTypeTitles = $('.userProfileType:checkbox:checked').map(function() {
-										return $(this).attr('profile-type-title');
-									}).get();
-									if(profileTypeTitles.length>0){
-										jQuery.ajax({
-											type: "POST",
-											url: "<?php echo admin_url('admin-ajax.php') ?>",
-											data: {
-												action: "rb_get_customfields_edit_profile",
-												'profile_types': profileTypeTitles,
-												'profileID': <?php echo $ProfileID ;?>,
-												'gender': $("#ProfileGender").val()
-											},
-											success: function (results) {
-												jQuery(".tbody-table-customfields").html(results);
-												//console.log(results);
-											}
-										});	
-										jQuery.ajax({
-											type: "POST",
-											url: "<?php echo admin_url('admin-ajax.php') ?>",
-											data: {
-												action: "rb_get_customfields_edit_profile_private",
-												'profile_types': profileTypeTitles,
-												'profileID': <?php echo $ProfileID ;?>,
-												'gender': $("#ProfileGender").val()
-											},
-											success: function (results) {
-												$(".tbody-table-customfields-private").html(results);
-												//console.log(results);
-											}
-										});
-									}
-									$(".userProfileType").click(function(){
-										$(".tbody-table-customfields").empty();
-										$(".tbody-table-customfields-private").empty();
-										var profileTypeTitles = $('.userProfileType:checkbox:checked').map(function() {
-											return $(this).attr('profile-type-title');
-										}).get();
-										if(profileTypeTitles.length>0){
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_edit_profile_onchanged_profiletype",
-													'profile_types': profileTypeTitles,
-													'profileID': <?php echo $ProfileID ;?>,
-													'gender': jQuery("#ProfileGender").val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields").html(results);
-													console.log(results);
-												}
-											});	
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_edit_profile_onchanged_profiletype_private",
-													'profile_types': profileTypeTitles,
-													'profileID': <?php echo $ProfileID ;?>,
-													'gender': jQuery("#ProfileGender").val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields-private").html(results);
-													console.log(results);
-												}
-											});
-										}else{
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_edit_profile",
-													'profileID': <?php echo $ProfileID ;?>,
-													'gender': jQuery("#ProfileGender").val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields").html(results);
-													console.log(results);
-												}
-											});	
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_edit_profile_private",
-													'profileID': <?php echo $ProfileID ;?>,
-													'gender': jQuery("#ProfileGender").val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields-private").html(results);
-													console.log(results);
-												}
-											});
-										}
-									});
-									$("#ProfileGender").on("change",function(){
-										$(".tbody-table-customfields").empty();
-										var profileTypeTitles = $('.userProfileType:checkbox:checked').map(function() {
-											return $(this).attr('profile-type-title');
-										}).get();
-										if(profileTypeTitles.length>0){
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_edit_profile_onchanged_profiletype",
-													'profile_types': profileTypeTitles,
-													'gender': $(this).val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields").html(results);
-													console.log(results);
-												}
-											});	
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_edit_profile_onchanged_profiletype_private",
-													'profile_types': profileTypeTitles,
-													'gender': $(this).val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields-private").html(results);
-													console.log(results);
-												}
-											});	
-										}else{
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_edit_profile",
-													'gender': $(this).val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields").html(results);
-													console.log(results);
-												}
-											});	
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_edit_profile_private",
-													'gender': $(this).val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields-private").html(results);
-													console.log(results);
-												}
-											});	
-										}
-									});
-								});
-							</script>
+							 <script>var ProfileID = '<?php echo $ProfileID;?>';</script>
 							<?php
 							}
 							if(isset($_GET['action']) && $_GET['action'] == "add") { 
@@ -1922,10 +1799,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "        <td>\n";
 							if(isset($_GET['action']) && !empty($_GET["ProfileID"]) && $_GET["action"] == 'editRecord') { 
 							?>
-							<script type="text/javascript">
-							</script>
+							<script type="text/javascript"> </script>
 							<?php
-						}
+	                        }
 							?>
 							<?php if($_GET['action'] == 'add') { ?>
 								<script type="text/javascript">
@@ -2071,13 +1947,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							<!-- This is generated via ajax call -->
 							<?php
 							if(isset($_GET['action']) && $_GET['action'] == "add") { 
-								$getGender = $_GET["ProfileGender"];
+								$getGender = $ProfileGender;
 								echo "<table class=\"rbform-table table-customfields\">\n";
 								echo "<tbody>
 										<tr valign=\"top\">
 									      <th scope=\"row\">Gender</th>
 									      <td><select name=\"ProfileGender\" id=\"ProfileGender\">";
-												$ProfileGender = isset($_GET["ProfileGender"])?$_GET["ProfileGender"]:"";		      	
+													      	
 							$sql = "SELECT GenderID, GenderTitle FROM " . table_agency_data_gender;
 							$results=  $wpdb->get_results($sql,ARRAY_A);
 							$count  = $wpdb->num_rows;
@@ -2105,7 +1981,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "			<select name=\"ProfileGender\" id=\"ProfileGender\">\n";
 								$ProfileGender1 = get_user_meta(isset($ProfileUserLinked)?$ProfileUserLinked:0, "rb_agency_interact_pgender", true);
 								if($ProfileGender==""){
-									$ProfileGender = isset($_GET["ProfileGender"])?$_GET["ProfileGender"]:"";
+									$ProfileGender = isset($_GET["ProfileGender"])?$_GET["ProfileGender"]:$ProfileGender;
 								} elseif($ProfileGender1!=""){
 									$ProfileGender =$ProfileGender;
 								}
@@ -2128,17 +2004,17 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "  <tbody class=\"tbody-table-customfields\">\n";
 								// Load custom fields , Public  = 0, ProfileCustomGender = true
 								// ProfileCustomView = 1 , Private
-								if (isset($_GET["ProfileGender"])) {
-									$ProfileGender = $_GET["ProfileGender"];
+								if ($ProfileGender) {
+									//$ProfileGender = $_GET["ProfileGender"];
 									// -1 make sure that theres no exist profile in DB
-									rb_custom_fields(0, -1, $ProfileGender, true);
+									rb_custom_fields(0, $ProfileID, $ProfileGender, true);
 								} else { // onload for edit
 									$param = array();
 									$param['operation'] = "editProfile";
 									$param['ProfileID'] = $ProfileID;
 									//$rbagencyCustomfieldsClass = new RBAgency_Customfields();
 									//$rbagencyCustomfieldsClass->getCustomFieldsProfileManager($ProfileGender,$param);
-									//rb_custom_fields(0, $ProfileID, $ProfileGender, true);
+									rb_custom_fields(0, $ProfileID, $ProfileGender, true);
 								}
 								//$reflFunc = new ReflectionFunction('rb_custom_fields');
 								//print $reflFunc->getFileName() . ':' . $reflFunc->getStartLine();
@@ -2270,103 +2146,76 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								// Go about our biz-nazz
 								# rb_agency_option_galleryorder
 								# 1 - recent 0 - chronological
-								$rb_agency_options_arr = get_option('rb_agency_options');
+								
+                               // echo "<div id='wrapper-sortable'><div id='gallery-sortable' style='list-style:none;'>";
+                                
+                                $rb_agency_options_arr = get_option('rb_agency_options');
 								$order = isset( $rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
-								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image"); 
 								$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 								$countImg =$wpdb->num_rows;
 								$massDelete = "";
 								$private_profile_photo = get_user_meta($ProfileUserLinked,'private_profile_photo',true);
 								$private_profile_photo_arr = explode(',',$private_profile_photo);
-								echo "<div id='wrapper-sortable'><div id='gallery-sortable' style='list-style:none;'>";
-								foreach ($resultsImg as $dataImg) {
+								
+								foreach ($resultsImg as $k=>$dataImg) {
 									if ($dataImg['ProfileMediaPrimary']) {
-										$toggleClass = " primary";
-										$isChecked = " checked";
-										$isCheckedText = " Primary";
-										if ($countImg == 1) {
-											$toDelete = "<a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\" title=\"Delete this Photo\" class=\"rbicon-del icon-small\"><span>Delete</span> &raquo;</a>\n";
-											$massDelete = '<input type="checkbox" name="massgaldel" value="' . $dataImg['ProfileMediaID'] . '"> Select<br>';
-											$privateImage = "<input type=\"checkbox\" name=\"setprivate[]\" value=" . $dataImg['ProfileMediaID'] . " ".(in_array($dataImg['ProfileMediaID'], $private_profile_photo_arr) ? "checked" : "")."> Set Private";
-										} else {
-											$toDelete = "<a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\" title=\"Delete this Photo\" class=\"rbicon-del icon-small\"><span>Delete</span> &raquo;</a>\n";
-											$massDelete = '<input type="checkbox" name="massgaldel" value="' . $dataImg['ProfileMediaID'] . '"> Select<br>';
-											$privateImage = "<input type=\"checkbox\" name=\"setprivate[]\" value=" . $dataImg['ProfileMediaID'] . " ".(in_array($dataImg['ProfileMediaID'], $private_profile_photo_arr) ? "checked" : "")."> Set Private";
-										}
-									} else {
-										$toggleClass = "";
-										$isChecked = "";
-										$isCheckedText = " Set Primary";
-										$toDelete = "<a href=\"javascript:confirmDelete('" . $dataImg['ProfileMediaID'] . "','" . $dataImg['ProfileMediaType'] . "')\" title=\"Delete this Photo\" class=\"rbicon-del icon-small\"><span>Delete</span> &raquo;</a>\n";
-										$massDelete = '<input type="checkbox" name="massgaldel" value="' . $dataImg['ProfileMediaID'] . '"> Select<br>';
-										$privateImage = "<input type=\"checkbox\" name=\"setprivate[]\" value=" . $dataImg['ProfileMediaID'] . " ".(in_array($dataImg['ProfileMediaID'], $private_profile_photo_arr) ? "checked" : "")."> Set Private";
-									}
-									echo "<div class=\"item gallery-item".$toggleClass." ".(in_array($dataImg["ProfileMediaURL"], $newlyUploadedImages) ? "marked_changed" : "")."\">\n";
-									echo $toDelete;
-									// <img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&a=t&w=120&h=108\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
-									$image_path = RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataImg['ProfileMediaURL'];
-									$params = array(
-										'width' => 100,
-										'height' => 150
-									);
-									$profile_image_src = bfi_thumb( $image_path, $params );
-									echo "  <div class=\"photo \" ><img src=\"" . $profile_image_src ."\"/></div>\n";
-									//echo "  <div class=\"photo\"><img src=\"" . get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataImg['ProfileMediaURL'] . "&a=t&w=100&h=150\"/></div>\n";
-									echo "		<div class=\"item-order\" style='display:none;'>Order: <input type=\"hidden\" name=\"ProfileMediaOrder_" . $dataImg['ProfileMediaID'] . "\" style=\"width: 25px\" value=\"" . $dataImg['ProfileMediaOrder'] . "\" /></div>";
-									echo "  	<div class=\"make-primary\"><input type=\"radio\" name=\"ProfileMediaPrimary\" value=\"" . $dataImg['ProfileMediaID'] . "\" " . $isChecked . " /> " . $isCheckedText . "</div>";
-									echo "		<div>".$massDelete."</div>";
-									echo "<div>".$privateImage."</div>";
-									echo "  </div>\n";
+									
+									} 		
+                                    
+                                    $ProfileMediaURL = $dataImg['ProfileMediaURL'];						
+									$image_thumbpath = RBAGENCY_UPLOADDIR. $ProfileGallery . "/thumb/". $ProfileMediaURL;
+                                    $image_path = RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $ProfileMediaURL;
+                                                                  
+                                     //if(pathinfo($image_thumbpath,PATHINFO_EXTENSION ) || pathinfo($image_path,PATHINFO_EXTENSION ))  { 
+                                        
+                                        $image_path = @getimagesize($image_thumbpath) ? $image_thumbpath:$image_path;
+                                        
+                                        $pic = array();    
+                                        $imageinfo = pathinfo($image_path);    
+                                        $imagesize = getimagesize($image_path); 
+                                        if($imagesize['mime']!=null){
+                                        //$realpath =  realpath($image_path);                           
+                                        $pic['file'] = $image_path;
+                                        $pic['url'] = $image_path;          
+                                        $pic['name'] = $dataImg['ProfileMediaTitle'];
+                                        $pic['id'] = $dataImg['ProfileMediaID'];
+                                        $pic['primary'] = $dataImg['ProfileMediaPrimary'];
+                                        $pic['private'] = $dataImg['isPrivate'];
+                                        //$pic['type'] = image_type_to_mime_type(exif_imagetype($image_path));
+                                        $pic['type'] = $imagesize['mime'];
+                                        //$pic['size'] = filesize($realpath);
+                                        $arr[] = $pic;
+                                        }
+                                    //}
+                                   
+                                    
 								}
-								echo "</div></div>";
-								?>
-								<script type="text/javascript">
-								jQuery(document).ready(function(){
-									jQuery("#wrapper-sortable #gallery-sortable").sortable(
-										{item:'.item',
-										cursor:'move',
-										update: function( event, ui ) {
-												jQuery("#wrapper-sortable #gallery-sortable .item").each(function(i,d){
-													jQuery(this).find("input[type=hidden]").val(i);
-												});
-												jQuery("#notify-gallery").css('display','block').fadeOut().fadeIn().fadeOut().fadeIn();
-										}
-									});
-									jQuery("#wrapper-sortable #gallery-sortable").disableSelection();
-								});
-								</script>
+                                ?>
+                                    <script>
+
+                                        var files = <?php echo json_encode($arr);?>;
+                                        var profilegallery = "<?php echo $ProfileGallery;?>";
+                                        var profileid = "<?php echo $ProfileID;?>";
+                                        
+                                    </script>
+                                    <div id="files" class="files"></div>
+                                    <input id="file_upload" name="rba_imgupload[]" type="file"><button class='button-primary' id='deleteProfileMedia'>Delete Selected</button>
+								    </div>
+                                </div>
+								
 								<?php
 								// No records?
 								if ($countImg < 1) {
-									echo "<div class='item gallery-item ui-sortable-handle' id='gallery-no-image'>" . __("There are no images loaded for this profile yet.", RBAGENCY_TEXTDOMAIN) . "</div>\n";
+									//echo "<div class='item gallery-item ui-sortable-handle' id='gallery-no-image'>" . __("There are no images loaded for this profile yet.", RBAGENCY_TEXTDOMAIN) . "</div>\n";
 								}
 							?>
 							<div style="clear: both;"></div>
 							<style>
 								.main .gallery-item{width:100px; height: 200px;overflow:hidden;}
 							</style>
-								<a href="javascript:confirm_mass_gallery_delete();">Delete Selected Images</a>
-								<script language="javascript">
-								function confirm_mass_gallery_delete(){
-									var mas_del_ids = '&';
-									jQuery("input:checkbox[name=massgaldel]:checked").each(function() {
-										if(mas_del_ids != '&'){
-											mas_del_ids += '&';
-										}
-									mas_del_ids += 'targetids[]='+jQuery(this).val();
-									});
-									if( mas_del_ids != '&'){
-										if(confirm("Do you want to delete all the selected images?")){
-											urlmassdelete = '<?php echo admin_url("admin.php?page=" . $_GET['page']);?>&action=editRecord&ProfileID=<?php echo $ProfileID;?>&actionsub=massphotodelete' + mas_del_ids;
-											document.location = urlmassdelete;
-										}
-									}else {
-										alert("You have to select images to delete");
-									}
-								}
-								</script>
-							</div>
-						</div>
+							<!--</div>
+						</div>-->
 					</div>
 				</div>
 			</div>
@@ -2612,7 +2461,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
 							for($i = 0; $i < count($files); $i++){
 								$parsedFile = explode('-',$files[$i]);
-								if($ProfileID == $parsedFile[1]){
+								if(count($parsedFile)>1){ 
+								    if($ProfileID == $parsedFile[1]){
 									$au = get_option("auditiondemo_".str_replace('.mp3','',$files[$i]));
 									$auditiondemo = empty($au) ? "TITLE" : $au;
 									 $path = '_casting-jobs/'.$files[$i];
@@ -2622,6 +2472,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										$force_download_url = wpfdl_dl('_casting-jobs/'.$files[$i],get_option('wpfdl_token'),'dl');
 										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo\" audiodemo_place_id=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"><span>".__('VoiceDemo')."</span><br /><a ".$force_download_url."  target=\"_blank\" class=\"link-icon\">mp3</a>[<a href=\"#\" onclick=\"deleteAuditionDemo('".$path."')\"  title=\"Delete this File\" class=\"delete-file\">DELETE</a>] <br><a ".$force_download_url." ><span class=\"auditiondemo-caption\">".$auditiondemo."</span></a>&nbsp; <a href=\"#edit-audition-demo\" id=\"".(str_replace('.mp3','',$files[$i]))."\" class=\"audition-mp3 thickbox\" audition_demo_name_key=\"auditiondemo_".str_replace('.mp3','',$files[$i])."\"  audition_demo_name_val=\"".$auditiondemo."\">&nbsp[EDIT]</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$files[$i]."\"></div>\n";
 									}
+                                    }
 								}
 							}
 							?>
@@ -2994,7 +2845,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						<div class="inside">
 							<div class="main">
 								<?php
-								include_once(RBAGENCY_PLUGIN_DIR .'view/include-photouploadmulti.php');
+								//include_once(RBAGENCY_PLUGIN_DIR .'view/include-photouploadmulti.php');
 											// Upload Images
 								echo "      <p>" . __("Upload new media using the forms below", RBAGENCY_TEXTDOMAIN) . ".</p>\n";
 								if(isset($errorValidation['profileMedia'])){echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['profileMedia']."</p>\n";}
@@ -3003,7 +2854,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									echo "<tr><th colspan=\"2\">Type:</th></tr>\n";
 									echo "<tr><td><select name=\"profileMedia" . $i . "Type\">\n";
 									echo "<option value=\"\">--Please Select--</option>\n";
-									echo "<option value=\"Image\">Photo</option>\n";
+									//echo "<option value=\"Image\">Photo</option>\n";
 									echo "<option value=\"Headshot\">Headshot</option>\n";
 									echo "<option value=\"CompCard\">Comp Card</option>\n";
 									echo "<option value=\"Resume\">Resume</option>\n";
@@ -3141,7 +2992,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						<h3 class="hndle"><span>Box Cover</span></h3>
 						<div class="inside">
 							<div class="upload-form">
-								<?php include_once(RBAGENCY_PLUGIN_DIR .'view/include-boxcoverupload.php'); ?>
+								<?php //include_once(RBAGENCY_PLUGIN_DIR .'view/include-boxcoverupload.php'); ?>
 							</div>
 							<div class="main">
 							<?php

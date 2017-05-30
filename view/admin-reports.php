@@ -5,7 +5,8 @@
 
 	// Include Admin Menu
 	include (RBAGENCY_PLUGIN_DIR ."view/partial/admin-menu.php");
-
+    include_once RBAGENCY_PLUGIN_DIR."/ext/Uploader.php";
+    
 	$arrayProfilesRenamedFolders = array();
 	$arraySuggestedFolderNames = array();
 	$arrayAllFolderNames = array();
@@ -373,7 +374,6 @@ elseif ($ConfigID == 53) {
 			$arr_folder_names = array();
 			foreach ($results1 as $data1) {
 				$ProfileGallery = $data1['ProfileGallery'];
-
 				// Create the right folder name for the profile
 				$ProfileGalleryCurrent = generate_foldername($data1['ProfileID'], $data1['ProfileContactNameFirst'], $data1['ProfileContactNameLast'], $data1['ProfileContactDisplay']);
 				echo "<div>\n";
@@ -425,7 +425,7 @@ elseif ($ConfigID == 3) {
 	<?php
 	global $wpdb;
 
-	$q = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
+	$q = "SELECT ProfileID FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
 	$r =$wpdb->get_results($q, ARRAY_A);
 
 	$to_paginate = $_GET;
@@ -461,46 +461,55 @@ elseif ($ConfigID == 3) {
 	$results3 =$wpdb->get_results($query3, ARRAY_A);
 	$count3 =  $wpdb->num_rows;
 
+    echo "<form method='post' name='updateimageform' id='updateprofileMedia' action='?page=rb_agency_reports&ConfigID=3&paging=".$p->page."'>";
+	echo "<a href='#' class='add-pending-btn button-primary'>Add All Pending Changes</a>";
+	echo "<a href='#' class='remove-missing-btn button-primary'>Remove All Missing Files</a>";
+    echo "</form>";
 	echo "<div class=\"tablenav\">\n";
 	echo "  <div class='tablenav-pages'>\n";
+    
 	if ($items > 0) {
 		echo $p->show();// Echo out the list of paging. 
 	}
 	echo "  </div>\n";
 	echo "</div>\n";
 
-	$query3a = "SELECT * FROM ". table_agency_profile_media ."";
-	$results3a = $wpdb->get_results($query3a, ARRAY_A);
-	$arr_media = array();
-	foreach($results3a as $media){
-		if (!empty($media["ProfileMediaURL"])) {
-			array_push($arr_media, $media["ProfileMediaURL"]);
-		}
-	}
+	//$query3a = "SELECT * FROM ". table_agency_profile_media ."";
+//	$results3a = $wpdb->get_results($query3a, ARRAY_A);
+//	$arr_media = array();
+//	foreach($results3a as $media){
+//		if (!empty($media["ProfileMediaURL"])) {
+//			array_push($arr_media, $media["ProfileMediaURL"]);
+//		}
+//	}
 
-	foreach ($results3 as $data3) {
+	foreach ($results3 as $prf=>$data3) {
+	   $pending = false;
 		$dirURL = RBAGENCY_UPLOADPATH . $data3['ProfileGallery'];
 		if (is_dir($dirURL)) { // Does folder exist?
-			echo "<div style=\"background-color: lightYellow; \">\n<h3>". $data3['ProfileContactNameFirst'] ." ". $data3['ProfileContactNameLast'] ."</h3>\n";
+			echo "<div class='pending-profile-list'>\n<h3>". $data3['ProfileContactNameFirst'] ." ". $data3['ProfileContactNameLast'] ."</h3>\n";
 			echo "<strong>Directory: ".$dirURL."</strong>";
 			echo "<br/>";
 
-			$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID=".$data3["ProfileID"];
+			$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID=".$data3["ProfileID"]." AND ProfileMediaType='Image'";
 			$results4a = $wpdb->get_results($query4a, ARRAY_A);
+            $profileMediaImages = array();
 			//if(!in_array($_GET['action'],array("add"))){
 				foreach ($results4a as $key) {
-					if(!in_array($key["ProfileMediaType"],array("Video Slate","Video Monologue","Demo Reel","SoundCloud"),true) || empty($key["ProfileMediaURL"]) ){
-						if(strpos($key["ProfileMediaTitle"],"migrated") !== true && (!file_exists($dirURL."/".$key["ProfileMediaURL"]) /*|| empty($key["ProfileMediaURL"])*/)){
-							if($_GET['action'] == "remove"){
-								$wpdb->query("DELETE FROM ".table_agency_profile_media." WHERE ProfileID = ".$key["ProfileID"]." AND  ProfileMediaURL='".$key["ProfileMediaURL"]."'");
-								echo "<div style=\"border-color: #E6DB55;\">File: <span style=\"color:red;\">". $key["ProfileMediaURL"] ."</span> is missing in the directory and <span style=\"color:green;\">has been removed from the database</span>.</div>\n";
-							} else {
-								echo "<div style=\"border-color: #E6DB55;\">File: <span style=\"color:red;\">". $key["ProfileMediaURL"] ."</span> is mssing in the directory.</div>\n";
-							}
-						}
-					}
+                    if($key["ProfileMediaURL"] && file_exists($dirURL.DIRECTORY_SEPARATOR.$key["ProfileMediaURL"])){
+				       $profileMediaImages[$key["ProfileMediaID"]] = $key["ProfileMediaURL"]; 
+				    }else{
+				        $pending = true;
+				        if($_POST['action'] == "remove"){
+								$wpdb->query("DELETE FROM ".table_agency_profile_media." WHERE ProfileMediaID = '".$key["ProfileMediaID"]."'");
+								echo "<div class='removed-file'>File: <span class='red'>". $key["ProfileMediaURL"] ."</span> is missing in the directory and <span class='red'>has been removed from the database</span>.</div>";
+				        }else{
+				           echo "<div class='missing-file'><span class='red'>".$key["ProfileMediaID"] ."-". $key["ProfileMediaURL"] ."</span> is missing in directory! </div>"; 
+				        }
+				    }
+					
 				}
-			//}
+		
 			$has_rename = false;
 			$_SESSION['renamed_pending'] = false;
 			$fileArray = array();
@@ -508,158 +517,98 @@ elseif ($ConfigID == 3) {
 			if ($handle = opendir($dirURL) ) { //  Open seasame
 				//echo $file;
 				while (false !== ($file = readdir($handle))) {
-					$arrayFiles[] = $file;
-					if (strtolower($file) == "thumbs.db"  || strtolower($file) == "thumbsdb.jpg" || strtolower($file) == "thumbsdbjpg.jpg" || strtolower($file) == "thumbsdbjpgjpg.jpg") {
+                    if (is_dir($dirURL.DIRECTORY_SEPARATOR.$file)) continue; //exclude directory
+                    
+                    $arrayFiles[] = $file; 
+					if (strtolower($file) == "thumbs.db"  || 
+                    strtolower($file) == "thumbsdb.jpg" || 
+                    strtolower($file) == "thumbsdbjpg.jpg" || 
+                    strtolower($file) == "thumbsdbjpgjpg.jpg") {
 						if (!unlink($dirURL ."/". $file)) {
 							echo ("Error deleting $file");
 						} else {
 							echo ("Deleted $file");
 						}
-					} elseif ($file != "." && $file != "..") {
-						$new_file = str_replace("'","",RBAgency_Common::format_stripchars($file,false));
-
-						$result = $wpdb->get_row($wpdb->prepare("SELECT ProfileMediaURL as url FROM ".table_agency_profile_media." WHERE ProfileMediaURL = %s", $file));
-						// no need to rename if the file exist with the new filename
-
+					} elseif ($file != "." && $file != "..") { 
+						//$new_file = str_replace("'","",RBAgency_Common::format_stripchars($file,false));
+                        //$new_file =  str_replace($data3["ProfileID"]."-","",$new_file);
+                        //$new_file =  str_replace(" ","-",$new_file);
+                        
 						//If newly imported files
-						if(file_exists($dirURL ."/".$file) && strpos($file , $data3["ProfileID"]) === false){
-
-							//Rename the files
-							$new_file =  $data3["ProfileID"]."-".$new_file;
-							rename($dirURL ."/". $file, $dirURL ."/".$new_file);
-							$results = $wpdb->query($wpdb->prepare("UPDATE " . table_agency_profile_media . " SET ProfileMediaURL = %s  WHERE ProfileID = %d AND ProfileMediaURL = %s",$new_file, $data3['ProfileID'],$file));
-
+                        if(file_exists($dirURL .DIRECTORY_SEPARATOR.$file) && in_array($file,$profileMediaImages)){ 
+                            //if file exists in database and in directory, do nothing.
+                            continue;
+                        }elseif(file_exists($dirURL .DIRECTORY_SEPARATOR.$file) && !in_array($file,$profileMediaImages)){
+							
 							//Setters
-							$has_rename = true;
-							$fileArray[$new_file] = $new_file;
+							//$has_rename = true;
+							//$fileArray[$new_file] = $new_file;
 
 							//Message
 							$open_div = "<div id='1' style=\"border-color: #E6DB55;\">";
-							$fileMessage = "File: ". $file ."";
-							$newFile = " has been renamed <strong>". $new_file ."</strong>";
-						}
-
-						//Else if imported files are renamed
-						if(file_exists($dirURL ."/".$file) && strpos($file , $data3["ProfileID"]) !== false){
-
-							if(isset($fileArray[$new_file])){
-								$open_div = "<div id='2' style=\"border-color: #E6DB55;display:none;\">";
-								unset($fileArray[$k]);
-							} else {
-								$open_div = "<div id='3' style=\"border-color: #E6DB55;\">";
-								$fileMessage = "File: ". $file ."";
-								$newFile = "";
-							}
-
-						}
-
-
-						/**if($has_rename){
-							if($_SESSION['renamed_pending'] === true){
-								$open_div = "<div id='1' style=\"border-color: #E6DB55;display:none;\">";
-							} else {
-								$open_div = "<div id='1' style=\"border-color: #E6DB55;\">";
-							}
-							$fileMessage = "File: ". $file ."";
-							$newFile = "";
-
-						} else {
-
-							$open_div = "<div id='1' style=\"border-color: #E6DB55;\">";
-							$fileMessage = "File: ". $file ."";
-							$newFile = "";
-						}
-
-						//PENDING
-						/**if(!file_exists($dirURL ."/".$file) && strpos($file , $data3["ProfileID"]) === false && $has_rename){
-							$open_div = "<div id='3' style=\"border-color: #E6DB55;display:none;\">";
-						}
-						//Display
-						if(!file_exists($dirURL ."/".$file) && strpos($file , $data3["ProfileID"]) !== false && $has_rename){
-							$open_div = "<div id='3' style=\"border-color: #E6DB55;display:none;\">";
-						}
-
-						//Scanned, renamed and saved into the database
-						if(file_exists($dirURL ."/".$file) && strpos($file , $data3["ProfileID"]) !== false && $has_rename == false){
-							$open_div = "<div id='5' style=\"border-color: #E6DB55;\">";
-							$fileMessage = "File: ". $file ."";
-						}**/
-
-
-						//echo $renamedFile."=".$file."=".$old_file."<br>";
-
-
-						/**if(empty($hasInRenamed) && $hasInFile === false && $hasOld === false){
-							echo "<div id='imported-files' style=\"border-color: #E6DB55;\">";
-						}
-
-						if($hasInRenamed === false && empty($hasInFile) && empty($hasOld)){
-							echo "<div id='imported-files' style=\"border-color: #E6DB55;\">";
-						}**/
-
-
-						$file_ext = strtolower(rb_agency_filenameextension($file));
-
-						if (($file_ext == "jpg" || $file_ext == "jpeg" || $file_ext == "png" || $file_ext == "gif" || $file_ext == "bmp")) {
-							if (empty($result->url) && !in_array($new_file,$arr_media,true)) {
-								if($_GET['action'] == "add") {
-									unset($_SESSION['renamed_pending']);
-									if(!empty($result->url) && strpos($result->url , $data3["ProfileID"]) === false){
-										$results = $wpdb->query($wpdb->prepare("UPDATE " . table_agency_profile_media . " SET ProfileMediaTitle = %s, ProfileMediaURL = %s  WHERE ProfileID = %d AND ProfileMediaURL = %s", $data3['ProfileContactNameFirst'] ."-". $new_file."-migrated",$new_file, $data3['ProfileID'],$file));
-									} else {
-										$results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'Image',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
-									}
-									$actionText = ($has_rename ? $newFile." and":"")." <span style=\"color: green;\">added to database</span> ";
-								} else {
-									$actionText = ($has_rename ? $newFile." and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
-								}
-
-							} else {
-								$actionText = ($has_rename ? $newFile." and":"")." exists in database";
-							}
-						} elseif (($file_ext == "amr" || $file_ext == "m4a" || $file_ext == "mp3" || $file_ext == "wav")) {
-							if (empty($result->url) && !in_array($new_file,$arr_media,true)) {
-								if($_GET['action'] == "add") {
-									unset($_SESSION['renamed_pending']);
-									if(!empty($result->url) && strpos($result->url , $data3["ProfileID"]) === false){
-										$results = $wpdb->query($wpdb->prepare("UPDATE " . table_agency_profile_media . " SET ProfileMediaTitle = %s, ProfileMediaURL = %s  WHERE ProfileID = %d AND ProfileMediaURL = %s", $data3['ProfileContactNameFirst'] ."-". $new_file."-migrated",$new_file, $data3['ProfileID'],$file));
-									} else {
-										$results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'VoiceDemo',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
-									}
-									$actionText = ($has_rename ? $newFile." and":"")." <span style=\"color: green;\">added to database</span> ";
-								} else {
-									$actionText = ($has_rename ? $newFile." and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
-								}
-
-							} else {
-								$actionText = ($has_rename ? $newFile." and":"")." exists in database";
-							}
-						} elseif (($file_ext == "pdf" || $file_ext == "doc" || $file_ext == "docx")) {
-							if (empty($result->url) && !in_array($new_file,$arr_media,true)) {
-								if($_GET['action'] == "add") {
-									unset($_SESSION['renamed_pending']);
-									if(!empty($result->url) && strpos($result->url , $data3["ProfileID"]) === false){
-										$results = $wpdb->query($wpdb->prepare("UPDATE " . table_agency_profile_media . " SET ProfileMediaTitle = %s, ProfileMediaURL = %s  WHERE ProfileID = %d AND ProfileMediaURL = %s", $data3['ProfileContactNameFirst'] ."-". $new_file."-migrated",$new_file, $data3['ProfileID'],$file));
-									} else {
-										$results = $wpdb->query($wpdb->prepare("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES (%s,'Resume',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));
-									}
-									$actionText = ($has_rename ? $newFile." and":"")." <span style=\"color: green;\">added to database</span> ";
-								} else {
-									$actionText = ($has_rename ? $newFile." and":"")." <strong>PENDING ADDITION TO DATABASE</strong>";
-								}
-
-							} else {
-									$actionText = ($has_rename ? $newFile." and":"")." exists in database";
-							}
-						} elseif(empty($result->url)) {
-								$actionText = " is <span style=\"color: red;\">NOT an allowed file type</span> ";
-								$actionText = "";
+							$fileMessage = "File: ". $file ." ";
+							//$newFile = " has been renamed <strong>". $new_file ."</strong>";
+                            
+                            $file_ext = strtolower(rb_agency_filenameextension($file));
+                            
+                            if($_POST['action'] == "add") {
+                                
+                                if (($file_ext == "jpg" || $file_ext == "jpeg" || $file_ext == "png" || $file_ext == "gif" || $file_ext == "bmp")) {
+                                    $filename = mt_rand();
+                                    $newfile = $data3["ProfileID"]."-".$filename.".".$file_ext;
+                                    rename($dirURL .DIRECTORY_SEPARATOR. $file, $dirURL .DIRECTORY_SEPARATOR.$newfile);
+                                    $newImage = array(
+                                    'ProfileID'=>$data3["ProfileID"],
+                                    'ProfileMediaType'=>'Image',
+                                    'ProfileMediaTitle'=>$newfile,
+                                    'ProfileMediaURL'=>$newfile);
+                                   $newid = $wpdb->insert( table_agency_profile_media, $newImage, array( '%d', '%s','%s','%s' ) );
+                                   if($newid){
+                                    $fileMessage .= " Image successfully added to DATABASE";
+                                   }
+                                }
+                                
+                                elseif (($file_ext == "amr" || $file_ext == "m4a" || $file_ext == "mp3" || $file_ext == "wav")) {        								
+        									
+                                            unset($_SESSION['renamed_pending']);
+                                            
+                                            $newid = $wpdb->query(
+                                            $wpdb->prepare("INSERT INTO " . table_agency_profile_media . " 
+                                            (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) 
+                                            VALUES (%s,'VoiceDemo',%s,%s)", 
+                                            $data3['ProfileID'],$new_file,$new_file));
+        								if($newid){
+                                            $fileMessage .= " Video successfully added to DATABASE";
+                                           }
+        						}
+                                
+                                elseif (($file_ext == "pdf" || $file_ext == "doc" || $file_ext == "docx")) {
+        									unset($_SESSION['renamed_pending']);
+        									$newid = $wpdb->query(
+                                            $wpdb->prepare("INSERT INTO " . table_agency_profile_media . " 
+                                            (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) 
+                                            VALUES (%s,'Resume',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));   
+                                            
+                                            if($newid){
+                                            $fileMessage .= " Resume successfully added to DATABASE";
+                                           }     							
+        						}else {
+        						  $fileMessage .= "Invalid file type!";
+        						}
+                                
+                            }
+                            else
+                            {
+                                    
+                                    $fileMessage .=  "PENDING ADDITION TO DATABASE";
+                            
+                            }
+                            $pending = true;
 						}
 						//$wpdb->show_errors();
 						//$wpdb->print_error();
 
 						echo $open_div;
-
 						echo $fileMessage . $actionText;
 
 
@@ -681,11 +630,13 @@ elseif ($ConfigID == 3) {
 	if ($items > 0) {
 		echo $p->show();// Echo out the list of paging. 
 	}
+    
 	echo "  </div>\n";
 	echo "</div>\n";
-	echo "<a href='?page=rb_agency_reports&ConfigID=3&action=add' class='button-primary'>Add All Pending Changes</a>";
-	echo "<a href='?page=rb_agency_reports&ConfigID=3&action=remove' class='button-primary'>Remove All Missing Files</a>";
-
+    echo "<form method='post' name='updateimageform' id='updateprofileMedia' action='?page=rb_agency_reports&ConfigID=3&paging=".$p->page."'>";
+	echo "<a href='#' class='add-pending-btn button-primary'>Add All Pending Changes</a>";
+	echo "<a href='#' class='remove-missing-btn button-primary'>Remove All Missing Files</a>";
+    echo "</form>";
 
 
 }// End 3
@@ -694,11 +645,26 @@ elseif ($ConfigID == 4) {
 
 	global $wpdb;
 
-	$stepSize = 100;
-	$query4t = "SELECT ProfileID FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
-	$results4t =$wpdb->get_results($query4t, ARRAY_A);
+	$stepSize = 20;
+	//$query4t = "SELECT ProfileID FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC";
+	//$results4t =$wpdb->get_results($query4t, ARRAY_A);
 	$pageString = "";
-	$count4total =  $wpdb->num_rows;
+	//$count4total =  $wpdb->num_rows;
+    
+    $query4 = "SELECT SUM(profilemedia.ProfileMediaPrimary),
+    profilemedia.ProfileID,
+    profile.ProfileContactNameFirst,
+    profile.ProfileContactNameLast,
+    profile.ProfileGallery
+    FROM wp_ttbg_agency_profile_media profilemedia
+    JOIN wp_ttbg_agency_profile profile ON profilemedia.ProfileID = profile.ProfileID
+    WHERE profilemedia.ProfileMediaType='Image'
+    GROUP BY profilemedia.ProfileID
+    HAVING SUM(profilemedia.ProfileMediaPrimary)<1"; //LIMIT $step,100
+	
+    $results4 = $wpdb->get_results($query4, ARRAY_A); 
+	$count4 = $wpdb->num_rows;		
+   
 
 	if (isset($_GET['Step'])) {
 		$currentPage = $_GET['Step'];
@@ -707,16 +673,22 @@ elseif ($ConfigID == 4) {
 		$currentPage = 1;
 		$step = 0;
 	}
+    
+    
+	//$count4 =$wpdb->num_rows;
 
-	$totalPages = ceil($count4total/$stepSize);
-		//echo "Total pages:" . $totalPages;
+	$totalPages = ceil($count4/$stepSize);
+		//echo "Total pages:" . $count4;
 		if($totalPages >= 1) {
 		for($i = 1; $i <= $totalPages; $i++) {
-			$pageString .= " <a href=\"?page=rb_agency_reports&ConfigID=4&Step={$i}".(!empty($queryVars)?$queryVars:"")."\">Page $i</a>";
+            $page = $i -1;
+			$pageString .= " <a href=\"?page=rb_agency_reports&ConfigID=4&Step={$page}".(!empty($queryVars)?$queryVars:"")."\">Page $i</a>";
 			$pageString .= $i != $totalPages ? " | " : "";
 		}
 		}
 	echo $pageString;
+    
+    $results4 =$wpdb->get_results($wpdb->prepare($query4 . " LIMIT %d ,%d",$step,$stepSize), ARRAY_A); 
 
 	if(isset($_POST['action']) && $_POST['action'] == 'update')
 	{
@@ -737,44 +709,49 @@ elseif ($ConfigID == 4) {
 		<h3>Manage Galleries</h3>
 		<h3>Select Primary Profile Photo</h3>
 		<p>Select the checkbox for the model desired.</p>
-		<form method="post" action="<?php echo str_replace( '%7E', '~', $_SERVER['REQUEST_URI']); ?>">
 			<?php
-			$query4 = "SELECT * FROM ". table_agency_profile ." ORDER BY ProfileContactNameFirst,ProfileContactNameLast DESC LIMIT %d,%d"; //LIMIT $step,100
-			$results4 =$wpdb->get_results($wpdb->prepare($query4,$step,$stepSize), ARRAY_A);
-			$count4 =$wpdb->num_rows;
+            $uploader = new Uploader();
 			foreach ($results4 as $data4)  {
 				$dirURL = RBAGENCY_UPLOADDIR . $data4['ProfileGallery'];
+                $target_dir = RBAGENCY_UPLOADPATH.$data4['ProfileGallery'];
+                if (!is_dir($target_dir)){ 
+                    mkdir($target_dir,0755);
+                }
+                if (!is_dir($target_dir.DIRECTORY_SEPARATOR."thumb")){ 
+                    mkdir($target_dir.DIRECTORY_SEPARATOR."thumb",0755);
+                }
+                
+				
 				$profileID = $data4['ProfileID'];
-
-				$query4b = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = %d AND ProfileMediaType = 'Image' AND ProfileMediaPrimary = 1";
+				$query4b = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = %d AND ProfileMediaType = 'Image' GROUP BY ProfileMediaURL";
 				$results4b = $wpdb->get_results($wpdb->prepare($query4b,$profileID), ARRAY_A);
-				$count4b = $wpdb->num_rows;
+				$count4b = $wpdb->num_rows; 
 				//echo $query4b ."<br />". $count4b ."<hr />";
-				if ($count4b < 1) {
+				if ($count4b>1) {
 
 					echo "<div style=\"background-color: lightYellow; \">\n<h3><a href='?page=rb_agency_profiles&action=editRecord&ProfileID=$profileID' target='_blank'>". $data4['ProfileContactNameFirst'] ." ". $data4['ProfileContactNameLast'] ."</a></h3>\n";
-
-					$query4a = "SELECT * FROM ". table_agency_profile_media ." WHERE ProfileID = %d AND ProfileMediaType = 'Image' GROUP BY(ProfileMediaURL)";
-					$results4a = $wpdb->get_results($wpdb->prepare($query4a,$profileID), ARRAY_A);
-					$count4a = $wpdb->num_rows;
-
-					$image_path = $dirURL ."/". $data4a['ProfileMediaURL'];
-					$bfi_params = array(
-						'crop'=>true,
-						'width'=>150,
-						'height'=>150
-					);
-					$image_src = bfi_thumb( $image_path, $bfi_params );
-
-					if ($count4a < 1) {
-						echo "This profile has no images loaded.";
-					} else {
-						foreach ($results4a as $data4a) {
-							echo "<div style=\"width: 150px; float: left; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" />&nbsp;&nbsp;Select Primary<br /><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". $dirURL."/". $data4a['ProfileMediaURL'] ."&w=150\"  style=\"width: 150px;\" /></div>\n";
+						foreach ($results4b as $data4a) { 
+						      $image_path = $target_dir.DIRECTORY_SEPARATOR.$data4a['ProfileMediaURL']; 
+                            if(@getimagesize($image_path)){
+                              $image_thumbpath = $target_dir.DIRECTORY_SEPARATOR."thumb".DIRECTORY_SEPARATOR.$data4a['ProfileMediaURL'];
+                              
+                              if(!file_exists($image_thumbpath)){ 
+                               
+                                $image = array('file'=>$image_path,'name'=>$data4a['ProfileMediaURL']);
+                                $uploader->makeThumbnails($target_dir.DIRECTORY_SEPARATOR,$image);
+                              }
+                              $image_thumbpath = $dirURL ."/thumb/". $data4a['ProfileMediaURL'];
+                              //$image_thumbpath = $dirURL ."/thumb/". $data4a['ProfileMediaURL'];
+							
+                            echo "<div style='width: 150px; float: left; overflow: hidden; margin: 10px;'>
+                            <input class='setprimary' type='radio' name='". $data4a['ProfileID'] ."' value='". $data4a['ProfileMediaID'] ."' />
+                            &nbsp;&nbsp;Select Primary<br /><img src='". $image_thumbpath."' /></div>\n";
 							//echo "<div style=\"width: 150px; float: left; height: 200px; overflow: hidden; margin: 10px; \"><input type=\"radio\" name=\"". $data4a['ProfileID'] ."\" value=\"". $data4a['ProfileMediaID'] ."\" />&nbsp;&nbsp;Select Primary<br /><img src=\"". $image_src."\"  style=\"width: 150px;\" /></div>\n";
-						}
+						  }
+                        }
+                        
 						echo "<div style=\"clear: both;\"></div>\n";
-					}
+					//}
 					echo "</div>\n";
 				} else {
 					// Primary Image Already Set
@@ -783,11 +760,6 @@ elseif ($ConfigID == 4) {
 			if ($count4 < 1) {
 				echo "There are currently no profile records.";
 			}
-			?>
-			<input type="hidden" value="update" name="action" />
-			<input type="submit" value="Submit" class="button-primary" name="Update" />
-		</form>
-	<?php
 	}
 }// End 4
 elseif ($ConfigID == 5) {
