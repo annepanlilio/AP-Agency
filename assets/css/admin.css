@@ -108,8 +108,14 @@ input.stubby { width: 80px; }
 #profile-manage-media .delete a:hover { border: none; }
 #profile-manage-media .delete a:hover span { background: #000; display: inline; }
 
-
-
+.pending-profile-list {
+    background: lightyellow;
+padding: 5px 13px;
+margin: 10px 0px;
+}
+.red {
+    color: red;
+}
 #popup_bg{
 	position: fixed;
 	left: 0;
@@ -190,6 +196,10 @@ input[type=radio]:checked:before { margin-bottom: 2px!important; }
 #dashboard_gallery .main .gallery-item > div { display: block; clear: both; }
 #dashboard_gallery .main .gallery-item > div.item-order { padding: 5px; background: #ddd; }
 #dashboard_gallery .main .gallery-item > div.make-primary { padding: 5px 0px; }
+.selectProfileMedia-wrap{
+    margin-top:4px;
+    margin-bottom:10px;
+}
 
 /* Icons */
 .icon-small { display: inline-block; font-size: 0px; width: 26px; height: 26px; overflow: hidden; text-indent: 999px; }

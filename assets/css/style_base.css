@@ -298,11 +298,11 @@ Last updated: April 08, 2016
 	font-size: 13px;
 	padding:2px 5px 0px 0px;
 }
-.rbpagination > span, .rbpagination > a { 
+.rbpagination > a { 
 	float: left;
-	height: 30px;
-	padding: 0 15px;
-	line-height: 30px;
+	height: 25px;
+    padding: 6px 5px 0px !important;
+	line-height: 1;
 	text-align: center;
 	text-decoration: none;
 	background: #ddd;
@@ -315,9 +315,17 @@ Last updated: April 08, 2016
 	border-top-right-radius: 3px;
 	border-bottom-right-radius: 3px;
 }
-.rbpagination > span.current {
+.rbpagination > span.current,.rbpagination > span {
+    float: left;
+	height: 27px;
+    padding: 6px 5px 0px !important;
+	line-height: 1;
+	text-align: center;
+	text-decoration: none;
 	font-weight: bold;
-	background: #eee;
+	background: #044f6c !important;
+    color: #fff;
+    border: none;
 }
 .rbpagination > span:hover, .rbpagination > a:hover {
 	background: #eee;	
