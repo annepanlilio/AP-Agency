@@ -215,7 +215,6 @@ add_action('wp_ajax_nopriv_rb_get_customfields_edit_profile','rb_get_customfield
 
 function rb_get_customfields_edit_profile_onchanged_profiletype(){
 	global $wpdb;
-	
 	$profileGenderID = $_POST["gender"];
 	$param["operation"] = "editProfile";
 	$param["profileTypes"] = !empty($_POST["profile_types"]) ? $_POST["profile_types"] : "";	
@@ -266,7 +265,7 @@ add_action('wp_ajax_nopriv_rb_get_customfields_add_profile_onchanged_profiletype
 
 
 function rb_get_customfields_edit_profile_private(){
-	global $wpdb;
+	global $wpdb; 
 	$profileGenderID = $_POST['gender'];
 	$param["operation"] = "editProfile";
 	$param["ProfileID"] = !empty($_POST['profileID']) ? $_POST['profileID'] : "";

@@ -33,13 +33,15 @@ class RBAgency_Profile {
 			 * Setup Requirements
 			 */
 				global $wpdb;
-				global $current_user;
-				get_currentuserinfo();
+				$current_user = wp_get_current_user();
 				$ptype = (int)get_user_meta($current_user->ID, "rb_agency_interact_profiletype", true);
 				$user_info = get_userdata($current_user->ID);
                 $user_role = $user_info->roles;
                 if(is_array($user_info->roles)){
                    $user_role = implode(', ', $user_info->roles); 
+                }
+                if(empty($atts_arr) && is_admin()){
+                    $atts_arr['att_type']='advanced';
                 }
 				$rb_agency_options_arr = get_option('rb_agency_options');
 					$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:1;
@@ -71,9 +73,9 @@ class RBAgency_Profile {
 					}
 				}
 				if($type == 0){
-					if($atts_arr['att_mode'] == 'ajax' && $atts_arr['att_type'] == 'basic'){
+					if(isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && $atts_arr['att_type'] == 'basic'){
 						wp_enqueue_script( 'search_profile_js', RBAGENCY_PLUGIN_URL .'assets/js/search_profile_js.js', array( 'jquery' ) );
-					}elseif($atts_arr['att_mode'] == 'ajax' && $atts_arr['att_type'] == 'advanced'){
+					}elseif(isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && $atts_arr['att_type'] == 'advanced'){
                     }else{
 					}
 				}else{
@@ -89,7 +91,7 @@ class RBAgency_Profile {
 				{
 					$add_form_class	 = "show_fields_dynamiclly" ;
 					$add_class_for_form	 = "hide_custom_fields" ;
-				}
+				} 
 			/*
 			 * Display Form
 			 */
@@ -159,7 +161,7 @@ class RBAgency_Profile {
 				$profile_cat_slug = str_replace("/", "", $profile_cat_slug);
 				echo "			<input type=\"hidden\" name=\"profile_cat\" value=\"". (isset($profile_cat_slug)?$profile_cat_slug:"") ."\" />\n";
 				// Show Profile Name
-						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+						if(isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
 							$hide_name = $atts_arr["att_show_name"] == "false" ? "style='display:none;'" : "";
 							echo "				<div class=\"rbfield rbtext rbsingle rb_firstname\" id=\"rb_firstname\" ".$hide_name.">\n";
 							echo "					<label for=\"namefirst\">". __("First Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
@@ -186,7 +188,7 @@ class RBAgency_Profile {
 								echo "				</div>\n";
 							}
 						}
-						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+						if(isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
 							$hide_display_name = $atts_arr["att_show_display_name"] == "false" ? "style='display:none;'" : "";
 							echo "				<div class=\"rbfield rbtext rbsingle rb_displayname\" id=\"rb_displayname\" ".$hide_display_name.">\n";
 							echo "					<label for=\"displayname\">". __("Display Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
@@ -226,7 +228,7 @@ class RBAgency_Profile {
 					$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
 				}
 				// Show Classification
-						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+						if(isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
 							$hide_profile_type = $atts_arr["att_profile_type"] == "false" ? "style='display:none;'" : "";
 							echo "				<div class=\"rbfield rbradio rbmulti rb_profiletype\" id=\"rb_profiletype\" ".$hide_profile_type.">\n";
 							echo "					<label for=\"type\">". __("Type", RBAGENCY_TEXTDOMAIN) . "</label>\n";
@@ -323,7 +325,7 @@ class RBAgency_Profile {
         											url: "<?php echo admin_url('admin-ajax.php') ?>",
         											data: {
         												action: "rb_get_gender_by_preselected_datatype",
-        												'profile_type': $(".DataTypeIDClassCheckbox:checked").val(),
+        												profile_types: $(".DataTypeIDClassCheckbox:checked").val(),
                                                         search_type:'<?php echo $atts_arr['att_type']?>'
         											},
         											success: function (results) {
@@ -339,9 +341,9 @@ class RBAgency_Profile {
         												url: "<?php echo admin_url('admin-ajax.php') ?>",
         												data: {
         													action: "rb_get_customfields_search_ajax",
-        													'profile_types': $(".DataTypeIDClassCheckbox:checked").val(),
-        													'gender': jQuery(this).val(),
-        													'search_type': "<?php echo $atts_arr['att_type']; ?>"
+        													profile_types: $(".DataTypeIDClassCheckbox:checked").val(),
+        													gender: jQuery(this).val(),
+        													search_type: "<?php echo $atts_arr['att_type']; ?>"
         												},
         												success: function (results) {
         													jQuery(".customfields-onload").html(results);
@@ -398,7 +400,7 @@ class RBAgency_Profile {
 							}
 						}
 				// Show Profile Gender
-						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+						if(isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
 							?>
 							<script type="text/javascript">
 								jQuery(document).ready(function($){
@@ -409,7 +411,7 @@ class RBAgency_Profile {
 											url: "<?php echo admin_url('admin-ajax.php') ?>",
 											data: {
 												action: "rb_get_gender_by_preselected_datatype",
-												'profile_type': $(".DataTypeIDClassCheckbox:checked").val()
+												profile_type: $(".DataTypeIDClassCheckbox:checked").val()
 											},
 											success: function (results) {
 												console.log(results);
@@ -458,7 +460,7 @@ class RBAgency_Profile {
 						}
 				echo "<div class=".$add_form_class.">" ;
 				// Show Profile Age
-						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+						if(isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
 							$hide_age = $atts_arr["att_show_age"] == "false" ? "style='display:none;'" : "";
 							echo "				<div class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth\" ".$hide_age.">\n";
 							echo "					<label for=\"datebirth_min datebirth_max\">". __("Age", RBAGENCY_TEXTDOMAIN) . "</label>\n";
@@ -491,7 +493,7 @@ class RBAgency_Profile {
 							}
 						}
 				// Show Profile birthdate
-						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+						if(isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
 							$hide_birthdate = $atts_arr["att_show_birthdate"] == "false" ? "style='display:none;'" : "";
 							echo "				<div class=\"rbfield rbtext rbmulti rb_datebirth\" id=\"rb_datebirth2\" ".$hide_birthdate.">\n";
 							echo "					<label for=\"datebirth_min2 datebirth_max\">". __("Birthdate", RBAGENCY_TEXTDOMAIN) . "</label>\n";
@@ -532,7 +534,7 @@ class RBAgency_Profile {
 							}
 						}
 				// Show Location Search
-						if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+						if(isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
 							$hide_city = $atts_arr["att_show_city"] == "false" ? "style='display:none;'" : "";	
 							echo "				<div class=\"rbfield rbtext rbsingle rb_city\" id=\"rb_city\" ".$hide_city.">\n";
 							echo "					<label for=\"city\">". __("City", RBAGENCY_TEXTDOMAIN) ."</label>\n";
@@ -578,7 +580,7 @@ class RBAgency_Profile {
 							echo "						</select>\n";
 							echo "					</div>\n";
 							echo "				</div>\n";
-							if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+							if(isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
 								$hide_zip = $atts_arr["att_show_zip"] == "false" ? "style='display:none;'" : "";
 							}else{
 								$hide_zip = "";
@@ -631,8 +633,8 @@ class RBAgency_Profile {
 						}
 						//here, display custom fields for searching
 				echo "<div class=\"customfields_search_form\" ></div>";
-				if( $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
-					if($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic'){
+				if( isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
+					if(isset($atts_arr['att_type']) && $atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic'){
 						?>
 						<script type="text/javascript">
 						jQuery(document).ready(function(){
@@ -749,7 +751,7 @@ class RBAgency_Profile {
 				}
 				$field_results = $wpdb->get_results($field_sql,ARRAY_A);
 				$searchType =  strpos($_SERVER['REQUEST_URI'], 'basic') >-1 ? 'basic' : 'advanced';
-			if( ($atts_arr['att_mode'] == 'ajax' && $atts_arr['att_type'] == 'advanced') || $searchType == 'advanced' ){
+			if( (isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && $atts_arr['att_type'] == 'advanced') || $searchType == 'advanced' ){
 				echo "<div class=\"customfields-onload\" >";
 				foreach($field_results  as $data){
 					// Set Variables
@@ -1097,9 +1099,9 @@ class RBAgency_Profile {
 						}
 					}
 					$is_casting_page = get_query_var("rbgroup");
-                    $hide_basic_button = $atts_arr["att_show_basic_button"] == "false" ? "style='display:none;'" : "";
-                    $hide_advanced_button = $atts_arr["att_show_advanced_button"] == "false" ? "style='display:none;'" : "";
-					if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){
+                    $hide_basic_button = isset($atts_arr["att_show_basic_button"]) == "false" ? "style='display:none;'" : "";
+                    $hide_advanced_button = isset($atts_arr["att_show_advanced_button"]) && $atts_arr["att_show_advanced_button"] == "false" ? "style='display:none;'" : "";
+					if(isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){
 							if(is_admin() === false){
 								echo "				<input type=\"button\" onclick=\"window.location.href='". get_bloginfo("wpurl") ."/search-basic/'\" value=\"". __("Go to Basic Search", RBAGENCY_TEXTDOMAIN) . "\" ".$hide_basic_button."/>\n";
 							}
@@ -1323,6 +1325,7 @@ class RBAgency_Profile {
 					if(isset($_REQUEST['rb_datepicker_to_bd'])){
 						$filterArray['rb_datepicker_to_bd'] = $_REQUEST['rb_datepicker_to_bd'];
 					}
+                   
 			// Debug
 			if(self::$error_debug){
 				self::$error_checking[] = array('search_process',$filterArray);
@@ -1423,6 +1426,7 @@ class RBAgency_Profile {
 						"sort_by" => NULL,
 						"list_layout" => NULL
 					), $atts));
+                     
 				/*
 				 * WHERE
 				 */
@@ -1842,6 +1846,7 @@ class RBAgency_Profile {
 					$atts['sort'] .= ' '.$_sort_way;
 					self::search_generate_sqlorder($atts,$filter2);
 					// Store SQL and Custom Fields SQL
+                    
 					$filter_array = array(
 						"standard" => $filter,
 						"custom" => $filter2,
@@ -1939,6 +1944,7 @@ class RBAgency_Profile {
 			// Merge them
 			$sql_where = $sql_where_array['standard'] ." ". $sql_where_array['custom'];
 			$sqlCasting_userID = "";
+            
 			switch ($query_type) {
 			/*
 			 * Standard Query (Public Front-End)
@@ -2046,8 +2052,10 @@ class RBAgency_Profile {
 						$sql .= "FROM ". table_agency_profile ." profile
 							WHERE ". $sql_where_array['standard'] ." ";
 					}
+                    
 					$sql .= self::$order_by;
 					break;
+                    
 			/*
 			 * Casting Cart
 			 */
@@ -2185,6 +2193,7 @@ class RBAgency_Profile {
 					}else{
 						$q = $sql;
 					}
+                    
 					return self::search_result_admin( $q, $arr_query );
 				} else {
 					return self::search_result_public( $sql, $castingcart, $shortcode, $arr_query );
@@ -2715,8 +2724,8 @@ class RBAgency_Profile {
 			/*
 			 * process query
 			 */
-            
-				$results = $wpdb->get_results($sql,ARRAY_A);
+           
+				$results = $wpdb->get_results($sql,ARRAY_A); 
 				$count = count($results);
 			/*
 			 * initialize html
@@ -2901,6 +2910,8 @@ class RBAgency_Profile {
 					}
 					$displayHtml .=  "            </td>\n";
 					$displayHtml .=  "        </tr>\n";
+                    
+                    
 				}
 				if ($count < 1) {
 					if (isset($filter)) {
@@ -3115,6 +3126,9 @@ class RBAgency_Profile {
 							".$displayGridBtnsHtml."
 							</div>
 						</div>";
+                        
+                        
+                       
 		}
 		/*
 		 * Format Profile
@@ -3272,13 +3286,13 @@ class RBAgency_Profile {
 					//if(isset($dataList["ProfileRating"]) && !empty($dataList["ProfileRating"])){
 						$link_bg = plugins_url('rb-agency/view/imgs/sprite.png');
 						$ProfileRating = !empty($dataList["ProfileRating"]) ? $dataList["ProfileRating"] : 0;
-						$Rating .= "        <div style='clear:both; margin-top:5px;margin-bottom:-5px;'>";
-						$Rating .= "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 1 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
-						$Rating .= "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 2 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
-						$Rating .= "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 3 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
-						$Rating .= "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 4 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
-						$Rating .= "					<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating == 5 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
-						$Rating .= "        </div><br>";
+						$Rating = "<div style='clear:both; margin-top:5px;margin-bottom:-5px;'>";
+						$Rating .= "<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 1 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+						$Rating .= "<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 2 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+						$Rating .= "<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 3 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+						$Rating .= "<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating >= 4 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+						$Rating .= "<div class='p_star' style='float:left; width:15px; height:15px; background:url(\"$link_bg\") ".(isset($ProfileRating) && $ProfileRating == 5 ? "0px 0px;" : '0px -15px;' ) ."'></div>";
+						$Rating .= "</div><br>";
 					//}
 				if($rb_agency_option_layoutprofileviewmode == 1) {
 					$profile_name = "<strong class=\"name\"><a href=\"#lightbox-fancy-".$dataList["ProfileID"] ."\" class=\"".$profile_link_class."\">". stripslashes($ProfileContactDisplay) ."</a></strong>\n";
