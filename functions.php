@@ -1154,7 +1154,7 @@
 		if($ProfileID != 0){
 			$query = $wpdb->get_results($wpdb->prepare("SELECT ProfileType FROM ".table_agency_profile." WHERE ProfileID = %d",$ProfileID),ARRAY_A);
 			$fetchID = current($query);
-			$ptype = $fetchID["ProfileType"];
+			$ptype = $fetchID["ProfileType"]; 
 			if(strpos($ptype,",") > -1){
 				$t = explode(",",$ptype);
 				$ptype = "";
@@ -1245,15 +1245,19 @@
 		$rb_agency_option_unittype  		= isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0;
 		$rb_agency_option_profilenaming 	= isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int)$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 		$rb_agency_option_locationtimezone 	= isset($rb_agency_options_arr['rb_agency_option_locationtimezone'])?(int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
-		if( (!empty($data3['ProfileCustomID']) || $data3['ProfileCustomID'] !="") ){
-			$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
-			$row = $subresult;
+        if( (!empty($data3['ProfileCustomID']) || $data3['ProfileCustomID'] !="") ){
+			$subresult = $wpdb->get_results(
+            $wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID 
+            FROM ". table_agency_customfield_mux ." 
+            WHERE ProfileCustomID = %d 
+            AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
+			$row = $subresult[0];
 			#get profile user linked
 			$user = $wpdb->get_row("SELECT ProfileUserLinked FROM ".table_agency_profile." WHERE ProfileID = ".$ProfileID,ARRAY_A);
 			$ProfileCustomTitle = $data3['ProfileCustomTitle'];
 			$ProfileCustomType  = $data3['ProfileCustomType'];
-			$ProfileCustomDateValue =  ($row[1]["ProfileCustomDateValue"]!=="1970-01-01"  && $row[1]["ProfileCustomDateValue"]!=="0000-00-00")?$row[0]["ProfileCustomDateValue"]:"";
-			$ProfileCustomValue = !empty($row[1]["ProfileCustomValue"])?$row[1]["ProfileCustomValue"]:$row[0]["ProfileCustomValue"];
+            $ProfileCustomDateValue =  ($row["ProfileCustomDateValue"]!=="1970-01-01"  && $row["ProfileCustomDateValue"]!=="0000-00-00")?$row["ProfileCustomDateValue"]:"";
+			$ProfileCustomValue = !empty($row["ProfileCustomValue"])?$row["ProfileCustomValue"]:$row["ProfileCustomValue"];
 			$ProfileCustomValue = !empty($ProfileCustomValue) ? $ProfileCustomValue : "";
 			$ProfileCustomDateValue = !empty($ProfileCustomDateValue) ? $ProfileCustomDateValue : "";
 			/* Pull data from post so data will not lost @Satya 12/12/2013 */
@@ -1574,7 +1578,7 @@
 						<script type="text/javascript">
 						jQuery(document).ready(function(){
 							jQuery(".rb-datepicker").each(function(){
-								jQuery(this).datepicker({dateFormat: "yy-mm-dd" }).val(jQuery(this).val());
+								//jQuery(this).datepicker({dateFormat: "yy-mm-dd" }).val(jQuery(this).val());
 							})
 						});
 						</script>
@@ -4293,7 +4297,9 @@ function get_social_media_links($ProfileID = "", $return = false){
 			wp_enqueue_style("rbagencyadmin", plugins_url( '/assets/css/admin.css', __FILE__ ) );
 			wp_enqueue_style("rbagencyadmin", plugins_url( '/assets/css/forms.css', __FILE__ ) );
 			wp_enqueue_style('rbagency-datepicker', plugins_url( '/assets/css/jquery-ui/jquery-ui.css', __FILE__ ) );
-				wp_enqueue_style('rbagency-datepicker-theme', plugins_url( '/assets/css/jquery-ui/jquery-ui.theme.min.css', __FILE__ ) );
+			wp_enqueue_style('rbagency-datepicker-theme', plugins_url( '/assets/css/jquery-ui/jquery-ui.theme.min.css', __FILE__ ) );
+            wp_enqueue_style('jquery-filer-style', plugins_url( '/assets/css/jquery.filer.css', __FILE__ ) );
+            wp_enqueue_style('jquery-confirm-style', plugins_url( '/assets/css/jquery-confirm.min.css', __FILE__ ) );
 		}
 		wp_enqueue_style("rbagencyadmin-base_css", plugins_url( '/assets/css/style_base.css', __FILE__ ) );
 		wp_enqueue_style('rbagency-datepicker', plugins_url( '/assets/css/jquery-ui/jquery-ui.css', __FILE__ ) );
@@ -4304,10 +4310,10 @@ function get_social_media_links($ProfileID = "", $return = false){
 			wp_enqueue_script( 'customfields', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js', array( 'jquery' ) );
 		}else{
 			wp_enqueue_script( 'jquery-ui', RBAGENCY_PLUGIN_URL .'assets/js/jquery-ui.js', array( 'jquery' ) );
+            wp_enqueue_script( 'script-handle2', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js', array( 'jquery' ) );
 		}
 		wp_enqueue_script( 'audiojs', RBAGENCY_PLUGIN_URL .'assets/audiojs/audio.min.js', array( 'jquery' ) );
 		wp_enqueue_script( 'script-handle', RBAGENCY_PLUGIN_URL .'assets/js/list_reorder.js', array( 'jquery' ) );
-		wp_enqueue_script( 'script-handle2', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js', array( 'jquery' ) );
 		wp_localize_script( 'script-handle2', 'objectL10n', array(
 			'youngest_to_oldest' => esc_html__( 'Youngest to Oldest', RBAGENCY_TEXTDOMAIN ),
 			'oldest_to_youngest' => esc_html__( 'Oldest to Youngest', RBAGENCY_TEXTDOMAIN ),
@@ -4323,6 +4329,26 @@ function get_social_media_links($ProfileID = "", $return = false){
 		) );
 	}
 	add_action( 'init', 'load_admin_js' );
+    function load_admin_script(){ 
+    wp_register_script( 'jquery-filer', RBAGENCY_PLUGIN_URL .'assets/js/jquery.filer.js', array( 'jquery' ),FALSE);
+    wp_register_script( 'manageprofile', RBAGENCY_PLUGIN_URL .'assets/js/rbManageProfile.js', array( 'jquery-filer' ),FALSE);
+    wp_register_script( 'rbagency-reports', RBAGENCY_PLUGIN_URL .'assets/js/rbReports.js', array( 'jquery' ),FALSE);
+    wp_register_script( 'jquery-confirm', RBAGENCY_PLUGIN_URL .'assets/js/jquery-confirm.min.js', array( 'jquery' ),FALSE);
+       if(isset($_GET['page']) && $_GET['page']=="rb_agency_profiles"){
+            wp_enqueue_script( 'jquery-filer');
+            wp_enqueue_script( 'manageprofile');
+            wp_enqueue_script( 'jquery-confirm');
+       }else{
+            wp_dequeue_script('manageprofile');
+            wp_dequeue_script('jquery-confirm');
+       }
+       if(isset($_GET['page']) && $_GET['page']=="rb_agency_reports"){
+            wp_enqueue_script( 'rbagency-reports');
+       }else{
+           wp_dequeue_script('rbagency-reports'); 
+       }
+    }
+    add_action('admin_enqueue_scripts','load_admin_script');
 	function load_datetime_basic_search(){
 		echo '<script type="text/javascript">
 				jQuery(function(){
@@ -4337,7 +4363,7 @@ function get_social_media_links($ProfileID = "", $return = false){
 				});
 				</script>';
 	}
-	add_action( 'wp_head', 'load_datetime_basic_search' );
+add_action( 'wp_head', 'load_datetime_basic_search' );
 add_action( 'widgets_init', 'rblogin_widget' );
 function rblogin_widget() {
 	register_widget( 'RBLogin_Widget' );
@@ -4634,8 +4660,8 @@ function rbagency_lightbox_style_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'rbagency_lightbox_style_scripts' );
- add_filter('ws_plugin__s2member_login_redirect', '__return_false');
- add_action( 'login_form_register', 'wpse45134_catch_register' );
+add_filter('ws_plugin__s2member_login_redirect', '__return_false');
+add_action( 'login_form_register', 'wpse45134_catch_register' );
 /**
  * Redirects visitors to `wp-login.php?action=register` to
  * `site.com/register`
@@ -4753,7 +4779,7 @@ function rate_profile(){
 		die();
 }
 add_action('wp_ajax_rate_profile', 'rate_profile');
-add_action('wp_ajax_rate_profile', 'rate_profile');
+//add_action('wp_ajax_rate_profile', 'rate_profile');
 function insertNewCountries(){
 	global $wpdb;
 	$arr = array(
@@ -4960,7 +4986,8 @@ function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$Pr
 	$sql = "SELECT DISTINCT(DataTypeID),DataTypeTitle,DataTypeLevel,DataTypeParentID,DataTypeTag FROM ".$wpdb->prefix."agency_data_type WHERE DataTypeParentID = $parentID";
 	$childs = $wpdb->get_results($sql,ARRAY_A);
 	$updated_ProfileTypesArr = explode(",",$fields['updated_ProfileType']);
-	$DataTypeGenderTitle = rbGetDataTypeGenderTitleByID($_GET["ProfileGender"]);
+    //$ProfileGender = $_GET["ProfileGender"];
+	//$DataTypeGenderTitle = is_numeric($ProfileGender)? rbGetDataTypeGenderTitleByID($_GET["ProfileGender"]):$ProfileGender;
 	if($wpdb->num_rows > 0){
 		$ProfileTypeArr = [];
 		if(strpos($ProfileType, '|')>-1){
@@ -4991,18 +5018,18 @@ function rb_get_profile_type_childs_checkbox_profilemanage($parentID,$action,$Pr
 					echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" profile-type-title=\"".$child["DataTypeTitle"]."\" value=\"" . $child['DataTypeID'] . "\" profile-type-title=\"".$child['DataTypeTitle']."\" id=\"ProfileType[]\" class=\"userProfileType \" $checked/>&nbsp;".$child['DataTypeTitle']."<br>";
 				}
 								}
-								if ($action == "editRecord") {
-									echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $child['DataTypeID'] . "\" profile-type-title=\"".$child['DataTypeTitle']."\"class=\"userProfileType ".(in_array($child['DataTypeID'], $updated_ProfileTypesArr) ? "marked_changed" : "" )."\"";
-									if(is_array($ProfileTypeArr)){
-											if (in_array($child['DataTypeID'], $ProfileTypeArr)) {
-												echo " checked=\"checked\"";
-											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
-									} else {
-											if ($data3['DataTypeID'] == $ProfileTypeArr) {
-												echo " checked=\"checked\"";
-											}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
-									}
-								}
+			if ($action == "editRecord") {
+				echo $space."<input type=\"checkbox\" name=\"ProfileType[]\" id=\"ProfileType[]\" value=\"" . $child['DataTypeID'] . "\" profile-type-title=\"".$child['DataTypeTitle']."\"class=\"userProfileType ".(in_array($child['DataTypeID'], $updated_ProfileTypesArr) ? "marked_changed" : "" )."\"";
+				if(is_array($ProfileTypeArr)){
+						if (in_array($child['DataTypeID'], $ProfileTypeArr)) {
+							echo " checked=\"checked\"";
+						}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
+				} else {
+						if ($data3['DataTypeID'] == $ProfileTypeArr) {
+							echo " checked=\"checked\"";
+						}echo "/> " . $child['DataTypeTitle'] . "<br />\n";
+				}
+			}
 			if(strpos($DataTypeOptionValue, $GenderTitle)>-1 || strpos($DataTypeOptionValue, 'All Gender')>-1 || empty($DataTypeOptionValue)){
 				do_action('rb_get_profile_type_childs_checkbox_display_profilemanage_display',$child['DataTypeID'],$action,$ProfileType,$fields);
 			}					
@@ -5591,7 +5618,6 @@ function rb_load_customfields_search($visibility = 0,$result){
 		echo "		</div>"; 
 		echo "	</div>";
 	} elseif ($ProfileCustomType == 7) { // Imperial(in/lb), Metrics(ft/kg)
-    
 		   echo "<div id=\"rbfield-". $result['ProfileCustomID'] ."\" class=\"rbfield rbtext rbmulti\">\n";
            echo "<label for=\"ProfileCustomID". $result['ProfileCustomID'] ."\">".__($result['ProfileCustomTitle'].$measurements_label, RBAGENCY_TEXTDOMAIN).":</label>\n"; 
            if($result['ProfileCustomOptions']==3 && $rb_agency_option_unittype == 1){
@@ -5634,25 +5660,20 @@ function rb_load_customfields_search($visibility = 0,$result){
                        echo "</div>";     
 					echo "</div>";	
 			} else {
-		 
 		#echo "	<div id=\"rbfield-". $result['ProfileCustomID'] ."\" class=\"rbfield rbtextarea rbsingle\">\n";
 		#echo "		<label for=\"ProfileCustomID". $result['ProfileCustomID'] ."\">".__($result['ProfileCustomTitle'].$measurements_label, RBAGENCY_TEXTDOMAIN).":</label>\n";
 		#echo "		<div><input type=\"text\" name=\"ProfileCustomID". $result['ProfileCustomID'] ."\" value=\"". $ProfileCustomValue ."\" /></div>\n";
 		#echo "	</div>";
-        
         #echo "	<div id=\"rbfield-". $result['ProfileCustomID'] ."\" class=\"rbfield rbtext rbmulti\">\n";
 	 	#echo "  	<label for=\"ProfileCustomID". $result['ProfileCustomID'] ."\">".__($result['ProfileCustomTitle'].$measurements_label, RBAGENCY_TEXTDOMAIN).":</label>\n"; 
-
 		$ProfileCustomOptions_String = str_replace(",",":",strtok(strtok($result['ProfileCustomOptions'],"}"),"{"));
 		list($ProfileCustomOptions_Min_label,$ProfileCustomOptions_Min_value,$ProfileCustomOptions_Max_label,$ProfileCustomOptions_Max_value) = explode(":",$ProfileCustomOptions_String);
-
 		echo "		<div>";
 		if(!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)){
 				echo "<div><label for=\"ProfileCustomLabel_min\">". __("Min", RBAGENCY_TEXTDOMAIN) . ":</label>\n";
 				echo "<input class='stubby' type=\"text\" name=\"ProfileCustomID". $result['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Min_value ."\" />\n";
 				echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", RBAGENCY_TEXTDOMAIN) . ":</label>\n";
 				echo "<input class='stubby' type=\"text\" name=\"ProfileCustomID". $result['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Max_value ."\" /></div>\n";
-
 		} else {
 				echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", RBAGENCY_TEXTDOMAIN) . ":</label>\n";
 				echo "<input class='stubby' type=\"text\" name=\"ProfileCustomID". $result['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $result['ProfileCustomID']]."\" /></div>\n";
@@ -5660,7 +5681,6 @@ function rb_load_customfields_search($visibility = 0,$result){
 				echo "<input class='stubby' type=\"text\" name=\"ProfileCustomID". $result['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $result['ProfileCustomID']]."\" /></div>\n";
 		}
 		echo "		</div>\n";
-		
 	}
         echo "	</div>\n";
    } 
@@ -5731,7 +5751,6 @@ function rb_get_customfields_search_ajax(){
     		$find_in_set = " FIND_IN_SET('".$_REQUEST['profile_types']."',b.ProfileCustomDataTypeID)>0 ";
     	}
     }
-	
 	if(!empty($_REQUEST['profile_types'])){
 		if($search_type == "advanced"){
 			$find_in_set = !empty($find_in_set) ? "a.ProfileCustomShowSearch > 0 AND ".$find_in_set : "a.ProfileCustomShowSearch > 0";
@@ -5908,4 +5927,109 @@ function rb_i18n( $text ){
 	}
 	return $text;
 }
-?>
+add_action("wp_ajax_rb_agency_upload_image","rb_agency_upload_image");
+add_action("wp_ajax_nopriv_rb_agency_upload_image","rb_agency_upload_image");
+function rb_agency_upload_image()
+{
+    global $wpdb;
+    include_once dirname(__FILE__)."/ext/Uploader.php";
+    $profiledir = $_POST['profilegallery'];
+    $profileid = $_POST['profileid'];
+    $upload_dir = wp_upload_dir();
+    $target_dir = RBAGENCY_UPLOADPATH.$profiledir."/";
+    if(!$profileid){
+        $errors = array('error'=>'Profile ID Required!-->');
+        echo json_encode($errors);
+        exit;
+    }
+    if (!is_dir($target_dir)){
+        mkdir($target_dir);
+        //$errors = array('error'=>'Target directory not accessible!-->'.$target_dir);
+        //echo json_encode($errors);
+        //exit;
+    }  
+    $uploader = new Uploader();
+    $filename = mt_rand();
+    $data = $uploader->upload($_FILES['rba_imgupload'], array(
+        'limit' => 30, //Maximum Limit of files. {null, Number}
+        'maxSize' => 10, //Maximum Size of files {null, Number(in MB's)}
+        'extensions' => null, //Whitelist for file extension. {null, Array(ex: array('jpg', 'png'))}
+        'required' => false, //Minimum one file is required for upload {Boolean}
+        'uploadDir' => $target_dir, //Upload directory {String}
+        'title' => $profileid."-".$filename, //New file name {null, String, Array} *please read documentation in README.md
+        'removeFiles' => true, //Enable file exclusion {Boolean(extra for jQuery.filer), String($_POST field name containing json data with file names)}
+        'replace' => true, //Replace the file if it already exists  {Boolean}
+        'perms' => null, //Uploaded file permisions {null, Number}
+        'onCheck' => null, //A callback function name to be called by checking a file for errors (must return an array) | ($file) | Callback
+        'onError' => null, //A callback function name to be called if an error occured (must return an array) | ($errors, $file) | Callback
+        'onSuccess' => null, //A callback function name to be called if all files were successfully uploaded | ($files, $metas) | Callback
+        'onUpload' => null, //A callback function name to be called if all files were successfully uploaded (must return an array) | ($file) | Callback
+        'onComplete' => null, //A callback function name to be called when upload is complete | ($file) | Callback
+        'onRemove' => null //A callback function name to be called by removing files (must return an array) | ($removed_files) | Callback
+    ));
+    if($data['isComplete']){
+        $images = $data['data']['metas'];
+        $info = array();
+        foreach($images as $image){
+            if (!is_dir($target_dir."thumb/")){
+                mkdir($target_dir."thumb/");
+            }
+            $url = $target_dir."thumb/".$image['name'];
+            $uploader->makeThumbnails($target_dir,$image);
+            $imgid = $wpdb->insert(table_agency_profile_media, 
+            array( 
+            'ProfileID' => $profileid, 
+            'ProfileMediaType' => 'Image',
+            'ProfileMediaTitle'=>$image['name'],
+            'ProfileMediaURL'=>$image['name']
+            ));
+            array_push($info,array('image'=>$url,'mediaid'=>$wpdb->insert_id));
+        }
+        echo json_encode($info);
+    }
+    if($data['hasErrors']){
+        $errors = $data['errors'];
+        echo json_encode($errors);
+    }
+    exit;
+}
+add_action("wp_ajax_rb_agency_delete_image","rb_agency_update_image");
+add_action("wp_ajax_nopriv_rb_agency_delete_image","rb_agency_update_image");
+add_action("wp_ajax_rb_agency_setprivate_image","rb_agency_update_image");
+add_action("wp_ajax_nopriv_rb_agency_setprivate_image","rb_agency_update_image");
+add_action("wp_ajax_rb_agency_setprimary_image","rb_agency_update_image");
+add_action("wp_ajax_nopriv_rb_agency_setprimary_image","rb_agency_update_image");
+function rb_agency_update_image()
+{
+    global $wpdb;
+    $action = $_POST['action'];
+    $mediaid = $_POST['mediaid'];
+    $profileid = $_POST['profileid'];
+    if($action=="rb_agency_delete_image"){    
+        $media = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileMediaTitle FROM ".table_agency_profile_media." WHERE ProfileMediaID = $mediaid" ) );
+        $mediadir = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileGallery FROM ".table_agency_profile." WHERE ProfileID = $profileid" ) );
+        $file = $media->ProfileMediaTitle;
+        $imgdir = $mediadir->ProfileGallery;
+        $image = RBAGENCY_UPLOADPATH.$imgdir.DIRECTORY_SEPARATOR.$file;
+        $thumb = RBAGENCY_UPLOADPATH.$imgdir.DIRECTORY_SEPARATOR."thumb".DIRECTORY_SEPARATOR.$file;
+        unlink($image);
+        unlink($thumb);
+        $wpdb->delete(table_agency_profile_media, array( 'ProfileMediaID' => $mediaid ), array( '%d' ) );
+        echo $image;
+        echo $thumb;
+        exit;
+    }
+    if($action=="rb_agency_setprivate_image"){
+        $isprivate = $_POST['isprivate'];
+        $wpdb->update(table_agency_profile_media, array( 'isPrivate' => $isprivate ), array('ProfileMediaID'=>$mediaid) );
+        echo json_encode(array('success'=>'true'));
+        exit;
+    }
+    if($action=="rb_agency_setprimary_image"){
+        $profileid = $_POST['profileid'];
+        $wpdb->update(table_agency_profile_media, array( 'ProfileMediaPrimary' => 0 ), array('ProfileID'=>$profileid,'ProfileMediaPrimary'=>1) );
+        $wpdb->update(table_agency_profile_media, array( 'ProfileMediaPrimary' => 1 ), array('ProfileMediaID'=>$mediaid) );
+        echo json_encode(array('success'=>'primary image set'));
+        exit;
+    }
+}
