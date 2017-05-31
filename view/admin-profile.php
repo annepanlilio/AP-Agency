@@ -701,7 +701,11 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 												if(!empty($_voidemodID)){
 													update_option("voicedemo_".$_voidemodID ,  $path_parts['filename'] );
 												}
-												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
+                                                $voicedemodir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/voicedemo/";
+                                                if(!is_dir($voicedemodir)){
+                                                    mkdir($voicedemodir);
+                                                }
+												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $voicedemodir.$safeProfileMediaFilename);
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload a mp3 file only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
 												$have_error = true;
@@ -710,7 +714,11 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 											// Add to database
 											if ($_FILES['profileMedia' . $i]['type'] == "application/msword" || $_FILES['profileMedia' . $i]['type'] == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || $_FILES['profileMedia' . $i]['type'] == "application/pdf" || $_FILES['profileMedia' . $i]['type'] == "application/rtf") {
 												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
+												$resumedir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/resume/" ;
+                                                if(!is_dir($resumedir)){
+                                                    mkdir($resumedir);
+                                                }
+                                                move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $resumedir. $safeProfileMediaFilename);
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload PDF/MSword/RTF files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
 												$have_error = true;
@@ -719,7 +727,11 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 											// Add to database
 											if ($_FILES['profileMedia' . $i]['type'] == "application/msword" || $_FILES['profileMedia' . $i]['type'] == "application/pdf" || $_FILES['profileMedia' . $i]['type'] == "application/rtf" || $_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/gif" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
 												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
+												$headshotdir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/headshot/" ;
+                                                if(!is_dir($headshotdir)){
+                                                    mkdir($headshotdir);
+                                                }
+                                                move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $headshotdir. $safeProfileMediaFilename);
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload PDF/MSWord/RTF/Image files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
 												$have_error = true;
@@ -728,7 +740,11 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 											// Add to database
 											if ($_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
 												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
+												$CompCarddir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/compcard/" ;
+                                                if(!is_dir($CompCarddir)){
+                                                    mkdir($CompCarddir);
+                                                }
+                                                move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $CompCarddir. $safeProfileMediaFilename);
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload jpeg or png files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
 												$have_error = true;
@@ -738,7 +754,11 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 											// Add to database
 											if ($_FILES['profileMedia' . $i]['type'] == "image/pjpeg" || $_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/gif" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
 												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
+												$CardPhotos = RBAGENCY_UPLOADPATH . $ProfileGallery . "/cardphotos/" ;
+                                                if(!is_dir($CardPhotos)){
+                                                    mkdir($CardPhotos);
+                                                }
+                                                move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $CardPhotos. $safeProfileMediaFilename);
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload an image file only",rb_agency_TEXTDOMAIN)."</i></b><br />";
 												$have_error = true;
@@ -2174,7 +2194,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
                                         $pic = array();    
                                         $imageinfo = pathinfo($image_path);    
                                         $imagesize = getimagesize($image_path); 
-                                        if($imagesize['mime']!=null){
+                                        $imgtype = $imagesize['mime'] ? $imagesize['mime']:image_type_to_mime_type(exif_imagetype($image_path));
+                                        if($imgtype!=null){
                                         //$realpath =  realpath($image_path);                           
                                         $pic['file'] = $image_path;
                                         $pic['url'] = $image_path;          
@@ -2183,7 +2204,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
                                         $pic['primary'] = $dataImg['ProfileMediaPrimary'];
                                         $pic['private'] = $dataImg['isPrivate'];
                                         //$pic['type'] = image_type_to_mime_type(exif_imagetype($image_path));
-                                        $pic['type'] = $imagesize['mime'];
+                                        $pic['type'] = $imgtype;
                                         //$pic['size'] = filesize($realpath);
                                         $arr[] = $pic;
                                         }
@@ -2387,13 +2408,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									if(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedResumes)){
 										$markedClass = "marked_changed";
 									}
-									$outLinkResume .= "<div class=\"media-file resume ".$markedClass."\"><span>" .$dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
+									$outLinkResume .= "<div class=\"media-file resume ".$markedClass."\"><span>" .$dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/resume/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
 									$markedClass = "";
 									if(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedHeadshots)){
 										$markedClass = "marked_changed";
 									}
-									$headshot_image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'];
+									$headshot_image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/headshot/". $dataMedia['ProfileMediaURL'];
 									$headshot_params = array(
 										'crop'=>true,
 										'width'=>120,
@@ -2421,7 +2442,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									}elseif(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedPolaroids)){
 										$markedClass = "marked_changed";
 									}
-									$polaroid_image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'];
+									$polaroid_image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/polariod/". $dataMedia['ProfileMediaURL'];
 									$polariod_params = array(
 										'crop'=>true,
 										'width'=>120,
