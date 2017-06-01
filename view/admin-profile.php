@@ -2186,12 +2186,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$private_profile_photo = get_user_meta($ProfileUserLinked,'private_profile_photo',true);
 								$private_profile_photo_arr = explode(',',$private_profile_photo);
 								
-                                if (!extension_loaded('gd')) {
-                                    if (!dl('gd.so')) {
-                                        exit('GD Library is not installed on this server!');
-                                    }
-                                }
-								
+                                								
                                 foreach ($resultsImg as $k=>$dataImg) {
 									if ($dataImg['ProfileMediaPrimary']) {
 									
@@ -2456,7 +2451,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										$markedClass = "marked_changed";
 									}
 									$polaroid_image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/polariod/". $dataMedia['ProfileMediaURL'];
-									$$polaroid_path_params = array(
+									$polaroid_path_params = array(
 										'crop'=>true,
 										'width'=>120,
 										'height'=>108,
@@ -2479,7 +2474,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										'crop_only'=>true,
 										'crop_y'=>'0'
 									);
-                                    $markedClass = "marked_changed"; echo $compcard_image_path;
+                                    $markedClass = "marked_changed"; 
 									$image_src = bfi_thumb( $compcard_image_path, $compcard_path_params );
 									$outLinkComCard .= "<div class='media-file com-card'><span class='media-file-title'>" . $dataMedia['ProfileMediaType'] . "</span><br /><img src=\"".$image_src."\" /><br/><a href=\"" . $compcard_image_path . "\" target=\"_blank\"></a><input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 								} else if (strpos($dataMedia['ProfileMediaType'] ,"rbcustommedia") !== false) {
