@@ -545,6 +545,7 @@ elseif ($ConfigID == 3) {
 							//$fileArray[$new_file] = $new_file;
 
 							//Message
+                            $fileInfo = pathinfo($dirURL .DIRECTORY_SEPARATOR.$file);
 							$open_div = "<div id='1' style=\"border-color: #E6DB55;\">";
 							$fileMessage = "File: ". $file ." ";
 							//$newFile = " has been renamed <strong>". $new_file ."</strong>";
@@ -553,9 +554,9 @@ elseif ($ConfigID == 3) {
                             
                             if($_POST['action'] == "add") {
                                 
+                                $newfile = RBAgency_Common::generateFilename($dirURL,$fileInfo);
                                 if (($file_ext == "jpg" || $file_ext == "jpeg" || $file_ext == "png" || $file_ext == "gif" || $file_ext == "bmp")) {
-                                    $filename = mt_rand();
-                                    $newfile = $data3["ProfileID"]."-".$filename.".".$file_ext;
+                                    
                                     rename($dirURL .DIRECTORY_SEPARATOR. $file, $dirURL .DIRECTORY_SEPARATOR.$newfile);
                                     $newImage = array(
                                     'ProfileID'=>$data3["ProfileID"],
@@ -577,7 +578,12 @@ elseif ($ConfigID == 3) {
                                             (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) 
                                             VALUES (%s,'VoiceDemo',%s,%s)", 
                                             $data3['ProfileID'],$new_file,$new_file));
-        								if($newid){
+                                            $voicedemopath = $dirURL .DIRECTORY_SEPARATOR."/voicedemo/";
+                                            if(!is_dir($voicedemopath)){
+                                                    mkdir($voicedemopath);
+                                                }
+        								    rename($dirURL .DIRECTORY_SEPARATOR. $file, $voicedemopath.$newfile);
+                                        if($newid){
                                             $fileMessage .= " Video successfully added to DATABASE";
                                            }
         						}
@@ -589,6 +595,11 @@ elseif ($ConfigID == 3) {
                                             (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) 
                                             VALUES (%s,'Resume',%s,%s)", $data3['ProfileID'],$data3['ProfileContactNameFirst'] ."-". $new_file,$new_file));   
                                             
+                                            $resumepath = $dirURL .DIRECTORY_SEPARATOR."/resume/";
+                                            if(!is_dir($resumepath)){
+                                                    mkdir($resumepath);
+                                                }
+        								    rename($dirURL .DIRECTORY_SEPARATOR. $file, $resumepath.$newfile);
                                             if($newid){
                                             $fileMessage .= " Resume successfully added to DATABASE";
                                            }     							
