@@ -935,7 +935,23 @@ class RBAgency_Common {
 	/**
 	 * Converts array to http uri
 	 */
-		public static function http_build_query($query_data){
+		public static function generateFilename($filepath,$file){
+		    $string = "";
+            $pattern = '@\(.*?\)@';
+            $name = preg_replace($pattern, '', $file['filename']);
+		    $string = $file['filename'];
+            $extension = !empty($file['extension']) ? "." . $file['extension'] : "";
+            $string .= $extension;
+            //$name = $file['filename'];
+            $i = 1;
+            while (file_exists($filepath.$string)) { 
+                $string = $name . " ({$i})".$extension;
+                $i++;
+            }
+		   return $string;
+		}
+        
+        public static function http_build_query($query_data){
 				$query_data = http_build_query(array_filter($query_data));
 				return $query_data;
 		}
