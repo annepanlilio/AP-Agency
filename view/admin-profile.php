@@ -711,14 +711,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
                                                 if(!is_dir($resumedir)){
                                                     mkdir($resumedir);
                                                 }
-                                                $resumeid = $wpdb->get_var( "SELECT ProfileMediaID FROM ".table_agency_profile_media." WHERE ProfileMediaType='Resume' AND ProfileID='$ProfileID'" );
-                                                if(!$resumeid){
-                                                    $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-												}else{
-												    $wpdb->update(table_agency_profile_media, array( 'ProfileMediaTitle' => $safeProfileMediaFilename, 'ProfileMediaURL' => $safeProfileMediaFilename ), array( 'ProfileMediaID' => $resumeid ) );
-												    rb_empty_directory($resumedir);
-                                                }
-                                                
+                                                $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+												
                                                 move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $resumedir. $safeProfileMediaFilename);
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload PDF/MSword/RTF files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
@@ -727,18 +721,12 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 										} elseif ($uploadMediaType == "Headshot") {
 											// Add to database
 											if ($_FILES['profileMedia' . $i]['type'] == "application/msword" || $_FILES['profileMedia' . $i]['type'] == "application/pdf" || $_FILES['profileMedia' . $i]['type'] == "application/rtf" || $_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/gif" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
-												$headshotid = $wpdb->get_var( "SELECT ProfileMediaID FROM ".table_agency_profile_media." WHERE ProfileMediaType='Headshot' AND ProfileID='$ProfileID'" );
-                                                $headshotdir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/headshot/" ;
+												$headshotdir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/headshot/" ;
                                                 if(!is_dir($headshotdir)){
                                                     mkdir($headshotdir);
                                                 }
-                                                if(!$headshotid){
-                                                    $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-												}else{
-												    $wpdb->update(table_agency_profile_media, array( 'ProfileMediaTitle' => $safeProfileMediaFilename, 'ProfileMediaURL' => $safeProfileMediaFilename ), array( 'ProfileMediaID' => $headshotid ) );
-												    rb_empty_directory($headshotdir);
-                                                }                                               
-       
+                                                $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+												
                                                 move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $headshotdir. $safeProfileMediaFilename);
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload PDF/MSWord/RTF/Image files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
@@ -747,18 +735,12 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 										} elseif ($uploadMediaType == "CompCard") {
 											// Add to database
 											if ($_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
-												$compcardid = $wpdb->get_var( "SELECT ProfileMediaID FROM ".table_agency_profile_media." WHERE ProfileMediaType='CompCard' AND ProfileID='$ProfileID'" );
-                                                $CompCarddir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/compcard/" ;
+												$CompCarddir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/compcard/" ;
 												 if(!is_dir($CompCarddir)){
                                                     mkdir($CompCarddir);
                                                 }
-                                                if(!$compcardid){
-                                                    $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-												}else{
-												    $wpdb->update(table_agency_profile_media, array( 'ProfileMediaTitle' => $safeProfileMediaFilename, 'ProfileMediaURL' => $safeProfileMediaFilename ), array( 'ProfileMediaID' => $compcardid ) );
-                                                    rb_empty_directory($CompCarddir);
-												}                                               
-                                               
+                                                $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+												
                                                 move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $CompCarddir. $safeProfileMediaFilename);
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload jpeg or png files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
@@ -782,6 +764,10 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 										// Custom Media Categories
 										elseif (strpos($uploadMediaType,"rbcustommedia") !== false) {
 											// Add to database
+                                            $customMedia = RBAGENCY_UPLOADPATH . $ProfileGallery . "/custom/" ;
+                                            if(!is_dir($customMedia)){
+                                                    mkdir($customMedia);
+                                                }
 											$custom_media_info = explode("_",$uploadMediaType);
 											$custom_media_title = $custom_media_info[1];
 											$custom_media_type = $custom_media_info[2];
@@ -807,7 +793,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 											}
 											if (in_array($_FILES['profileMedia' . $i]['type'], $arr_extensions)) {
 												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
+												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $customMedia);
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>".__("Please upload ".$custom_media_extenstion." files only", RBAGENCY_TEXTDOMAIN)."</i></b><br />";
 												$have_error = true;
