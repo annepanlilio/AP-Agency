@@ -10,8 +10,7 @@
 
 		// Get User Information
 		global $user_ID;
-		global $current_user;
-		get_currentuserinfo();
+		$current_user = wp_get_current_user();
 		$CurrentUser = $current_user->ID;
 
 		// Get Target Profile ID

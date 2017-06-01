@@ -51,7 +51,7 @@ echo "<div id=\"profile-links\">\n";
 		$countImg  = $wpdb->num_rows;
 
 		if($countImg  > 0){
-			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/polaroids/\" class=\"profile-link polaroid\">". __("View Polaroids", RBAGENCY_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-30
+			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/polaroid/\" class=\"lightbox[polaroid] profile-link polaroid\">". __("View Polaroids", RBAGENCY_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-30
 			echo "<a href=\"".get_bloginfo('url')."/profile/".$ProfileGallery."/print-polaroids/\" class=\"profile-link polaroid\">". __("Print Polaroids", RBAGENCY_TEXTDOMAIN)."</a>\n"; //MODS 2012-11-28
 		}
 	}
@@ -62,7 +62,7 @@ echo "<div id=\"profile-links\">\n";
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {
 		foreach($resultsImg as $dataMedia ){
-			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL'],true) ." class=\"profile-link\">".__("View Resume",RBAGENCY_TEXTDOMAIN)."</a>\n";
+			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/resume/". $dataMedia['ProfileMediaURL'],true) ." class=\"profile-link\">".__("View Resume",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		}
 	}
 
@@ -72,7 +72,7 @@ echo "<div id=\"profile-links\">\n";
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {
 		foreach($resultsImg as $dataMedia ){
-			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".__("View Comp Card",RBAGENCY_TEXTDOMAIN)."</a>\n";
+			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/compcard/". $dataMedia['ProfileMediaURL']) ."  class=\"lightbox[compcard] profile-link\">".__("View Comp Card",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		}
 	}
 
@@ -100,7 +100,7 @@ echo "<div id=\"profile-links\">\n";
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {javascript:;
 		foreach($resultsImg as $dataMedia ){
-			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".__("View Headshot",RBAGENCY_TEXTDOMAIN)."</a>\n";
+			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/headshot/". $dataMedia['ProfileMediaURL']) ."  class=\"lightbox[headshot]  profile-link\">".__("View Headshot",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		}
 	}
 
@@ -112,7 +112,7 @@ echo "<div id=\"profile-links\">\n";
 		foreach($resultsImg as $dataMedia ){
 			$optionProfileMedia = get_option("voicedemo_".$dataMedia['ProfileMediaID']);
 			$voicedemo = empty($optionProfileMedia) ? "RENAME" : get_option("voicedemo_".$dataMedia['ProfileMediaID']);
-			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".$voicedemo."</a>\n";
+			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/voicedemo/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".$voicedemo."</a>\n";
 		}
 	}
 
@@ -161,7 +161,7 @@ echo "<div id=\"profile-links\">\n";
 	$countMedia = $wpdb->num_rows;
 	if ($countMedia > 0) {
 		foreach($resultsImg as $dataMedia ){
-			echo "<a href=\"". $dataMedia['ProfileMediaURL'] ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">". $dataMedia['ProfileMediaTitle'] ."</a>\n";
+			echo "<a href=\"". rb_get_profilemedia_link_opentype($ProfileGallery ."/custom/". $dataMedia['ProfileMediaURL'])  ."\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"profile-link\">". $dataMedia['ProfileMediaTitle'] ."</a>\n";
 		}
 	}
 
