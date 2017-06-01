@@ -271,7 +271,7 @@ class RBAgency_Admin {
 				</script>
 				<?php
 				// Load custom fields javascript
-				wp_enqueue_script( 'customfields', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js' );
+				//wp_enqueue_script( 'customfields', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js' );
 			}
 		}
 	/*

@@ -342,7 +342,84 @@ input[type=radio]:checked:before { margin-bottom: 2px!important; }
 .search-result-grid-container .profile-item .profile-image img { height: 100%; }
 
 .view-mode-btns { float:right; }
-
+input.full-width-text{width: 300px !important;}
+	.custom_media-box{
+		height: 108px;
+		background: #FFF;
+		text-align: center;
+		}
+	.custom_media-box span {
+		display: block;
+		background: #A5A4A4;
+		width: 34px;
+		text-align: center;
+		border-radius: 5px;
+		height: 26px;
+		padding-top: 10px;
+		margin-top: 38px;
+		float: left;
+		margin-left: 43px;
+	}
+	.custom_media-box-a {
+		color: #FFF !important;
+		text-transform: uppercase;
+		font-size: 9px;
+	}
+	.column-isPrivate{max-width: 100px;}
+	.media-files{
+		-webkit-column-count: 1;
+    	-webkit-column-gap: 10px;
+    	-webkit-column-fill: auto;
+    	-moz-column-count: 1;
+    	-moz-column-gap: 10px;
+    	-moz-column-fill: auto;
+    	column-count: 1;
+    	column-gap: 15px;
+    	column-fill: auto;
+	}
+	.media-files .media-file{
+	float:none!important;
+	display: inline-block;
+	margin: 0 2px 15px;
+	-webkit-column-break-inside: avoid;
+	-moz-column-break-inside: avoid;
+	column-break-inside: avoid;
+	padding: 3px !important;
+    text-align: center;
+	background: -webkit-linear-gradient(45deg, #FFF, #F9F9F9);
+	opacity: 1;
+	-webkit-transition: all .2s ease;
+	-moz-transition: all .2s ease;
+	-o-transition: all .2s ease;
+	transition: all .2s ease;
+	}
+.media-files-checkbox {
+    margin: 3px auto;
+    display: block;
+    width: 10px;
+    float: none !important;
+}
+.bulk_delete_media {
+    clear: both;
+}
+.video-title {
+    display: none !important;
+}
+.media-file-title {
+    display: block;
+    background: #0688a4;
+    padding: 2px;
+    margin: 0px;
+    color: #fff;
+}
+.postbox h3.hndle {
+    padding: 10px !important;
+    background: #7d7d7d !important;
+    margin: 0px !important;
+    color: #fff !important;
+    font-weight: bold !important;
+}
+.main .gallery-item{width:100px; height: 200px;overflow:hidden;}
 @media (min-width:768px){
 	#admin-search-profiles { width: 75%; }
 }

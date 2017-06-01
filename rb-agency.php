@@ -57,6 +57,7 @@ See license.txt for full details.
 		define('RBAGENCY_PLUGIN_URL', WP_PLUGIN_URL . '/' . RBAGENCY_PLUGIN_NAME . '/');
 	// Upload Directory
 	$upload_dir = wp_upload_dir();
+    
 	if (!defined('RBAGENCY_UPLOADREL')) // /wp-content/uploads/profile-media/
 		define("RBAGENCY_UPLOADREL", str_replace(get_bloginfo('url'), '', $upload_dir['baseurl']) ."/profile-media/" );
 	if (!defined('RBAGENCY_UPLOADDIR')) // http://domain.com/wp-content/uploads/profile-media/

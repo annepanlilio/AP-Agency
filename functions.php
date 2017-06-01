@@ -748,6 +748,15 @@
 		}
 		return $display;
 	}
+    
+    function rb_empty_directory($dirpath)
+    {
+        $files = glob($dirpath.'{,.}*', GLOB_BRACE);
+        foreach($files as $file){ // iterate files
+          if(is_file($file))
+            unlink($file); // delete file
+        }
+    }
 	// Get profile images
 	function rb_agency_profileimages($profileID){
 		// Call DB
@@ -4328,7 +4337,7 @@ function get_social_media_links($ProfileID = "", $return = false){
 			'select_state' => esc_html__('Select State',RBAGENCY_TEXTDOMAIN)
 		) );
 	}
-	add_action( 'init', 'load_admin_js' );
+	add_action( 'admin_init', 'load_admin_js' );
     function load_admin_script(){ 
     wp_register_script( 'jquery-filer', RBAGENCY_PLUGIN_URL .'assets/js/jquery.filer.js', array( 'jquery' ),FALSE);
     wp_register_script( 'manageprofile', RBAGENCY_PLUGIN_URL .'assets/js/rbManageProfile.js', array( 'jquery-filer' ),FALSE);
@@ -6006,17 +6015,29 @@ function rb_agency_update_image()
     $mediaid = $_POST['mediaid'];
     $profileid = $_POST['profileid'];
     if($action=="rb_agency_delete_image"){    
-        $media = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileMediaTitle FROM ".table_agency_profile_media." WHERE ProfileMediaID = $mediaid" ) );
+        $media = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileMediaTitle,ProfileMediaType FROM ".table_agency_profile_media." WHERE ProfileMediaID = $mediaid" ) );
         $mediadir = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileGallery FROM ".table_agency_profile." WHERE ProfileID = $profileid" ) );
         $file = $media->ProfileMediaTitle;
+        $mediatype = strtolower($media->ProfileMediaType);
+        $subdir = "";
+        if($mediatype!="image"){
+           $subdir =  DIRECTORY_SEPARATOR.$mediatype;
+        }
         $imgdir = $mediadir->ProfileGallery;
-        $image = RBAGENCY_UPLOADPATH.$imgdir.DIRECTORY_SEPARATOR.$file;
+        $image = RBAGENCY_UPLOADPATH.$imgdir.$subdir.DIRECTORY_SEPARATOR.$file;
         $thumb = RBAGENCY_UPLOADPATH.$imgdir.DIRECTORY_SEPARATOR."thumb".DIRECTORY_SEPARATOR.$file;
-        unlink($image);
-        unlink($thumb);
         $wpdb->delete(table_agency_profile_media, array( 'ProfileMediaID' => $mediaid ), array( '%d' ) );
-        echo $image;
-        echo $thumb;
+        unlink($image);
+        if(is_file($thumb)){
+            unlink($thumb);
+        }
+        if($wpdb->last_error !== ''){
+            $msg = array('error'=>$wpdb->last_error);
+        }else{
+            $msg = array('success'=>'File deleted successfully');
+        }
+        echo json_encode($msg);
+        
         exit;
     }
     if($action=="rb_agency_setprivate_image"){

@@ -135,6 +135,7 @@ $('#file_upload').filer({
             return false;
          });
      
+     
      $.each(files,function(i,value){ 
         if(value.primary!=0){
             $("input[value="+value.id+"].setprimary").attr('checked','checked');
@@ -144,6 +145,66 @@ $('#file_upload').filer({
         }
         
      });
+     
+     var selectedMediaFiles = [];
+     
+     $( ".media-files" ).on('change',"input[name=media_files]",function(){
+       var item = $(this);       
+       if($(this).is(':checked')){
+        selectedMediaFiles.push(item);
+       }else{
+        var _searchedIndex = $.inArray(item,selectedMediaFiles);
+        if(_searchedIndex >= 0){
+             selectedMediaFiles.splice(_searchedIndex,1);
+            }
+       }
+                
+     }); 
+     
+     $("#dashboard_media").on('click',"#bulk_delete_media",function(e){   
+        e.preventDefault();
+         if(selectedMediaFiles.length>0){
+                $.confirm({
+                    title: 'Confirm!',
+                    content: "Are you sure you want to delete selected media file/s?",
+                    buttons: {
+                        Yes: {
+                            btnClass: 'btn-red',
+                            action:function(){
+                            $(selectedMediaFiles).each(function(i,v){
+                                var mediaid = $(v).val();
+                                $.post(ajaxurl,{action:'rb_agency_delete_image',mediaid:mediaid,profileid:ProfileID},function(result){
+                                    var msg = $.parseJSON(result);
+                                    if(msg.error){
+                                        $.alert({
+                                            title: 'ERROR!',
+                                            content: 'Failed to delete file - '+msg.error,
+                                            useBootstrap:false,
+                                            boxWidth:'400px'
+                                        });
+                                    }else{
+                                        $(v).closest('.media-file').remove();
+                                    }
+                                });
+                            });
+                            selectedMediaFiles = [];
+                            }
+                        },
+                        cancel: function () {}
+                    },
+                    useBootstrap:false,
+                    boxWidth:'400px'
+                });   
+            }else{
+                $.alert({
+                    title: 'Alert!',
+                    content: 'No media file selected!',
+                    useBootstrap:false,
+                    boxWidth:'400px'
+                });
+            }         
+            return false;
+         });
      
      $(document).on('change','.setprimary',function(){ 
             var setprivate = $(this).attr("checked");
@@ -337,5 +398,158 @@ $('#file_upload').filer({
                 }
 			}
 		});					
+        
+        
+function deleteAuditionDemo(auditiondemopath){
+	var c = confirm('Are you sure that you want to delete this file?');
+	if(c){
+		jQuery.post(ajaxurl, {
+			auditiondemo_path:auditiondemopath,
+			action: 'deleteauditiondemo_func'
+		}).done(function(data) {
+			console.log(data);
+			alert('File successfully deleted!');
+			window.location.reload();
+		});
+	}
+}
+
+	jQuery('.audition-mp3').click(function(){
+		var audition_demo_name_key = jQuery(this).attr('audition_demo_name_key');
+		var audition_demo_name_val = jQuery(this).attr('audition_demo_name_val');
+		jQuery('.auditiondemoname').val(audition_demo_name_val);
+		jQuery('.old_auditiondemoname').val(audition_demo_name_val);
+		jQuery('.auditiondemoname_key').val(audition_demo_name_key);
+		jQuery('.auditiondemoname_val').val(audition_demo_name_val);
+		tb_show('Edit Audition Demo','#TB_inline?width=500&height=100&inlineId=edit-audition-demo');
+		return false;
+	});
+	jQuery('.auditiondemoname').keyup(function(){
+		jQuery('.new_auditiondemoname').val(jQuery(this).val());
+	});
+	jQuery('.update_auditiondemoname').click(function(){
+		var new_val = jQuery('.new_auditiondemoname').val();
+		var old_val = jQuery('.old_auditiondemoname').val();
+		var auditiondemoname_key = jQuery('.auditiondemoname_key').val();
+		jQuery.post(ajaxurl, {
+			demo_name_key:auditiondemoname_key,
+			old_value: old_val,
+			new_value:new_val,
+			action: 'editauditiondemo'
+		}).done(function(data) {
+			jQuery(".auditiondemo-caption", '.media-file[audiodemo_place_id='+auditiondemoname_key+']').html('');
+			jQuery(".auditiondemo-caption", '.media-file[audiodemo_place_id='+auditiondemoname_key+']').html(new_val);
+			jQuery(".audvoicedemo-caption" , '.media-file[audaudiodemo_place_id='+auditiondemoname_key+']').html('');
+			jQuery(".audvoicedemo-caption" , '.media-file[audaudiodemo_place_id='+auditiondemoname_key+']').html(new_val);
+		});
+		tb_remove();
+		return false;
+	});
+	//voice demo
+	jQuery('.voice-demo-mp3').click(function(){
+		var voice_demo_name_key = jQuery(this).attr('voice_demo_name_key');
+		var voice_demo_name_val = jQuery(this).attr('voice_demo_name_val');
+		var voice_demo_caption_key = jQuery(this).attr('voice_demo_caption_key');
+		var voice_demo_caption_val = jQuery(this).attr('voice_demo_caption_val');
+		jQuery('.voicedemoname').val(voice_demo_name_val);
+		jQuery('.old_voicedemoname').val(voice_demo_name_val);
+		jQuery('.voicedemoname_key').val(voice_demo_name_key);
+		jQuery('.voicedemoname_val').val(voice_demo_name_val);
+		jQuery('.voicedemocaption').val(voice_demo_caption_val);
+		jQuery('.old_voicedemocaption').val(voice_demo_caption_val)
+		jQuery('.voicedemocaption_key').val(voice_demo_caption_key);
+		jQuery('.voicedemocaption_val').val(voice_demo_caption_val);									
+		tb_show('Edit Voice Demo','#TB_inline?width=500&height=110&inlineId=edit-voice-demo');
+		return false;
+	});
+	jQuery('.voicedemoname').keyup(function(){
+		jQuery('.new_voicedemoname').val(jQuery(this).val());
+	});
+	jQuery('.voicedemocaption').keyup(function(){
+		jQuery('.new_voicedemocaption').val(jQuery(this).val());
+	});
+	jQuery('.update_voicedemoname').click(function(){
+		var new_val = jQuery('.new_voicedemoname').val();
+		var old_val = jQuery('.old_voicedemoname').val();
+		var voicedemoname_key = jQuery('.voicedemoname_key').val();	
+		var new_val_caption = jQuery('.new_voicedemocaption').val();
+		var old_val_caption = jQuery('.old_voicedemocaption').val();
+		var voicedemocaption_key = jQuery('.voicedemocaption_key').val();
+		jQuery.post(ajaxurl, {
+			demo_name_key:voicedemoname_key,
+			old_value: old_val,
+			new_value:new_val,
+			action: 'editvoicedemo',
+			new_value_caption : new_val_caption,
+			old_value_caption : old_val_caption,
+			demo_caption_key:voicedemocaption_key
+		}).done(function(data) {	
+		console.log(data);									
+			jQuery(".voicedemo-caption", '.media-file[voicedemo_place_id='+voicedemoname_key+']').html('');
+			if(new_val.length > 0){
+				jQuery(".voicedemo-caption", '.media-file[voicedemo_place_id='+voicedemoname_key+']').html(new_val);
+			}else{
+				jQuery(".voicedemo-caption", '.media-file[voicedemo_place_id='+voicedemoname_key+']').html(old_val);
+			}
+			if(new_val_caption.length > 0){
+				jQuery(".voicedemocaption_label",'.media-file[voicedemo_place_id='+voicedemoname_key+']').html(new_val_caption);
+			}else{
+				jQuery(".voicedemocaption_label",'.media-file[voicedemo_place_id='+voicedemoname_key+']').html(old_val_caption);
+			}
+		});
+		tb_remove();
+		return false;
+	});
+    
+    $('.prepare-edit-video').on('click',function(){
+	var vidID = $(this).attr('video_id');
+	var vidType = $(this).attr('video_type');
+	var vidtitle = $(this).attr('video_title');
+	var vidURL = $(this).attr('video_url');
+	var vidCap = $(this).attr('video_caption');
+	$('.profileMediaVType option[value="'+vidType+'"]','.inline-edit-video').prop('selected', true);
+	$('.profilemedia_title','.inline-edit-video').val(vidtitle);
+	$('.profilemedia_url','.inline-edit-video').val(vidURL);
+	$('.profilemedia_id','.inline-edit-video').val(vidID);
+	$('.profilemedia_caption','.inline-edit-video').val(vidCap);
+	console.log(vidType);
+	//profileMediaV
+	//profileMediaVType
+	//alert('eoe');
+	tb_show('Edit Video','#TB_inline?width=500&height=220&inlineId=inline-edit-video');
+	return false;
+});
+$('.save_media_inline').on('click',function(){
+	var v_id      = $( ".profilemedia_id" ).val();
+	var v_url     = $( ".profilemedia_url" ).val();
+	var v_title   = $( ".profilemedia_title" ).val();
+	var v_caption = $( ".profilemedia_caption" ).val();
+	var v_medtype = $( ".profileMediaVType" ).val();
+	jQuery.post(ajaxurl, {
+		id:      v_id,
+		url:     v_url,
+		title:   v_title,
+		caption: v_caption,
+		medtype: v_medtype,
+		action: 'editvideo_inline_save'
+	}).done(function(data) {
+		/* if( data== 'error'){
+			$('#photo-message-div').addClass('error');
+			$('#photo-message-div').html('<p>Error uploading image</p>');
+		}else{
+			jQuery("#wrapper-sortable #gallery-sortable").append(data);
+		} */
+		$('span.video-title', '.media-file[video_place_id='+v_id+']').html(v_title);
+		$('span.video-caption', '.media-file[video_place_id='+v_id+']').html(v_caption);
+		$('span.video-type', '.media-file[video_place_id='+v_id+']').html(v_medtype);
+		$('span.video-thumb', '.media-file[video_place_id='+v_id+']').html(data);
+		console.log(data);
+	});
+	//process the ajax save and result
+	tb_remove();
+	console.log('saved');
+	return false;
+});
+				
 							
 });

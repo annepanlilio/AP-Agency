@@ -654,40 +654,33 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 						// Upload Image & Add to Database
 						$i = 1;
 						// Check how many images currently exist
-						$results = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaType = 'Image'";
-						$results = $wpdb->get_results($wpdb->prepare($results, $ProfileID),ARRAY_A);
-						if ($wpdb->num_rows > 0) {
-							$pi = $wpdb->num_rows +1;
-						} else {
-							$pi = 1;
-						}
+						
 						while ($i <= 10) {
 							if (isset($_FILES['profileMedia' . $i]['tmp_name']) && $_FILES['profileMedia' . $i]['tmp_name'] != "") {
 								$uploadMediaType = $_POST['profileMedia' . $i . 'Type'];
 								if ($have_error != true) {
 									// Upload if it doesnt exist already
 									$path_parts = pathinfo($_FILES['profileMedia' . $i]['name']);
-									$safeProfileMediaFilename = RBAgency_Common::format_stripchars($path_parts['filename'] ."_". RBAgency_Common::generate_random_string(6) . "." . $path_parts['extension']);
+									$safeProfileMediaFilename = RBAgency_Common::format_stripchars($path_parts['filename'] ."-". RBAgency_Common::generate_random_string(6) . "." . $path_parts['extension']);
 									$query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d1' AND ProfileMediaURL = '%d2'";
-									$results = $wpdb->get_results($wpdb->prepare($query, $ProfileID, $safeProfileMediaFilename),ARRAY_A);
+									$results = $wpdb->get_results($wpdb->prepare($query, $ProfileID, $path_parts['filename']),ARRAY_A);
 									$count =  $wpdb->num_rows;
 									if ($count < 1) {
-										if ($uploadMediaType == "Image" || $uploadMediaType == "Polaroid") {
+										if ($uploadMediaType == "Polaroid") {
 											if ($_FILES['profileMedia' . $i]['type'] == "image/pjpeg" || $_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/gif" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
 												$image = new rb_agency_image();
 												$image->load($_FILES['profileMedia' . $i]['tmp_name']);
 												if ($image->getHeight() > $rb_agency_option_agencyimagemaxheight) {
 													$image->resizeToHeight($rb_agency_option_agencyimagemaxheight);
 												}
-												$image->save(RBAGENCY_UPLOADPATH . $ProfileGallery . "/" . $safeProfileMediaFilename);
+												$polariodir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/polariod/";
+                                                if(!is_dir($polariodir)){
+                                                    mkdir($polariodir);
+                                                }
+                                                $image->save($polariodir . $safeProfileMediaFilename);
 												// Add to database
-												if ($uploadMediaType == "Image") {
-													$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL, ProfileMediaOrder) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "','" . $pi . "')");
-													$pi++;
-												} elseif ($uploadMediaType == "Polaroid") {
-													$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL, ProfileMediaOrder) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "','" . $pi . "')");
-													//$pi++
-												}
+												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL, ProfileMediaOrder) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "',0)");
+												
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload an image file only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
 												$have_error = true;
@@ -713,11 +706,19 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 										} elseif ($uploadMediaType == "Resume") {
 											// Add to database
 											if ($_FILES['profileMedia' . $i]['type'] == "application/msword" || $_FILES['profileMedia' . $i]['type'] == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || $_FILES['profileMedia' . $i]['type'] == "application/pdf" || $_FILES['profileMedia' . $i]['type'] == "application/rtf") {
-												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+												
 												$resumedir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/resume/" ;
                                                 if(!is_dir($resumedir)){
                                                     mkdir($resumedir);
                                                 }
+                                                $resumeid = $wpdb->get_var( "SELECT ProfileMediaID FROM ".table_agency_profile_media." WHERE ProfileMediaType='Resume' AND ProfileID='$ProfileID'" );
+                                                if(!$resumeid){
+                                                    $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+												}else{
+												    $wpdb->update(table_agency_profile_media, array( 'ProfileMediaTitle' => $safeProfileMediaFilename, 'ProfileMediaURL' => $safeProfileMediaFilename ), array( 'ProfileMediaID' => $resumeid ) );
+												    rb_empty_directory($resumedir);
+                                                }
+                                                
                                                 move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $resumedir. $safeProfileMediaFilename);
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload PDF/MSword/RTF files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
@@ -726,11 +727,18 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 										} elseif ($uploadMediaType == "Headshot") {
 											// Add to database
 											if ($_FILES['profileMedia' . $i]['type'] == "application/msword" || $_FILES['profileMedia' . $i]['type'] == "application/pdf" || $_FILES['profileMedia' . $i]['type'] == "application/rtf" || $_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/gif" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
-												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-												$headshotdir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/headshot/" ;
+												$headshotid = $wpdb->get_var( "SELECT ProfileMediaID FROM ".table_agency_profile_media." WHERE ProfileMediaType='Headshot' AND ProfileID='$ProfileID'" );
+                                                $headshotdir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/headshot/" ;
                                                 if(!is_dir($headshotdir)){
                                                     mkdir($headshotdir);
                                                 }
+                                                if(!$headshotid){
+                                                    $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+												}else{
+												    $wpdb->update(table_agency_profile_media, array( 'ProfileMediaTitle' => $safeProfileMediaFilename, 'ProfileMediaURL' => $safeProfileMediaFilename ), array( 'ProfileMediaID' => $headshotid ) );
+												    rb_empty_directory($headshotdir);
+                                                }                                               
+       
                                                 move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $headshotdir. $safeProfileMediaFilename);
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload PDF/MSWord/RTF/Image files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
@@ -739,11 +747,18 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 										} elseif ($uploadMediaType == "CompCard") {
 											// Add to database
 											if ($_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
-												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
-												$CompCarddir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/compcard/" ;
-                                                if(!is_dir($CompCarddir)){
+												$compcardid = $wpdb->get_var( "SELECT ProfileMediaID FROM ".table_agency_profile_media." WHERE ProfileMediaType='CompCard' AND ProfileID='$ProfileID'" );
+                                                $CompCarddir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/compcard/" ;
+												 if(!is_dir($CompCarddir)){
                                                     mkdir($CompCarddir);
                                                 }
+                                                if(!$compcardid){
+                                                    $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+												}else{
+												    $wpdb->update(table_agency_profile_media, array( 'ProfileMediaTitle' => $safeProfileMediaFilename, 'ProfileMediaURL' => $safeProfileMediaFilename ), array( 'ProfileMediaID' => $compcardid ) );
+                                                    rb_empty_directory($CompCarddir);
+												}                                               
+                                               
                                                 move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $CompCarddir. $safeProfileMediaFilename);
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload jpeg or png files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
@@ -2178,7 +2193,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$private_profile_photo = get_user_meta($ProfileUserLinked,'private_profile_photo',true);
 								$private_profile_photo_arr = explode(',',$private_profile_photo);
 								
-								foreach ($resultsImg as $k=>$dataImg) {
+                                if (!extension_loaded('gd')) {
+                                    if (!dl('gd.so')) {
+                                        exit('GD Library is not installed on this server!');
+                                    }
+                                }
+								
+                                foreach ($resultsImg as $k=>$dataImg) {
 									if ($dataImg['ProfileMediaPrimary']) {
 									
 									} 		
@@ -2193,9 +2214,10 @@ function rb_display_manage($ProfileID, $errorValidation) {
                                         
                                         $pic = array();    
                                         $imageinfo = pathinfo($image_path);    
-                                        $imagesize = getimagesize($image_path); 
-                                        $imgtype = $imagesize['mime'] ? $imagesize['mime']:image_type_to_mime_type(exif_imagetype($image_path));
-                                        if($imgtype!=null){
+                                        $imagesize = @getimagesize($image_path); 
+                                        $imgtype = $imagesize['mime'] ? $imagesize['mime']:"";
+                                        
+                                        if($imageinfo){
                                         //$realpath =  realpath($image_path);                           
                                         $pic['file'] = $image_path;
                                         $pic['url'] = $image_path;          
@@ -2221,20 +2243,19 @@ function rb_display_manage($ProfileID, $errorValidation) {
                                         
                                     </script>
                                     <div id="files" class="files"></div>
-                                    <input id="file_upload" name="rba_imgupload[]" type="file"><button class='button-primary' id='deleteProfileMedia'>Delete Selected</button>
+                                    <input id="file_upload" name="rba_imgupload[]" type="file">
+                                    <?php
+        								if ($countImg >= 1) {
+        									echo "<button class='button-primary' id='deleteProfileMedia'>Delete Selected</button>";
+        								}
+        							?>
+                                    
 								    </div>
                                 </div>
 								
-								<?php
-								// No records?
-								if ($countImg < 1) {
-									//echo "<div class='item gallery-item ui-sortable-handle' id='gallery-no-image'>" . __("There are no images loaded for this profile yet.", RBAGENCY_TEXTDOMAIN) . "</div>\n";
-								}
-							?>
+								
 							<div style="clear: both;"></div>
-							<style>
-								.main .gallery-item{width:100px; height: 200px;overflow:hidden;}
-							</style>
+							
 							<!--</div>
 						</div>-->
 					</div>
@@ -2372,7 +2393,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									}
 									$clean_title = stripslashes($dataMedia['ProfileMediaTitle']);
 									$vidTitleCaption = explode('<br>',$clean_title);
-									$outVideoMedia .= "<div class=\"media-file voice-demo ".$markedClass."\" video_place_id=\"" . $dataMedia['ProfileMediaID'] . "\"><span class=\"video-type\">" . $dataMedia['ProfileMediaType'] . "</span><br /><span class=\"video-thumb\">" . rb_agency_get_videothumbnail($FullVideoURL, $dataMedia['ProfileVideoType']) . "</span><br /><b><span class='video-title'>".ucfirst($vidTitleCaption[0])."</span></b><br><span class='video-caption'>".$vidTitleCaption[1]."</span><a href=\"" . $FullVideoURL . "\" title=\"".ucfirst($dataMedia['ProfileVideoType'])."\" target=\"_blank\"><br> Watch Video</a><br />
+									$outVideoMedia .= "<div class=\"media-file voice-demo ".$markedClass."\" video_place_id=\"" . $dataMedia['ProfileMediaID'] . "\"><span class=\"video-type media-file-title\">" . $dataMedia['ProfileMediaType'] . "</span><br /><span class=\"video-thumb\">" . rb_agency_get_videothumbnail($FullVideoURL, $dataMedia['ProfileVideoType']) . "</span><br /><b><span class='video-title'>".ucfirst($vidTitleCaption[0])."</span></b><br><span class='video-caption'>".$vidTitleCaption[1]."</span><a href=\"" . $FullVideoURL . "\" title=\"".ucfirst($dataMedia['ProfileVideoType'])."\" target=\"_blank\"><br> Watch Video</a><br />
 									[<a href=\"#inline-edit-video\" title=\"Edit Video Information\" ".
 										"video_type=\"" . $dataMedia['ProfileMediaType'] .
 										"\" video_id=\"" . $dataMedia['ProfileMediaID'] .
@@ -2394,21 +2415,21 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									$medialink_option = $rb_agency_options_arr['rb_agency_option_profilemedia_links'];
 									if($medialink_option == 2){
 										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo ".$markedClass."\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br />
-										<a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>
+										<a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/voicedemo/" . $dataMedia['ProfileMediaURL'] . "\" title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a>
 										<span class='voicedemocaption_label'> ".$voicedemocaption."</span>
-										 <br> <a href=\"".RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL']."\" target=\"_blank\"><span class=\"voicedemo-caption\">".$voicedemo."</span></a><br><a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\"									voice_demo_caption_key=\"voicedemocaption_".$dataMedia['ProfileMediaID']."\" voice_demo_caption_val=\"".$voicedemocaption."\">&nbsp[EDIT]</a>&nbsp;[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
+										 <br> <a href=\"".RBAGENCY_UPLOADDIR . $ProfileGallery . "/voicedemo/" . $dataMedia['ProfileMediaURL']."\" target=\"_blank\"><span class=\"voicedemo-caption\">".$voicedemo."</span></a><br><a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\"									voice_demo_caption_key=\"voicedemocaption_".$dataMedia['ProfileMediaID']."\" voice_demo_caption_val=\"".$voicedemocaption."\">&nbsp[EDIT]</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 									}elseif($medialink_option == 3){
 										$force_download_url = wpfdl_dl($ProfileGallery . "/" . $dataMedia['ProfileMediaURL'],get_option('wpfdl_token'),'dl');
-										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo ".$markedClass."\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a ".$force_download_url." title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a> <span class='voicedemocaption_label'>".$voicedemocaption."</span> <br><a ".$force_download_url."><span class=\"voicedemo-caption\">".$voicedemo."</span></a>&nbsp;<a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\" 
+										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo ".$markedClass."\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span class='media-file-title'>" . $dataMedia['ProfileMediaType'] . "</span><br /><a ".$force_download_url." title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a> <span class='voicedemocaption_label'>".$voicedemocaption."</span> <br><a ".$force_download_url."><span class=\"voicedemo-caption\">".$voicedemo."</span></a>&nbsp;<a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\" 
 											voice_demo_caption_key=\"voicedemocaption_".$dataMedia['ProfileMediaID']."\" 
-											voice_demo_caption_val=\"".$voicedemocaption."\">&nbsp[EDIT]</a>&nbsp;[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
+											voice_demo_caption_val=\"".$voicedemocaption."\">&nbsp[EDIT]</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 									}
 								} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
 									$markedClass = "";
 									if(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedResumes)){
 										$markedClass = "marked_changed";
 									}
-									$outLinkResume .= "<div class=\"media-file resume ".$markedClass."\"><span>" .$dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/resume/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
+									$outLinkResume .= "<div class=\"media-file resume ".$markedClass."\"><span class='media-file-title'>" .$dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/resume/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\" title=\"" . $dataMedia['ProfileMediaTitle'] . "\" class=\"link-icon\">pdf</a><br /><span><input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "Headshot") {
 									$markedClass = "";
 									if(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedHeadshots)){
@@ -2425,15 +2446,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										'crop_y'=>'0'
 									);
 									$headshot_image_src = bfi_thumb( $headshot_image_path, $headshot_params );
-									$outLinkHeadShot .= "<div class=\"media-file ".$markedClass."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"".$headshot_image_src ."\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
+									$outLinkHeadShot .= "<div class=\"media-file ".$markedClass."\"><span class='media-file-title'>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/headshot/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"".$headshot_image_src ."\" /></a><br /><input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 									//$outLinkHeadShot .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&a=t&w=120&h=108\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
-								} elseif ($dataMedia['ProfileMediaType'] == "CardPhotos" || $dataMedia['ProfileMediaType'] == "Polaroid" || $dataMedia['ProfileMediaType'] == "CompCard" ) {
+								} elseif ($dataMedia['ProfileMediaType'] == "CardPhotos" || 
+                                $dataMedia['ProfileMediaType'] == "Polaroid" ) {
 									$markedClass = "";
 									if(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedHeadshots)){
 										$markedClass = "marked_changed";
 									}elseif(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedImages)){
-										$markedClass = "marked_changed";
-									}elseif(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedCompCards)){
 										$markedClass = "marked_changed";
 									}elseif(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedResumes)){
 										$markedClass = "marked_changed";
@@ -2443,7 +2463,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										$markedClass = "marked_changed";
 									}
 									$polaroid_image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/polariod/". $dataMedia['ProfileMediaURL'];
-									$polariod_params = array(
+									$$polaroid_path_params = array(
 										'crop'=>true,
 										'width'=>120,
 										'height'=>108,
@@ -2452,15 +2472,30 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										'crop_only'=>true,
 										'crop_y'=>'0'
 									);
-									$polariod_image_src = bfi_thumb( $polaroid_image_path, $polariod_params );
-									$outLinkPolaroid .= "<div class=\"media-file ".$markedClass."\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><img src=\"".$polariod_image_src."\" /><br/><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"></a>[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
+									$image_src = bfi_thumb( $polaroid_image_path, $$polaroid_path_params );
+									$outLinkPolaroid .= "<div class=\"media-file ".$markedClass."\"><span class='media-file-title'>" . $dataMedia['ProfileMediaType'] . "</span><br /><img src=\"".$image_src."\" /><br/><a href=\"" . $polaroid_image_path . "\" target=\"_blank\"></a><input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
+								} elseif ($dataMedia['ProfileMediaType'] == "CompCard" ) {
+									$markedClass = "";
+									$compcard_image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/compcard/". $dataMedia['ProfileMediaURL'];
+									$compcard_path_params = array(
+										'crop'=>true,
+										'width'=>120,
+										'height'=>108,
+										'crop_width'=>'500',
+										'crop_height'=>'500',
+										'crop_only'=>true,
+										'crop_y'=>'0'
+									);
+                                    $markedClass = "marked_changed";
+									$image_src = bfi_thumb( $compcard_image_path, $compcard_path_params );
+									$outLinkComCard = "<span class='media-file-title'>" . $dataMedia['ProfileMediaType'] . "</span><br /><img src=\"".$image_src."\" /><br/><a href=\"" . $compcard_image_path . "\" target=\"_blank\"></a><input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\">\n";
 								} else if (strpos($dataMedia['ProfileMediaType'] ,"rbcustommedia") !== false) {
 									$custom_media_info = explode("_",$dataMedia['ProfileMediaType']);
 									$custom_media_title = str_replace("-"," ",$custom_media_info[1]);
 									$custom_media_type = $custom_media_info[2];
 									$custom_media_id = $custom_media_info[4];
 									$query = current($wpdb->get_results("SELECT MediaCategoryTitle, MediaCategoryFileType FROM  ".table_agency_data_media." WHERE MediaCategoryID='".$custom_media_id."'",ARRAY_A));
-									$outCustomMediaLink .= "<div class=\"media-file\"><span style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title) ." </span> <a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" class=\"custom_media-box-a\" target=\"_blank\"><div class=\"custom_media-box\"><span>" .  (isset($query["MediaCategoryFileType"])?$query["MediaCategoryFileType"]:$custom_media_type)."</span></div></a> [<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
+									$outCustomMediaLink .= "<div class=\"media-file\"><span style=\"text-transform: capitalize !important;\">".(isset($query["MediaCategoryTitle"])?$query["MediaCategoryTitle"]:$custom_media_title) ." </span> <a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" class=\"custom_media-box-a\" target=\"_blank\"><div class=\"custom_media-box\"><span>" .  (isset($query["MediaCategoryFileType"])?$query["MediaCategoryFileType"]:$custom_media_type)."</span></div></a> <input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "SoundCloud") {
 									$outSoundCloud .= "<div style=\"width:600px;float:left;padding:10px;\">";
 									$outSoundCloud .= "<span>" . $dataMedia['ProfileMediaType'] . " - <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></span> \n";
@@ -2497,109 +2532,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								}
 							}
 							?>
-							<script type="text/javascript">
-							function deleteAuditionDemo(auditiondemopath){
-								var c = confirm('Are you sure that you want to delete this file?');
-								if(c){
-									jQuery.post("<?php echo admin_url('admin-ajax.php');?>", {
-										auditiondemo_path:auditiondemopath,
-										action: 'deleteauditiondemo_func'
-									}).done(function(data) {
-										console.log(data);
-										alert('File successfully deleted!');
-										window.location.reload();
-									});
-								}
-							}
-							jQuery(document).ready(function(){
-								jQuery('.audition-mp3').click(function(){
-									var audition_demo_name_key = jQuery(this).attr('audition_demo_name_key');
-									var audition_demo_name_val = jQuery(this).attr('audition_demo_name_val');
-									jQuery('.auditiondemoname').val(audition_demo_name_val);
-									jQuery('.old_auditiondemoname').val(audition_demo_name_val);
-									jQuery('.auditiondemoname_key').val(audition_demo_name_key);
-									jQuery('.auditiondemoname_val').val(audition_demo_name_val);
-									tb_show('Edit Audition Demo','#TB_inline?width=500&height=100&inlineId=edit-audition-demo');
-									return false;
-								});
-								jQuery('.auditiondemoname').keyup(function(){
-									jQuery('.new_auditiondemoname').val(jQuery(this).val());
-								});
-								jQuery('.update_auditiondemoname').click(function(){
-									var new_val = jQuery('.new_auditiondemoname').val();
-									var old_val = jQuery('.old_auditiondemoname').val();
-									var auditiondemoname_key = jQuery('.auditiondemoname_key').val();
-									jQuery.post("<?php echo admin_url('admin-ajax.php');?>", {
-										demo_name_key:auditiondemoname_key,
-										old_value: old_val,
-										new_value:new_val,
-										action: 'editauditiondemo'
-									}).done(function(data) {
-										jQuery(".auditiondemo-caption", '.media-file[audiodemo_place_id='+auditiondemoname_key+']').html('');
-										jQuery(".auditiondemo-caption", '.media-file[audiodemo_place_id='+auditiondemoname_key+']').html(new_val);
-										jQuery(".audvoicedemo-caption" , '.media-file[audaudiodemo_place_id='+auditiondemoname_key+']').html('');
-										jQuery(".audvoicedemo-caption" , '.media-file[audaudiodemo_place_id='+auditiondemoname_key+']').html(new_val);
-									});
-									tb_remove();
-									return false;
-								});
-								//voice demo
-								jQuery('.voice-demo-mp3').click(function(){
-									var voice_demo_name_key = jQuery(this).attr('voice_demo_name_key');
-									var voice_demo_name_val = jQuery(this).attr('voice_demo_name_val');
-									var voice_demo_caption_key = jQuery(this).attr('voice_demo_caption_key');
-									var voice_demo_caption_val = jQuery(this).attr('voice_demo_caption_val');
-									jQuery('.voicedemoname').val(voice_demo_name_val);
-									jQuery('.old_voicedemoname').val(voice_demo_name_val);
-									jQuery('.voicedemoname_key').val(voice_demo_name_key);
-									jQuery('.voicedemoname_val').val(voice_demo_name_val);
-									jQuery('.voicedemocaption').val(voice_demo_caption_val);
-									jQuery('.old_voicedemocaption').val(voice_demo_caption_val)
-									jQuery('.voicedemocaption_key').val(voice_demo_caption_key);
-									jQuery('.voicedemocaption_val').val(voice_demo_caption_val);									
-									tb_show('Edit Voice Demo','#TB_inline?width=500&height=110&inlineId=edit-voice-demo');
-									return false;
-								});
-								jQuery('.voicedemoname').keyup(function(){
-									jQuery('.new_voicedemoname').val(jQuery(this).val());
-								});
-								jQuery('.voicedemocaption').keyup(function(){
-									jQuery('.new_voicedemocaption').val(jQuery(this).val());
-								});
-								jQuery('.update_voicedemoname').click(function(){
-									var new_val = jQuery('.new_voicedemoname').val();
-									var old_val = jQuery('.old_voicedemoname').val();
-									var voicedemoname_key = jQuery('.voicedemoname_key').val();	
-									var new_val_caption = jQuery('.new_voicedemocaption').val();
-									var old_val_caption = jQuery('.old_voicedemocaption').val();
-									var voicedemocaption_key = jQuery('.voicedemocaption_key').val();
-									jQuery.post("<?php echo admin_url('admin-ajax.php');?>", {
-										demo_name_key:voicedemoname_key,
-										old_value: old_val,
-										new_value:new_val,
-										action: 'editvoicedemo',
-										new_value_caption : new_val_caption,
-										old_value_caption : old_val_caption,
-										demo_caption_key:voicedemocaption_key
-									}).done(function(data) {	
-									console.log(data);									
-										jQuery(".voicedemo-caption", '.media-file[voicedemo_place_id='+voicedemoname_key+']').html('');
-										if(new_val.length > 0){
-											jQuery(".voicedemo-caption", '.media-file[voicedemo_place_id='+voicedemoname_key+']').html(new_val);
-										}else{
-											jQuery(".voicedemo-caption", '.media-file[voicedemo_place_id='+voicedemoname_key+']').html(old_val);
-										}
-										if(new_val_caption.length > 0){
-											jQuery(".voicedemocaption_label",'.media-file[voicedemo_place_id='+voicedemoname_key+']').html(new_val_caption);
-										}else{
-											jQuery(".voicedemocaption_label",'.media-file[voicedemo_place_id='+voicedemoname_key+']').html(old_val_caption);
-										}
-									});
-									tb_remove();
-									return false;
-								});
-							});
-							</script>
+							
 							<div id="edit-audition-demo" style="display:none;">
 								 <input type="hidden" name="auditiondemoname_key" class="auditiondemoname_key" >
 								 <input type="hidden" name="auditiondemoname_val" class="auditiondemoname_val" >
@@ -2656,126 +2589,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										</table><input type='hidden' name='media_id' class='profilemedia_id'>
 							</div>
 							</div>
-							<script>
-							jQuery(document).ready(function($){
-								$('.prepare-edit-video').on('click',function(){
-									var vidID = $(this).attr('video_id');
-									var vidType = $(this).attr('video_type');
-									var vidtitle = $(this).attr('video_title');
-									var vidURL = $(this).attr('video_url');
-									var vidCap = $(this).attr('video_caption');
-									$('.profileMediaVType option[value="'+vidType+'"]','.inline-edit-video').prop('selected', true);
-									$('.profilemedia_title','.inline-edit-video').val(vidtitle);
-									$('.profilemedia_url','.inline-edit-video').val(vidURL);
-									$('.profilemedia_id','.inline-edit-video').val(vidID);
-									$('.profilemedia_caption','.inline-edit-video').val(vidCap);
-									console.log(vidType);
-									//profileMediaV
-									//profileMediaVType
-									//alert('eoe');
-									tb_show('Edit Video','#TB_inline?width=500&height=220&inlineId=inline-edit-video');
-									return false;
-								});
-								$('.save_media_inline').on('click',function(){
-									var v_id      = $( ".profilemedia_id" ).val();
-									var v_url     = $( ".profilemedia_url" ).val();
-									var v_title   = $( ".profilemedia_title" ).val();
-									var v_caption = $( ".profilemedia_caption" ).val();
-									var v_medtype = $( ".profileMediaVType" ).val();
-									jQuery.post("<?php echo admin_url('admin-ajax.php');?>", {
-										id:      v_id,
-										url:     v_url,
-										title:   v_title,
-										caption: v_caption,
-										medtype: v_medtype,
-										action: 'editvideo_inline_save'
-									}).done(function(data) {
-										/* if( data== 'error'){
-											$('#photo-message-div').addClass('error');
-											$('#photo-message-div').html('<p>Error uploading image</p>');
-										}else{
-											jQuery("#wrapper-sortable #gallery-sortable").append(data);
-										} */
-										$('span.video-title', '.media-file[video_place_id='+v_id+']').html(v_title);
-										$('span.video-caption', '.media-file[video_place_id='+v_id+']').html(v_caption);
-										$('span.video-type', '.media-file[video_place_id='+v_id+']').html(v_medtype);
-										$('span.video-thumb', '.media-file[video_place_id='+v_id+']').html(data);
-										console.log(data);
-									});
-									//process the ajax save and result
-									tb_remove();
-									console.log('saved');
-									return false;
-								});
-							});
-							</script>
-							<style type="text/css">
-							input.full-width-text{width: 300px !important;}
-							.custom_media-box{
-								height: 108px;
-								background: #FFF;
-								text-align: center;
-								}
-							.custom_media-box span {
-								display: block;
-								background: #A5A4A4;
-								width: 34px;
-								text-align: center;
-								border-radius: 5px;
-								height: 26px;
-								padding-top: 10px;
-								margin-top: 38px;
-								float: left;
-								margin-left: 43px;
-							}
-							.custom_media-box-a {
-								color: #FFF !important;
-								text-transform: uppercase;
-								font-size: 9px;
-							}
-							.column-isPrivate{max-width: 100px;}
-							.media-files{
-								-webkit-column-count: 1;
-	-webkit-column-gap: 10px;
-	-webkit-column-fill: auto;
-	-moz-column-count: 1;
-	-moz-column-gap: 10px;
-	-moz-column-fill: auto;
-	column-count: 1;
-	column-gap: 15px;
-	column-fill: auto;
-							}
-							.media-files .media-file{float:none!important;
-							display: inline-block;
-	margin: 0 2px 15px;
-	-webkit-column-break-inside: avoid;
-	-moz-column-break-inside: avoid;
-	column-break-inside: avoid;
-	padding: 15px;
-	padding-bottom: 5px;
-	background: -webkit-linear-gradient(45deg, #FFF, #F9F9F9);
-	opacity: 1;
-	-webkit-transition: all .2s ease;
-	-moz-transition: all .2s ease;
-	-o-transition: all .2s ease;
-	transition: all .2s ease;
-							}
-							/*
-@media (min-width: 960px) {
-	.media-files {
-		-webkit-column-count: 4;
-		-moz-column-count: 4;
-		column-count: 4;
-	}
-}
-@media (min-width: 1100px) {
-	.media-files{
-		-webkit-column-count: 5;
-		-moz-column-count: 5;
-		column-count: 5;
-	}
-} */
-							</style>
+							
 							<?php
 							echo '<div class="media-files">';
 								if(!empty($outLinkVoiceDemo)):
@@ -2804,36 +2618,17 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								if(!empty($outSoundCloud)):
 									echo $outSoundCloud;
 								endif;
+                                
+                                $delbtn = '<div class="bulk_delete_media"><button class="button-primary" id="bulk_delete_media">Delete Selected</button></div>';
 								if ($countMedia < 1) {
 									echo "<div><em>" . __("There are no additional media linked", RBAGENCY_TEXTDOMAIN) . "</em></div>\n";
+                                    $delbtn = "";
 								}
 							echo '</div>';
 						echo '</div>';
 						echo '<br><br>';
-						echo '<div class="bulk_delete_media"><a href="javascript:bulkDeleteMediaLinks();">Delete Selected Media Files</a></div>';
+						echo $delbtn;
 					echo '</div>';
-?>
-	<script type="text/javascript">
-	function bulkDeleteMediaLinks(){
-		var mas_del_ids = '&';
-		jQuery("input:checkbox[name=media_files]:checked").each(function() {
-			if(mas_del_ids != '&'){
-				mas_del_ids += '&';
-			}
-		mas_del_ids += 'media_ids[]='+jQuery(this).val();
-		});
-		if( mas_del_ids != '&'){
-			if(confirm("Do you want to delete all the selected media files?")){
-				//alert(mas_del_ids);
-				urlmassdelete = '<?php echo admin_url("admin.php?page=" . $_GET['page']);?>&action=editRecord&ProfileID=<?php echo $ProfileID;?>&actionsub=del_media' + mas_del_ids;
-				document.location = urlmassdelete;
-			}
-		}else {
-			alert("You have to select images to delete");
-		}
-	}
-	</script>
-<?php
 					/*
 					 * Get Links
 					 */
