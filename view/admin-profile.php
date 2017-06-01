@@ -2465,7 +2465,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										'crop_only'=>true,
 										'crop_y'=>'0'
 									);
-									$image_src = bfi_thumb( $polaroid_image_path, $$polaroid_path_params );
+									$image_src = bfi_thumb( $polaroid_image_path, $polaroid_path_params );
 									$outLinkPolaroid .= "<div class=\"media-file ".$markedClass."\"><span class='media-file-title'>" . $dataMedia['ProfileMediaType'] . "</span><br /><img src=\"".$image_src."\" /><br/><a href=\"" . $polaroid_image_path . "\" target=\"_blank\"></a><input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 								} elseif ($dataMedia['ProfileMediaType'] == "CompCard" ) {
 									$markedClass = "";
