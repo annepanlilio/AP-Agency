@@ -678,9 +678,10 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
                                                     mkdir($polariodir);
                                                 }
                                                 $safeProfileMediaFilename = RBAgency_Common::generateFilename($polariodir,$file);
+                                                $mediaTitle = pathinfo($safeProfileMediaFilename,PATHINFO_FILENAME);
                                                 $image->save($polariodir . $safeProfileMediaFilename);
 												// Add to database
-												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL, ProfileMediaOrder) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "',0)");
+												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL, ProfileMediaOrder) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $mediaTitle . "','" . $safeProfileMediaFilename . "',0)");
 												
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload an image file only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
@@ -688,18 +689,20 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 											}
 										} elseif ($uploadMediaType == "VoiceDemo") {
 											// Add to database
-											$MIME = array('audio/mpeg', 'audio/mp3');
+											$MIME = array('audio/mpeg', 'audio/mp3'); 
 											if (in_array($_FILES['profileMedia' . $i]['type'], $MIME)) {
-												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+											    $voicedemodir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/voicedemo/";
+												$safeProfileMediaFilename = RBAgency_Common::generateFilename($voicedemodir,$file);
+                                                $mediaTitle = pathinfo($safeProfileMediaFilename,PATHINFO_FILENAME);
+                                                $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $mediaTitle . "','" . $safeProfileMediaFilename . "')");
 												$_voidemodID = $wpdb->insert_id;
 												if(!empty($_voidemodID)){
 													update_option("voicedemo_".$_voidemodID ,  $path_parts['filename'] );
-												}
-                                                $voicedemodir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/voicedemo/";
-                                                $safeProfileMediaFilename = RBAgency_Common::generateFilename($voicedemodir,$file);
+												}    
+                                                
                                                 if(!is_dir($voicedemodir)){
                                                     mkdir($voicedemodir);
-                                                }
+                                                } 
 												move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $voicedemodir.$safeProfileMediaFilename);
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload a mp3 file only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
@@ -711,10 +714,11 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 												
 												$resumedir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/resume/" ;
                                                 $safeProfileMediaFilename = RBAgency_Common::generateFilename($resumedir,$file);
+                                                $mediaTitle = pathinfo($safeProfileMediaFilename,PATHINFO_FILENAME);
                                                 if(!is_dir($resumedir)){
                                                     mkdir($resumedir);
                                                 }
-                                                $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+                                                $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $mediaTitle . "','" . $safeProfileMediaFilename . "')");
 												
                                                 move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $resumedir. $safeProfileMediaFilename);
 											} else {
@@ -729,7 +733,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
                                                     mkdir($headshotdir);
                                                 }
                                                 $safeProfileMediaFilename = RBAgency_Common::generateFilename($headshotdir,$file);
-                                                $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+                                                $mediaTitle = pathinfo($safeProfileMediaFilename,PATHINFO_FILENAME);
+                                                $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $mediaTitle . "','" . $safeProfileMediaFilename . "')");
 												
                                                 move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $headshotdir. $safeProfileMediaFilename);
 											} else {
@@ -744,7 +749,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
                                                     mkdir($CompCarddir);
                                                 }
                                                 $safeProfileMediaFilename = RBAgency_Common::generateFilename($CompCarddir,$file);
-                                                $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+                                                $mediaTitle = pathinfo($safeProfileMediaFilename,PATHINFO_FILENAME);
+                                                $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $mediaTitle . "','" . $safeProfileMediaFilename . "')");
 												
                                                 move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $CompCarddir. $safeProfileMediaFilename);
 											} else {
@@ -755,12 +761,14 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 										elseif ($uploadMediaType == "CardPhotos") {
 											// Add to database
 											if ($_FILES['profileMedia' . $i]['type'] == "image/pjpeg" || $_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/gif" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
-												$results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $safeProfileMediaFilename . "','" . $safeProfileMediaFilename . "')");
+												
 												$CardPhotos = RBAGENCY_UPLOADPATH . $ProfileGallery . "/cardphotos/" ;
                                                 if(!is_dir($CardPhotos)){
                                                     mkdir($CardPhotos);
                                                 }
                                                 $safeProfileMediaFilename = RBAgency_Common::generateFilename($CardPhotos,$file);
+                                                $mediaTitle = pathinfo($safeProfileMediaFilename,PATHINFO_FILENAME);
+                                                $results = $wpdb->query("INSERT INTO " . table_agency_profile_media . " (ProfileID, ProfileMediaType, ProfileMediaTitle, ProfileMediaURL) VALUES ('" . $ProfileID . "','" . $uploadMediaType . "','" . $mediaTitle . "','" . $safeProfileMediaFilename . "')");
                                                 move_uploaded_file($_FILES['profileMedia' . $i]['tmp_name'], $CardPhotos. $safeProfileMediaFilename);
 											} else {
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload an image file only",rb_agency_TEXTDOMAIN)."</i></b><br />";
@@ -2407,11 +2415,11 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										<span class='voicedemocaption_label'> ".$voicedemocaption."</span>
 										 <br> <a href=\"".RBAGENCY_UPLOADDIR . $ProfileGallery . "/voicedemo/" . $dataMedia['ProfileMediaURL']."\" target=\"_blank\"><span class=\"voicedemo-caption\">".$voicedemo."</span></a><br><a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\"									voice_demo_caption_key=\"voicedemocaption_".$dataMedia['ProfileMediaID']."\" voice_demo_caption_val=\"".$voicedemocaption."\">&nbsp[EDIT]</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
 									}elseif($medialink_option == 3){
-										$force_download_url = wpfdl_dl($ProfileGallery . "/" . $dataMedia['ProfileMediaURL'],get_option('wpfdl_token'),'dl');
+										$force_download_url = wpfdl_dl($ProfileGallery . "/voicedemo/" . $dataMedia['ProfileMediaURL'],get_option('wpfdl_token'),'dl');
 										$outLinkVoiceDemo .= "<div class=\"media-file voice-demo ".$markedClass."\" voicedemo_place_id=\"voicedemo_".$dataMedia['ProfileMediaID']."\"><span class='media-file-title'>" . $dataMedia['ProfileMediaType'] . "</span><br /><a ".$force_download_url." title=\"". $dataMedia['ProfileMediaTitle'] ."\" target=\"_blank\" class=\"link-icon\">mp3</a> <span class='voicedemocaption_label'>".$voicedemocaption."</span> <br><a ".$force_download_url."><span class=\"voicedemo-caption\">".$voicedemo."</span></a>&nbsp;<a href=\"#edit-voice-demo\" id=\"".$dataMedia['ProfileMediaID']."\" class=\"voice-demo-mp3 thickbox\" voice_demo_name_key=\"voicedemo_".$dataMedia['ProfileMediaID']."\" voice_demo_name_val=\"".$voicedemo."\" 
 											voice_demo_caption_key=\"voicedemocaption_".$dataMedia['ProfileMediaID']."\" 
 											voice_demo_caption_val=\"".$voicedemocaption."\">&nbsp[EDIT]</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
-									}
+									} 
 								} elseif ($dataMedia['ProfileMediaType'] == "Resume") {
 									$markedClass = "";
 									if(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedResumes)){
