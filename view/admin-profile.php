@@ -1232,21 +1232,25 @@ function rb_display_manage($ProfileID, $errorValidation) {
 		echo "<form method=\"post\" enctype=\"multipart/form-data\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=".$_GET["ProfileID"]."\">\n";
 	}
 ?>
-	<div id="welcome-panel" class="welcome-panel">
-		<div class="welcome-panel-content">
+	<h3><strong><?php echo $caption_header; ?></strong></h3>
+    <em><?php echo $caption_text; ?> <strong><?php echo __("Required fields are marked", RBAGENCY_TEXTDOMAIN); ?> *</strong></em>
+    <div id="welcome-panel" class="welcome-panel">
+		
 			<?php if (!empty($ProfileID) && ($ProfileID > 0)) { ?>
 			<a class="button button-primary button-hero" style="float: right; margin-top: 0px;" href="<?php echo RBAGENCY_PROFILEDIR  . $ProfileGallery; ?>" target="_blank">Preview Model</a>
 			<?php }?>
-			<h3><?php echo $caption_header; ?> <a class="button button-secondary" href="<?php echo admin_url("admin.php?page=" . $_GET['page']); ?>"><?php echo __("Back to " . LabelSingular . " List", RBAGENCY_TEXTDOMAIN); ?></a></h3>
-			<p class="about-description"><?php echo $caption_text; ?> <strong><?php echo __("Required fields are marked", RBAGENCY_TEXTDOMAIN); ?> *</strong></p>
-		</div>
+			<p class="about-description"> <a class="button button-primary" href="<?php echo admin_url("admin.php?page=" . $_GET['page']); ?>"><?php echo __("Back to " . LabelSingular . " List", RBAGENCY_TEXTDOMAIN); ?></a></p>
+			
+            </br>
 	</div>
+    
 	<div id="dashboard-widgets-wrap">
 		<div id="dashboard-widgets" class="metabox-holder columns-2">
 			<!-- Row 1: Column Left Start -->
 			<div id="postbox-container-1" class="postbox-container">
 				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
-					<div id="dashboard_rbagency_profile_glance" class="postbox">
+					<!-- CONTACT INFORMATION -->
+                    <div id="dashboard_rbagency_profile_glance" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span><?php echo __("Contact Information", RBAGENCY_TEXTDOMAIN); ?></span></h3>
 						<div class="inside">
@@ -1359,7 +1363,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "    <tr valign=\"top\">\n";
 								echo "      <th scope=\"row\">" . __("Profile Description", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
-								echo "          <textarea type=\"text\" cols=\"50\" rows=\"5\" id=\"ProfileDescription\" name=\"ProfileDescription\" ".(!empty($fields_val['updated_ProfileDescription']) ? "class=\"marked_changed\"" : "").">";
+								echo "          <textarea type=\"text\" class=\"rb-textarea\"  id=\"ProfileDescription\" name=\"ProfileDescription\" ".(!empty($fields_val['updated_ProfileDescription']) ? "class=\"marked_changed\"" : "").">";
 								echo	esc_attr( $ProfileDescription );
 								echo "</textarea>";
 								echo "</td>\n";
@@ -1377,7 +1381,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 //									jQuery(".datepicker-bd").datepicker("setDate", "<?php echo $ProfileDateBirth != '0000-00-00' ? $ProfileDateBirth : ''; ?>");
 //								});
 							</script>
-					<div id="dashboard_private_information" class="postbox">
+                    <!-- END CONTACT INFORMATION -->        
+					<!-- PRIVATE INFORMATION -->
+                    <div id="dashboard_private_information" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span><?php echo  __("Private Information", RBAGENCY_TEXTDOMAIN); ?></span></h3>
 						<div class="inside">
@@ -1495,6 +1501,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							</div>
 						</div>
 					</div>
+                    <!-- END PRIVATE INFORMATION -->
 					<!-- SOCIAL MEDIA LINKS -->
 					<div id="dashboard_social_media_links" class="postbox">
 						<div class="handlediv" title="Click to toggle"><br></div>
@@ -1554,6 +1561,22 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							</div>
 						</div>
 					</div>
+                    <!-- END SOCIAL MEDIA LINKS -->
+                    <!-- RESUME EDITOR-->
+            			<div id="resume_edito" class="postbox ">
+    						<h3 class="hndle"><span><?php echo __("Resume Editor", RBAGENCY_TEXTDOMAIN); ?></span></h3>
+    						<div class="inside">
+    							<div class="main">
+    								<?php
+    								$profile_resume = $ProfileResume;
+    								$content = !empty($profile_resume) ? $profile_resume : "";
+    								$editor_id = 'profile_resume'; 
+    								wp_editor( $content, $editor_id,array("wpautop"=>false,"tinymce"=>true) ); 
+    								?>
+    							</div>
+    						</div>
+    					</div>
+                    <!-- END RESUME EDITOR-->
 				</div>
 			</div>
 			<script type="text/javascript">
@@ -1834,9 +1857,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							echo "        <th scope=\"row\">" . __("Rate Profile", RBAGENCY_TEXTDOMAIN) . ":</th>\n";
 							echo "        <td>\n";
 							if(isset($_GET['action']) && !empty($_GET["ProfileID"]) && $_GET["action"] == 'editRecord') { 
-							?>
-							<script type="text/javascript"> </script>
-							<?php
+							
 	                        }
 							?>
 							<?php if($_GET['action'] == 'add') { ?>
@@ -2063,27 +2084,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 					</div>
 				</div>
 			</div>
-			<!-- Row 1: Column Right End -->
-			<div id="dashboard-widgets" class="metabox-holder columns-1">
-			<div id="postbox-container-1" class="postbox-container">
-				<div id="side-sortables" class="meta-box-sortables ui-sortable">
-			<div id="resume_edito" class="postbox ">
-						<h3 class="hndle"><span><?php echo __("Resume Editor", RBAGENCY_TEXTDOMAIN); ?></span></h3>
-						<div class="inside">
-							<div class="main">
-								<?php
-								$profile_resume = $ProfileResume;
-								$content = !empty($profile_resume) ? $profile_resume : "";
-								$editor_id = 'profile_resume'; 
-								wp_editor( $content, $editor_id,array("wpautop"=>false,"tinymce"=>true) ); 
-								?>
-							</div>
-						</div>
-					</div>
-					</div>
-					</div>
-					</div>
-		</div>
+            </div>
+			<!-- Row 1: Column Right End -->		
 		<?php
 		if (!empty($ProfileID) && ($ProfileID > 0)) { // Editing Record
 		?>
@@ -2251,9 +2253,6 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								
 								
 							<div style="clear: both;"></div>
-							
-							<!--</div>
-						</div>-->
 					</div>
 				</div>
 			</div>
@@ -2372,7 +2371,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							$outLinkComCard = "";
 							$outCustomMediaLink = "";
 							$outSoundCloud = "";
-							echo "<style>.media-files-checkbox{ float:right; margin-top:5px;}</style>";
+							
 							foreach ($resultsMedia  as $dataMedia) {
 								if ($dataMedia['ProfileMediaType'] == "Demo Reel" || $dataMedia['ProfileMediaType'] == "Video Monologue" || $dataMedia['ProfileMediaType'] == "Video Slate") {
 									$markedClass = "";
@@ -2496,14 +2495,6 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									$outSoundCloud .= "<div style=\"width:600px;float:left;padding:10px;\">";
 									$outSoundCloud .= "<span>" . $dataMedia['ProfileMediaType'] . " - <a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>&nbsp;<input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></span> \n";
 									$outSoundCloud .= RBAgency_Common::rb_agency_embed_soundcloud($dataMedia['ProfileMediaURL']);
-									/* $outSoundCloud .= "<object height=\"81\" width=\"100%\">";
-									$outSoundCloud .= "<param name=\"movie\" value=\"http://player.soundcloud.com/player.swf?&url=".$dataMedia['ProfileMediaURL']."\"></param>";
-									$outSoundCloud .=  "<param name=\"allowscriptaccess\" value=\"always\"></param>";
-									$outSoundCloud .=  "<embed";
-									$outSoundCloud .=  "src=\"http://player.soundcloud.com/player.swf?&url=".$dataMedia['ProfileMediaURL']."\"";
-									$outSoundCloud .=  "allowscriptaccess=\"always\" height=\"81\"  type=\"application/x-shockwave-flash\" width=\"100%\">";
-									$outSoundCloud .=  "</embed>";
-									$outSoundCloud .=  "</object>"; */
 									$outSoundCloud .= "</div>";
 								}
 							}
@@ -2662,8 +2653,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								if(isset($errorValidation['profileMedia'])){echo "<p style='background-color: #FFEBE8; border-color: #CC0000;margin: 5px 0 15px;' >".$errorValidation['profileMedia']."</p>\n";}
 								echo "<table class=\"rbform-table\">";
 								for ($i = 1; $i < 10; $i++) {
-									echo "<tr><th colspan=\"2\">Type:</th></tr>\n";
-									echo "<tr><td><select name=\"profileMedia" . $i . "Type\">\n";
+									//echo "<tr><th colspan=\"2\">Type:</th></tr>\n";
+									echo "<tr><th>Type: <select name=\"profileMedia" . $i . "Type\">\n";
 									echo "<option value=\"\">--Please Select--</option>\n";
 									//echo "<option value=\"Image\">Photo</option>\n";
 									echo "<option value=\"Headshot\">Headshot</option>\n";
@@ -2674,7 +2665,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									echo "<option value=\"CardPhotos\">Card Photos</option>";
 									rb_agency_getMediaCategories($ProfileGender);
 									echo "</select>\n";
-									echo "</td>\n";
+									echo "</th>\n";
 									echo "<td><input type='file' id='profileMedia" . $i . "' name='profileMedia" . $i . "' /></td>\n";
 									echo "</tr>\n";
 								}
@@ -2684,6 +2675,30 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						</div>
 					</div>
 				</div>
+				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
+                <div id="dashboard_line_to_links" class="postbox ">
+						<div class="handlediv" title="Click to toggle"><br></div>
+						<h3 class="hndle"><span><?php echo  __("Link to Other Accounts", RBAGENCY_TEXTDOMAIN); ?></span></h3>
+						<div class="inside">
+							<div class="main" >
+							<div id="other-account-url-wrapper">
+								<?php 
+								$OtherProfileAccountUserMeta = get_user_meta($_GET["ProfileID"],"otherAccountURLs_".$_GET["ProfileID"],true);
+								if(empty($OtherProfileAccountUserMeta)){
+									echo "<input type=\"text\" class=\"rb-url-input add-other-account-url-txt\" name=\"otherAccountURLs[]\" placeholder=\"Add URL Here\"/><br/>";
+								}else{
+									$OtherProfileAccountUserMeta = explode("|",$OtherProfileAccountUserMeta);
+									foreach($OtherProfileAccountUserMeta as $url){
+										echo "<input type=\"text\" class=\"rb-url-input add-other-account-url-txt\" name=\"otherAccountURLs[]\" placeholder=\"Add URL Here\" value=\"".$url."\"/><br/>";
+									}
+								}
+								?>
+							</div>							
+							<input type="button" class="button-primary add-account-url-btn" value="Add URL">
+							</div>
+						</div>
+					</div>
+                  </div>
 			</div>
 			<div id="postbox-container-6" class="postbox-container">
 				<div id="side-sortables" class="meta-box-sortables ui-sortable">
@@ -2753,36 +2768,6 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							</div>
 						</div>
 					</div>
-					<script type="text/javascript">
-						jQuery(document).ready(function(){
-							jQuery(".add-account-url-btn").click(function(event){
-								event.preventDefault;
-								jQuery("#other-account-url-wrapper").append("<input type='text' class='add-other-account-url-txt' name='otherAccountURLs[]' placeholder='Add URL Here' /><br/> ");
-							});
-						});
-					</script>
-					<div id="dashboard_line_to_links" class="postbox ">
-						<div class="handlediv" title="Click to toggle"><br></div>
-						<h3 class="hndle"><span><?php echo  __("Link to Other Accounts", RBAGENCY_TEXTDOMAIN); ?></span></h3>
-						<div class="inside">
-							<div class="main" >
-							<div id="other-account-url-wrapper">
-								<?php 
-								$OtherProfileAccountUserMeta = get_user_meta($_GET["ProfileID"],"otherAccountURLs_".$_GET["ProfileID"],true);
-								if(empty($OtherProfileAccountUserMeta)){
-									echo "<input type=\"text\" class=\"add-other-account-url-txt\" name=\"otherAccountURLs[]\" placeholder=\"Add URL Here\"/><br/>";
-								}else{
-									$OtherProfileAccountUserMeta = explode("|",$OtherProfileAccountUserMeta);
-									foreach($OtherProfileAccountUserMeta as $url){
-										echo "<input type=\"text\" class=\"add-other-account-url-txt\" name=\"otherAccountURLs[]\" placeholder=\"Add URL Here\" value=\"".$url."\"/><br/>";
-									}
-								}
-								?>
-							</div>							
-							<input type="button" class="add-account-url-btn" value="Add URL">
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 			<!--box cover gallary-->
@@ -2802,9 +2787,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 						<div class="handlediv" title="Click to toggle"><br></div>
 						<h3 class="hndle"><span>Box Cover</span></h3>
 						<div class="inside">
-							<div class="upload-form">
-								<?php //include_once(RBAGENCY_PLUGIN_DIR .'view/include-boxcoverupload.php'); ?>
-							</div>
+							
 							<div class="main">
 							<?php
 								echo "<script type='text/javascript'>\n";
@@ -3174,20 +3157,20 @@ function rb_display_manage($ProfileID, $errorValidation) {
 	} elseif($_GET["action"] == "editRecord"){
 		echo "</div>";
 	}
-		echo "<div class=\"postbox\">\n";
-		echo "	<div class=\"inside\">\n";
+		//echo "<div class=\"postbox\">\n";
+		//echo "	<div class=\"inside\">\n";
 	if (!empty($ProfileID) && ($ProfileID > 0)) {
 		echo "     <input type=\"hidden\" name=\"ProfileID\" value=\"" . $ProfileID . "\" />\n";
 		echo "     <input type=\"hidden\" name=\"ProfileUserLinked\" value=\"" . $ProfileUserLinked. "\" />\n";
 		echo "     <input type=\"hidden\" name=\"action\" value=\"editRecord\" />\n";
-		echo "     <input type=\"submit\" name=\"submit\" value=\"" . __("Update Record", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+		echo "     <input type=\"submit\" name=\"submit\" value=\"" . __("Update Record", RBAGENCY_TEXTDOMAIN) . "\" class=\"button button-primary button-hero\" />\n";
 		//echo "" . __("Last updated ", RBAGENCY_TEXTDOMAIN) . " " . rb_make_ago($ProfileDateUpdated) . "\n";
 	} else {
 		echo "     <input type=\"hidden\" name=\"action\" value=\"addRecord\" />\n";
-		echo "     <input type=\"submit\" name=\"submit\" value=\"" . __("Create Record", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" />\n";
+		echo "     <input type=\"submit\" name=\"submit\" value=\"" . __("Create Record", RBAGENCY_TEXTDOMAIN) . "\" class=\"button button-primary button-hero\" />\n";
 	}
-		echo "	</div>\n";
-		echo "</div>\n";
+		//echo "	</div>\n";
+		//echo "</div>\n";
 	echo "</form>\n";
 }
 // End Manage
