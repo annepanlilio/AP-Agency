@@ -1920,6 +1920,13 @@ elseif ($ConfigID == 3) {
 		$queryAlter = "ALTER TABLE " . $wpdb->prefix ."agency_data_type ADD DataTypeOrder int(11) default ".$countAll['total'];
 		$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
 	}
+    
+    $DataTypeLevel = $wpdb->get_var( "SELECT DataTypeLevel FROM ".$wpdb->prefix."agency_data_type LIMIT 1" );
+	if(!$DataTypeLevel){
+		//create column
+		$queryDataTypeLevel = "ALTER TABLE " . $wpdb->prefix ."agency_data_type ADD DataTypeLevel int(10) default 0";
+		$wpdb->query($queryDataTypeLevel,ARRAY_A);
+	}
 
   /* Initial Registration [RESPOND TO POST] ***********/
   if ( isset($_POST['action']) ) {
