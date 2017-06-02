@@ -1428,7 +1428,7 @@
 					}
 				} elseif ($ProfileCustomType == 4) {
 					$updated_textarea = get_user_meta($user['ProfileUserLinked'], "updated_ProfileCustomID".$data3['ProfileCustomID'], true);
-						echo "<textarea style=\"width: 100%; min-height: 300px;\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" ".(!empty($updated_textarea) ? "class=\"marked_changed\"" : "").">". stripslashes($ProfileCustomValue) ."</textarea>";
+						echo "<textarea class=\"rb-textarea\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" ".(!empty($updated_textarea) ? "class=\"marked_changed\"" : "").">". stripslashes($ProfileCustomValue) ."</textarea>";
 				} elseif ($ProfileCustomType == 5) {
 					$updated_checkbox = get_user_meta($user['ProfileUserLinked'], "updated_ProfileCustomID".$data3['ProfileCustomID'], true);
 					echo "<fieldset>";
@@ -1443,7 +1443,7 @@
 						}
 						if(!empty($val)){
 							echo "<label class=\"checkbox \" data-raw=\"".addslashes($val)."\"><input type=\"checkbox\"  id=\"".$data3['ProfileCustomID']."\" value=\"". $val."\"   "; if(in_array(addslashes($val),$xplode) && !empty($val)){echo "checked=\"checked\""; }echo" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".(!empty($updated_checkbox) ? "class=\"marked_changed select-checkbox\"" : "class=\"select-checkbox\"")."/> ";
-							echo "". $val."</label><br />";
+							echo "". $val."</label>";
 						}
 					}
 					echo "</fieldset>";

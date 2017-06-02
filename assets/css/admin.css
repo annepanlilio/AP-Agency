@@ -169,11 +169,26 @@ margin: 10px 0px;
 .tablenav .tablenav-pages .current {
 	margin-right: 1px;
 }
-
+.form-table td {
+    margin-bottom: 9px;
+    padding: 5px 10px;
+    line-height: 1.3;
+    vertical-align: middle;
+}
+.form-table th {
+    vertical-align: top;
+    text-align: left;
+    padding: 5px 10px 5px 0;
+    width: 200px;
+    line-height: 1.3;
+    font-weight: 600;
+}
+.rb-url-input {width:100%;margin-bottom:10px;}
+.rb-textarea {width:100%;}
 /* Dashboard Widget Forms */
 .rbtool-box { clear: both; }
 .postbox .rbform-table { width: 100%; }
-.postbox .rbform-table th { text-align: left; }
+.postbox .rbform-table th { text-align: left; width: 30%;vertical-align: top;}
 .postbox .rbform-table td input[type=""] { width: 30%; }
 #dashboard_public_information td label.dropdown { display: none; }
 #dashboard_upload_images td input[type="file"] { width: 100%; }
@@ -185,7 +200,12 @@ margin: 10px 0px;
 #dashboard_media .media-files .media-file.headshots { width: auto; height: auto; overflow: hidden; padding: 10px 5px; }
 input[type=checkbox], input[type=radio] { width: 12px!important; height: 15px!important; }
 input[type=radio]:checked:before { margin-bottom: 2px!important; }
-
+label.checkbox {
+    border: none;
+    display: block;
+    width: 50%;
+    float: left;
+}
 /* Dashboard Gallery Widget */
 #dashboard_gallery .main .gallery-item { float: left; margin: 10px 5px; padding: 5px; position: relative; font-size: 12px; width:100px; height: 215px;overflow:hidden;}
 #dashboard_gallery .main .gallery-item.primary { background: #666; }

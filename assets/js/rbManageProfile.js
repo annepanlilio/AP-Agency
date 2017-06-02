@@ -550,6 +550,10 @@ $('.save_media_inline').on('click',function(){
 	console.log('saved');
 	return false;
 });
-				
+	
+jQuery(".add-account-url-btn").click(function(event){
+	event.preventDefault;
+	jQuery("#other-account-url-wrapper").append("<input type='text' class='rb-url-input add-other-account-url-txt' name='otherAccountURLs[]' placeholder='Add URL Here' /><br/> ");
+});			
 							
 });
