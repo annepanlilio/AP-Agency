@@ -27,14 +27,15 @@ echo "          <h1>". __("Members Sign in", RBAGENCY_interact_TEXTDOMAIN). "</h
 
 echo "          <form name=\"loginform\" id=\"login\" action=\"". $login_post_to ."\" method=\"post\">\n";
 echo " 			<input type=\"hidden\" name=\"redirect_to\" value=\"".network_site_url("/")."dashboard/\">\n";
-echo "            <div class=\"field-row\">\n";
+echo "            <div class=\"field-row username\">\n";
 echo "              <label for=\"user-name\">". __("Username", RBAGENCY_interact_TEXTDOMAIN). "</label><input type=\"text\" name=\"user-name\" value=\"". esc_html( isset($_POST['user-name'])?$_POST['user-name']:"", 1 ) ."\" id=\"user-name\" />\n";
 echo "            </div>\n";
-echo "            <div class=\"field-row\">\n";
-echo "              <label for=\"password\">". __("Password", RBAGENCY_interact_TEXTDOMAIN). "</label><input type=\"password\" name=\"password\" value=\"\" id=\"password\" /> <a href=\"". get_bloginfo('wpurl') ."/wp-login.php?action=lostpassword\">". __("forgot password", RBAGENCY_interact_TEXTDOMAIN). "?</a>\n";
+echo "            <div class=\"field-row password\">\n";
+echo "              <label for=\"password\">". __("Password", RBAGENCY_interact_TEXTDOMAIN). "</label><input type=\"password\" name=\"password\" value=\"\" id=\"password\" />\n";
 echo "            </div>\n";
-echo "            <div class=\"field-row\">\n";
-echo "              <input type=\"checkbox\" name=\"remember-me\" value=\"forever\" /> ". __("Keep me signed in", RBAGENCY_interact_TEXTDOMAIN). "\n";
+echo "            <div class=\"field-row options\">\n";
+echo "              <small><input type=\"checkbox\" name=\"remember-me\" value=\"forever\" /> ". __("Keep me signed in", RBAGENCY_interact_TEXTDOMAIN). "</small>\n";
+echo "              <a href=\"". get_bloginfo('wpurl') ."/wp-login.php?action=lostpassword\">". __("forgot password", RBAGENCY_interact_TEXTDOMAIN). "?</a>\n";
 echo "            </div>\n";
 echo "            <div class=\"field-row submit-row\">\n";
 echo "              <input type=\"hidden\" name=\"action\" value=\"log-in\" />\n";
