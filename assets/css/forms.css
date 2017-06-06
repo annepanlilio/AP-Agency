@@ -1,13 +1,12 @@
 .rbform {
-	
+	webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0px;
+    min-height: 100%;
+    width:100%
 }
-.rbform * {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	margin: 0px;
-	min-height: 1px;
-}
+
 .rbform h3,
 .rbform p {
 	clear: both;
@@ -20,9 +19,8 @@
 }
 .rbform .rbfield {
 	float: left;
-	clear: both;
-	width: 100%;
-	margin: 0px;
+	width: 45%;
+	margin: 0px 35px 0 0;
 	max-width: 500px;
 	padding: 5px 0px;
 }
@@ -108,11 +106,14 @@
 }
 .rbform .rbfield.rbsubmit {
 	padding: 15px 0px;
+    width: 80%;
 }
 .rbform .rbfield.rbsubmit input {
 	margin-bottom: 10px;
 }
-
+.clear {
+    clear: both;
+}
 /* Widget RBForm */
 .widget .rbform .rbfield > label,
 .widget .rbform .rbfield > legend {
@@ -125,4 +126,10 @@
 .widget .rbform .rbfield > div {
 	width: 60%;
 	padding-left: 3%;
+}
+#member-register .rbfield {
+    width: 100%;
+}
+#client-register .rbfield {
+    clear:both;
 }

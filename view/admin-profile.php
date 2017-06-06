@@ -1415,9 +1415,9 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								echo "      <th scope=\"row\">" . __("Phone", RBAGENCY_TEXTDOMAIN) . "</th>\n";
 								echo "      <td>\n";
 								echo "      <fieldset>\n";
-								echo "          <label>Home:</label><br /><input type=\"text\" id=\"ProfileContactPhoneHome\" name=\"ProfileContactPhoneHome\" value=\"" . (isset($ProfileContactPhoneHome)?$ProfileContactPhoneHome:"") . "\" class=\"".(!empty($fields_val['updated_ProfileContactPhoneHome']) ? 'marked_changed' : "")."\"/><br />\n";
-								echo "          <label>Cell:</label><br /><input type=\"text\" id=\"ProfileContactPhoneCell\" name=\"ProfileContactPhoneCell\" value=\"" . (isset($ProfileContactPhoneCell)?$ProfileContactPhoneCell:"") . "\" class=\"".(!empty($fields_val['updated_ProfileContactPhoneCell']) ? 'marked_changed' : "")."\"/><br />\n";
-								echo "          <label>Work:</label><br /><input type=\"text\" id=\"ProfileContactPhoneWork\" name=\"ProfileContactPhoneWork\" value=\"" . (isset($ProfileContactPhoneWork)?$ProfileContactPhoneWork:"") . "\" class=\"".(!empty($fields_val['updated_ProfileContactPhoneWork']) ? 'marked_changed' : "")."\"/><br />\n";
+								echo "          <label class='floatlabel'>Home:</label><input type=\"text\" id=\"ProfileContactPhoneHome\" name=\"ProfileContactPhoneHome\" value=\"" . (isset($ProfileContactPhoneHome)?$ProfileContactPhoneHome:"") . "\" class=\"".(!empty($fields_val['updated_ProfileContactPhoneHome']) ? 'marked_changed' : "")."\"/><br />\n";
+								echo "          <label class='floatlabel'>Cell:</label><input type=\"text\" id=\"ProfileContactPhoneCell\" name=\"ProfileContactPhoneCell\" value=\"" . (isset($ProfileContactPhoneCell)?$ProfileContactPhoneCell:"") . "\" class=\"".(!empty($fields_val['updated_ProfileContactPhoneCell']) ? 'marked_changed' : "")."\"/><br />\n";
+								echo "          <label class='floatlabel'>Work:</label><input type=\"text\" id=\"ProfileContactPhoneWork\" name=\"ProfileContactPhoneWork\" value=\"" . (isset($ProfileContactPhoneWork)?$ProfileContactPhoneWork:"") . "\" class=\"".(!empty($fields_val['updated_ProfileContactPhoneWork']) ? 'marked_changed' : "")."\"/><br />\n";
 								echo "      </fieldset>\n";
 								echo "      </td>\n";
 								echo "    </tr>\n";

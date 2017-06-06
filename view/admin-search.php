@@ -106,7 +106,7 @@
 	 * Display Cart
 	 */
 		if (isset($_SESSION['cartArray']) || isset($_POST["action"]) && $_POST["action"] == "cartAdd" && $_POST["action"] !== "massEmail" || isset($_REQUEST["action"]) && @$_REQUEST["action"] == "cartEmpty" || !empty($_SESSION["cartAgentsArray"])) {
-			echo "<div id=\"casting-cart\" class=\"boxblock-container\" style=\"float: left; padding-top:24px; width: 49%; min-width: 500px;\">\n";
+			echo "<div id=\"casting-cart\" class=\"boxblock-container\">\n";
 			echo " <div class=\"boxblock\">\n";
 			echo "   <div class=\"inner\">\n";
 			echo "   	<h2>". __("Casting Cart", RBAGENCY_TEXTDOMAIN) ."</h2>\n";
@@ -124,7 +124,7 @@
 	if (isset($_REQUEST["action"]) && @$_REQUEST["action"] !== "massEmail"  && @$_REQUEST["action"] !== "cartEmpty"  && !isset($_SESSION['cartArray']) ) {
 	} else {
 		// Search Form
-			echo "    <div class=\"boxblock-container\" style=\"float: left; width: 49%;\">\n";
+			echo "    <div class=\"boxblock-container\">\n";
 			echo "     <div class=\"boxblock\">\n";
 			echo "      <h3>". __("Advanced Search", RBAGENCY_TEXTDOMAIN) ."</h3>\n";
 			echo "      <div class=\"inner\">\n";

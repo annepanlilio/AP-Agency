@@ -1050,7 +1050,7 @@ elseif ($ConfigID == 11) {
 		echo "<table class=\"form-table\">\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Database Version', RBAGENCY_TEXTDOMAIN) ."</th>\n";
-		echo "   <td><input name=\"\" value=\"". RBAGENCY_interact_VERSION ."\" disabled /></td>\n";
+		echo "   <td><input name=\"\" type='text' value=\"". RBAGENCY_interact_VERSION ."\" disabled /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Display', RBAGENCY_TEXTDOMAIN) ."</th>\n";
@@ -1130,16 +1130,6 @@ elseif ($ConfigID == 11) {
 		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_switch_sidebar_agent]\" value=\"0\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_switch_sidebar_agent'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_switch_sidebar_agent']:"", 0,false)."/> ". __("Use theme widget sidebar", RBAGENCY_interact_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
-
-
-
-
-
-
-
-
-
-
 
 
 		echo " <tr valign=\"top\">\n";
@@ -1286,8 +1276,17 @@ elseif ($ConfigID == 11) {
 		echo " </tr>\n";
 
 
-
-
+        echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Recaptcha', RBAGENCY_TEXTDOMAIN); echo "</h3></th>\n";
+		echo " </tr>\n";
+        echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Site key', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_site_key]\" size='50' type='text' value=\"". (isset($rb_agencyinteract_options_arr['rb_agencyinteract_site_key'])? $rb_agencyinteract_options_arr['rb_agencyinteract_site_key']:"") ."\" /></td>\n";
+		echo " </tr>\n";
+        echo " <tr valign=\"top\">\n";
+		echo "   <th scope=\"row\">". __('Secret key', RBAGENCY_TEXTDOMAIN) ."</th>\n";
+		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_secret_key]\" size='50' type='text' value=\"". (isset($rb_agencyinteract_options_arr['rb_agencyinteract_secret_key'])? $rb_agencyinteract_options_arr['rb_agencyinteract_secret_key']:"") ."\" /></td>\n";
+		echo " </tr>\n";
 
 
 		echo " <tr valign=\"top\">\n";
@@ -1301,15 +1300,15 @@ elseif ($ConfigID == 11) {
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Embed Overview Page ID', RBAGENCY_TEXTDOMAIN) ."</th>\n";
-		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_option_overviewpagedetails]\" value=\"". (isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_overviewpagedetails'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_overviewpagedetails']:"") ."\" /></td>\n";
+		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_option_overviewpagedetails]\" type='text' value=\"". (isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_overviewpagedetails'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_overviewpagedetails']:"") ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Embed Registration Page ID', RBAGENCY_TEXTDOMAIN) ."</th>\n";
-		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_option_subscribepagedetails]\" value=\"". (isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepagedetails'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepagedetails']:"") ."\" /></td>\n";
+		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_option_subscribepagedetails]\" type='text' value=\"". (isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepagedetails'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepagedetails']:"") ."\" /></td>\n";
 		echo " </tr>\n";
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('PayPal Email Address', RBAGENCY_TEXTDOMAIN) ."</th>\n";
-		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_option_subscribepaypalemail]\" value=\"". (isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepaypalemail'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepaypalemail']:"") ."\" /></td>\n";
+		echo "   <td><input name=\"rb_agencyinteract_options[rb_agencyinteract_option_subscribepaypalemail]\" type='text' value=\"". (isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepaypalemail'])?$rb_agencyinteract_options_arr['rb_agencyinteract_option_subscribepaypalemail']:"") ."\" /></td>\n";
 		echo " </tr>\n";
 		echo "</table>\n";
 		echo "<input type=\"submit\" class=\"button-primary\" value=\"". __('Save Changes') ."\" />\n";

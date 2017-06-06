@@ -206,6 +206,10 @@ label.checkbox {
     width: 50%;
     float: left;
 }
+.floatlabel {
+    position:absolute;
+    left:20%;
+}
 /* Dashboard Gallery Widget */
 #dashboard_gallery .main .gallery-item { float: left; margin: 10px 5px; padding: 5px; position: relative; font-size: 12px; width:100px; height: 215px;overflow:hidden;}
 #dashboard_gallery .main .gallery-item.primary { background: #666; }
