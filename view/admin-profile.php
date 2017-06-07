@@ -946,18 +946,20 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							wp_delete_user($dataDelete["ProfileUserLinked"]);
 								if (isset($ProfileGallery)) {
 									// Remove Folder
-									$dir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/";
+                                    $mediatype = strtolower($dataDelete['ProfileMediaType']);
+                                    $mediatype = $mediatype!='image' ? $mediatype:"";
+									$dir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/".$mediatype;
 									$mydir = @opendir($dir);
 									while (false !== ($file = @readdir($mydir))) {
 										if ($file != "." && $file != "..") {
 											if(@is_file($dir . $file))
-											@unlink($dir . $file);// or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing file:", RBAGENCY_TEXTDOMAIN) . $dir . $file . "</p></div>");
+											@unlink($dir . $file);
 										}
 									}
 									// Remove Directory
-									if (@is_dir($dir)) {
-										@rmdir($dir);// or die("<div id=\"message\" class=\"error\"><p>" . __("Error removing directory:", RBAGENCY_TEXTDOMAIN) . $dir . $file . "</p></div>");
-									}
+									//if (@is_dir($dir)) {
+									//	@rmdir($dir);
+									//}
 									@closedir($mydir);
 								} else {
 									echo ("<div id=\"message\" class=\"error\"><p>" . __("No Valid Record Found.", RBAGENCY_TEXTDOMAIN) . "</p></div>");
@@ -1011,7 +1013,9 @@ elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 		}
 		if (isset($ProfileGallery)) {
 			// Remove Folder
-			$dir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/";
+            $mediatype = strtolower($dataDelete['ProfileMediaType']);
+            $mediatype = $mediatype!='image' ? $mediatype:"";
+			$dir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/".$mediatype;
 			$mydir = @opendir($dir);
 			while (false !== ($file = @readdir($mydir))) {
 				if ($file != "." && $file != "..") {
@@ -1019,9 +1023,9 @@ elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 				}
 			}
 			// remove dir
-			if (is_dir($dir)) {
-				rmdir($dir);// or DIE("couldn't delete $dir$file folder not exist<br />");
-			}
+			//if (is_dir($dir)) {
+			//	rmdir($dir);// or DIE("couldn't delete $dir$file folder not exist<br />");
+			//}
 			closedir($mydir);
 		} else {
 			echo __("No valid record found.", RBAGENCY_TEXTDOMAIN);
