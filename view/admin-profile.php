@@ -673,7 +673,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 												if ($image->getHeight() > $rb_agency_option_agencyimagemaxheight) {
 													$image->resizeToHeight($rb_agency_option_agencyimagemaxheight);
 												}
-												$polariodir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/polariod/";
+												$polariodir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/polaroid/";
                                                 if(!is_dir($polariodir)){
                                                     mkdir($polariodir);
                                                 }
