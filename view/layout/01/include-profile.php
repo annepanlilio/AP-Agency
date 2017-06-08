@@ -342,14 +342,14 @@ echo "					</div>\n"; // #photos
 							<div id="polaroids" class="rbcol-12 rbcolumn">
 
 								<div class="rbcol-6 rbcolumn">
-									<h3><input type="radio" value="11" name="print_option" checked="checked" /> <?php echo __("Four Polaroids Per Page",RBAGENCY_TEXTDOMAIN); ?></h3>
+									<input type="radio" value="11" name="print_option" checked="checked" /><h3><?php echo __("Four Polaroids Per Page",RBAGENCY_TEXTDOMAIN); ?></h3>
 									<div class="polaroid">
 										<img src="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/view/layout/06/images/polariod-four-per-page.png" alt="" />
 									</div><!-- polariod -->
 								</div><!-- .six .rbcolumn -->
 
 								<div class="rbcol-6 rbcolumn">
-									<h3><input type="radio" value="12" name="print_option" /> <?php echo __("One Polaroid Per Page",RBAGENCY_TEXTDOMAIN); ?></h3>
+									<input type="radio" value="12" name="print_option" /><h3><?php echo __("One Polaroid Per Page",RBAGENCY_TEXTDOMAIN); ?></h3>
 									<div class="polaroid">
 										<img src="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/view/layout/06/images/polariod-one-per-page.png" alt="" />
 									</div><!-- polariod -->
