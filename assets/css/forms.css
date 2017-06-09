@@ -135,3 +135,9 @@
 #client-register .rbfield {
     clear:both;
 }
+
+/*MCE Editor*/
+div.mce-panel {
+	border-color: #e5e5e5!important;
+    border-style: solid!important;
+}
