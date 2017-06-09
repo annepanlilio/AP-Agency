@@ -3,6 +3,6 @@
 #rblayout-one #profile-picture,
 #rblayout-one #links,
 #rblayout-one #stats { margin: 0px 0px 30px 0px; }
-#polaroids h3 { font-size: large; margin-bottom: 9px; padding-bottom: 0; }
+#polaroids label { font-size: large; }
 #polaroids .rbcolumn { margin-bottom: 30px; }
 .rblayout .profile-photos { margin-top: 15px; }
