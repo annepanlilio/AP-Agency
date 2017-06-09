@@ -290,8 +290,8 @@ echo "					</div>\n"; // #photos
 								<?php  
 								foreach($resultsImg as $dataImg ){
 									echo '<div class="photo">';
-									echo '	<a href="'. RBAGENCY_UPLOADDIR . $ProfileGallery ."/polariod/". $dataImg['ProfileMediaURL'] .'" rel="lightbox-mygallery" class="allimages_print" href="javascript:void(0)">'; // onClick="selectImg('.$dataImg["ProfileMediaID"].')"
-									echo "	<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/polariod/". $dataImg['ProfileMediaURL'] ."&h=150\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
+									echo '	<a href="'. RBAGENCY_UPLOADDIR . $ProfileGallery ."/polaroid/". $dataImg['ProfileMediaURL'] .'" rel="lightbox-mygallery" class="allimages_print" href="javascript:void(0)">'; // onClick="selectImg('.$dataImg["ProfileMediaID"].')"
+									echo "	<img id='".$dataImg["ProfileMediaID"]."' src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/polaroid/". $dataImg['ProfileMediaURL'] ."&h=150\" alt='' class='allimages_thumbs' /></a><input type='hidden'  name='".$dataImg["ProfileMediaID"]."' id='p".$dataImg["ProfileMediaID"]."'>\n";
 									echo '</div>';
 								}
 								?> <br clear="all" />
@@ -342,14 +342,14 @@ echo "					</div>\n"; // #photos
 							<div id="polaroids" class="rbcol-12 rbcolumn">
 
 								<div class="rbcol-6 rbcolumn">
-									<h3><input type="radio" value="11" name="print_option" checked="checked" /> <?php echo __("Four Polaroids Per Page",RBAGENCY_TEXTDOMAIN); ?></h3>
+									<input type="radio" value="11" name="print_option" checked="checked" /><h3><?php echo __("Four Polaroids Per Page",RBAGENCY_TEXTDOMAIN); ?></h3>
 									<div class="polaroid">
 										<img src="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/view/layout/06/images/polariod-four-per-page.png" alt="" />
 									</div><!-- polariod -->
 								</div><!-- .six .rbcolumn -->
 
 								<div class="rbcol-6 rbcolumn">
-									<h3><input type="radio" value="12" name="print_option" /> <?php echo __("One Polaroid Per Page",RBAGENCY_TEXTDOMAIN); ?></h3>
+									<input type="radio" value="12" name="print_option" /><h3><?php echo __("One Polaroid Per Page",RBAGENCY_TEXTDOMAIN); ?></h3>
 									<div class="polaroid">
 										<img src="<?php echo get_bloginfo("url");?>/wp-content/plugins/rb-agency/view/layout/06/images/polariod-one-per-page.png" alt="" />
 									</div><!-- polariod -->
