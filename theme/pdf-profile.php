@@ -260,7 +260,7 @@ if($_POST['print_option']==14){ // print for division
 	$table.='<div style="page-break-before:always" /></div><br><br><br>';
 
 	if($_POST['print_option'] == "3-1" || $_POST['print_option'] == "1-1"){
-		$table.="</td><td valign='top'><img style='width:50%;height:auto;'' src=".$rb_agency_option_agencylogo."></td></tr></table>"."<table border='0'><tr>".$table3."</tr></table>";
+		$table.="</td><td valign='top'><img style='width:50%;height:auto;' src=".$rb_agency_option_agencylogo."></td></tr></table>"."<table border='0'><tr>".$table3."</tr></table>";
 	}
 
 	$table = str_replace("src","",$table);
@@ -328,8 +328,13 @@ $modelInfo=str_replace("<li","<tr><td",$modelInfo);
 		$modelInfo=str_replace("</ul>","</table>",$modelInfo);  
 		$modelInfo=str_replace("</label>","</label>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",$modelInfo);  
 		
-		if($_POST['print_type']=="print-polaroids"){$printType="Polaroid";}
-			else{$printType="Image";}
+		if($_POST['print_type']=="print-polaroids"){
+			$printType = "Polaroid";
+			$media_folder = "polaroid/";
+		} else {
+			$printType = "Image";
+			$media_folder = "";
+		}
 
 			if(isset($_POST['pdf_image_id']) && count($_POST['pdf_image_id'])>0) {
 				$pdf_image_id=$_POST['pdf_image_id'];
@@ -338,7 +343,7 @@ $modelInfo=str_replace("<li","<tr><td",$modelInfo);
 			}
 			elseif(!empty($orderBy)) {
 				$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
-			}else{
+			} else {
 					$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
 			
 			
@@ -375,7 +380,7 @@ $modelInfo=str_replace("<li","<tr><td",$modelInfo);
 
 					
 					
-				 	$image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'];
+				 	$image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/".$media_folder."". $dataImg['ProfileMediaURL'];
 
 					$bfi_params = array(
 						'crop'=>true,
@@ -432,10 +437,10 @@ $modelInfo=str_replace("<li","<tr><td",$modelInfo);
 		} elseif($_POST['print_option'] == 11 || $_POST['print_option'] == 12){
 			$table.='<br clear="all">';
 		} else {
-			$table.='<br clear="all"><img style="width:50%;height:auto;float:left;" src="'.$rb_agency_option_agencylogo.'">';
+			$table.='<br clear="all"><img style="width:50%;height:auto;float:left;" src="'.get_site_url().''.$rb_agency_option_agencylogo.'">';
 		}
 	}
-	$logo_img = '<table><tr><td valign="top"><img style="width:100%;height:auto;float:left;" src="'.$rb_agency_option_agencylogo.'"></td></tr></table>';
+	$logo_img = '<table><tr><td valign="top"><img style="width:100%;height:auto;float:left;" src="'.get_site_url().''.$rb_agency_option_agencylogo.'"></td></tr></table>';
 	if($printType=="Polaroid"){
 		$modelInfo="<table border='0' width='800'><tr><td width='180' valign'top>".$modelInfo.$logo_img."</td><td width='600' valign='top'>$table";
 		$table=$modelInfo;
