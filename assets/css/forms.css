@@ -20,9 +20,10 @@
 .rbform .rbfield {
 	float: left;
 	width: 45%;
-	margin: 0px 35px 0 0;
+	clear: both;
 	max-width: 500px;
 	padding: 5px 0px;
+	margin: 0px 35px 0 0;
 }
 .rbform.form-admin .rbfield {
 	max-width: 100%;
