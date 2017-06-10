@@ -625,7 +625,7 @@
 		$image_url = parse_url($url);
 		if(isset($image_url['host']) && ($image_url['host'] == 'www.youtube.com' || $image_url['host'] == 'youtube.com')){
 			$array = explode("&", $image_url['query']);
-			return "<img src=\"http://img.youtube.com/vi/".substr($array[0], 2)."/default.jpg\"/>";
+			return "<img src=\"http://img.youtube.com/vi/".substr($array[0], 2)."/hqdefault.jpg\"/>";
 		}elseif(isset($image_url['host']) && ($image_url['host'] == 'www.vimeo.com' || $image_url['host'] == 'vimeo.com')){
 			$is_host_active = @file_get_contents("http://vimeo.com/api/v2/video/".substr($image_url['path'], 1).".php");
 			if(!empty($is_host_active)){
@@ -636,7 +636,7 @@
 			}
 		} else {
 			if($host == "youtube") {
-				return "<img src=\"http://img.youtube.com/vi/".$url."/default.jpg\"/>";
+				return "<img src=\"http://img.youtube.com/vi/".$url."/hqdefault.jpg\"/>";
 			} elseif ($host == "vimeo") {
 				$is_host_active = @file_get_contents("http://vimeo.com/api/v2/video/".$url.".php");
 				if(!empty($is_host_active)){
