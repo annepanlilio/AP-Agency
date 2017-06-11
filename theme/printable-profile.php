@@ -155,7 +155,7 @@ ul li{list-style:none;}
 .lg-photos-info .group.first {width: 450px; }
 .lg-photos-info .allimages_thumbs {width: 450px; }
 
-.md-photos-info #model_info {height: auto; width: 215px; }
+.md-photos-info #model_info {height: auto; width: 215px; height: 270px; }
 .md-photos-info #model_info h1 {margin-top: 0; }
 .md-photos-info .group.first {width: 690px; }
 .md-photos-info > img:nth-of-type(4) {margin-left: 0; }
@@ -202,9 +202,11 @@ ul li{list-style:none;}
 <?php }
 
 	if($_POST['print_type']=="print-polaroids") {
-		$printType="Polaroid";}
-	else {
+		$printType="Polaroid";
+		$mediaFolder = "polariod/";
+	} else {
 		$printType="Image";
+		$mediaFolder = "";
 	}
     $pdf_image_id = "";
 	if(isset($_POST['pdf_image_id']) && count($_POST['pdf_image_id'])>0) {
@@ -236,7 +238,7 @@ ul li{list-style:none;}
 				echo '<div class="group'.($rowCount == 0 ? ' first' : '').'">';
 			}
 
-			echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/polaroid/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
+			echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/".$mediaFolder."". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
 
     		if($rowCount % $images_per_row == 0 || $rowCount+$first_photos == $countImg) { // add row clear, add agency logo, close .group
 				echo '<div class="row"></div><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
@@ -252,7 +254,7 @@ ul li{list-style:none;}
 			// 		echo '<div class="group first">';
 			// 	}
 
-				echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/polaroid/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
+				echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/".$mediaFolder."". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
 
 				if($rowCount == $first_photos-1){
 					echo '<div class="row"></div><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'">'; // add row clear, add agency logo, close .group
@@ -266,16 +268,24 @@ ul li{list-style:none;}
 				$rowCount++;
 
 				if(($imageCnt % $images_per_row == 1) || $images_per_row == 1) { // group photos in a div
-					echo '<div class="group">';
+					echo '<table style="width:100%; page-break-before:always;">';
 				}
 
-				echo "	<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/polaroid/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
+				if(($rowCount % 4 == 0) || 4 == 1) { // Add tr for every 4 photos
+echo "				<tr>";
+				}
+echo "					<td style=\"width:50%;\" class=\"imageCnt-".$imageCnt." rowCount-".$rowCount." countImg-".$countImg."\"><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/".$mediaFolder."". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>";
+				if($rowCount % 4 == 1 || 4 == 1) { // Close tr
+echo "				</tr>";
+				}
 
-				if($imageCnt % $images_per_row == 0 || $imageCnt+$first_photos == $countImg) { // add row clear, add agency logo, close .group
-					echo '<div class="row"></div><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
+				if($imageCnt % $images_per_row == 0 || $rowCount == $countImg) { // add row clear, add agency logo, close .group
+					echo '<tr><td style="width:50%;"><h1 class="name">'.$ProfileContactDisplay.'</h1></td><td style="width:50%;text-align:right;"><img src="'.$rb_agency_option_agencylogo.'"></td></tr>';
+					echo '<table>';
 				}
 
 				$imageCnt++;
+				
 			}
 
 		} elseif ($print_format == "1-1"){ // Print Large Photos with without info
@@ -286,20 +296,20 @@ ul li{list-style:none;}
 				echo '<div class="group">';
 			}
 
-			echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/polaroid/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
+			echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/".$mediaFolder."". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
 
     		if($rowCount % $images_per_row == 0 || $rowCount == $countImg) { // add row clear, add agency logo, close .group
 				echo '<div class="row"></div><h1 class="name">'.$ProfileContactDisplay.'</h1><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
 			}
 
-		} elseif ($print_format == "3-1") { // Print Medium Photos with without info
+		} elseif ($print_format == "3-1") { // Print Medium Photos without info
 
 			$rowCount++;
 			if(($rowCount % $images_per_row == 1) || $images_per_row == 1) {
 				echo '<div class="group">';
 			}
 
-			echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/polaroid/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
+			echo "<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/".$mediaFolder."". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
 
     		if($rowCount % $images_per_row == 0 || $rowCount == $countImg) { // add row clear, add agency logo, close .group
 				echo '<div class="row"></div><h1 class="name">'.$ProfileContactDisplay.'</h1><img class="agency-logo" '.$logoMarginTop.'" src="'.$rb_agency_option_agencylogo.'"></div>'; // add row clear, add agency logo, close .group
@@ -316,7 +326,7 @@ echo "				<table style=\"width:60%; float: left;\">";
 echo "					<tr>";
 					}
 echo "						<td style=\"width:50%;\">";
-echo "							<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/polaroid/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
+echo "							<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/".$mediaFolder."". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
 echo "						</td>";
 					if($rowCount % 2 == 1 || 2 == 1) { // Close tr
 echo "					</tr>";
@@ -338,7 +348,7 @@ echo '				</table>';
 				if(($rowCount % 4 == 0) || 4 == 1) { // Add tr for every 2 photos
 echo "				<tr>";
 				}
-echo "					<td style=\"width:50%;\"><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/polaroid/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>";
+echo "					<td style=\"width:50%;\"><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/".$mediaFolder."". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>";
 				if($rowCount % 4 == 1 || 4 == 1) { // Close tr
 echo "				</tr>";
 				}
@@ -363,7 +373,7 @@ echo "				<table style=\"width:50%; float: left;\">";
 echo "					<tr>";
 					}
 echo "						<td style=\"width:50%;\">";
-echo "							<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/polaroid/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
+echo "							<img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/".$mediaFolder."". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' />";
 echo "						</td>";
 					if($rowCount % 1 == 1 || 1 == 1) { // Close tr
 echo "					</tr>";
@@ -385,7 +395,7 @@ echo '				</table>';
 				if(($rowCount % 2 == 1) || 2 == 1) { // Add tr for every 2 photos
 echo "				<tr>";
 				}
-echo "					<td style=\"width:50%;\" class=\"rowcount-".$rowCount."\"><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/polaroid/". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>";
+echo "					<td style=\"width:50%;\" class=\"rowcount-".$rowCount."\"><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/".$mediaFolder."". $dataImg['ProfileMediaURL'] .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>";
 				if($rowCount % 2 == 0 || 2 == 1) { // Close tr
 echo "				</tr>";
 				}
