@@ -1,6 +1,6 @@
 var $ = jQuery.noConflict();
 
-$(function() {
+$(window).load(function() {    
 
 	// cache container
     var $container = $('#profile-list');
