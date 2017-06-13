@@ -119,7 +119,7 @@ class RBAgency_Admin {
 			rb_agency_casting_searchsaved();
 		}
 		public static function menu_casting_types(){
-			include_once(RBAGENCY_PLUGIN_DIR.'view/admin-castingtypes.php');
+			rb_agency_casting_types();
 		}
 		public static function menu_casting_jobpostings(){
 			rb_agency_casting_jobpostings();
