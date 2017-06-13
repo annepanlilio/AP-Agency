@@ -6014,9 +6014,9 @@ function rb_agency_update_image()
     $mediaid = $_POST['mediaid'];
     $profileid = $_POST['profileid'];
     if($action=="rb_agency_delete_image"){    
-        $media = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileMediaTitle,ProfileMediaType FROM ".table_agency_profile_media." WHERE ProfileMediaID = $mediaid" ) );
+        $media = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileMediaTitle,ProfileMediaType,ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID = $mediaid" ) );
         $mediadir = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileGallery FROM ".table_agency_profile." WHERE ProfileID = $profileid" ) );
-        $file = $media->ProfileMediaTitle;
+        $file = $media->ProfileMediaURL;
         $mediatype = strtolower($media->ProfileMediaType);
         $subdir = "";
         if($mediatype!="image"){
@@ -6033,7 +6033,7 @@ function rb_agency_update_image()
         if($wpdb->last_error !== ''){
             $msg = array('error'=>$wpdb->last_error);
         }else{
-            $msg = array('success'=>'File deleted successfully');
+            $msg = array('success'=>'File deleted successfully'.$image);
         }
         echo json_encode($msg);
         
