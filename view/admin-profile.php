@@ -2461,7 +2461,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									}elseif(in_array($dataMedia['ProfileMediaURL'], $newlyUploadedPolaroids)){
 										$markedClass = "marked_changed";
 									}
-									$polaroid_image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/polariod/". $dataMedia['ProfileMediaURL'];
+									$polaroid_image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/polaroid/". $dataMedia['ProfileMediaURL'];
 									$polaroid_path_params = array(
 										'crop'=>true,
 										'width'=>120,
