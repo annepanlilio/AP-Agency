@@ -184,31 +184,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 				}
 		}
 	}
-	//if (isset($_POST['action']) && $_POST["action"] == "editRecord") {
-//		//set customfields value to sessions
-//		$_SESSION['profileCustomValue'] = [];
-//				foreach($_POST as $k=>$v){
-//					if(substr($k,0,15) == 'ProfileCustomID' ){
-//						$ProfileCustomValue = $v;
-//						if(is_array($ProfileCustomValue)){
-//							$ProfileCustomValue = implode(',',$ProfileCustomValue);
-//						}else{
-//							$ProfileCustomValue = $v;
-//						}
-//						$_SESSION['profileCustomValue'][$k] = $ProfileCustomValue;						
-//					}					
-//				}
-//		if($ProfileContactEmail != $_POST['HiddenContactEmail']){
-//			if (!is_email($ProfileContactEmail)) {
-//				$errorValidation['ProfileContactEmail']= __("You must enter a valid email address.<br />", RBAGENCY_TEXTDOMAIN);
-//				$have_error = true;
-//			}
-//			if (rb_check_exists($ProfileContactEmail,'ProfileContactEmail','text')) {
-//				$errorValidation['ProfileContactEmail']= __("Sorry, that email address is already used!<br />", RBAGENCY_TEXTDOMAIN);
-//				$have_error = true;
-//			}
-//		}
-//	}
+
 	// Get Post State
 	$action = $_POST['action'];
 	switch ($action) {
@@ -3005,15 +2981,11 @@ function rb_display_manage($ProfileID, $errorValidation) {
 					$query = "SELECT cs_job.*, avail.* FROM  ".table_agency_casting_job." AS cs_job LEFT JOIN ".table_agency_castingcart_availability."
 					AS avail ON cs_job.Job_ID = avail.CastingJobID WHERE avail.CastingAvailabilityProfileID = ".$ProfileID."
 					";
-					//$query = "SELECT cs_job.*, avail.* FROM  ".table_agency_casting_job." AS cs_job INNER JOIN ".table_agency_castingcart_availability."
-					//AS avail ON cs_job.Job_ID = avail.CastingJobID INNER JOIN ". table_agency_profile ." as profile WHERE avail.CastingAvailabilityStatus = 'available'
-					//AND avail.CastingAvailabilityProfileID = ".$ProfileID." AND profile.ProfileID IN (".(!empty($cartArray)?implode(",", $cartArray):"''").")
-					//";
+					
 					$job_data = $wpdb->get_results($query);
-					//print_r($job_data);
-					//echo $wpdb->last_query ;
+				
 					$count = $wpdb->num_rows;
-					//echo '<pre>';print_r($job_data);echo '<pre>';
+				
 				?>
 					<div class="postbox " id="dashboard_line_to_links">
 						<div title="Click to toggle" class="handlediv"><br></div>
@@ -3065,9 +3037,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 														}
 													}
 												}
-												//echo "<pre>";
-												//print_r(get_alloptions());
-												//echo "</pre>";
+												
 												?>
 											</td>
 											<div id="aud-edit-voice-demo" style="display:none;">
