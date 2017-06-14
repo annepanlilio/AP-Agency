@@ -12,6 +12,12 @@ if(strpos(get_site_url(),'localhost') !== false){
 	$rb_agency_option_agencylogo = !empty($rb_agency_options_arr['rb_agency_option_agencylogo']) ? $rb_agency_options_arr['rb_agency_option_agencylogo'] : "";
 }
 
+
+$printType = $_POST['print_type'];
+$printOption = $_POST['print_option'];
+$pdfImageID = $_POST['pdf_image_id'];
+$profileImages = "";
+
 //check if http include
 /* if(strpos(rb_agency_option_agencylogo,'http') === false){
 	$rb_agency_option_agencylogo =  get_site_url(). $rb_agency_option_agencylogo;
@@ -23,7 +29,6 @@ $additionalCss = "";
 $wrapperWidthHeight = "";
 $ProfileGender = "";
 $modelInfo = "";
-$pdf_image_id = "";
 $orderBy = "";
 $allImages = "";
 $cnt = 0;
@@ -31,7 +36,7 @@ $cnt1  = 0;
 $cnt2  = 0;
 $footer = "";
 $paperDef = "";
-$pdf_image_id = "";
+$has_info = 0;
 
 $header='
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -52,22 +57,9 @@ $header='
 
 //where we decide what print format will it be.
 
-if($_POST['print_option']==1){ // Print Large Photos
-	$chrome = strpos($_SERVER["HTTP_USER_AGENT"], 'Chrome') ? true : false;//detect if CHROME
-	if($chrome){
-			$widthAndHeight='style="width:365px; height:546px"';
-			$model_info_width="width:365px;";
-			$w = 365;
-			$h = 546;
-	} else {
-			$widthAndHeight='style="width:350px; height:550px"';
-			$model_info_width="width:410px;";
-			$w = 350;
-			$h = 550;
-	}
-
-	$col=2;
-	$perPage=2;
+if($_POST['print_option']=="1"){ // Print Large Photos
+	$photoSize = array(500,580);
+	$table = get_profile_images($ProfileID, $ProfileGender, $ProfileContactDisplay, $printType, $printOption, 1, $pdfImageID, $ProfileGallery, 500, 2, 1, $photoSize, $rb_agency_option_agencylogo);
 }
 
 elseif($_POST['print_option']=="1-1"){ // Print Large Photos Without Model Info
@@ -76,6 +68,8 @@ elseif($_POST['print_option']=="1-1"){ // Print Large Photos Without Model Info
 	$col=4;
 	$perPage=8;
 	$w = 183;
+	$photoSize = array(500,580);
+	$table = get_profile_images($ProfileID, $ProfileGender, $ProfileContactDisplay, $printType, $printOption, 0, $pdfImageID, $ProfileGallery, 500, 2, 1, $photoSize, $rb_agency_option_agencylogo);
 }
 
 elseif($_POST['print_option']==2){
@@ -86,14 +80,16 @@ elseif($_POST['print_option']==2){
 	$w = 183;
 }
 
-elseif($_POST['print_option']==3){ // Print Medium Size Photos
-	$widthAndHeight='style="width:183px; height:264px"';
-	$model_info_width="width:182px;"; 
+elseif($_POST['print_option']=="3"){ // Print Medium Size Photos
+	$widthAndHeight='style="width:256px; height:300px"';
+	$model_info_width="width:256px;"; 
 	$col=4;
 	$perPage=8;
 	$fileFormat="_medium";
-	$w = 183;
-	$h = 264;
+	$w = 256;
+	$h = 300;
+	$photoSize = array(244,285);
+	$table = get_profile_images($ProfileID, $ProfileGender, $ProfileContactDisplay, $printType, $printOption, 1, $pdfImageID, $ProfileGallery, 244, 8, 6, $photoSize, $rb_agency_option_agencylogo);
 }
 
 elseif($_POST['print_option']=="3-1"){ // Print Medium Size Photos Without Model Info
@@ -103,6 +99,9 @@ elseif($_POST['print_option']=="3-1"){ // Print Medium Size Photos Without Model
 	$perPage=8;
 	$fileFormat="_medium";
 	$w = 183;
+	$h = 150;
+	$photoSize = array(244,285);
+	$table = get_profile_images($ProfileID, $ProfileGender, $ProfileContactDisplay, $printType, $printOption, 0, $pdfImageID, $ProfileGallery, 244, 8, 6, $photoSize, $rb_agency_option_agencylogo);
 }
 
 elseif($_POST['print_option']==4){
@@ -119,7 +118,7 @@ elseif($_POST['print_option']==5){
 	$w = 100;
 }
 
-elseif($_POST['print_option']==11){
+elseif($_POST['print_option']=="11"){
 	$widthAndHeight='style="width:232px; "';
 	$model_info_width="width:158px; border:0px solid #000;"; 
 	$col=2;
@@ -128,9 +127,11 @@ elseif($_POST['print_option']==11){
 	$additionalCss="#4, #6, #8, #10, #12, #14, #16, #18 {margin-left:158px;}";
 	$paperDef="10x16"; //pdf size
 	$w = 232;
+	$photoSize = array(325,285);
+	$table = get_profile_images($ProfileID, $ProfileGender, $ProfileContactDisplay, $printType, $printOption, 1, $pdfImageID, $ProfileGallery, 325, 6, 4, $photoSize, $rb_agency_option_agencylogo);
 }
 
-elseif($_POST['print_option']==12){
+elseif($_POST['print_option']=="12"){
 	$widthAndHeight='style="width:360px; "';
 	$model_info_width="width:348px; border:0px solid #000;"; 
 	$col=1;
@@ -139,6 +140,8 @@ elseif($_POST['print_option']==12){
 	$additionalCss="#1, #2, #3, #4, #5, #6, #7, #8, #9, #10, #11, #12 {margin-left:158px;}";
 	$paperDef="10x16"; //pdf size
 	$w = 360;
+	$photoSize = array(500,580);
+	$table = get_profile_images($ProfileID, $ProfileGender, $ProfileContactDisplay, $printType, $printOption, 1, $pdfImageID, $ProfileGallery, 500, 2, 1, $photoSize, $rb_agency_option_agencylogo);
 }
 
 elseif($_POST['print_option']==14){
@@ -252,200 +255,124 @@ if($_POST['print_option']==14){ // print for division
 	$table4=do_shortcode('[profile_list gender="2" age_start="18" age_stop="99" type="1" pagingperpage="5" paging="4"]');
 
 
-	// strpos($table2,"No Profiles Found");
-
-	$table= "<table border='0'><tr>".$table1."</tr></table>--></td></tr></table>";
-	// $table.=' <div style="page-break-before:always" /></div><br><br><br>';
-	$table.="</td></tr></table><table border='0'><tr>".$table2."</tr></table>-->";
-	$table.='<div style="page-break-before:always" /></div><br><br><br>';
-
-	if($_POST['print_option'] == "3-1" || $_POST['print_option'] == "1-1"){
-		$table.="</td><td valign='top'><img style='width:50%;height:auto;' src=".$rb_agency_option_agencylogo."></td></tr></table>"."<table border='0'><tr>".$table3."</tr></table>";
-	}
-
-	$table = str_replace("src","",$table);
-	$table = str_replace('<img ="','<img src="',$table);
-
-	$table = str_replace('="http:','src="http:',$table);
-	$table = str_replace("<br>'","",$table);
-	$table = str_replace(" />"," /><br>",$table);
-
 } else { //this will loop images of simple profile
 
-	$modelInfo.='
-			<div id="model_info" style="'.$model_info_width.'">
-				<h1 style="margin-top:0px; margin-bottom:0px;">'.$ProfileContactDisplay.'</h1>';
-
-	$modelInfo .='<ul>';
-
-								$hideY = get_user_meta($ProfileID,"rb_agency_hide_age_year",true);
-								$hideM = get_user_meta($ProfileID,"rb_agency_hide_age_month",true);
-								$hideD = get_user_meta($ProfileID,"rb_agency_hide_age_day",true);
-
-								$ParseAge = explode(' ',$ProfileAge);
-
-								$hideTheAgeYear = 0;
-								$hideTheAgeMonth = 0;
-								$hideTheAgeDay = 0;
-
-								$theYear = str_replace('>','',$ParseAge[1]);
-								$theMonth = str_replace('>','',$ParseAge[4]);
-								$theDay = str_replace('>','',$ParseAge[7]);
-
-								if((empty($theYear) || !is_numeric($theYear)) || $hideY == 1){
-									$hideTheAgeYear = 1;
-								}
-
-								if((empty($theMonth) || !is_numeric($theMonth)) || $hideM == 1){
-									$hideTheAgeMonth = 1;
-								}
-
-								if((empty($theDay) || !is_numeric($theDay)) || $hideD == 1){
-									$hideTheAgeDay = 1;
-								}
+	
+	
+	
+} //end else of if($_POST['print_option']
 
 
-								if($hideTheAgeYear == 1 && $hideTheAgeMonth == 1 && $hideTheAgeDay == 1){
-									$hideAgeLabel = true;
-								}
-if($hideAgeLabel == true){
-
-} else {
-	$modelInfo .= '
-					<tr><td><span style="margin-left:-3px;">Age : '.$ProfileAge.'</span></td></tr>
-					<tr><td><span style="margin-left:-3px;">Gender : '.__($fetchGenderData["GenderTitle"], RBAGENCY_TEXTDOMAIN).'</span></td></tr>
-					';
+function get_profile_info($profileID, $profileGender, $profileName){
+	$output = "";	
+	$profileInfo = rb_agency_getProfileCustomFieldsArray($profileID, $profileGender);
+	$output .= "<table style=\"width:100%;\">";
+	$output .= "	<tr><td style=\"font-size: xx-large;padding-bottom:15px;\">".$profileName."</td></tr>";
+	foreach ($profileInfo as $info) {
+		$output .= "<tr><td>".$info['title'].": ".$info['value']."</td></tr>";
+	}
+	$output .= "</table>";
+	return $output;
 }
 
-	$modelInfo .= rb_agency_getProfileCustomFields_print($ProfileID, $ProfileGender,false,$title_to_exclude="","strong","span",false,true).'
-				</ul>
-			</div>'."\n";
+function get_profile_images($profile_id, $profile_gender, $profile_name, $print_type, $print_option, $has_info, $pdf_image_id, $profile_gallery, $column_width, $photos_per_page, $photos_beside_info, $photo_size, $agency_logo) {
 
-	//trim more infom
-$modelInfo=str_replace("<li","<tr><td",$modelInfo);
-		$modelInfo=str_replace("</li>","</td></tr>",$modelInfo);
-		$modelInfo=str_replace("<ul>","<table>",$modelInfo);
-		$modelInfo=str_replace("</ul>","</table>",$modelInfo);  
-		$modelInfo=str_replace("</label>","</label>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",$modelInfo);  
+	global $wpdb;	
+
+	if($print_type == "print-polaroids"){
+		$print_type = "Polaroid";
+		$media_folder = "polaroid/";
+	} else {
+		$print_type = "Image";
+		$media_folder = "";
+	}
+
+	if(isset($pdf_image_id) && count($pdf_image_id)>0) {		
+		$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $profile_id ."\" AND ProfileMediaType = \"".$print_type."\" AND ProfileMediaID IN ($pdf_image_id) ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
+	} elseif(!empty($orderBy)) {
+		$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $profile_id ."\" AND ProfileMediaType = \"".$print_type."\" ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
+	} else {
+		$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $profile_id ."\" AND ProfileMediaType = \"".$print_type."\" ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
+	}
+
+	$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
+	$countImg = count($resultsImg);
+	$totalCount = 0;
+	$profileImages = "";
+
+	$ctr_first_page = 1;
+	$ctr_pages = 1;
+	$ctr_loop = 1;
+
+	foreach($resultsImg as $dataImg){
+
+		$image_path = RBAGENCY_UPLOADDIR . $profile_gallery ."/".$media_folder."". $dataImg['ProfileMediaURL'];
+
+		$bfi_params = array(
+			'crop'=>true,			
+			'width'=>$photo_size[0],
+			'height'=>$photo_size[1]
+		);
+		$image_src = bfi_thumb( $image_path, $bfi_params );
 		
-		if($_POST['print_type']=="print-polaroids"){
-			$printType = "Polaroid";
-			$media_folder = "polaroid/";
-		} else {
-			$printType = "Image";
-			$media_folder = "";
+		$_imgpath_upload = '';
+		//be sure to add the full url
+		if(strpos($image_src, get_bloginfo('url'))=== false){
+			$_imgpath_upload = get_bloginfo('url');
 		}
+		$imgURL = $_imgpath_upload. $image_src;
 
-			if(isset($_POST['pdf_image_id']) && count($_POST['pdf_image_id'])>0) {
-				$pdf_image_id=$_POST['pdf_image_id'];
-				$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" AND ProfileMediaID IN ($pdf_image_id) ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
+		if(($ctr_first_page <= $photos_beside_info) && ($has_info === 1)) { // First Page
+			if($ctr_first_page == 1) {
+			$profileImages .= "	<table style=\"width: 100%;\">";
+			$profileImages .= "		<tr>
+										<td style=\"width:".$column_width."px;vertical-align:top;padding-right:10px;\">".get_profile_info($profile_id, $profile_gender, $profile_name)."</td>";
+			$profileImages .= "			<td>";
 
-			}
-			elseif(!empty($orderBy)) {
-				$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
-			} else {
-					$queryImg = "SELECT * FROM ". table_agency_profile_media ." as media WHERE ProfileID =  \"". $ProfileID ."\" AND ProfileMediaType = \"".$printType."\" ORDER BY  convert(`ProfileMediaOrder`, decimal)  ASC";
 			
-			
+				$profileImages .= "			<table style=\"width: 100%;\">";
+				$profileImages .= "				<tr>";
+				$profileImages .= "					<td style=\"vertical-align:top;\">";
 			}
-					$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
-					$countImg = count($resultsImg);
-					$totalCount = 0;
-					foreach($resultsImg as $dataImg){$totalCount++;
-				
-					if($printType!="Polaroid"){ 
-						 if($totalCount==1 AND $_POST['print_option']!="3-1" AND $_POST['print_option']!="1-1"){
-							 
-							 $allImages.="<td>$modelInfo</td>";
-							$cnt=1;  $cnt2=1; 
-						 }
-					 }
-							 
-					 //  if($_POST[$dataImg['ProfileMediaID']]==1){  - for the mean time as the were missed conception
-						   $cnt++;
-						   $cnt2++;
-						   
-					// $allImages.="<td><img $widthAndHeight id='".$dataImg["ProfileMediaID"]."' src=\"". rb_agency_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL'] ."\" alt='' class='allimages_thumbs' /></td>\n";
-					//style="width:450px; height:650px;"
-					$timthumbHW=str_replace('style="width:',"&w=",$widthAndHeight);
-					$timthumbHW=str_replace('px; height:',"&h=",$timthumbHW);
-					$timthumbHW=str_replace('px;"',"",$timthumbHW);
-					$timthumbHW=str_replace('px"',"",$timthumbHW);
-					
+			// Photos beside info
+			$profileImages .= "							<img id=\"".$dataImg["ProfileMediaID"]."\" src=\"".$imgURL."\" alt=\"a\" style=\"margin: 10px 5px 0 5px;\" />";
 
+			if($ctr_first_page == $photos_beside_info) { // close table
+					$profileImages .= "					</td>";
+					$profileImages .= "				</tr>";
+					$profileImages .= "			</table>";
+				$profileImages .= "			</td>";
+				$profileImages .= "		</tr>";
+				$profileImages .= "		<tr><td colspan=\"2\" style=\"text-align:right;vertical-align:top;\"><img src=\"".get_site_url()."".$agency_logo."\" alt=\"\" style=\"height:64px; margin-right:10px; margin-top:10px;\" /></td></tr>";
+				$profileImages .= "	</table>";
+			}
+			
+			$ctr_first_page++;
+		} else { // Succeeding Pages
 
+			if(($ctr_pages % $photos_per_page == 1) || $photos_per_page == 1){ // open row
+				if($has_info === 1) { // Break to New page if it has info
+					$profileImages .= "<table style=\"width:100%;page-break-before:always;\"><tr><td style=\"vertical-align:top;\">";
+				} else {
+					$profileImages .= "<table style=\"width:100%;\"><tr><td style=\"vertical-align:top;\">";
+				}	 			
+		 	}
+			$profileImages .= "<img id=\"".$dataImg["ProfileMediaID"]."\" src=\"".$imgURL."\" alt=\"a\" style=\"margin: 10px 5px 0 5px;\"/>\n";
+			if($ctr_pages % $photos_per_page == 0 || $countImg == $ctr_loop) { // close row
+				$profileImages .= "</td></tr>";
+				// Add Logo
+				$profileImages .= "<tr><td style=\"font-size: xx-large; width:50%;\">".$profile_name."</td><td style=\"width:50%;text-align:right;vertical-align:top;\"><img src=\"".get_site_url()."".$agency_logo."\" alt=\"\" style=\"margin-top: 15px;height:64px; margin-right:10px; margin-bottom: 10px;\" /></td></tr>";
+				$profileImages .= "</table>";
+			}
 
-			//$allImages.="<td><img id='".$dataImg["ProfileMediaID"]."' src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataImg['ProfileMediaURL']  .$timthumbHW."\" alt='' class='allimages_thumbs' /></td>\n";
-				 $imgStyle = "";
-
-					
-					
-				 	$image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/".$media_folder."". $dataImg['ProfileMediaURL'];
-
-					$bfi_params = array(
-						'crop'=>true,
-						'height'=>$h,
-						'width'=>$w
-					);
-					$image_src = bfi_thumb( $image_path, $bfi_params );
-					
-					$_imgpath_upload = '';
-					//be sure to add the full url
-					if(strpos($image_src, get_bloginfo('url'))=== false){
-						$_imgpath_upload = get_bloginfo('url');
-					}
-
-				 	$imgURL = $_imgpath_upload. $image_src; 
-
-				$allImages.= "<td valign='top'><img ".$imgStyle." id='".$dataImg["ProfileMediaID"]."' src='".$imgURL."' alt='' class='allimages_thumbs' /></td>\n";
-
-
-			//src=\"".get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $dataList["ProfileGallery"] ."/". $dataList["ProfileMediaURL"]."&w=200&q=60\"
-
-					if($cnt==$col){$allImages.="</tr></table>\n";
-						if($cnt2==$perPage){
-
-						if($_POST['print_option'] == "3-1" || $_POST['print_option'] == "1-1"){
-							$allImages.='<br><br clear=""><h1 style="float:left;margin-top:0px; margin-bottom:0px;">'.$ProfileContactDisplay.'</h1><img style="width:50%;height:auto;float:right;" src="'.$rb_agency_option_agencylogo.'">';
-						} elseif($_POST['print_option'] == 3 || $_POST['print_option'] == 1){
-							$allImages.='<br><br clear=""><img style="width:50%;height:auto;float:left;" src="'.$rb_agency_option_agencylogo.'">';
-						} else {
-							//$allImages.='<br><br clear=""><img style="width:50%;height:auto;float:left;" src="'.$rb_agency_option_agencylogo.'">';
-						}
-
-
-								if($printType=="Polaroid" AND $excape!=1){$allImages.="<td valign='top'></tr></table>"; $excape=1;}
-
-								$allImages.='<div style="page-break-before:always" /></div><br>';
-
-						$cnt2=0;}
-
-					$allImages.="<table id='$totalCount' border='0'><tr>";
-					$cnt="0";}
-
-					// }for if($_POST[$dataImg['ProfileMediaID']]==1){
-				}
-
-
-	$table="<table border='0'><tr>".$allImages;
-
-	$table.="</tr></table>\n";
-
-	if($cnt2!=$perPage AND $cnt2!="0"){
-		if($_POST['print_option'] == "3-1" || $_POST['print_option'] == "1-1"){
-			$table.='<br clear="all"><h1 style="float:left;margin-top:0px; margin-bottom:0px;">'.$ProfileContactDisplay.'</h1><img style="width:50%;height:auto;float:right;" src="'.$rb_agency_option_agencylogo.'">';
-		} elseif($_POST['print_option'] == 11 || $_POST['print_option'] == 12){
-			$table.='<br clear="all">';
-		} else {
-			$table.='<br clear="all"><img style="width:50%;height:auto;float:left;" src="'.get_site_url().''.$rb_agency_option_agencylogo.'">';
+			$ctr_pages++;
 		}
+		$ctr_loop++;
 	}
-	$logo_img = '<table><tr><td valign="top"><img style="width:100%;height:auto;float:left;" src="'.get_site_url().''.$rb_agency_option_agencylogo.'"></td></tr></table>';
-	if($printType=="Polaroid"){
-		$modelInfo="<table border='0' width='800'><tr><td width='180' valign'top>".$modelInfo.$logo_img."</td><td width='600' valign='top'>$table";
-		$table=$modelInfo;
-	}
-}//end else of if($_POST['print_option']
+	
+	return $profileImages;
+}
+
 
 
 $footer.='
@@ -458,16 +385,7 @@ $border='
 <div style="width:770px; height:760px; border:1px solid #000;">
 </div>';
 
-/*
-echo $header;
-//echo $border;
-//echo $modelInfo;
-echo $allImages;
-echo $footer;
-
-die();*/
-echo $modelInfo;
-echo $allImages;
+echo $profileImages;
 $htmlFile=rand(1,10000).time().date("ymd").".html"; 
 //$pdfFile=str_replace(".html",".pdf",$htmlFile);
 
@@ -507,13 +425,6 @@ foreach($result[1] as $_img){
 $_server_path = dirname(dirname(dirname(dirname(__DIR__))));
 $table = str_replace( get_site_url(),$_server_path,$table);
 
-
-
-
-
-
-
-
 //fwrite($fp,$header);
 //*fwrite($fp,$border);
 if($_POST["print_option"] == 1 || $_POST['print_option'] == 3){
@@ -523,7 +434,7 @@ if($_POST["print_option"] == 1 || $_POST['print_option'] == 3){
 fwrite($fp,$table);
 fwrite($fp,$footer);
 fclose($fp);
-$toRedirect=RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&pper=$paperDef&output_filed=".$pdfFile."&input_file=".$htmlFile;
+$toRedirect=RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&paper=A4&orientation=landscape&output_filed=".$pdfFile."&input_file=".$htmlFile;
 //*die($toRedirect);
 
 //echo $toRedirect;
