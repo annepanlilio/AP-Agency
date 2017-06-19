@@ -296,6 +296,7 @@
 							var file = f.files[i],
 								id = (f._itFc ? f._itFc.id : id),
                                 mediaid = file.id,
+                                mediatype = file.mediatype,
 								name = file.name,
 								size = file.size,
 								type = file.type.split("/", 1)
@@ -309,6 +310,7 @@
 									id: id,
 									name: name,
                                     mediaid:mediaid,
+                                    mediatype:mediatype,
 									size: size,
 									size2: f._assets.bytesToSize(size),
 									type: type,

@@ -38,7 +38,7 @@ $('#file_upload').filer({
 		},
         uploadFile: {
             url: ajaxurl,
-            data: {action:'rb_agency_upload_image',profilegallery: profilegallery,profileid:profileid},
+            data: {action:'rb_agency_upload_image',profilemediatype:'Image',profilegallery: profilegallery,profileid:profileid},
             type: 'POST',
             enctype: 'multipart/form-data',
             beforeSend: function(){},
@@ -554,6 +554,62 @@ $('.save_media_inline').on('click',function(){
 jQuery(".add-account-url-btn").click(function(event){
 	event.preventDefault;
 	jQuery("#other-account-url-wrapper").append("<input type='text' class='rb-url-input add-other-account-url-txt' name='otherAccountURLs[]' placeholder='Add URL Here' /><br/> ");
-});			
-							
+});		
+
+
+jQuery('.imperial_metrics').keyup(function(){
+		var vals = jQuery(this).val();
+		var new_val = extractNumber(vals,2,false);
+		if(new_val !== true){
+				jQuery(this).nextAll('.error_msg').eq(0).html('*Non numeric value is not accepted');
+				new_val.replace(/[^/\d*\.*]/g,'');
+				jQuery(this).val(new_val);
+		}
 });
+jQuery('.imperial_metrics').focusout(function(){
+		var vals = jQuery(this).val();
+		var new_val = extractNumber(vals,2,false);
+		if(new_val !== true){
+				jQuery(this).nextAll('.error_msg').eq(0).html('*Non numeric value is not accepted');
+				new_val.replace(/[^/\d*\.*]/g,'');
+				jQuery(this).val(new_val);
+		} else {
+				jQuery(this).nextAll('.error_msg').eq(0).html('');
+		}
+});
+
+function extractNumber(obj, decimalPlaces, allowNegative)
+{
+		var temp = obj; var reg0Str = '[0-9]*';
+		if (decimalPlaces > 0) {
+				reg0Str += '\\.?[0-9]{0,' + decimalPlaces + '}';
+		} else if (decimalPlaces < 0) {
+				reg0Str += '\\.?[0-9]*';
+		}
+		reg0Str = allowNegative ? '^-?' + reg0Str : '^' + reg0Str;
+		reg0Str = reg0Str + '$';
+		var reg0 = new RegExp(reg0Str);
+		if (reg0.test(temp)) return true;
+		var reg1Str = '[^0-9' + (decimalPlaces != 0 ? '.' : '') + (allowNegative ? '-' : '') + ']';
+		var reg1 = new RegExp(reg1Str, 'g');
+		temp = temp.replace(reg1, '');
+		if (allowNegative) {
+				var hasNegative = temp.length > 0 && temp.charAt(0) == '-';
+				var reg2 = /-/g;
+				temp = temp.replace(reg2, '');
+				if (hasNegative) temp = '-' + temp;
+		}
+		if (decimalPlaces != 0) {
+				var reg3 = /\./g;
+				var reg3Array = reg3.exec(temp);
+				if (reg3Array != null) {
+						var reg3Right = temp.substring(reg3Array.index + reg3Array[0].length);
+						reg3Right = reg3Right.replace(reg3, '');
+						reg3Right = decimalPlaces > 0 ? reg3Right.substring(0, decimalPlaces) : reg3Right;
+						temp = temp.substring(0,reg3Array.index) + '.' + reg3Right;
+				}
+		}
+		return temp;
+}	
+							
+});//document ready end

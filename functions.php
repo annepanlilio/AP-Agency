@@ -1203,7 +1203,7 @@
 				if(!isset($ptype)){
 					$ptype = "";
 				}
-				$ptype = str_replace(' ','_',$ptype);
+				$ptype = $ptype=="" ? $ptype : str_replace(' ','_',$ptype);
 				//$ptype = str_replace(' ','_',$ptype);
 				if($types != "" || $types != NULL){
 					if(strpos($types,",") > -1){
@@ -4341,14 +4341,17 @@ function get_social_media_links($ProfileID = "", $return = false){
     function load_admin_script(){ 
     wp_register_script( 'jquery-filer', RBAGENCY_PLUGIN_URL .'assets/js/jquery.filer.js', array( 'jquery' ),FALSE);
     wp_register_script( 'manageprofile', RBAGENCY_PLUGIN_URL .'assets/js/rbManageProfile.js', array( 'jquery-filer' ),FALSE);
+    wp_register_script( 'rbboxcover', RBAGENCY_PLUGIN_URL .'assets/js/rbBoxCover.js', array( 'jquery-filer' ),FALSE);
     wp_register_script( 'rbagency-reports', RBAGENCY_PLUGIN_URL .'assets/js/rbReports.js', array( 'jquery' ),FALSE);
     wp_register_script( 'jquery-confirm', RBAGENCY_PLUGIN_URL .'assets/js/jquery-confirm.min.js', array( 'jquery' ),FALSE);
        if(isset($_GET['page']) && $_GET['page']=="rb_agency_profiles"){
             wp_enqueue_script( 'jquery-filer');
             wp_enqueue_script( 'manageprofile');
             wp_enqueue_script( 'jquery-confirm');
+            wp_enqueue_script( 'rbboxcover');
        }else{
             wp_dequeue_script('manageprofile');
+            wp_dequeue_script('rbboxcover');
             wp_dequeue_script('jquery-confirm');
        }
        if(isset($_GET['page']) && $_GET['page']=="rb_agency_reports"){
@@ -5944,10 +5947,24 @@ function rb_agency_upload_image()
     include_once dirname(__FILE__)."/ext/Uploader.php";
     $profiledir = $_POST['profilegallery'];
     $profileid = $_POST['profileid'];
+    $profileMediatype = $_POST['profilemediatype'];
     $upload_dir = wp_upload_dir();
     $target_dir = RBAGENCY_UPLOADPATH.$profiledir."/";
+    
+    if(isset($_FILES['rba_imgupload'])){
+        $files = $_FILES['rba_imgupload'];
+    }
+    if(isset($_FILES['rba_boxcover_upload'])){
+        $files = $_FILES['rba_boxcover_upload'];
+    }
+    
     if(!$profileid){
         $errors = array('error'=>'Profile ID Required!-->');
+        echo json_encode($errors);
+        exit;
+    }
+    if(!$files){
+        $errors = array('error'=>'Profile Media Type Required!-->');
         echo json_encode($errors);
         exit;
     }
@@ -5956,9 +5973,10 @@ function rb_agency_upload_image()
         //$errors = array('error'=>'Target directory not accessible!-->'.$target_dir);
         //echo json_encode($errors);
         //exit;
-    }  
+    } 
+     
     $uploader = new Uploader();
-    $data = $uploader->upload($_FILES['rba_imgupload'], array(
+    $data = $uploader->upload($files, array(
         'limit' => 30, //Maximum Limit of files. {null, Number}
         'maxSize' => 10, //Maximum Size of files {null, Number(in MB's)}
         'extensions' => null, //Whitelist for file extension. {null, Array(ex: array('jpg', 'png'))}
@@ -5987,11 +6005,11 @@ function rb_agency_upload_image()
             $imgid = $wpdb->insert(table_agency_profile_media, 
             array( 
             'ProfileID' => $profileid, 
-            'ProfileMediaType' => 'Image',
+            'ProfileMediaType' => $profileMediatype,
             'ProfileMediaTitle'=>$image['name'],
             'ProfileMediaURL'=>$image['name']
             ));
-            array_push($info,array('image'=>$url,'mediaid'=>$wpdb->insert_id));
+            array_push($info,array('image'=>$url,'mediatype'=>strtoupper($profileMediatype),'mediaid'=>$wpdb->insert_id));
         }
         echo json_encode($info);
     }
