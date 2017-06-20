@@ -1536,8 +1536,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										</td>
 									</tr>
 								</table>
-								<input type="button" name="add_social" class="add_social" value="Add More"/>
-								<input type="button" name="remove_social" class="remove_social" value="Remove Field"/>
+								<input type="button" name="add_social" class="button-primary add_social" value="Add More"/>
+								<input type="button" name="remove_social" class="button-primary remove_social" value="Remove Field"/>
 							</div>
 						</div>
 					</div>
