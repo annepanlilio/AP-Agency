@@ -1208,9 +1208,11 @@
 				if($types != "" || $types != NULL){
 					if(strpos($types,",") > -1){
 						$types = explode(",",$types);
-						foreach($types as $t){
-							if(strpos($ptype,$t) > -1) {$permit_type=true; break;}
-						}
+                        if(is_array($types)){
+    						foreach($types as $t){ 
+    							if($t && strpos($ptype,$t) > -1) {$permit_type=true; break;}
+    						}
+                        }
 					} else {
 							if(strpos($ptype,$types) > -1) $permit_type=true;
 					}
