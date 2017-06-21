@@ -10,7 +10,7 @@ Version: 2.4.9
 */
 $RBAGENCY_VERSION = "2.4.9";
 /* If you modify the plugin set the following to TRUE */
-$RBAGENCY_CUSTOM = FALSE;
+$RBAGENCY_CUSTOM = TRUE;
 /*
 License: CF Commercial-to-GPL License
 Copyright 2007-2014 Rob Bertholf
