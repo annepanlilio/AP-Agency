@@ -219,7 +219,11 @@ $('#file_upload').filer({
               data: { profileid: profileid,mediaid: mediaid,action: 'rb_agency_setprimary_image' }
               })
               .done(function( msg ) {
-                console.log(msg);
+                $("#notify-gallery").html("<strong>Image ID:"+mediaid+" is set as PRIMARY.</strong>");
+                $("#notify-gallery").show("slow");
+                setTimeout(function(){
+                    $("#notify-gallery").hide("slow");
+                }, 5000);
             });
             
      });
@@ -227,8 +231,10 @@ $('#file_upload').filer({
      $(document).on('change','.setprivate',function(){ 
             var setprivate = $(this).attr("checked");
             var isprivate = 0;
+            var setas = 'PUBLIC';
             if(setprivate=='checked'){
                 isprivate = 1;
+                setas = 'PRIVATE';
             }
             var mediaid = $(this).val();
             $.ajax({
@@ -237,7 +243,11 @@ $('#file_upload').filer({
               data: { isprivate: isprivate,mediaid: mediaid,action: 'rb_agency_setprivate_image' }
               })
               .done(function( msg ) {
-                console.log(msg);
+                $("#notify-gallery").html("<strong>Image ID:"+mediaid+" is set as "+setas+".</strong>");
+                $("#notify-gallery").show("slow");
+                setTimeout(function(){
+                    $("#notify-gallery").hide("slow");
+                }, 5000);
             });
             
      });
@@ -250,7 +260,6 @@ $('#file_upload').filer({
             var imgs = $(this).children();
             var obj = [];
             $.each(imgs,function(i,d){
-                console.log(i);
 		        var imgid = $(this).find("input[name=selectProfileMedia]").val();
                     obj.push(imgid);
 		      });
@@ -261,7 +270,11 @@ $('#file_upload').filer({
               data: { action: 'rb_agency_sort_image',profileMedium:obj }
               })
               .done(function( msg ) {
-                console.log(msg);
+                $("#notify-gallery").html("<strong>Images sort order updated!</strong>");
+                $("#notify-gallery").show("slow");
+                setTimeout(function(){
+                    $("#notify-gallery").hide("slow");
+                }, 5000);
             });
         }
      });
