@@ -6021,6 +6021,8 @@ function rb_agency_upload_image()
     }
     exit;
 }
+add_action("wp_ajax_rb_agency_sort_image","rb_agency_update_image");
+add_action("wp_ajax_nopriv_rb_agency_sort_image","rb_agency_update_image");
 add_action("wp_ajax_rb_agency_delete_image","rb_agency_update_image");
 add_action("wp_ajax_nopriv_rb_agency_delete_image","rb_agency_update_image");
 add_action("wp_ajax_rb_agency_setprivate_image","rb_agency_update_image");
@@ -6070,6 +6072,16 @@ function rb_agency_update_image()
         $wpdb->update(table_agency_profile_media, array( 'ProfileMediaPrimary' => 0 ), array('ProfileID'=>$profileid,'ProfileMediaPrimary'=>1) );
         $wpdb->update(table_agency_profile_media, array( 'ProfileMediaPrimary' => 1 ), array('ProfileMediaID'=>$mediaid) );
         echo json_encode(array('success'=>'primary image set'));
+        exit;
+    }
+    if($action=="rb_agency_sort_image"){
+        $profileMedium = $_POST['profileMedium'];
+        if(is_array($profileMedium) && count($profileMedium)>0){
+            foreach($profileMedium as $order=>$mediaID){
+                $wpdb->update(table_agency_profile_media, array( 'ProfileMediaOrder' => $order ), array('ProfileMediaID'=>$mediaID) );
+            }
+            echo json_encode(array('success'=>'true'));
+        }
         exit;
     }
 }

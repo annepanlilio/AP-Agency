@@ -11,8 +11,8 @@ $('#file_upload').filer({
         files: files,
         templates: {
 			box: '<ul class="jFiler-items-list jFiler-items-default"></ul>',
-			item: '<li class="jFiler-item"><div class="item gallery-item"><div class="photo">{{fi-image}}</div><div class="make-primary"><input class="setprimary" name="ProfileMediaPrimary" value="{{fi-id}}" type="radio"> Set Primary</div><div class="setprivate-wrap"><input class="setprivate" name="setprivate[]" value="{{fi-id}}" type="checkbox"> Set Private</div><div class="selectProfileMedia-wrap"><input class="selectProfileMedia" name="selectProfileMedia" value="{{fi-id}}" type="checkbox"> Select</div><div class="jFiler-item-info pull-left"><div class="jFiler-item-others"><ul class="list-inline"><li><a class="icon-jfi-trash jFiler-item-trash-action"><i class="dashicons dashicons-trash"></i></a></li></ul><span class="jFiler-item-status"></span></div><div class="jFiler-item-assets"></div></div></div></li>',
-			itemAppend: '<li class="jFiler-item"><div class="item gallery-item"><div class="photo">{{fi-image}}</div><div class="make-primary"><input class="setprimary" name="ProfileMediaPrimary" value="{{fi-mediaid}}" type="radio"> Set Primary</div><div class="setprivate-wrap"><input class="setprivate" name="setprivate[]" value="{{fi-mediaid}}" type="checkbox"> Set Private</div><div class="selectProfileMedia-wrap"><input class="selectProfileMedia" name="selectProfileMedia" value="{{fi-mediaid}}" type="checkbox"> Select</div><div class="jFiler-item-info pull-left"><div class="jFiler-item-others"><ul class="list-inline"><li><a id="trash_{{fi-mediaid}}" class="icon-jfi-trash jFiler-item-trash-action"><i class="dashicons dashicons-trash"></i></a></li></ul><span class="jFiler-item-status"></span></div><div class="jFiler-item-assets"></div></div></div></li>',
+			item: '<li class="jFiler-item"><div class="item gallery-item"><i class="dashicons dashicons-leftright"></i><div class="photo">{{fi-image}}</div><div class="make-primary"><input class="setprimary" name="ProfileMediaPrimary" value="{{fi-id}}" type="radio"> Set Primary</div><div class="setprivate-wrap"><input class="setprivate" name="setprivate[]" value="{{fi-id}}" type="checkbox"> Set Private</div><div class="selectProfileMedia-wrap"><input class="selectProfileMedia" name="selectProfileMedia" value="{{fi-id}}" type="checkbox"> Select</div><div class="jFiler-item-info pull-left"><div class="jFiler-item-others"><ul class="list-inline"><li><a class="icon-jfi-trash jFiler-item-trash-action"><i class="dashicons dashicons-trash"></i></a></li></ul><span class="jFiler-item-status"></span></div><div class="jFiler-item-assets"></div></div></div></li>',
+			itemAppend: '<li class="jFiler-item"><div class="item gallery-item"><i class="dashicons dashicons-leftright"></i><div class="photo">{{fi-image}}</div><div class="make-primary"><input class="setprimary" name="ProfileMediaPrimary" value="{{fi-mediaid}}" type="radio"> Set Primary</div><div class="setprivate-wrap"><input class="setprivate" name="setprivate[]" value="{{fi-mediaid}}" type="checkbox"> Set Private</div><div class="selectProfileMedia-wrap"><input class="selectProfileMedia" name="selectProfileMedia" value="{{fi-mediaid}}" type="checkbox"> Select</div><div class="jFiler-item-info pull-left"><div class="jFiler-item-others"><ul class="list-inline"><li><a id="trash_{{fi-mediaid}}" class="icon-jfi-trash jFiler-item-trash-action"><i class="dashicons dashicons-trash"></i></a></li></ul><span class="jFiler-item-status"></span></div><div class="jFiler-item-assets"></div></div></div></li>',
 			progressBar: '<div class="jFiler-jProgressBar"></div>',
 			itemAppendToEnd: true,
 			removeConfirmation: false,
@@ -242,6 +242,30 @@ $('#file_upload').filer({
             
      });
      
+     $("ul.jFiler-items-list").sortable({
+        item:'jFiler-item',
+        cursor:'move',
+        handle: 'i.dashicons-leftright',
+        update:function(event,ui){
+            var imgs = $(this).children();
+            var obj = [];
+            $.each(imgs,function(i,d){
+                console.log(i);
+		        var imgid = $(this).find("input[name=selectProfileMedia]").val();
+                    obj.push(imgid);
+		      });
+              
+              $.ajax({
+              method: "POST",
+              url: ajaxurl,
+              data: { action: 'rb_agency_sort_image',profileMedium:obj }
+              })
+              .done(function( msg ) {
+                console.log(msg);
+            });
+        }
+     });
+     
      $("#wrapper-sortable #gallery-sortable").sortable(
 			{item:'.item',
 			cursor:'move',
@@ -251,7 +275,8 @@ $('#file_upload').filer({
 					});
 					$("#notify-gallery").css('display','block').fadeOut().fadeIn().fadeOut().fadeIn();
 			}
-		});
+    });
+    
 	$("#wrapper-sortable #gallery-sortable").disableSelection();
     
 								

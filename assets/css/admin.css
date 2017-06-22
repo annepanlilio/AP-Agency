@@ -211,7 +211,7 @@ label.checkbox {
     left:20%;
 }
 /* Dashboard Gallery Widget */
-#dashboard_gallery .main .gallery-item { float: left; margin: 10px 5px; padding: 5px; position: relative; font-size: 12px; width:100px; height: 215px;overflow:hidden;}
+#dashboard_gallery .main .gallery-item { float: left; margin: 10px 5px; padding: 5px; position: relative; font-size: 12px; width:100px; height: 243px;overflow:hidden;}
 #dashboard_gallery .main .gallery-item.primary { background: #666; }
 #dashboard_gallery .main .gallery-item.primary div.make-primary { color: #fff; }
 #dashboard_gallery .main .gallery-item img { max-height: 150px; float: left; display: block; }
@@ -224,7 +224,7 @@ label.checkbox {
     margin-top:4px;
     margin-bottom:10px;
 }
-
+.dashicons-leftright {cursor:move;}
 /* Icons */
 .icon-small { display: inline-block; font-size: 0px; width: 26px; height: 26px; overflow: hidden; text-indent: 999px; }
 .rbicon-del { background-image: url(rbicon-del.png); background-repeat: no-repeat; }

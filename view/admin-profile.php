@@ -2072,7 +2072,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 		<div id="dashboard-widgets" class="metabox-holder columns-1">
 			<!-- Row 2: Column Left Start -->
 			<div id="postbox-container-3" class="postbox-container">
-				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
+			<!--	<div id="normal-sortables" class="meta-box-sortables ui-sortable">-->
 					<?php 
 					$updated_ProfileImage = $wpdb->get_results("SELECT * FROM ".$wpdb->prefix."usermeta WHERE meta_key LIKE '%MediaFileName_Image%' AND user_id = ".$ProfileUserLinked,ARRAY_A);
 					$newlyUploadedImages = [];
@@ -2091,13 +2091,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								if(!empty($updated_ProfileImage)){
 									echo "<span class=\"marked_changed_txt\" >".__('New image/s has been uploaded!')."</span>";
 								}
-								echo "<script type='text/javascript'>\n";
-								echo "function confirmDelete(delMedia,mediaType) {\n";
-								echo "  if (confirm('Are you sure you want to delete this '+mediaType+'?')) {\n";
-								echo "  document.location= '" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=" . $ProfileID . "&actionsub=photodelete&targetid='+delMedia;";
-								echo "  }\n";
-								echo "}\n";
-								echo "</script>\n";
+								#echo "<script type='text/javascript'>\n";
+#								echo "function confirmDelete(delMedia,mediaType) {\n";
+#								echo "  if (confirm('Are you sure you want to delete this '+mediaType+'?')) {\n";
+#								echo "  document.location= '" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=" . $ProfileID . "&actionsub=photodelete&targetid='+delMedia;";
+#								echo "  }\n";
+#								echo "}\n";
+#								echo "</script>\n";
 								// Mass delete
 								if (isset($_GET["actionsub"]) && $_GET["actionsub"] == "massphotodelete" && is_array($_GET['targetids'])) {
 									$massmediaids = '';
@@ -2158,8 +2158,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
                                // echo "<div id='wrapper-sortable'><div id='gallery-sortable' style='list-style:none;'>";
                                 
                                 $rb_agency_options_arr = get_option('rb_agency_options');
-								$order = isset( $rb_agency_options_arr['rb_agency_option_galleryorder'])?$rb_agency_options_arr['rb_agency_option_galleryorder']:0;
-								$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image"); 
+								$order = isset( $rb_agency_options_arr['rb_agency_option_galleryorder']) ? $rb_agency_options_arr['rb_agency_option_galleryorder']:0;
+								$queryImg = rb_agency_option_galleryorder_query(0 ,$ProfileID,"Image"); 
 								$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 								$countImg =$wpdb->num_rows;
 								$massDelete = "";
@@ -2176,7 +2176,6 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									$image_thumbpath = RBAGENCY_UPLOADDIR. $ProfileGallery . "/thumb/". $ProfileMediaURL;
                                     $image_path = RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $ProfileMediaURL;
                                                                   
-                                     //if(pathinfo($image_thumbpath,PATHINFO_EXTENSION ) || pathinfo($image_path,PATHINFO_EXTENSION ))  { 
                                         
                                         $image_path = @getimagesize($image_thumbpath) ? $image_thumbpath:$image_path;
                                         
@@ -2186,20 +2185,20 @@ function rb_display_manage($ProfileID, $errorValidation) {
                                         $imgtype = $imagesize['mime'] ? $imagesize['mime']:"";
                                         
                                         if($imageinfo){
-                                        //$realpath =  realpath($image_path);                           
-                                        $pic['file'] = $image_path;
-                                        $pic['url'] = $image_path;          
-                                        $pic['name'] = $dataImg['ProfileMediaTitle'];
-                                        $pic['id'] = $dataImg['ProfileMediaID'];
-                                        $pic['primary'] = $dataImg['ProfileMediaPrimary'];
-                                        $pic['private'] = $dataImg['isPrivate'];
-                                        $pic['mediatype'] = $dataImg['ProfileMediaType'];
-                                        //$pic['type'] = image_type_to_mime_type(exif_imagetype($image_path));
-                                        $pic['type'] = $imgtype;
-                                        //$pic['size'] = filesize($realpath);
-                                        $arr[] = $pic;
+                                                               
+                                            $pic['file'] = $image_path;
+                                            $pic['url'] = $image_path;          
+                                            $pic['name'] = $dataImg['ProfileMediaTitle'];
+                                            $pic['id'] = $dataImg['ProfileMediaID'];
+                                            $pic['primary'] = $dataImg['ProfileMediaPrimary'];
+                                            $pic['private'] = $dataImg['isPrivate'];
+                                            $pic['mediatype'] = $dataImg['ProfileMediaType'];
+                                           
+                                            $pic['type'] = $imgtype;
+                                          
+                                            $arr[] = $pic;
                                         }
-                                    //}
+                                    
                                    
                                     
 								}
@@ -2227,7 +2226,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								
 							<div style="clear: both;"></div>
 					</div>
-				</div>
+			<!--	</div>-->
 			</div>
 			<!-- Row 1: Column Right End -->
 		</div>
@@ -3015,10 +3014,6 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									?>
 								</tbody>
 							</table>
-							<script type="text/javascript">
-							jQuery(document).ready(function(){
-							});
-							</script>
 							</div>
 						</div>
 					</div>
