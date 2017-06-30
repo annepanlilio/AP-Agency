@@ -226,9 +226,9 @@ class RBAgency_Admin {
 			// Ensure we are in the admin section of wordpress
 			if( is_admin() ) {
 				// Load Jquery if not registered
-				if ( ! wp_script_is( 'jquery', 'registered' ) )
-					wp_register_script( 'jquery', plugins_url( 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', __FILE__ ), false, '1.8.3' );
-					wp_enqueue_script( 'jquery-ui-core' );
+				if ( !wp_script_is( 'jquery', 'registered' ) )
+					 wp_register_script( 'jquery', plugins_url( 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js', __FILE__ ), false, '1.8.3' );
+					 wp_enqueue_script( 'jquery-ui-core' );
 					 wp_enqueue_script( 'jquery-ui-widget' );
 					 wp_enqueue_script( 'jquery-ui-mouse' );
 					 wp_enqueue_script( 'jquery-ui-accordion' );
