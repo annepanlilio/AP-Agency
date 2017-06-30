@@ -1,5 +1,6 @@
 jQuery(document).ready(function($){
 
+if(typeof boxcoverfiles=='undefined'){boxcoverfiles = [];}
 $('#boxcover_upload').filer({
         limit: 30,
         maxSize: 20,
@@ -25,9 +26,11 @@ $('#boxcover_upload').filer({
         afterRender:function(data,el){
             var boxcovertype = $('#boxcovertype').val();
            
-            $.each(el,function(i,elem){  console.log(elem);
+           if(boxcoverfiles.length>0){
+            $.each(el,function(i,elem){  
                 $(elem).find(".media-file-title").text(boxcoverfiles[i].mediatype);
             });
+            }
             $('#boxcovertype').on('change',function(){
               boxcovertype = $('#boxcovertype').val();
               
@@ -41,6 +44,7 @@ $('#boxcover_upload').filer({
             formData.append('profilemediatype', boxcovertype);
             formData.append('profilegallery', profilegallery);
             formData.append('profileid', profileid);
+            formData.append('security', security);
             formData.append('rba_boxcover_upload[]', imgdata);
             $.ajax({
             url: ajaxurl,
@@ -84,37 +88,6 @@ $('#boxcover_upload').filer({
 				filesSizeAll: "Files you've choosed are too large! Please upload files up to {{fi-maxSize}} MB."
 			}
 		},
-        //uploadFile: {
-//            url: ajaxurl,
-//            data: {action:'rb_agency_upload_image',profilemediatype:boxcovertype.value,profilegallery: profilegallery,profileid:profileid},
-//            type: 'POST',
-//            enctype: 'multipart/form-data',
-//            success: function(data, el){ 
-//                var img = $.parseJSON(data);
-//                var imgurl = img.files;
-//                var parent = el.find(".jFiler-jProgressBar").parent();
-//                el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-//                    $('<div class="jFiler-item-others text-success"><i class="dashicons dashicons-plus-alt"></i> Success</div>').hide().appendTo(parent).fadeIn("slow");    
-//                });
-//                console.log(img);
-//                $.each(img,function(i,value){ 
-//                    el.find("input[name='setprivateBoxCover[]']").attr('value',value.mediaid);
-//                    el.find("input[name='selectBoxCover']").attr('value',value.mediaid);
-//                    el.find(".media-file-title").text(value.mediatype);
-//                    el.find(".jFiler-item-trash-action").attr('id',"trash_"+value.mediaid);
-//                });
-//                
-//            },
-//            error: function(el){
-//                var parent = el.find(".jFiler-jProgressBar").parent();
-//                el.find(".jFiler-jProgressBar").fadeOut("slow", function(){
-//                    $("<div class=\"jFiler-item-others text-error\"><i class=\"fa fa-minus-circle\"></i> Error</div>").hide().appendTo(parent).fadeIn("slow");    
-//                });
-//            },
-//            statusCode: null,
-//            onProgress: null,
-//            onComplete: null
-//        },
        onRemove:function(data,el){ 
         var image = data.find(".jFiler-item-title").data('jfiler-index');
         $('input[value="'+image+'"]').remove();
@@ -125,7 +98,7 @@ $('#boxcover_upload').filer({
         $.ajax({
           method: "POST",
           url: ajaxurl,
-          data: { mediaid: imgid,profileid:profileid,action: 'rb_agency_delete_image' }
+          data: { mediaid: imgid,profileid:profileid,action: 'rb_agency_delete_image',security:security }
         }).done(function( msg ) {
             console.log( "Image deleted: " + msg );
           });

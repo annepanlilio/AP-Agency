@@ -1,5 +1,9 @@
 jQuery(document).ready(function($){
 
+if(typeof files=='undefined'){files = [];}
+if(typeof profilegallery=='undefined'){profilegallery = [];} 
+if(typeof profileid=='undefined'){profileid = 0;}
+
 
 $('#file_upload').filer({
         limit: 30,
@@ -38,7 +42,7 @@ $('#file_upload').filer({
 		},
         uploadFile: {
             url: ajaxurl,
-            data: {action:'rb_agency_upload_image',profilemediatype:'Image',profilegallery: profilegallery,profileid:profileid},
+            data: {action:'rb_agency_upload_image',profilemediatype:'Image',profilegallery: profilegallery,profileid:profileid,security:security},
             type: 'POST',
             enctype: 'multipart/form-data',
             beforeSend: function(){},
@@ -78,7 +82,7 @@ $('#file_upload').filer({
         $.ajax({
           method: "POST",
           url: ajaxurl,
-          data: { mediaid: imgid,profileid:profileid,action: 'rb_agency_delete_image' }
+          data: { mediaid: imgid,profileid:profileid,action:'rb_agency_delete_image',security:security }
         }).done(function( msg ) {
             console.log( "Image deleted: " + msg );
           });
@@ -113,7 +117,7 @@ $('#file_upload').filer({
                             btnClass: 'btn-red',
                             action:function(){
                             $(selectedProfileMedia).each(function(i,v){
-                                console.log($("a#trash_"+v));
+                               
                                 $("a#trash_"+v).trigger('click');
                             });
                             selectedProfileMedia = [];
@@ -173,7 +177,7 @@ $('#file_upload').filer({
                             action:function(){
                             $(selectedMediaFiles).each(function(i,v){
                                 var mediaid = $(v).val();
-                                $.post(ajaxurl,{action:'rb_agency_delete_image',mediaid:mediaid,profileid:ProfileID},function(result){
+                                $.post(ajaxurl,{action:'rb_agency_delete_image',mediaid:mediaid,profileid:ProfileID,security:security},function(result){
                                     var msg = $.parseJSON(result);
                                     if(msg.error){
                                         $.alert({
@@ -205,6 +209,55 @@ $('#file_upload').filer({
             }         
             return false;
          });
+     	
+    
+     $('.delete-profiles').on('click',function(e){
+          e.preventDefault();
+           var checkedprofiles =  $('.check-column input:checked');
+           var cntchecked = checkedprofiles.length;
+           if(cntchecked>0){
+                $.confirm({
+                    title: 'Confirm!',
+                    content: "Are you sure you want to delete selected profiles?",
+                    buttons: {
+                        Yes: {
+                            btnClass: 'btn-red',
+                            action:function(){
+                            $(checkedprofiles).each(function(i,v){
+                                var profileid = $(v).val();
+                                $.post(ajaxurl,{action:'rb_agency_delete_profile',profileid:profileid,security:security},function(result){
+                                    var msg = $.parseJSON(result);
+                                    if(msg.error){
+                                        $.alert({
+                                            title: 'ERROR!',
+                                            content: 'Failed to delete file - '+msg.error,
+                                            useBootstrap:false,
+                                            boxWidth:'400px'
+                                        });
+                                    }else{
+                                        $("tr#"+profileid).remove();
+                                        console.log(profileid);
+                                    }
+                                });
+                            });
+                            
+                            }
+                        },
+                        cancel: function () {}
+                    },
+                    useBootstrap:false,
+                    boxWidth:'400px'
+                });   
+           }else{
+                $.alert({
+                    title: 'Alert!',
+                    content: 'No profile is selected!',
+                    useBootstrap:false,
+                    boxWidth:'400px'
+                });
+           }
+                       
+     });
      
      $(document).on('change','.setprimary',function(){ 
             var setprivate = $(this).attr("checked");
@@ -216,7 +269,7 @@ $('#file_upload').filer({
             $.ajax({
               method: "POST",
               url: ajaxurl,
-              data: { profileid: profileid,mediaid: mediaid,action: 'rb_agency_setprimary_image' }
+              data: { profileid: profileid,mediaid: mediaid,action:'rb_agency_setprimary_image',security:security }
               })
               .done(function( msg ) {
                 $("#notify-gallery").html("<strong>Image ID:"+mediaid+" is set as PRIMARY.</strong>");
@@ -240,7 +293,7 @@ $('#file_upload').filer({
             $.ajax({
               method: "POST",
               url: ajaxurl,
-              data: { isprivate: isprivate,mediaid: mediaid,action: 'rb_agency_setprivate_image' }
+              data: { isprivate: isprivate,mediaid: mediaid,action: 'rb_agency_setprivate_image',security:security }
               })
               .done(function( msg ) {
                 $("#notify-gallery").html("<strong>Image ID:"+mediaid+" is set as "+setas+".</strong>");
@@ -267,7 +320,7 @@ $('#file_upload').filer({
               $.ajax({
               method: "POST",
               url: ajaxurl,
-              data: { action: 'rb_agency_sort_image',profileMedium:obj }
+              data: { action: 'rb_agency_sort_image',profileMedium:obj,security:security }
               })
               .done(function( msg ) {
                 $("#notify-gallery").html("<strong>Images sort order updated!</strong>");
@@ -362,6 +415,10 @@ $('#file_upload').filer({
 				});
 			}
 		});
+        
+        $( "input[type=date]" ).datepicker({dateFormat: "yy-mm-dd"});
+        $( "#registerdatefr" ).datepicker();
+        $( "#registerdateto" ).datepicker();
         
 		$("#ProfileGender").on("change",function(){
 			$(".tbody-table-customfields").empty();

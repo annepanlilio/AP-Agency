@@ -317,15 +317,17 @@ Last updated: April 08, 2016
 }
 .rbpagination > span.current,.rbpagination > span {
     float: left;
-	height: 27px;
-    padding: 6px 5px 0px !important;
-	line-height: 1;
+	height: 30px;
+    padding: 3px 8px 0px !important;
+	line-height: 24px;
 	text-align: center;
 	text-decoration: none;
 	font-weight: bold;
 	background: #044f6c !important;
     color: #fff;
-    border: none;
+    /*! border: 4px; */
+    vertical-align: middle;
+    position: relative;
 }
 .rbpagination > span:hover, .rbpagination > a:hover {
 	background: #eee;	

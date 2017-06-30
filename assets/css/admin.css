@@ -1,4 +1,4 @@
-#wpbody-content{ width:98% !important;}
+#wpbody-content{ /*! width:98% !important; */}
 /* menu & icons */
 #rb-overview-icon { background:transparent url(../img/rb-icon-gray-32.png) no-repeat scroll; }
 
@@ -28,9 +28,9 @@
 hr { border: none; }
 
 /* /wp-admin/admin.php?page=rb_agency_profiles : Filter Profiles */
-#filter-profiles span { float: left; width: 25%; min-height: 50px; }
+#filter-profiles span { float: left; width: 25%; height: 50px; overflow: hidden;margin-bottom: 12px;}
 #filter-profiles span label { display: inline-block; width: 100%; }
-#filter-profiles span.submit { width: auto; margin: 0!important; float: left!important; }
+#filter-profiles span.submit { width: auto; margin: 0!important; float: left!important; clear: both;}
 #filter-profiles span input[type="text"],
 #filter-profiles span select { width: 95%; }
 #filter-profiles span input[type="submit"] { margin-top: 17px; }
@@ -169,6 +169,13 @@ margin: 10px 0px;
 .tablenav .tablenav-pages .current {
 	margin-right: 1px;
 }
+.tablenav {
+    clear: both;
+    height: 45px !important;
+    margin: 6px 0 4px;
+    vertical-align: middle;
+}
+
 .form-table td {
     margin-bottom: 9px;
     padding: 5px 10px;
@@ -198,7 +205,7 @@ margin: 10px 0px;
 #dashboard_media .media-files .media-file.voice-demo a.link-icon { background-image: url(../img/admin-mp3.png); }
 #dashboard_media .media-files .media-file.resume a.link-icon { background-image: url(../img/admin-pdf.png); }
 #dashboard_media .media-files .media-file.headshots { width: auto; height: auto; overflow: hidden; padding: 10px 5px; }
-input[type=checkbox], input[type=radio] { width: 12px!important; height: 15px!important; }
+input[type=checkbox], input[type=radio] { width: 12px!important; height: 15px!important;}
 input[type=radio]:checked:before { margin-bottom: 2px!important; }
 label.checkbox {
     border: none;
@@ -243,7 +250,7 @@ label.checkbox {
 #rbplugin table.widefat tr td.column-ProfilesProfileDate span { display: block; }
 
 /* Search Results */
-#rbplugin table.widefat tr th, table.widefat tr td { border-bottom: 1px solid #e5e5e5; }
+#rbplugin table.widefat tr th, table.widefat tr td { border-bottom: 1px solid #e5e5e5; text-align: center;}
 #rbplugin table.widefat tr.inactive { background: #e0979f; }
 #rbplugin table.widefat tr.active { background: #a9d59d; }
 #rbplugin table.widefat tr.archived { background: #c0c0c0; }
@@ -367,6 +374,9 @@ label.checkbox {
 
 .video-thumb img {
     width:100px;
+}
+#filter-profiles span.w50 {
+    width:50%;
 }
 select.boxcovertype {
     float: left;
