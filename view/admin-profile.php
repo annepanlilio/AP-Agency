@@ -2,6 +2,8 @@
 global $wpdb;
 define("LabelPlural", "Profile");
 define("LabelSingular", "Profiles");
+
+
 //altering the main profile table for private fields...
 	$queryAlterCheck = "SELECT isPrivate FROM " . table_agency_profile_media ." LIMIT 1";
 	$resultsDataAlter = $wpdb->get_results($queryAlterCheck,ARRAY_A);
@@ -50,6 +52,7 @@ define("LabelSingular", "Profiles");
 		$rb_agency_option_inactive_profile_on_update = isset($rb_agency_options_arr['rb_agency_option_inactive_profile_on_update'])? $rb_agency_options_arr['rb_agency_option_inactive_profile_on_update']:0;
 // *************************************************************************************************** //
 // Handle Post Actions
+
 $errorValidation = array();
 if (isset($_POST['action'])) {
 	/*
@@ -3119,6 +3122,17 @@ function rb_display_list() {
 							$filter .= " FIND_IN_SET('". $selectedType ."', profile.ProfileType)";
 						}
 		}
+        if (isset($_GET['registerdatefr']) && isset($_GET['registerdateto'])){
+            $registerdatefr = $_GET['registerdatefr'];
+            $registerdateto = $_GET['registerdateto'];
+			$query .= "&registerdatefr=". $registerdatefr ."";
+            $query .= "&registerdateto=". $registerdateto ."";
+						if(strpos($filter,'profile') > 0){
+							$filter .= " AND profile.ProfileDateCreated BETWEEN CAST('$registerdatefr' AS DATE) AND CAST('$registerdateto' AS DATE)";
+						} else {
+							$filter .= " profile.ProfileDateCreated BETWEEN CAST('$registerdatefr' AS DATE) AND CAST('$registerdateto' AS DATE)";
+						}
+		}
 		if (isset($_GET['ProfileVisible'])){
 			$selectedVisible = $_GET['ProfileVisible'];
 			$query .= "&ProfileVisible=". $selectedVisible ."";
@@ -3145,6 +3159,7 @@ function rb_display_list() {
 		if(!strpos($filter, 'profile') > 0){
 				$filter = "";
 		}
+        print_r($filter);
 	//Paginate
 		$sqldata = "SELECT * FROM " . table_agency_profile . " profile LEFT JOIN " . table_agency_data_type . " profiletype ON profile.ProfileType = profiletype.DataTypeID " . $filter . "" ;
 		$results=  $wpdb->get_results($sqldata);
@@ -3205,23 +3220,7 @@ function rb_display_list() {
 							echo "<p>";
 							foreach ($queryGenderResult as $fetchGender) {
 								echo "<a class=\"button-primary\" href=\"" . admin_url("admin.php?page=" . $_GET['page']) . "&action=add&ProfileGender=" . $fetchGender["GenderID"] . "\">" . __("Create New " . ucfirst($fetchGender["GenderTitle"]) . "", RBAGENCY_TEXTDOMAIN) . "</a>\n";
-								/*
-								echo "
-								<select name='create-new_'".$fetchGender["GenderID"]." id='create-new_'".$fetchGender["GenderID"].">
-									<option value=''>". __("Create New " . ucfirst($fetchGender["GenderTitle"])) ."</option>";
-								echo "</select>";
-									$query_cus = "SELECT main.*,
-					a.ProfileCustomTypes
-					FROM ". table_agency_customfields ." main
-					LEFT JOIN ". table_agency_customfields_types ." a
-					ON a.ProfileCustomID = main.ProfileCustomID
-					ORDER BY ProfileCustomOrder ASC";
-						$query3 = "SELECT * FROM " . table_agency_data_type . " WHERE DataTypeParentID = 0 AND (DataTypeGenderID = {$genderID} OR DataTypeGenderID = 0) ORDER BY DataTypeTitle";
-		$db_CustomFields = array();
-		$db_ProfileCustomFields = $wpdb->get_results($query_cus,ARRAY_A);
-		foreach ($db_ProfileCustomFields as $data_CustomFields) {
-			$db_CustomFields[ $data_CustomFields['ProfileCustomID']] = $data_CustomFields['ProfileCustomTitle'];
-		} */
+								
 							}
 							echo "</p>";
 							if ($queryGenderCount < 1) {
@@ -3299,6 +3298,8 @@ function rb_display_list() {
 		echo "<option value=\"" . $dataGender["GenderID"] . "\"" . selected(isset($_GET["ProfileGender"])?$_GET["ProfileGender"]:"", $dataGender["GenderID"], false) . ">" . $dataGender["GenderTitle"] . "</option>";
 	}
 	echo "              </select></span>\n";
+    echo "              <span class='w50'><label>" . __("Date Registered:", RBAGENCY_TEXTDOMAIN) . "</label><input id='registerdatefr' type=\"date\" placeholder='From' name=\"registerdatefr\" value=\"" . $registerdatefr . "\" />";
+    echo "              <input type=\"date\" placeholder='To' name=\"registerdateto\" id='registerdateto' value=\"" . $registerdateto . "\" /></span>";
 	echo "              <span class=\"submit\"><input type=\"submit\" value=\"" . __("Filter", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" /></span>\n";
 	echo "          </p></form>\n";
 	echo "          <form style=\"display: inline; float: left; margin: 17px 5px 0px 0px;\" method=\"GET\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
@@ -3342,7 +3343,7 @@ function rb_display_list() {
 	echo "        <th class=\"column-ProfileDetails\" id=\"ProfileDetails\" scope=\"col\">".__("Images",RBAGENCY_TEXTDOMAIN)."</th>\n";
 	echo "        <th class=\"column-ProfileStatHits\" id=\"ProfileStatHits\" scope=\"col\">".__("Views",RBAGENCY_TEXTDOMAIN)."</th>\n";
 	echo "        <th class=\"column-isPrivate\" id=\"isPrivate\" scope=\"col\">".__("Private",RBAGENCY_TEXTDOMAIN)."</th>\n";
-	echo "        <th class=\"column-CustomOrder\" id=\"CustomOrder\" scope=\"col\">".__("Custom Order",RBAGENCY_TEXTDOMAIN)."</th>\n";
+	echo "        <th class=\"column-ProfileDateCreated\" id=\"ProfileDateCreated\" scope=\"col\">".__("Register Date",RBAGENCY_TEXTDOMAIN)."</th>\n";
 	echo "        <th class=\"column-ProfileDateViewLast\" id=\"ProfileDateViewLast\" scope=\"col\" style=\"width:100px;\">".__("Last Viewed Date",RBAGENCY_TEXTDOMAIN)."</th>\n";
 	echo "    </tr>\n";
 	echo " </thead>\n";
@@ -3396,6 +3397,7 @@ function rb_display_list() {
 		$ProfileDateBirth = stripslashes($data['ProfileDateBirth']);
 		$ProfileStatHits = stripslashes($data['ProfileStatHits']);
 		$ProfileDateViewLast = stripslashes($data['ProfileDateViewLast']);
+        $ProfileDateCreated = stripslashes($data['ProfileDateCreated']);
 		$isPrivate = stripslashes($data['isPrivate']);
 		$CustomOrder = stripslashes($data['CustomOrder']);
 		if ($rb_agency_option_profilenaming == 0) {
@@ -3470,9 +3472,9 @@ function rb_display_list() {
 		$query = "SELECT * FROM " . table_agency_data_gender . " WHERE GenderID = '%s' ";
 		$fetchProfileGender =  $wpdb->get_row($wpdb->prepare($query,$ProfileGender),ARRAY_A,0);
 		$ProfileGender = $fetchProfileGender["GenderTitle"];
-		echo "    <tr class=\"".$statusClass."\">\n";
+		echo "    <tr id='$ProfileID' class=\"".$statusClass."\">\n";
 		echo "        <td class=\"check-column\" scope=\"row\">\n";
-		echo "          <input type=\"checkbox\" value=\"" . $ProfileID . "\"  data-name=\"".$ProfileContactNameFirst." ". $ProfileContactNameLast."\" class=\"administrator\" id=\"" . $ProfileID . "\" name=\"" . $ProfileID . "\"/>\n";
+		echo "          <input type=\"checkbox\" value=\"" . $ProfileID . "\"  data-name=\"".$ProfileContactNameFirst." ". $ProfileContactNameLast."\" class=\"administrator\" name=\"" . $ProfileID . "\"/>\n";
 		echo "        </td>\n";
 		echo "        <td class=\"ProfileID column-ProfileID\">" . $ProfileID . "</td>\n";
 		if($rb_agency_option_formshow_displayname == 1){
@@ -3503,8 +3505,10 @@ function rb_display_list() {
 		echo "        <td class=\"ProfileDetails column-ProfileDetails\">" . $profileImageCount . "</td>\n";
 		echo "        <td class=\"ProfileStatHits column-ProfileStatHits\">" . $ProfileStatHits . "</td>\n";
 		echo "        <td class=\"isPrivate column-isPrivate\">". (!empty($isPrivate) ? "<b>Private</b>": " ") . "</td>\n";
-			if(isset($CustomOrder)){
-				echo "        <td class=\"CustomOrder column-CustomOrder\" id=\"CustomOrder\">".$CustomOrder."</td>\n";
+			if(isset($ProfileDateCreated)){
+			 $createdate=date_create($ProfileDateCreated);
+             $ProfileDateCreated = date_format($createdate,"M. j, Y");
+				echo "        <td class=\"ProfileDateCreated column-ProfileDateCreated\" id=\"ProfileDateCreated\">".$ProfileDateCreated."</td>\n";
 			}
 		echo "        <td class=\"ProfileDateViewLast column-ProfileDateViewLast\" attr_lastview=\"".strtotime($ProfileDateViewLast)."\" attr_timezone=\"". $rb_agency_option_locationtimezone."\">\n";
 		//echo "           " . rb_agency_makeago(rb_agency_convertdatetime($ProfileDateViewLast), $rb_agency_option_locationtimezone);
@@ -3541,23 +3545,9 @@ function rb_display_list() {
 	echo "</div>\n";
 	// Show Actions
 	echo "<p class=\"submit\">\n";
-	echo "  <input type=\"hidden\" value=\"deleteRecord\" name=\"action\" />\n";
-	echo "  <input type=\"submit\" value=\"" . __('Delete Profiles',RBAGENCY_TEXTDOMAIN) . "\" class=\"delete-profiles button-primary\" name=\"submit\" />   \n";
+	echo "  <button class='delete-profiles button button-primary button-hero'>" . __('Delete Selected Profiles',RBAGENCY_TEXTDOMAIN) . "</button>";
 	echo "</p>\n";
 	echo "</form>\n";
-	echo "<script  type=\"text/javascript\">\n\n";
-	echo "jQuery('.delete-profiles').click(function(){\n\n";
-	echo "    var profiles = '';\n\n";
-	echo "       jQuery('tbody .check-column input[type=checkbox]:checked').each(function(){\n\n";
-	echo "           profiles = profiles +'\\n'+jQuery(this).attr('data-name'); \n\n";
-	echo "       }); \n\n";
-	echo "  if(profiles !=='') {if(!confirm('Are you sure that you want to delete the following profiles? \\n'+profiles)){\n\n";
-	echo "           return false; \n\n";
-	echo "  }} else {\n\n";
-	echo "   alert('Please \'check\' the profiles that you want to delete.'); return false;\n\n";
-	echo "  }\n\n";
-	echo "});\n\n";
-	echo "</script>";
 }
 if(isset($_GET['action']) && $_GET['action'] == "add"){
 } elseif(isset($_GET['action']) && $_GET['action'] == "editRecord"){
