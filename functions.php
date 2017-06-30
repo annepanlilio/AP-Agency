@@ -4340,7 +4340,9 @@ function get_social_media_links($ProfileID = "", $return = false){
 		) );
 	}
 	add_action( 'admin_init', 'load_admin_js' );
-    function load_admin_script(){ 
+    function load_admin_script(){
+     $ajax_nonce = wp_create_nonce( "rb_agency_actions" );
+     echo "<script type='text/javascript'> var security ='".$ajax_nonce."'</script>";    
     wp_register_script( 'jquery-filer', RBAGENCY_PLUGIN_URL .'assets/js/jquery.filer.js', array( 'jquery' ),FALSE);
     wp_register_script( 'manageprofile', RBAGENCY_PLUGIN_URL .'assets/js/rbManageProfile.js', array( 'jquery-filer' ),FALSE);
     wp_register_script( 'rbboxcover', RBAGENCY_PLUGIN_URL .'assets/js/rbBoxCover.js', array( 'jquery-filer' ),FALSE);
@@ -4361,23 +4363,10 @@ function get_social_media_links($ProfileID = "", $return = false){
        }else{
            wp_dequeue_script('rbagency-reports'); 
        }
+       
     }
     add_action('admin_enqueue_scripts','load_admin_script');
-	function load_datetime_basic_search(){
-		echo '<script type="text/javascript">
-				jQuery(function(){
-				/*
-					jQuery( "input[id=rb_datepicker_from_bd]").datepicker({
-						dateFormat: "yy-mm-dd"
-					});
-					jQuery( "input[id=rb_datepicker_to_bd]").datepicker({
-						dateFormat: "yy-mm-dd"
-					});
-				*/
-				});
-				</script>';
-	}
-add_action( 'wp_head', 'load_datetime_basic_search' );
+	
 add_action( 'widgets_init', 'rblogin_widget' );
 function rblogin_widget() {
 	register_widget( 'RBLogin_Widget' );
@@ -6021,6 +6010,8 @@ function rb_agency_upload_image()
     }
     exit;
 }
+
+
 add_action("wp_ajax_rb_agency_sort_image","rb_agency_update_image");
 add_action("wp_ajax_nopriv_rb_agency_sort_image","rb_agency_update_image");
 add_action("wp_ajax_rb_agency_delete_image","rb_agency_update_image");
@@ -6032,9 +6023,14 @@ add_action("wp_ajax_nopriv_rb_agency_setprimary_image","rb_agency_update_image")
 function rb_agency_update_image()
 {
     global $wpdb;
+    
+    
     $action = $_POST['action'];
     $mediaid = $_POST['mediaid'];
     $profileid = $_POST['profileid'];
+    
+    check_ajax_referer( 'rb_agency_actions', 'security' );
+    
     if($action=="rb_agency_delete_image"){    
         $media = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileMediaTitle,ProfileMediaType,ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID = $mediaid" ) );
         $mediadir = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileGallery FROM ".table_agency_profile." WHERE ProfileID = $profileid" ) );
@@ -6083,5 +6079,51 @@ function rb_agency_update_image()
             echo json_encode(array('success'=>'true'));
         }
         exit;
+    }
+    
+    
+}
+
+add_action("wp_ajax_rb_agency_delete_profile","rb_agency_delete_profile");
+add_action("wp_ajax_nopriv_rb_agency_delete_profile","rb_agency_delete_profile");
+function rb_agency_delete_profile()
+{
+    global $wpdb;
+    $action = $_POST['action'];
+    $profileid = $_POST['profileid'];
+    
+     check_ajax_referer( 'rb_agency_actions', 'security' );
+     
+    if($action=="rb_agency_delete_profile"){
+        if($profileid!=""){
+                $mediadir = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM ".table_agency_profile." WHERE ProfileID = $profileid" ) );
+            
+                $imgdir = RBAGENCY_UPLOADPATH.$mediadir->ProfileGallery;
+                delete_directory($imgdir);
+                $wpdb->delete(table_agency_profile, array( 'ProfileID' => $profileid ), array( '%d' ) );
+                $wpdb->delete(table_agency_profile_media, array( 'ProfileID' => $profileid ), array( '%d' ) );
+           
+        }
+        if($wpdb->last_error !== ''){
+            $msg = array('error'=>$wpdb->last_error);
+        }else{
+            $msg = array('success'=>'Profile deleted successfully');
+        }
+        echo json_encode($msg);
+        exit;
+    }
+}
+
+function delete_directory($target) {
+    if(is_dir($target)){
+        $files = glob( $target . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
+        
+        foreach( $files as $file )
+        {
+            delete_directory( $file );      
+        }
+        rmdir( $target );
+    } elseif(is_file($target)) {
+        unlink( $target );  
     }
 }
