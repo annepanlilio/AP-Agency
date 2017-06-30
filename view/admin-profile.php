@@ -3125,6 +3125,7 @@ function rb_display_list() {
         if (isset($_GET['registerdatefr']) && isset($_GET['registerdateto'])){
             $registerdatefr = $_GET['registerdatefr'];
             $registerdateto = $_GET['registerdateto'];
+            if($registerdatefr!="" && $registerdateto!=""){
 			$query .= "&registerdatefr=". $registerdatefr ."";
             $query .= "&registerdateto=". $registerdateto ."";
 						if(strpos($filter,'profile') > 0){
@@ -3132,6 +3133,7 @@ function rb_display_list() {
 						} else {
 							$filter .= " profile.ProfileDateCreated BETWEEN CAST('$registerdatefr' AS DATE) AND CAST('$registerdateto' AS DATE)";
 						}
+            }
 		}
 		if (isset($_GET['ProfileVisible'])){
 			$selectedVisible = $_GET['ProfileVisible'];
@@ -3159,7 +3161,7 @@ function rb_display_list() {
 		if(!strpos($filter, 'profile') > 0){
 				$filter = "";
 		}
-        print_r($filter);
+        
 	//Paginate
 		$sqldata = "SELECT * FROM " . table_agency_profile . " profile LEFT JOIN " . table_agency_data_type . " profiletype ON profile.ProfileType = profiletype.DataTypeID " . $filter . "" ;
 		$results=  $wpdb->get_results($sqldata);
