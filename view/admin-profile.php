@@ -2415,9 +2415,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										'crop_only'=>true,
 										'crop_y'=>'0'
 									);
-									$headshot_image_src = bfi_thumb( $headshot_image_path, $headshot_params );
-									$outLinkHeadShot .= "<div class=\"media-file ".$markedClass."\"><span class='media-file-title'>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/headshot/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"".$headshot_image_src ."\" /></a><br /><input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
-									//$outLinkHeadShot .= "<div class=\"media-file\"><span>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $ProfileGallery ."/". $dataMedia['ProfileMediaURL'] ."&a=t&w=120&h=108\" /></a><br />[<a href=\"javascript:confirmDelete('" . $dataMedia['ProfileMediaID'] . "','" . $dataMedia['ProfileMediaType'] . "')\" title=\"Delete this File\" class=\"delete-file\">DELETE</a>]</div>\n";
+                                    if(is_file($headshot_image_path)){
+                                        $headshot_image_src = bfi_thumb( $headshot_image_path, $headshot_params );
+							     		$outLinkHeadShot .= "<div class=\"media-file ".$markedClass."\"><span class='media-file-title'>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/headshot/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"".$headshot_image_src ."\" /></a><br /><input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
+                                    }
+									
+									
 								} elseif ($dataMedia['ProfileMediaType'] == "CardPhotos" || 
                                 $dataMedia['ProfileMediaType'] == "Polaroid" ) {
 									$markedClass = "";

@@ -250,7 +250,7 @@ label.checkbox {
 #rbplugin table.widefat tr td.column-ProfilesProfileDate span { display: block; }
 
 /* Search Results */
-#rbplugin table.widefat tr th, table.widefat tr td { border-bottom: 1px solid #e5e5e5; text-align: center;}
+#rbplugin table.widefat tr th { border-bottom: 1px solid #e5e5e5}
 #rbplugin table.widefat tr.inactive { background: #e0979f; }
 #rbplugin table.widefat tr.active { background: #a9d59d; }
 #rbplugin table.widefat tr.archived { background: #c0c0c0; }

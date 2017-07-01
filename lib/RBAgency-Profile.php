@@ -2867,7 +2867,7 @@ class RBAgency_Profile {
 								'crop'=>true
 							);
 					// $imageSource = bfi_thumb( $imagePath, $_bfiParams );
-					$imageSource = get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $primary_image;
+					$imageSource = RBAGENCY_PLUGIN_URL."/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR ."". $data['ProfileGallery'] ."/". $primary_image;
 					// display
 					$displayGridHtml .= "   <div class=\"profile-item\">\n";
 					$displayGridHtml .= "   	<div class=\"profile-image\">\n";
@@ -3185,14 +3185,20 @@ class RBAgency_Profile {
 					$p_image = str_replace(" ", "%20", rb_get_primary_image($dataList["ProfileID"]));
 					if(!isset($_GET["Job_ID"])){
 						// if($rb_agency_option_profilelist_castingcart && !empty($p_image)  && $type != "favorite"){
+				        $profileID = $dataList["ProfileID"];
+                        
 						if($rb_agency_option_profilelist_castingcart && !empty($p_image)){
-							$displayActions .= "<div  id=\"profile-casting\"  class=\"casting\"><a href=\"javascript:;\" title=\""
-								.(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")
-								."\"  attr-id=\"".$dataList["ProfileID"]."\"  class=\""
-								.(in_array($dataList["ProfileID"], $arr_castingcart)?"active":"inactive")
-								." castingcart\">$cartIcon <span>"
-								.(in_array($dataList["ProfileID"], $arr_castingcart)?"Remove from Casting Cart":"Add to Casting Cart")
-								."</span></a></div>";
+						  
+						   $displayActions .= "<div class='castingactions'>";
+						   if(in_array($dataList["ProfileID"], $arr_castingcart)){
+						      
+						      $displayActions .= "<a href='#' data-profileid='$profileID' data-action='removeCasting' class='removeCasting'>$cartIcon <span>Remove from Casting Cart</span></a>";
+						   }else{
+						      $displayActions .= "<a href='#' data-profileid='$profileID' data-action='addCasting' class='addCasting'>$cartIcon <span>Add to Casting Cart</span></a>";
+						   }
+                           
+                           $displayActions .= "</div>";
+							
 						}
 					}
 					$displayActions .= "</div>";
@@ -3235,7 +3241,7 @@ class RBAgency_Profile {
 							$countImg = $wpdb->num_rows;
 							foreach($resultsImg as $dataImg ){
 								if ($countImg > 1) {
-									$images .= "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"roll\" />";
+									$images .= "<img src=\"".RBAGENCY_PLUGIN_URL."/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $dataImg['ProfileMediaURL'] ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"roll\" />";
 								}
 							}
 							$displayHTML .= '<script type="text/javascript">
@@ -3257,12 +3263,12 @@ class RBAgency_Profile {
 						}
 						//landscape settings
 						if($rb_agency_option_layoutprofilelistlayout == 2){
-							$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbheight."&h=".$rb_agency_value_profilethumbwidth."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"primary active\" />".$images."";
+							$displayHTML .="<img src=\"". RBAGENCY_PLUGIN_URL."/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbheight."&h=".$rb_agency_value_profilethumbwidth."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"primary active\" />".$images."";
 						}else{
-							$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"primary active\" />".$images."";
+							$displayHTML .="<img src=\"". RBAGENCY_PLUGIN_URL."/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\" class=\"primary active\" />".$images."";
 						}
 					} else {
-						$displayHTML .="<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\"  class=\"primary active\" >".$images."\n";
+						$displayHTML .="<img src=\"". RBAGENCY_PLUGIN_URL."/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] ."/". $p_image ."&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\"  class=\"primary active\" >".$images."\n";
 					}
 					$displayHTML .="</a>";
 					if($rb_agency_option_layoutprofilenamepos == 1) {
@@ -3270,7 +3276,7 @@ class RBAgency_Profile {
 					}
 					$displayHTML .="</div>";
 				} else {
-					$images = "<img src=\"". get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=". get_bloginfo("url")."/wp-content/plugins/rb-agency/assets/demo-data/Placeholder.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\">";
+					$images = "<img src=\"". RBAGENCY_PLUGIN_URL."/ext/timthumb.php?src=". RBAGENCY_PLUGIN_URL."/assets/demo-data/Placeholder.jpg&w=".$rb_agency_value_profilethumbwidth."&h=".$rb_agency_value_profilethumbheight."&a=t&zc=1\" alt=\"". stripslashes($ProfileContactDisplay) ."\">";
 					//slide panel trigger to image/ profile image
 					if($rb_agency_option_layoutprofileviewmode == 2) {
 						$images = '<a href="#slide-panel_'.$_panelID.'" class="slide-panel-link" profile_id="'.$dataList["ProfileID"].'">'.$images.'</a>';
@@ -3428,8 +3434,9 @@ class RBAgency_Profile {
 				if(strpos($outLinkResume,'http') === false){
 					$outLinkResume =  get_bloginfo("url"). $outLinkResume;
 				}
-				$imageURL = get_bloginfo("url")."/wp-content/plugins/rb-agency/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] .'/'. $p_image ."&w=300&h=420&a=t";
-				$displayHTML .='
+				$imageURL =  RBAGENCY_PLUGIN_URL."/ext/timthumb.php?src=".RBAGENCY_UPLOADDIR . $dataList["ProfileGallery"] .'/'. $p_image ."&w=300&h=420&a=t";
+				
+                $displayHTML .='
 				<div style="display:none">
 				<div id="lightbox-fancy-'.$dataList["ProfileID"].'" class="profile-fancy white-popup">
 					<div class="profile-photo" style="float: left;">
@@ -3452,6 +3459,7 @@ class RBAgency_Profile {
 				</div>
 				</div>
 				';
+                
 			}
 			elseif($rb_agency_option_layoutprofilelistlayout == 1){
 			/*
@@ -3487,7 +3495,7 @@ class RBAgency_Profile {
 							$voicedemo_links = '<ul class="links">';
 							if(!empty($dataList["ProfileContactWebsite"])){
 								$voicedemo_links .= '<li class="site_link"><a href="'.$dataList["ProfileContactWebsite"].'" title="Site Link" class="mp3-link icon-website rb-icon" target="_blank">
-									<img src="'.RBAGENCY_PLUGIN_URL .'assets/img/icon-website.png" alt="" /></a>
+									<img src="'.RBAGENCY_PLUGIN_URL .'/assets/img/icon-website.png" alt="" /></a>
 									</li>';
 							}
 							//<li>'.sanitize_title($dataMedia['ProfileMediaType']).' <a href="'.$mp3link.'" title="" class="mp3-link icon-website rb-icon">
@@ -3574,13 +3582,7 @@ class RBAgency_Profile {
 				self::$error_checking[] = array('search_formatted',$displayHTML);
 				echo "<pre>"; print_r(self::$error_checking); echo "</pre>";
 			}
-			?>
-			<script type="text/javascript">
-				jQuery(document).ready(function($){
-					$(".rbprofile-list").removeAttr('style');
-				});
-			</script>
-			<?php
+			
 			return $displayHTML;
 		}
 	/*

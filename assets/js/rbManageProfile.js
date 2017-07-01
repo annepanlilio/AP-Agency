@@ -416,9 +416,9 @@ $('#file_upload').filer({
 			}
 		});
         
-        $( "input[type=date]" ).datepicker({dateFormat: "yy-mm-dd"});
-        $( "#registerdatefr" ).datepicker();
-        $( "#registerdateto" ).datepicker();
+        
+        $( "#registerdatefr" ).datepicker({dateFormat: "yy-mm-dd"});
+        $( "#registerdateto" ).datepicker({dateFormat: "yy-mm-dd"});
         
 		$("#ProfileGender").on("change",function(){
 			$(".tbody-table-customfields").empty();
@@ -672,6 +672,8 @@ jQuery('.imperial_metrics').focusout(function(){
 				jQuery(this).nextAll('.error_msg').eq(0).html('');
 		}
 });
+
+
 
 function extractNumber(obj, decimalPlaces, allowNegative)
 {
