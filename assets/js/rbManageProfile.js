@@ -416,7 +416,7 @@ $('#file_upload').filer({
 			}
 		});
         
-        
+        $("#ProfileDateBirth").datepicker({dateFormat: "yy-mm-dd"});
         $( "#registerdatefr" ).datepicker({dateFormat: "yy-mm-dd"});
         $( "#registerdateto" ).datepicker({dateFormat: "yy-mm-dd"});
         $("#filter-btn").on('click',function(e){ 
