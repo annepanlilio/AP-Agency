@@ -720,6 +720,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 												$errorValidation['profileMedia'] = "<b><i>"._("Please upload PDF/MSWord/RTF/Image files only",RBAGENCY_TEXTDOMAIN)."</i></b><br />";
 												$have_error = true;
 											}
+                                            
 										} elseif ($uploadMediaType == "CompCard") {
 											// Add to database
 											if ($_FILES['profileMedia' . $i]['type'] == "image/jpeg" || $_FILES['profileMedia' . $i]['type'] == "image/png") {
@@ -1046,65 +1047,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 	$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int) $rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 	// Default Country
 	$rb_agency_option_locationcountry = isset($rb_agency_options_arr['rb_agency_option_locationcountry'])?$rb_agency_options_arr['rb_agency_option_locationcountry']:0;
-	?>
-	<script type="text/javascript">
-	jQuery(document).ready(function(){
-		jQuery('.imperial_metrics').keyup(function(){
-			var vals = jQuery(this).val();
-			var new_val = extractNumber(vals,2,false);
-			if(new_val !== true){
-				jQuery(this).nextAll('.error_msg').eq(0).html('*Non numeric value is not accepted');
-				new_val.replace(/[^/\d*\.*]/g,'');
-				jQuery(this).val(new_val);
-			}
-		});
-		jQuery('.imperial_metrics').focusout(function(){
-			var vals = jQuery(this).val();
-			var new_val = extractNumber(vals,2,false);
-			if(new_val !== true){
-				jQuery(this).nextAll('.error_msg').eq(0).html('*Non numeric value is not accepted');
-				new_val.replace(/[^/\d*\.*]/g,'');
-				jQuery(this).val(new_val);
-			} else {
-				jQuery(this).nextAll('.error_msg').eq(0).html('');
-			}
-		});
-	});
-	function extractNumber(obj, decimalPlaces, allowNegative)
-	{
-		var temp = obj; var reg0Str = '[0-9]*';
-		if (decimalPlaces > 0) {
-			reg0Str += '\\.?[0-9]{0,' + decimalPlaces + '}';
-		} else if (decimalPlaces < 0) {
-			reg0Str += '\\.?[0-9]*';
-		}
-		reg0Str = allowNegative ? '^-?' + reg0Str : '^' + reg0Str;
-		reg0Str = reg0Str + '$';
-		var reg0 = new RegExp(reg0Str);
-		if (reg0.test(temp)) return true;
-		var reg1Str = '[^0-9' + (decimalPlaces != 0 ? '.' : '') + (allowNegative ? '-' : '') + ']';
-		var reg1 = new RegExp(reg1Str, 'g');
-		temp = temp.replace(reg1, '');
-		if (allowNegative) {
-			var hasNegative = temp.length > 0 && temp.charAt(0) == '-';
-			var reg2 = /-/g;
-			temp = temp.replace(reg2, '');
-			if (hasNegative) temp = '-' + temp;
-		}
-		if (decimalPlaces != 0) {
-			var reg3 = /\./g;
-			var reg3Array = reg3.exec(temp);
-			if (reg3Array != null) {
-				var reg3Right = temp.substring(reg3Array.index + reg3Array[0].length);
-				reg3Right = reg3Right.replace(reg3, '');
-				reg3Right = decimalPlaces > 0 ? reg3Right.substring(0, decimalPlaces) : reg3Right;
-				temp = temp.substring(0,reg3Array.index) + '.' + reg3Right;
-			}
-		}
-		return temp;
-	}
-	</script>
-	<?php
+	
 	// Add Header
 	echo "<div class=\"wrap\">\n";
 	// Include Admin Menu
@@ -2286,6 +2229,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										$markedClass = "marked_changed";
 									}
 									$headshot_image_path = RBAGENCY_UPLOADDIR . $ProfileGallery ."/headshot/". $dataMedia['ProfileMediaURL'];
+                                    $headshot_file = RBAGENCY_UPLOADPATH.$ProfileGallery.DIRECTORY_SEPARATOR."headshot".DIRECTORY_SEPARATOR.$dataMedia['ProfileMediaURL'];
 									$headshot_params = array(
 										'crop'=>true,
 										'width'=>120,
@@ -2295,12 +2239,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 										'crop_only'=>true,
 										'crop_y'=>'0'
 									);
-                                    if(is_file($headshot_image_path)){
+                                    if(file_exists($headshot_file)){
                                         $headshot_image_src = bfi_thumb( $headshot_image_path, $headshot_params );
 							     		$outLinkHeadShot .= "<div class=\"media-file ".$markedClass."\"><span class='media-file-title'>" . $dataMedia['ProfileMediaType'] . "</span><br /><a href=\"" . RBAGENCY_UPLOADDIR . $ProfileGallery . "/headshot/" . $dataMedia['ProfileMediaURL'] . "\" target=\"_blank\"><img src=\"".$headshot_image_src ."\" /></a><br /><input type=\"checkbox\" class=\"media-files-checkbox\" name=\"media_files\" value=\"".$dataMedia['ProfileMediaID']."\"></div>\n";
+                                    
                                     }
 									
-									
+								
 								} elseif ($dataMedia['ProfileMediaType'] == "CardPhotos" || 
                                 $dataMedia['ProfileMediaType'] == "Polaroid" ) {
 									$markedClass = "";
