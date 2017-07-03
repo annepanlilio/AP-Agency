@@ -34,6 +34,9 @@ hr { border: none; }
 #filter-profiles span input[type="text"],
 #filter-profiles span select { width: 95%; }
 #filter-profiles span input[type="submit"] { margin-top: 17px; }
+#registerdatefr,#registerdateto {
+    width:45% !important;
+}
 .postbox .inside { overflow: hidden; }
 
 .boxblock { /*background-color:#FFFFFF;*/ border-color:#DFDFDF; -moz-border-radius:6px 6px 6px 6px; border-style:solid; border-width:1px; line-height:1; margin-bottom:20px; min-width:255px; position:relative; width:99.5%;}

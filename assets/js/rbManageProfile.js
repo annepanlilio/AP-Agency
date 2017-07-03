@@ -419,7 +419,30 @@ $('#file_upload').filer({
         
         $( "#registerdatefr" ).datepicker({dateFormat: "yy-mm-dd"});
         $( "#registerdateto" ).datepicker({dateFormat: "yy-mm-dd"});
-        
+        $("#filter-btn").on('click',function(e){ 
+            e.preventDefault();
+            var regfr = $("#registerdatefr").val();
+            var regto = $("#registerdateto").val();
+            if((regfr!="" && regto=="") || (regto!="" && regfr=="")){
+                $.alert({
+                    title: 'Alert!',
+                    content: 'All date fields must be set to make date filter work!',
+                    useBootstrap:false,
+                    boxWidth:'400px'
+                });
+            }else if( new Date(regfr) > new Date(regto)){
+                $.alert({
+                    title: 'Alert!',
+                    content: 'Date From should be older than Date To!',
+                    useBootstrap:false,
+                    boxWidth:'400px'
+                });
+            }
+            else{
+                $(this).closest('form').submit();
+            }
+           
+        });
 		$("#ProfileGender").on("change",function(){
 			$(".tbody-table-customfields").empty();
 			var profileTypeTitles = $('.userProfileType:checkbox:checked').map(function() {
