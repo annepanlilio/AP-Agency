@@ -171,7 +171,7 @@ echo "					<div id=\"photos\" class=\"lightbox-enabled profile-photos\">\n";
 							//$queryImg = "SELECT * FROM ". table_agency_profile_media ." media WHERE ProfileID = %d AND ProfileMediaType IN(\"Image\")  AND ProfileMediaPrimary = 0 ORDER BY $orderBy";
 							$private_profile_photo = get_user_meta($ProfileUserLinked,'private_profile_photo',true);
 							$private_profile_photo_arr = explode(',',$private_profile_photo);
-							$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Image");
+							$queryImg = rb_agency_option_galleryorder_query("ProfileMediaOrder" ,$ProfileID,"Image");
 							$resultsImg = $wpdb->get_results($queryImg,ARRAY_A);
 							$countImg = $wpdb->num_rows;
 							foreach($resultsImg as $dataImg ){
