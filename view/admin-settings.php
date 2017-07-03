@@ -4135,6 +4135,7 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		}**/
 
 		$custom_views="";
+        
 		if($data["ProfileCustomShowRegistration"]==1){
 			$custom_views ="Registration<br/>";
 		}
@@ -4144,8 +4145,20 @@ elseif (isset($_GET['action']) && $_GET['action'] == "editRecord") {
 		if($data["ProfileCustomShowSearchSimple"]==1){
 			$custom_views .="Simple<br/>";
 		}
-		if($data["ProfileCustomShowProfile"]==1){
-			$custom_views .="Profile";
+		if($data["ProfileCustomShowCastingJob"]==1){
+			$custom_views .="Casting Job<br/>";
+		}
+        if($data["ProfileCustomShowCastingRegister"]==1){
+			$custom_views .="Casting Register<br/>";
+		}
+        if($data["ProfileCustomShowAdmin"]==1){
+			$custom_views .="Admin<br/>";
+		}
+        if($data["ProfileCustomShowFilter"]==1){
+			$custom_views .="Filter<br/>";
+		}
+        if($data["ProfileCustomShowProfile"]==1){
+			$custom_views .="Profile<br/>";
 		}
 		if($data["ProfileCustomShowInitialRegistration"]==1){
 			$custom_views .="Initial Registration";

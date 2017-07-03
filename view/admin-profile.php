@@ -58,7 +58,7 @@ if (isset($_POST['action'])) {
 	/*
 	 * Pull Post Values
 	 */
-	$ProfileID = isset($_POST['ProfileID'])?$_POST['ProfileID']:0;
+	$ProfileID = isset($_POST['ProfileID']) ? $_POST['ProfileID']:0;
 	$ProfileUserLinked = isset($_POST['ProfileUserLinked'])?$_POST['ProfileUserLinked']:"";
 	$ProfileContactNameFirst = isset($_POST['ProfileContactNameFirst']) ? trim(preg_replace('!\s+!', ' ',$_POST['ProfileContactNameFirst'])):"";
 	$ProfileContactNameLast = isset($_POST['ProfileContactNameLast']) ? trim(preg_replace('!\s+!', ' ',$_POST['ProfileContactNameLast'])):"";
@@ -1630,132 +1630,12 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							}
 							if(isset($_GET['action']) && $_GET['action'] == "add") { 
 							?>
-							<script type="text/javascript">
-								jQuery(document).ready(function($){
-									$(".userProfileType").click(function(){
-										$(".tbody-table-customfields").empty();
-										$(".tbody-table-customfields-private").empty();
-										var profileTypeTitles = $('.userProfileType:checkbox:checked').map(function() {
-											return $(this).attr('profile-type-title');
-										}).get();
-										if(profileTypeTitles.length>0){
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_add_profile_onchanged_profiletype",
-													'profile_types': profileTypeTitles,
-													'gender': jQuery("#ProfileGender").val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields").html(results);
-													console.log(results);
-												}
-											});	
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_add_profile_onchanged_profiletype_private",
-													'profile_types': profileTypeTitles,
-													'gender': jQuery("#ProfileGender").val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields-private").html(results);
-													console.log(results);
-												}
-											});	
-										}else{
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_add_profile",
-													'gender': jQuery("#ProfileGender").val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields").html(results);
-													console.log(results);
-												}
-											});	
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_add_profile_private",
-													'gender': jQuery("#ProfileGender").val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields-private").html(results);
-													console.log(results);
-												}
-											});
-										}
-									});
-									$("#ProfileGender").on("change",function(){
-										$(".tbody-table-customfields").empty();
-										$(".tbody-table-customfields-private").empty();
-										var profileTypeTitles = $('.userProfileType:checkbox:checked').map(function() {
-											return $(this).attr('profile-type-title');
-										}).get();
-										if(profileTypeTitles.length>0){
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_add_profile_onchanged_profiletype",
-													'profile_types': profileTypeTitles,
-													'gender': $(this).val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields").html(results);
-													console.log(results);
-												}
-											});	
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_add_profile_onchanged_profiletype_private",
-													'profile_types': profileTypeTitles,
-													'gender': $(this).val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields-private").html(results);
-													console.log(results);
-												}
-											});
-										}else{
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_add_profile",
-													'gender': $(this).val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields").html(results);
-													console.log(results);
-												}
-											});	
-											jQuery.ajax({
-												type: "POST",
-												url: "<?php echo admin_url('admin-ajax.php') ?>",
-												data: {
-													action: "rb_get_customfields_add_profile_private",
-													'gender': $(this).val()
-												},
-												success: function (results) {
-													jQuery(".tbody-table-customfields-private").html(results);
-													console.log(results);
-												}
-											});
-										}
-									});
-								});
-							</script>
+                           
+							 <script>var ProfileID = '<?php echo $ProfileID;?>';</script>
+							
+							
 							<?php
-						}
+						      }
 							# get gender title
 							$DataTypeGenderTitle = rbGetDataTypeGenderTitleByID($ProfileGender);
 							$count3  = $wpdb->num_rows;
@@ -3303,9 +3183,9 @@ function rb_display_list() {
 		echo "<option value=\"" . $dataGender["GenderID"] . "\"" . selected(isset($_GET["ProfileGender"])?$_GET["ProfileGender"]:"", $dataGender["GenderID"], false) . ">" . $dataGender["GenderTitle"] . "</option>";
 	}
 	echo "              </select></span>\n";
-    echo "              <span class='w50'><label>" . __("Date Registered:", RBAGENCY_TEXTDOMAIN) . "</label><input id='registerdatefr' type=\"date\" placeholder='From' name=\"registerdatefr\" value=\"" . $registerdatefr . "\" />";
-    echo "              <input type=\"date\" placeholder='To' name=\"registerdateto\" id='registerdateto' value=\"" . $registerdateto . "\" /></span>";
-	echo "              <span class=\"submit\"><input type=\"submit\" value=\"" . __("Filter", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" /></span>\n";
+    echo "              <span class='w50'><label>" . __("Date Registered:", RBAGENCY_TEXTDOMAIN) . "</label><input id='registerdatefr' type=\"text\" placeholder='From' name=\"registerdatefr\" value=\"" . $registerdatefr . "\" />";
+    echo "              <input type=\"text\" placeholder='To' name=\"registerdateto\" id='registerdateto' value=\"" . $registerdateto . "\" /></span>";
+	echo "              <span class=\"submit\"><input type=\"submit\" id='filter-btn' value=\"" . __("Filter", RBAGENCY_TEXTDOMAIN) . "\" class=\"button-primary\" /></span>\n";
 	echo "          </p></form>\n";
 	echo "          <form style=\"display: inline; float: left; margin: 17px 5px 0px 0px;\" method=\"GET\" action=\"" . admin_url("admin.php?page=" . $_GET['page']) . "\">\n";
 	echo "              <input type=\"hidden\" name=\"page_index\" id=\"page_index\" value=\"" . $page_index  . "\" />  \n";
