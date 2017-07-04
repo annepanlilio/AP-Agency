@@ -281,6 +281,7 @@ label.checkbox {
 #custom-fields .inside { padding: 0; }
 #custom-fields .all-custom_fields { width: 65%; float: right; }
 #new-customfields .submit { margin-top: 10px; }
+#new-customfields .rbfield { width: 100%; float: none; }
 #new-customfields .rbfield > label { width: 30%; }
 #new-customfields .rbfield > div { width: 65%; }
 #new-customfields .rbfield > div { width: 65%; }
