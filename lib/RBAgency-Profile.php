@@ -2194,19 +2194,19 @@ class RBAgency_Profile {
 					$all_html.='<select id="sort_by">';
 					$all_html.='<option value="0">'.__("Sort List",RBAGENCY_TEXTDOMAIN).'</option>';
 					if($rb_agency_options_arr['rb_agency_option_profilelist_sortby_age'] == true){
-						$all_html.='<option value="1">'.__("Age",RBAGENCY_TEXTDOMAIN).'</option>';
+						$all_html.='<option data-sort-value="age" value="1">'.__("Age",RBAGENCY_TEXTDOMAIN).'</option>';
 					}
 					if($rb_agency_options_arr['rb_agency_option_profilelist_sortby_name'] == true){
-						$all_html.='<option value="2">'.__("Name",RBAGENCY_TEXTDOMAIN).'</option>';
+						$all_html.='<option data-sort-value="name" value="2">'.__("Name",RBAGENCY_TEXTDOMAIN).'</option>';
 					}
 					if($rb_agency_options_arr['rb_agency_option_profilelist_sortby_date_joined'] == true){
-						$all_html.='<option value="3">'.__("Date Joined",RBAGENCY_TEXTDOMAIN).'</option>';
+						$all_html.='<option data-sort-value="date-joined" value="3">'.__("Date Joined",RBAGENCY_TEXTDOMAIN).'</option>';
 					}
 					if($rb_agency_options_arr['rb_agency_option_profilelist_sortby_display_name'] == true){
-						$all_html.='<option value="2">'.__("Display Name",RBAGENCY_TEXTDOMAIN).'</option>';
+						$all_html.='<option data-sort-value="display-name" value="2">'.__("Display Name",RBAGENCY_TEXTDOMAIN).'</option>';
 					}
 					if(($rb_agency_options_arr['rb_agency_option_profilelist_sortby_gender'] == true) and (!isset($arr_query['gender']))){
-						$all_html.='<option value="50">'.__("Gender",RBAGENCY_TEXTDOMAIN).'</option>';
+						$all_html.='<option data-sort-value="gender" value="50">'.__("Gender",RBAGENCY_TEXTDOMAIN).'</option>';
 					}
 							if($rb_agency_options_arr['rb_agency_option_profilelist_includesortingbyprofileratings'] == true){
 								$all_html .= '<option value="151">'.__("Ratings",RBAGENCY_TEXTDOMAIN).'</option>';
@@ -3100,8 +3100,19 @@ class RBAgency_Profile {
 				$_proftypeClass[] = strtolower($profile_gender); // Add gender title to classes
 				$profile_list_class .= ' '. implode(' ', array_unique($_proftypeClass));
 				//echo $profiType;
-				// $PGENDER = $dataList["ProfileGender"] == 11 ? "Male" : "Female";
-				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"".$profile_list_class."\">\n";
+				$PGENDER = $dataList["ProfileGender"] == 1 ? "Male" : "Female";
+
+				$dataDOB = $dataList["ProfileDateBirth"];
+				if(!empty($dataDOB)) {
+					$pdob = new DateTime($dataDOB);
+					$datenow = new DateTime();
+					$dateinterval = $datenow->diff($pdob);
+					$dataAge = $dateinterval->y;	
+				} else {
+					$dataAge = 0;
+				}
+
+				$displayHTML .= "<div data-profileid=\"".$dataList["ProfileID"]."\" id=\"rbprofile-".$dataList["ProfileID"]."\" class=\"".$profile_list_class."\" data-age=\"".$dataAge."\" data-gender=\"".$PGENDER."\" data-date-joined=\"".(isset($dataList["ProfileDateCreated"])?$dataList["ProfileDateCreated"]:"")."\" data-name=\"".$dataList["ProfileContactDisplay"]."\" data-display-name=\"".$dataList["ProfileContactDisplay"]."\">\n";
 				$displayHTML .= "	<div class=\"profile-box\" >\n";
 				if(!$plain){
 					if(!empty($dataList["ProfileDateBirth"]) && $dataList["ProfileDateBirth"] !== '0000-00-00'){
