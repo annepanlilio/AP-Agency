@@ -1,6 +1,8 @@
 <?php
+
 ob_start();
-error_reporting(0);
+error_reporting(E_ALL);
+
 // Tap into WordPress Database
 @include_once('../../../../wp-config.php');
 @include_once('../../../../wp-load.php');
@@ -214,14 +216,19 @@ global $wpdb;
 				$type = "";
 			   if($_POST["file_type"] == "csv"){
 			   	$type = "CSV";
-			   	$extension = "csv";
+    			   	$extension = ".csv";
+                    $objWriter = new PHPExcel_Writer_CSV($objPHPExcel);
+                   
 			   } elseif($_POST["file_type"] == "xls"){
 					$type = "Excel5";
-			   	$extension = "xls";
+			   	    $extension = ".xlsx";
+                    $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
+                    
 			  }
-
-			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel,  $type);
-			$objWriter->save(str_replace('.php', '.'.$extension, __FILE__));
+            
+			//$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel,  $type);
+            //$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
+			$objWriter->save(str_replace('.php', $extension, __FILE__));
 			$profile_name = explode("-",$_POST["export-profile"]);
 			$from = $profile_name[0]+1;
 			$to = ($profile_name[1] == 100) ? 100 : ($profile_name[1] < 100 ? $profile_name[1] : $profile_name[1] - 100);
@@ -234,12 +241,12 @@ global $wpdb;
 			header("Content-Type: application/force-download");
 			header("Content-Type: application/octet-stream");
 			header("Content-Type: application/download");
-			header("Content-Disposition: attachment;filename=".$_SERVER['SERVER_NAME']."_".date("Y-m-d_H-i",time()).$profile_paginate .'.'.$extension); 
+			header("Content-Disposition: attachment;filename=".$_SERVER['SERVER_NAME']."_".date("Y-m-d_H-i",time()).$profile_paginate . $extension); 
 			header("Content-Transfer-Encoding: binary ");
 			ob_clean();
 			flush();
-			readfile(str_replace('.php', '.'.$extension, __FILE__));
-			unlink(str_replace('.php', '.'.$extension, __FILE__));
+			readfile(str_replace('.php', $extension, __FILE__));
+			unlink(str_replace('.php', $extension, __FILE__));
 	}
-	exit;
+	exit();
 ?>
