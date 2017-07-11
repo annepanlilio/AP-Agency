@@ -59,6 +59,7 @@ $('#file_upload').filer({
                     el.find("input[name='setprivate[]']").attr('value',value.mediaid);
                     el.find("input[name='selectProfileMedia']").attr('value',value.mediaid);
                     el.find(".jFiler-item-trash-action").attr('id',"trash_"+value.mediaid);
+                    el.find(".jFiler-item-thumb-image img").attr('src',value.image);
                 });
                 
             },
@@ -350,6 +351,41 @@ $('#file_upload').filer({
 		var profileTypeTitles = $('.userProfileType:checkbox:checked').map(function() {
 			return $(this).attr('profile-type-title');
 		}).get();
+        
+        if(profileTypeTitles.length>0){
+				jQuery.ajax({
+					type: "POST",
+					url: ajaxurl,
+					data: {
+						action: "rb_get_customfields_edit_profile_onchanged_profiletype",
+						profile_types: profileTypeTitles,
+                        profileID: ProfileID,
+						gender: jQuery("#ProfileGender").val()
+					},
+					success: function (results) {
+						jQuery(".tbody-table-customfields").html(results);
+					}
+				});	
+				
+                var privatetable = $(".tbody-table-customfields-private");
+                if(privatetable)
+                { 
+                    jQuery.ajax({
+						type: "POST",
+						url: ajaxurl,
+						data: {
+							action: "rb_get_customfields_edit_profile_onchanged_profiletype_private",
+							'profile_types': profileTypeTitles,
+                            'profileID': ProfileID,
+							'gender': jQuery("#ProfileGender").val()
+						},
+						success: function (results) {
+							jQuery(".tbody-table-customfields-private").html(results);
+						}
+					});	
+                }
+                
+		}
 	
 		$(".userProfileType").click(function(){
 			$(".tbody-table-customfields").empty();
@@ -369,7 +405,7 @@ $('#file_upload').filer({
 					},
 					success: function (results) {
 						jQuery(".tbody-table-customfields").html(results);
-						console.log(results);
+						
 					}
 				});	
 				jQuery.ajax({
@@ -383,7 +419,7 @@ $('#file_upload').filer({
 					},
 					success: function (results) {
 						jQuery(".tbody-table-customfields-private").html(results);
-						console.log(results);
+						
 					}
 				});
 			}else{
@@ -397,7 +433,7 @@ $('#file_upload').filer({
 					},
 					success: function (results) {
 						jQuery(".tbody-table-customfields").html(results);
-						console.log(results);
+						
 					}
 				});	
 				jQuery.ajax({
@@ -410,7 +446,7 @@ $('#file_upload').filer({
 					},
 					success: function (results) {
 						jQuery(".tbody-table-customfields-private").html(results);
-						console.log(results);
+						
 					}
 				});
 			}
