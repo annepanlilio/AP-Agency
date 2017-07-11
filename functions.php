@@ -5940,7 +5940,7 @@ function rb_agency_upload_image()
     $profileid = $_POST['profileid'];
     $profileMediatype = $_POST['profilemediatype'];
     $upload_dir = wp_upload_dir();
-    $upload_dir = $upload_dir['baseurl'].'/profile-media/'.$profiledir."/";
+    $upload_dir = RBAGENCY_UPLOADDIR.$profiledir."/";
     $target_dir = RBAGENCY_UPLOADPATH.$profiledir."/";
     
     if(isset($_FILES['rba_imgupload'])){
