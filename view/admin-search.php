@@ -36,7 +36,7 @@
 	 */
 		if(isset($_POST["SendEmail"])){
 				// Process Form
-				$isSent = RBAgency_Casting::cart_send_process();
+				//$isSent = RBAgency_Casting::cart_send_process();
 		}
 		if(isset($_GET["action"]) && $_GET["action"] == "massEmail") {
 		// TODO::>> ??????
