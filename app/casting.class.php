@@ -638,7 +638,10 @@ class RBAgency_Casting {
 			$MassEmailMessage	= str_ireplace("[site-title]",get_bloginfo("name"),$MassEmailMessage);
 			$isSent = wp_mail($MassEmailRecipient, utf8_decode($MassEmailSubject), stripcslashes(make_clickable($MassEmailMessage)), $headers);
 			if($rb_agency_email_can_received > 0){
-				wp_mail($rb_agency_email, utf8_decode($MassEmailSubject), stripcslashes(make_clickable($MassEmailMessage)), $headers);
+			     $agent_headers[]  = 'MIME-Version: 1.0';
+			     $agent_headers[] = 'Content-type: text/html; charset=iso-8859-1';
+                 $agent_headers[] = 'From: "'.$rb_agency_value_agencyname.'" <'. $rb_agency_value_agencyemail .'>';
+				wp_mail($rb_agency_email, utf8_decode($MassEmailSubject), stripcslashes(make_clickable($MassEmailMessage)), $agent_headers);
 			}
 			$url = admin_url('admin.php?page=rb_agency_searchsaved&m=1');
 			if($isSent){ ?>
