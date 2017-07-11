@@ -109,6 +109,7 @@ class Zubrag_image {
     // check if file exists
     if (!file_exists($from_name)) die("Source image does not exist!");
     
+    $exif = exif_read_data($from_name);
     // get source image size (width/height/type)
     // orig_img_type 1 = GIF, 2 = JPG, 3 = PNG
     list($orig_x, $orig_y, $orig_img_type, $img_sizes) = @GetImageSize($from_name);
@@ -128,12 +129,15 @@ class Zubrag_image {
       // resize
       $per_x = $orig_x / $this->max_x;
       $per_y = $orig_y / $this->max_y;
+      
       if ($per_y > $per_x) {
-        $this->max_x = $orig_x / $per_y;
+        //$this->max_x = $orig_x / $per_y;
       }
       else {
-        $this->max_y = $orig_y / $per_x;
+        //$this->max_y = $orig_y / $per_x;
       }
+      $max_x = $this->max_x;
+      $max_y = $this->max_y;
  
     }
     else {
@@ -162,33 +166,50 @@ class Zubrag_image {
  
     if ($this->image_type == 1) {
       // should use this function for gifs (gifs are palette images)
-      $ni = imagecreate($this->max_x, $this->max_y);
+      $ni = imagecreate($max_x, $max_y);
     }
     else {
+        
       // Create a new true color image
-      $ni = ImageCreateTrueColor($this->max_x,$this->max_y);
+      $ni = ImageCreateTrueColor($max_x,$max_y);
     }
  
     // Fill image with white background (255,255,255)
     $white = imagecolorallocate($ni, 255, 255, 255);
-    imagefilledrectangle( $ni, 0, 0, $this->max_x, $this->max_y, $white);
+    imagefilledrectangle( $ni, 0, 0, $max_x,$max_y, $white);
     // Create a new image from source file
     $im = $this->ImageCreateFromType($orig_img_type,$from_name);
+    
+    if (!empty($exif['Orientation'])) {
+        switch ($exif['Orientation']) 
+        {
+            case 3:
+            $im = imagerotate($im, 180, 0);
+            break;
+            case 6:
+            $im = imagerotate($im, -90, 0);
+            break;
+            case 8:
+            $im = imagerotate($im, 90, 0);
+            break;
+        } 
+    } 
+    
     // Copy the palette from one image to another
     imagepalettecopy($ni,$im);
     // Copy and resize part of an image with resampling
     imagecopyresampled(
       $ni, $im,             // destination, source
       0, 0, 0, 0,           // dstX, dstY, srcX, srcY
-      $this->max_x, $this->max_y,       // dstW, dstH
+      $max_x, $max_y,       // dstW, dstH
       $orig_x, $orig_y);    // srcW, srcH
- 
-    // save thumb file
-    $this->SaveImage($ni, $to_name);
 
     if($temp) {
       //unlink($tmpfname); // this removes the file
     }
+    
+    // save thumb file
+    $this->SaveImage($ni, $to_name);
 
   }
 
