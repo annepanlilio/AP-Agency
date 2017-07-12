@@ -381,6 +381,7 @@ $('#file_upload').filer({
 						},
 						success: function (results) {
 							jQuery(".tbody-table-customfields-private").html(results);
+                            $(".rb-datepicker").datepicker({dateFormat: "yy-mm-dd"});
 						}
 					});	
                 }
@@ -419,6 +420,7 @@ $('#file_upload').filer({
 					},
 					success: function (results) {
 						jQuery(".tbody-table-customfields-private").html(results);
+                        $(".rb-datepicker").datepicker({dateFormat: "yy-mm-dd"});
 						
 					}
 				});
@@ -452,9 +454,11 @@ $('#file_upload').filer({
 			}
 		});
         
+        $(".rb-datepicker").datepicker({dateFormat: "yy-mm-dd"});
         $("#ProfileDateBirth").datepicker({dateFormat: "yy-mm-dd"});
         $( "#registerdatefr" ).datepicker({dateFormat: "yy-mm-dd"});
         $( "#registerdateto" ).datepicker({dateFormat: "yy-mm-dd"});
+        
         $("#filter-btn").on('click',function(e){ 
             e.preventDefault();
             var regfr = $("#registerdatefr").val();
@@ -514,7 +518,7 @@ $('#file_upload').filer({
 						},
 						success: function (results) {
 							jQuery(".tbody-table-customfields-private").html(results);
-							console.log(results);
+							$(".rb-datepicker").datepicker({dateFormat: "yy-mm-dd"});
 						}
 					});	
                 }
@@ -546,7 +550,7 @@ $('#file_upload').filer({
 						},
 						success: function (results) {
 							jQuery(".tbody-table-customfields-private").html(results);
-							console.log(results);
+							$(".rb-datepicker").datepicker({dateFormat: "yy-mm-dd"});
 						}
 					});	
                 }
