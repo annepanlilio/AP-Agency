@@ -4040,12 +4040,19 @@ function get_social_media_links($ProfileID = "", $return = false){
 		} else {
 			$sql_exclude_primary_image = "";
 		}
+        
+        $isPrivate = "";
+        if ( current_user_can('administrator') && !is_admin() OR !current_user_can('administrator') && !is_admin()) {
+           $isPrivate = " AND isPrivate=0";
+        }
+        
+        
 		if($order == 1){
-			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaPrimary DESC, ProfileMediaID DESC ". $sql_count, $profileID, $ProfileMediaType);
+			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image . $isPrivate . " GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaPrimary DESC, ProfileMediaID DESC ". $sql_count, $profileID, $ProfileMediaType);
 		} elseif($order == 0) {
-			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY convert(`ProfileMediaOrder`, decimal)  ASC ". $sql_count, $profileID, $ProfileMediaType);
+			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image . $isPrivate . " GROUP BY(ProfileMediaURL) ORDER BY convert(`ProfileMediaOrder`, decimal)  ASC ". $sql_count, $profileID, $ProfileMediaType);
 		}else{
-			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image ." GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaPrimary DESC, ProfileMediaID ASC ". $sql_count, $profileID, $ProfileMediaType);
+			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image . $isPrivate . " GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaPrimary DESC, ProfileMediaID ASC ". $sql_count, $profileID, $ProfileMediaType);
 		}
 		return $queryImg ;
 	}
