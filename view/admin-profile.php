@@ -2953,14 +2953,20 @@ function rb_display_list() {
         if (isset($_GET['registerdatefr']) && isset($_GET['registerdateto'])){
             $registerdatefr = $_GET['registerdatefr'];
             $registerdateto = $_GET['registerdateto'];
+           
             if($registerdatefr!="" && $registerdateto!=""){
 			$query .= "&registerdatefr=". $registerdatefr ."";
             $query .= "&registerdateto=". $registerdateto ."";
-						if(strpos($filter,'profile') > 0){
-							$filter .= " AND profile.ProfileDateCreated BETWEEN CAST('$registerdatefr' AS DATE) AND CAST('$registerdateto' AS DATE)";
-						} else {
-							$filter .= " profile.ProfileDateCreated BETWEEN CAST('$registerdatefr' AS DATE) AND CAST('$registerdateto' AS DATE)";
-						}
+            
+			if(strpos($filter,'profile') > 0){
+						 
+            $filter .= " AND profile.ProfileDateCreated > '$registerdatefr 00:00:00' AND profile.ProfileDateCreated < '$registerdateto 23:59:59'";
+                           
+	           }else{
+	               
+            $filter .= " profile.ProfileDateCreated > '$registerdatefr 00:00:00' AND profile.ProfileDateCreated < '$registerdateto 23:59:59'";
+            }	
+					
             }
 		}
 		if (isset($_GET['ProfileVisible'])){
