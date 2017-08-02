@@ -13,9 +13,9 @@ global $wpdb;
 		#profile-list{background:#fff;}
 		#profile-list .rbprofile-list {
 			width: 35%;
-			padding: 10px 20px 20px 0px;
+			padding: 10px 20px 0 0px;
 			font-size: 14px;
-			max-width: 150px;
+			max-width: 160px;
 			min-width: 150px;
 			margin-bottom: 15px;
 			position: relative;
@@ -25,12 +25,19 @@ global $wpdb;
 			box-sizing: border-box;
 			line-height: normal;
 			}
+			.profile-info .name {
+				font-size: 16px;
+			}
 			#profile-list .rbprofile-list .image {
 			width: 100%;
-			height: 180px;
+			height: 200px;
 			overflow: hidden;
 			text-align: center;
 			position: relative;
+			margin-bottom: 7px;
+			}
+			.details-merged > span {
+				display: block;
 			}
 			.image a{
 				display: block;
@@ -39,7 +46,7 @@ global $wpdb;
 				background-repeat:no-repeat;
 			}
 			a{text-decoration:none;color:#000}
-			.details-email,.details,.details-merged{font-size:10px;word-wrap:break-word;}
+			.details-email,.details,.details-merged{word-wrap:break-word;}
 			.contact{display:block;font-size:10px;word-wrap:break-word;}
 	</style>";
 	// Call Header
@@ -53,7 +60,7 @@ global $wpdb;
 	<body  style="background: #fff;">';
 	// Call Footer
 	$footer='</body></html>';
-    $footerBlock ='<img style="height:30px page-break-before:always" src="'.$rb_agency_option_agencylogo.'">';
+    $footerBlock ='<img style="height:60px; width: auto; page-break-before:always" src="'.get_site_url()."".$rb_agency_option_agencylogo.'">';
 
 	// Catch Profile HTML elements
 	$profiles = isset($_GET["target"])?stripslashes($_GET["target"]):"";
@@ -110,6 +117,7 @@ global $wpdb;
 	$pdfFile  = $fileName.".pdf";
 
 	$toRedirect = RBAGENCY_PLUGIN_URL."ext/dompdf/dompdf.php?base_path=htmls/&pper=10x20&output_filed=".$pdfFile."&input_file=".$htmlFile;
+	$toHtml = RBAGENCY_PLUGIN_URL."ext/dompdf/htmls/".$htmlFile;
 	$path = RBAGENCY_PLUGIN_DIR."ext/dompdf/htmls/";
 
 	$fp = fopen($path.$htmlFile,"w");

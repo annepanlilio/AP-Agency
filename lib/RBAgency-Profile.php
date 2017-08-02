@@ -2384,6 +2384,10 @@ class RBAgency_Profile {
 						$all_html.="<a href=\"javascript:;\" class=\"link-profile-print\">".__("Print",RBAGENCY_TEXTDOMAIN)."</a> <span class=\"link-separate\">|</span> ";
 						$all_html.="<a href=\"javascript:;\" class=\"link-profile-pdf\">".__("Download PDF",RBAGENCY_TEXTDOMAIN)."</a>";
 						$all_html.="</div>";
+						if(isset($_GET["print_profiles"]) && $_GET["print_profiles"]!=""){
+						include(RBAGENCY_PLUGIN_DIR . 'view/print-profiles.php');
+							exit;
+						}
 					}
 					$profile_listlayout_class = array();
 					global $_list_my_profiles,$_profiles_row;
