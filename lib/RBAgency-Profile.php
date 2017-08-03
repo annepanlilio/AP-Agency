@@ -2124,6 +2124,7 @@ class RBAgency_Profile {
 				$rb_agency_option_profilelist_thumbsslide	= isset($rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']) ?(int)$rb_agency_options_arr['rb_agency_option_profilelist_thumbsslide']:0;
 				$rb_agency_option_layoutprofileviewmode = isset($rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']) ? $rb_agency_options_arr['rb_agency_option_layoutprofileviewmode']:0;
 				$profiles_perrow = array('one','two','three','four','five','six','seven','eight','nine','ten');
+
 				$results = $wpdb->get_results($sql,ARRAY_A);//echo 'error'.$sql;print_r($wpdb->last_error);
 				$profile_list = "";
 				$all_html = "";
@@ -2131,38 +2132,54 @@ class RBAgency_Profile {
 				$paginate = new RBAgency_Pagination;
 				$items = $wpdb->num_rows;
 				$count = $items;
+
 				$all_html.='<div id="results-options">';
 				$all_html.='	<div class="rbsort">';
+
 				// RB Agency default paging variables
 				$page = get_query_var("page");
 				$paging = get_query_var("page");
+
 				$offset = $page < 1?0:($page - 1)*(int)$rb_agency_option_persearch;
 				$limit = (int)$rb_agency_option_persearch;
+
 				if($shortcode){ // Wordpress default paging variables
 					$page = get_query_var("page");
 					$paging = get_query_var("page");
 					$offset = $page < 1?0:($page - 1)*(int)$rb_agency_option_profilelist_perpage;
 					$limit = (int)$rb_agency_option_profilelist_perpage;
 				}
+				
 				// Avoid double limits
 				$sql .= " LIMIT {$offset},{$limit}";
+
 				$results = $wpdb->get_results($sql,ARRAY_A);
 				$count = $wpdb->num_rows;
+
 				unset($_REQUEST["search_profiles"]); //unset unwanted variable
+
+
+                /*
+                Commented by Phel to fix pagination issue
                 unset($_REQUEST["page"]); //unset unwanted variable
-                $topage = array_unique($_REQUEST);
+                 	$topage = array_unique($_REQUEST);
+                */
+
 				$query = RBAgency_Common::http_build_query($topage);
 				$target = $query;
 				$paginate->items($items);
 				$paginate->limit($limit);
+
 				if( is_front_page() or is_home()){
 					$_url_link = '?';
 				}else{
 					$_url_link = $_SERVER["REQUEST_URI"];
 				}
-                $paginate->target($_url_link.$query);
-				//$paginate->target($_url_link,$target);
+                // $paginate->target($_url_link,$query); commented by Phel to fix pagination issue
+				$paginate->target($_url_link,$target); // uncommented by Phel to fix pagination issue
 				$paginate->currentPage(!empty($paging)?$paging:1);
+				/*
+				Commented by Phel to fix pagination issue
                 if(isset($paginate->page)){
         			$paginate->currentPage($_GET[$paginate->page]); // Gets and validates the current page
         		}
@@ -2174,12 +2191,13 @@ class RBAgency_Profile {
         		} else {
         			$paginate->page = $_GET['page'];
         		}
+        		*/
 			/*
 			 *  sorting options is activated if set on in admin/settings
 			 */
 				if($rb_agency_option_profilelist_sortby && empty($castingcart) && strpos($_SERVER['REQUEST_URI'],'profile-favorite') <= -1){
 					// Enqueue our js script
-					wp_enqueue_script( 'list_reorder', RBAGENCY_PLUGIN_URL .'assets/js/list_reorder.js', array('jquery'));
+					// wp_enqueue_script( 'list_reorder', RBAGENCY_PLUGIN_URL .'assets/js/list_reorder.js', array('jquery'));
 					// Dropdown
 					///get custom field
 					$query = " SELECT * FROM " .  table_agency_customfields . " WHERE ProfileCustomShowFilter = 1 ORDER BY ProfileCustomOrder ASC";
@@ -2381,7 +2399,7 @@ class RBAgency_Profile {
 					}
 					if($rb_agency_option_profilelist_printpdf == 1){
 						$all_html.="<div class=\"results-links\">";
-						$all_html.="<a href=\"javascript:;\" class=\"link-profile-print\">".__("Print",RBAGENCY_TEXTDOMAIN)."</a> <span class=\"link-separate\">|</span> ";
+						$all_html.="<a href=\"javascript:;\" class=\"link-profile-print\" target=\"_blank\">".__("Print",RBAGENCY_TEXTDOMAIN)."</a> <span class=\"link-separate\">|</span> ";
 						$all_html.="<a href=\"javascript:;\" class=\"link-profile-pdf\">".__("Download PDF",RBAGENCY_TEXTDOMAIN)."</a>";
 						$all_html.="</div>";
 						if(isset($_GET["print_profiles"]) && $_GET["print_profiles"]!=""){
