@@ -1,26 +1,22 @@
 <?php
-
 ob_start();
 error_reporting(E_ALL);
-
 // Tap into WordPress Database
 @include_once('../../../../wp-config.php');
 @include_once('../../../../wp-load.php');
 @include_once('../../../../wp-includes/wp-db.php');
 global $wpdb;
-
 	//$query3 = "SELECT ProfileCustomID, ProfileCustomTitle FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0  ORDER BY ProfileCustomOrder";
 	/*
 	 * to include all types of views including
 	 * private
 	 */
-	$query3 = "SELECT ProfileCustomID, ProfileCustomTitle FROM ". table_agency_customfields ." ORDER BY ProfileCustomOrder";
+	$query3 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType FROM ". table_agency_customfields ." ORDER BY ProfileCustomOrder";
 	$custom_fields_name = array();
 	$custom_fields_id = array();
 	$custom_fields_title = array();
 	$custom_fields_type = array();
 	$custom_fields = $wpdb->get_results($query3,ARRAY_A);
-
 	foreach ($custom_fields as $key => $value) {
 		//array_push($custom_fields_name, 'Client'.str_replace(' ', '', $value['ProfileCustomTitle']));
 		array_push($custom_fields_name, str_replace(",","||",$value['ProfileCustomTitle']));
@@ -28,9 +24,7 @@ global $wpdb;
 		array_push($custom_fields_title, $value['ProfileCustomTitle']);
 		array_push($custom_fields_type, $value['ProfileCustomType']);
 	}
-
 	if(isset($_POST)) {
-
 			require_once('../ext/PHPExcel.php');
 			require_once('../ext/PHPExcel/IOFactory.php');
 			$objPHPExcel = new PHPExcel();
@@ -38,70 +32,59 @@ global $wpdb;
 			$rowNumber = 1;
 			/*Getting headers*/
 			$headings = array();
-            $headings = array('ProfileContactDisplay','ProfileContactNameFirst','ProfileContactNameLast','ProfileGender','ProfileDateBirth','ProfileContactEmail','ProfileContactWebsite','ProfileContactPhoneHome','ProfileContactPhoneCell','ProfileContactPhoneWork','ProfileLocationStreet','ProfileLocationCity','ProfileLocationState','ProfileLocationZip','ProfileLocationCountry','ProfileType','ProfileIsActive','ProfileIsFeatured','isPrivate');
-            $head_count = count($headings);
-            foreach ($custom_fields_name as $key => $value) {
-        		if($value != "ProfileID"){
-			  		$headings[$head_count] = $value;
-			  		$head_count++;
-			      }
+            $field_names = $wpdb->get_results("SHOW COLUMNS FROM  ".$wpdb->prefix."agency_profile");
+            
+            $head_count = $field_names->num_rows;
+            foreach($field_names as $col){
+                if($col->Field!='CustomOrder'){
+                    $headings[] = $col->Field;
+                }
             }
 
+            $headings = array_merge(array_values($headings),array_values($custom_fields_name));
            if(isset($_POST["export-profile"]) && $_POST["export-profile"] == "template"){
         		$limit_template = "LIMIT 1";
             }elseif(isset($_POST["export-profile"]) && $_POST["export-profile"] != "template" && !empty($_POST["export-profile"]) ){
-				
             	if(strpos($_POST["export-profile"], '-' )===false){
-            		
             		$limit_offset = $_POST["export-profile"];
         			$limit_template = " LIMIT ".$limit_offset;
             	}else{
 					$limit_values = explode("-",$_POST["export-profile"]);
             		$limit_offset = $limit_values[0];
         			$limit_template = " LIMIT ".$limit_offset.", 100";
-					
             	}
-            	
             	// $limit_offset = ( intval($limit_values[0]) < 100) ? $limit_values[0] : $limit_values[0];
-            	
             }
             $objPHPExcel->getActiveSheet()->fromArray(array($headings),NULL,'A'.$rowNumber);
 			/*Profile data*/
 			$row_data = array();
-			$row_data = $wpdb->get_results('SELECT ProfileID,ProfileContactDisplay,ProfileContactNameFirst,ProfileContactNameLast,ProfileGender,ProfileDateBirth,ProfileContactEmail,ProfileContactWebsite,ProfileContactPhoneHome,ProfileContactPhoneCell,ProfileContactPhoneWork,ProfileLocationStreet,ProfileLocationCity,ProfileLocationState,ProfileLocationZip,ProfileLocationCountry,ProfileType,ProfileIsActive,ProfileIsFeatured,isPrivate FROM '. table_agency_profile." ORDER BY ProfileContactDisplay ASC $limit_template", ARRAY_A);
-			
-			$profile_data_id = $wpdb->get_results("SELECT ProfileID FROM ". table_agency_profile, ARRAY_A);
-
+			$row_data = $wpdb->get_results('SELECT '.table_agency_profile.'.*,'.table_agency_data_gender.'.GenderTitle FROM '. table_agency_profile." LEFT JOIN ".table_agency_data_gender." ON ".table_agency_profile.".ProfileGender=".table_agency_data_gender.".GenderID ORDER BY ProfileContactDisplay ASC $limit_template", ARRAY_A);
+			//$profile_data_id = $wpdb->get_results("SELECT ProfileID FROM ". table_agency_profile, ARRAY_A);
 			foreach ($row_data as $key => $data) 
 			{
 				$rowNumber++;
-
-				//$subresult = $wpdb->get_results("SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $profile_data_id[$key]['ProfileID'], ARRAY_A);
-				$subresult = $wpdb->get_results("SELECT * FROM ". table_agency_customfield_mux ." WHERE ProfileID = ". $data['ProfileID'], ARRAY_A);
-				$gender = $wpdb->get_row("SELECT GenderTitle FROM ". table_agency_data_gender ." WHERE GenderID = '".$data['ProfileGender']."'", ARRAY_A);
-                $ProfileGender = $data['ProfileGender'];
-
+				
+				$customfield_mux = $wpdb->get_results("SELECT mux.*,cfields.ProfileCustomTitle,cfields.ProfileCustomType FROM ". table_agency_customfield_mux ." AS mux LEFT JOIN ".table_agency_customfields." AS cfields ON mux.ProfileCustomID=cfields.ProfileCustomID WHERE mux.ProfileID = ". $data['ProfileID'], ARRAY_A);
+				
+                
                 $data['ProfileContactNameFirst'] = stripcslashes(stripcslashes($data['ProfileContactNameFirst']));
 				$data['ProfileContactNameLast'] = stripcslashes(stripcslashes($data['ProfileContactNameLast']));
 				$data['ProfileContactDisplay'] = stripcslashes(stripcslashes($data['ProfileContactDisplay']));
-
-				$data['ProfileGender'] = $gender['GenderTitle'];
+				$data['ProfileGender'] = $data['GenderTitle'];
 				$data['ProfileLocationCountry'] = rb_agency_getCountryTitle($data['ProfileLocationCountry'],true); // returns country code
 				$data['ProfileLocationState'] = rb_agency_getStateTitle($data['ProfileLocationState'],true); // returns state code
 				$data['ProfileType'] = str_replace(","," | ",$data['ProfileType']);
-
+                $ProfileGender = $data['ProfileGender'];
 				$c_value_array = array();
 				$temp_array = array();
-
 				$ProfileID = $data['ProfileID'];
-
 				$all_permit = false; // set to false
 				if($ProfileID != 0){
-					$query = $wpdb->get_results($wpdb->prepare("SELECT ProfileType FROM ".table_agency_profile." WHERE ProfileID = %d",$ProfileID),ARRAY_A);
-					$fetchID = current($query);
-					$ptype = $fetchID["ProfileType"];
-					if(strpos($ptype,",") > -1){
-						$t = explode(",",$ptype);
+//					
+					$ptype = $data["ProfileType"];
+                    
+					if(strpos($ptype,"|") > -1){
+						$t = explode("|",$ptype);
 						$ptype = ""; 
 						foreach($t as $val){
 							$ptyp[] = str_replace(" ","_",retrieve_title($val));
@@ -110,131 +93,70 @@ global $wpdb;
 					} else {
 						$ptype = str_replace(" ","_",retrieve_title($ptype));
 					}
-					$ptype = str_replace(",","",$ptype);
+					$ptype = str_replace("|"," ",$ptype);
 				} else {
 					$all_permit = true;
 				}
-
-				foreach ($subresult as $sub_value) {
-
+                
+				foreach ($customfield_mux as $sub_value) {
 								$permit_type = false;
 								$PID = $sub_value['ProfileCustomID'];
-								$get_types = "SELECT ProfileCustomTypes FROM ". table_agency_customfields_types ." WHERE ProfileCustomID = %d";
-
-								$result = $wpdb->get_results($wpdb->prepare($get_types, $PID),ARRAY_A);
+								
 								$types = "";
-								foreach ($result as $p){
-										$types = $p['ProfileCustomTypes'];
-								}
+								
+                                $types = $sub_value['ProfileCustomType'];
 								if(!isset($ptype)){
 									$ptype = "";
 								}
 								$ptype = str_replace(' ','_',$ptype);
+                                
 								if($types != "" || $types != NULL){
-									if(strpos($types,",") > -1){
-										$types = explode(",",$types);
-										foreach($types as $t){
-											if(strpos($ptype,$t) > -1) {$permit_type=true; break;}
-										}
-									} else {
-											if(strpos($ptype,$types) > -1) $permit_type=true;
-									}
+								    if(strpos($ptype,$types) > -1) {$permit_type=true;}
 								}
-
-
-			//$data3["ProfileCustomShowGender"] == $ProfileGender 
 					if(rb_agency_filterfieldGender($PID, $ProfileGender,false)  && $permit_type || $all_permit){
-
-						$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $sub_value["ProfileCustomID"],$ProfileID),ARRAY_A);
-						$row = $subresult;
-						$sub_value['ProfileCustomDateValue'] =  ($row[1]["ProfileCustomDateValue"]!=="1970-01-01"  && $row[1]["ProfileCustomDateValue"]!=="0000-00-00")?$row[0]["ProfileCustomDateValue"]:"";
-						$sub_value['ProfileCustomValue'] = !empty($row[1]["ProfileCustomValue"])?$row[1]["ProfileCustomValue"]:$row[0]["ProfileCustomValue"];
-						
-						$cfield = $wpdb->get_row("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomID = '".$sub_value["ProfileCustomID"]."'", ARRAY_A);
-
-						$ProfileCustomValue = "";
-
-						if($cfield["ProfileCustomType"] == 10){
-								$ProfileCustomValue = !empty($sub_value['ProfileCustomDateValue']) ? $sub_value['ProfileCustomDateValue'] : $sub_value['ProfileCustomValue'];
-						} elseif($cfield["ProfileCustomType"] == 7){
-								if($sub_value['ProfileCustomValue'] > 0){
-									$ProfileCustomValue = rb_get_imperial_metrics($sub_value['ProfileCustomValue'],$cfield['ProfileCustomOptions']);
-								}else{
-									$ProfileCustomValue = "";
-								}
-						} elseif($cfield["ProfileCustomType"] == 4 || $cfield["ProfileCustomType"] == 1){
-								$ProfileCustomValue =  $sub_value['ProfileCustomValue'];
-						} elseif(empty($sub_value['ProfileCustomDateValue'])){
-							if(trim($sub_value['ProfileCustomValue']) != ""){
-								$ProfileCustomValue = str_replace(',', '|', preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', $sub_value['ProfileCustomValue']));
-							} else {
-								$ProfileCustomValue = "";
-							}
-						}
-
-						$temp_array[$sub_value['ProfileCustomID']] = stripslashes($ProfileCustomValue); 
-					}
+				
+                    
+                        if($sub_value['ProfileCustomTitle']=="Height"){
+    							$rawValue = $sub_value['ProfileCustomValue'];
+    							$feet=intval($rawValue/12);
+    							$inches=intval($rawValue%12);
+                                $sub_value['ProfileCustomValue'] = $feet."ft ".$inches."in";							
+    					}
+                        if(array_key_exists($sub_value['ProfileCustomTitle'],$data)){
+                            $data[$sub_value['ProfileCustomTitle']] += "|".$sub_value['ProfileCustomValue'];
+                        }else{
+                            $data[$sub_value['ProfileCustomTitle']] = $sub_value['ProfileCustomValue'];
+                        }
+                    
+    	         }
+                    
 				}
-
-				/*
-				 * arrange array to right column headings
-				 */
-				foreach($custom_fields_id as $d){
-					$c_value_array[] = $temp_array[$d];
-				}
-
-				//Height conversion from inches to feet n inches
-				foreach($custom_fields_title as $key => $title){
-						if($title=="Height"){
-							$rawValue=$temp_array[$custom_fields_id[$key]];
-							$feet=intval($rawValue/12);
-							$inches=intval($rawValue%12);
-							if($feet==0 && $inches==0){
-								$c_value_array[$key]='';
-							} elseif(!is_int($rawValue)){
-								if(strpos($rawValue, "'") !== false && strpos($rawValue, "and") === false){
-			                				$c_value_array[$key] = str_replace('""',"\"",str_replace('\'"',"'",$rawValue.'"'));
-				                  } else {
-									$c_value_array[$key] = $rawValue;
-								}
-							}
-						else
-							$c_value_array[$key]=$feet."ft ".$inches."in";
-
-
-						}
-
-                    }
-
-                         $data = array_merge($data, $c_value_array);
-                         unset($data['ProfileID']);
-                      
-                        $objPHPExcel->getActiveSheet()->fromArray(array($data),NULL,'A'.$rowNumber);
-			      }
-
-				$extension = "";
-				$type = "";
+                
+                foreach($headings as $column_name){
+                
+                    $temp_array[$key][] = $data[$column_name];
+                        
+                }
+                
+                $objPHPExcel->getActiveSheet()->fromArray($temp_array,NULL,'A'.$rowNumber);
+			  }
+				
 			   if($_POST["file_type"] == "csv"){
-			   	$type = "CSV";
+	                $type = "CSV";
     			   	$extension = ".csv";
                     $objWriter = new PHPExcel_Writer_CSV($objPHPExcel);
-                   
 			   } elseif($_POST["file_type"] == "xls"){
 					$type = "Excel5";
 			   	    $extension = ".xlsx";
                     $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
-                    
 			  }
-            
-			//$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel,  $type);
-            //$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
+			
 			$objWriter->save(str_replace('.php', $extension, __FILE__));
 			$profile_name = explode("-",$_POST["export-profile"]);
 			$from = $profile_name[0]+1;
 			$to = ($profile_name[1] == 100) ? 100 : ($profile_name[1] < 100 ? $profile_name[1] : $profile_name[1] - 100);
 			$fname = is_numeric($profile_name[1]) ? ($from."-".$profile_name[1]) : $_POST["export-profile"];
 			$profile_paginate = isset($_POST["export-profile"]) && !empty($_POST["export-profile"]) ? "-profiles-".$fname : "-profiles-".$fname;
-          
 			header("Pragma: public");
 			header("Expires: 0");
 			header("Cache-Control: must-revalidate, post-check=0, pre-check=0"); 

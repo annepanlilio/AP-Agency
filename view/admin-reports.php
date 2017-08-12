@@ -1378,25 +1378,41 @@ elseif ($ConfigID == 80) {
 		global $wpdb;
 
 		$custom_fields_rb_agency = $wpdb->get_results("SELECT * FROM ". table_agency_customfields ." WHERE ProfileCustomView = 0  ORDER BY ProfileCustomOrder", ARRAY_A);
-		$fields_array = array( 0 => array('ProfileContactDisplay','ProfileContactNameFirst','ProfileContactNameLast','ProfileGender','ProfileDateBirth','ProfileContactEmail','ProfileContactWebsite','ProfileContactPhoneHome','ProfileContactPhoneCell','ProfileContactPhoneWork','ProfileLocationStreet','ProfileLocationCity','ProfileLocationState','ProfileLocationZip','ProfileLocationCountry','ProfileType','ProfileIsActive','ProfileIsPromoted','isPrivate'));
+        
+        $query3 = "SELECT ProfileCustomID, ProfileCustomTitle, ProfileCustomType FROM ". table_agency_customfields ." ORDER BY ProfileCustomOrder";
+    	$custom_fields_title = array();
+    	$custom_fields = $wpdb->get_results($query3,ARRAY_A);
+    	foreach ($custom_fields as $key => $value) {
+    		array_push($custom_fields_title, $value['ProfileCustomTitle']);
+    	}
+		//$fields_array = array( 0 => array('ProfileContactDisplay','ProfileContactNameFirst','ProfileContactNameLast','ProfileGender','ProfileDateBirth','ProfileContactEmail','ProfileContactWebsite','ProfileContactPhoneHome','ProfileContactPhoneCell','ProfileContactPhoneWork','ProfileLocationStreet','ProfileLocationCity','ProfileLocationState','ProfileLocationZip','ProfileLocationCountry','ProfileType','ProfileIsActive','ProfileIsPromoted','isPrivate'));
+        
+        $field_names = $wpdb->get_results("SHOW COLUMNS FROM  ".$wpdb->prefix."agency_profile");
+        $fields_array = array();    
+        $head_count = $field_names->num_rows;
+        foreach($field_names as $col){
+            $fields_array[] = $col->Field;
+        }
 
-		$count = count($fields_array[0]);
-
-		// right distribution of header keys
-		foreach ($custom_fields_rb_agency as $keys)
-		{
-			foreach ($keys as $key => $c_field)
-				{
-					if($key == 'ProfileCustomTitle'){
-						$fields_array[0][$count] = 'Client'.str_replace(' ', '',$c_field);
-						$count++;
-					}
-				}
-		}
+		//$count = $field_names->num_rows;
+//
+//		// right distribution of header keys
+//		foreach ($custom_fields_rb_agency as $keys)
+//		{
+//			foreach ($keys as $key => $c_field)
+//				{
+//					if($key == 'ProfileCustomTitle'){
+//						$fields_array[0][$count] = 'Client'.str_replace(' ', '',$c_field);
+//						$count++;
+//					}
+//				}
+//		}
+        
+        $fields_array = array_merge(array_values($fields_array),array_values($custom_fields_title));
 
 		$target_path = WP_CONTENT_DIR.'/FORMAT.csv';
 		$csv_format = fopen($target_path,'w');
-		fputcsv($csv_format, $fields_array[0]);
+		fputcsv($csv_format, $fields_array);
 		fclose($csv_format);
 		@chmod($target_path, 0777);
 
@@ -1447,7 +1463,9 @@ elseif ($ConfigID == 80) {
 		$form_display_flag = true;
 
 	}
-
+    
+    echo $error_message;
+    
 	if( $form_display_flag == true )
 	{
 		echo "<h2>". __("Import CSV / XLS", RBAGENCY_TEXTDOMAIN) . "</h2>\n";
@@ -2315,17 +2333,23 @@ class RBAgencyCSVXLSImpoterPlugin {
 			@mkdir($new_upload_path, 0755);
 			@chmod($new_upload_path, 0777);
 		}
+        
 
 		$get_ext = pathinfo($_FILES['source_file']['name'], PATHINFO_EXTENSION);
+        if( strtolower($get_ext) != 'csv' && strtolower($get_ext) != 'xls' && strtolower($get_ext) != 'xlsx' ){
+            echo "File type is not supported! Please upload CSV or XLS file only";
+            exit();
+        }
+        
 		$target_path = $new_upload_path ;
 		$target_path = $target_path . basename( $_FILES['source_file']['name']);
 
-		if( strtolower($get_ext) == 'csv' )  /*If uploaded file is a CSV*/
-		{
-
-			if(!is_writable($new_upload_path)){
+		if(!is_writable($new_upload_path)){
 				echo "The upload directory was not writable. please check the CHMOD of <b>$new_upload_path</b>";
-			}
+		}
+            
+        if( strtolower($get_ext) == 'csv' )  /*If uploaded file is a CSV*/
+		{			
 
 			if(move_uploaded_file($_FILES['source_file']['tmp_name'], $target_path))
 			{
@@ -2354,7 +2378,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 			move_uploaded_file($_FILES['source_file']['tmp_name'], $target_path);
 
 			$objReader = PHPExcel_IOFactory::createReader($inputFileType);
-			//$objReader->setReadDataOnly(true);
+			$objReader->setReadDataOnly(true);
 			$objPHPExcel = $objReader->load($target_path);
 			$sheetData = $objPHPExcel->getActiveSheet()->toArray(null,true,true,true);
 			$t_file = date('d_M_Y_h_i_s');
@@ -2380,7 +2404,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 		$arr_headers = array();
 		$arr_exists = array();
 
-		if( strtolower($get_ext) == 'xls' ){
+		if( strtolower($get_ext) == 'xls' OR strtolower($get_ext) == 'xlsx'){
 			for($a=0; $a<=$total_header; $a++){
 
 				$row = $objPHPExcel->getActiveSheet()->getRowIterator($a)->current();
@@ -2443,25 +2467,6 @@ class RBAgencyCSVXLSImpoterPlugin {
 		echo "<table class=\"form-table\">";
 		echo "<tbody>";
 
-		/*for($i = 0; $i <= $t_head; $i++){
-			if(!empty($header[$heads]) && $header[$heads] != ''){
-				echo '<tr><th><label>'.$header[$heads].'</label></th>';
-				echo '<td><select name = "select'.$default.'" id="select'.$default.'">';
-				foreach ($custom_fields as $custom_fields_result) {
-					$custom_field_id = intval($custom_fields_result->ProfileCustomID);
-					$custom_field_title = $custom_fields_result->ProfileCustomTitle;
-					//if($custom_field_id==$default){
-					if($custom_field_title == $header[$heads])
-						$is_default = ' selected="selected" ';
-					}
-					else {
-						$is_default ='';
-					}
-					echo '<option value="'.$custom_field_id.'"'.$is_default.'>'.$custom_field_title.'</option>';
-				}
-				echo '</select>';
-				echo '</td></tr>';
-			}*/
 			$pos = 0;
 
 			foreach ($arr_headers as $key ) {
@@ -2741,7 +2746,7 @@ class RBAgencyCSVXLSImpoterPlugin {
 													
 
 
-															//$ProfileGalleryCurrent = generate_foldername($last_inserted_id, $vv['ProfileContactNameFirst'], $vv['ProfileContactNameLast'], $vv['ProfileContactDisplay']);
+															
 																if ($rb_agency_option_profilenaming == 0) {
 																	$ProfileContactDisplay = $ProfileContactNameFirst . " " . $ProfileContactNameLast;
 																} elseif ($rb_agency_option_profilenaming == 1) {
