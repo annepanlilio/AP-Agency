@@ -206,7 +206,8 @@
 				if( data== 'error'){
 					jQuery('#msg-handler-submit').html('<p>Error generating ecard</p>');
 				}else{
-					window.open(data, '_blank');
+					//window.open(data, '_blank');
+                    location.href=data;
 				}
 			});
 			jQuery('#msg-handler-submit').append('</p>');
