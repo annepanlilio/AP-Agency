@@ -454,10 +454,10 @@ $('#file_upload').filer({
 			}
 		});
         
-        $(".rb-datepicker").datepicker({dateFormat: "yy-mm-dd"});
-        $("#ProfileDateBirth").datepicker({dateFormat: "yy-mm-dd"});
-        $( "#registerdatefr" ).datepicker({dateFormat: "yy-mm-dd"});
-        $( "#registerdateto" ).datepicker({dateFormat: "yy-mm-dd"});
+        $(".rb-datepicker").datepicker({dateFormat: "yy-mm-dd",changeYear:true, yearRange: "-100:+0"});
+        $("#ProfileDateBirth").datepicker({dateFormat: "yy-mm-dd",changeYear:true, yearRange: "-100:+0"});
+        $( "#registerdatefr" ).datepicker({dateFormat: "yy-mm-dd",changeYear:true, yearRange: "-100:+0"});
+        $( "#registerdateto" ).datepicker({dateFormat: "yy-mm-dd",changeYear:true, yearRange: "-100:+0"});
         
         $("#filter-btn").on('click',function(e){ 
             e.preventDefault();
