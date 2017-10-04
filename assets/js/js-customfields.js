@@ -593,4 +593,6 @@ jQuery(document).ready(function(){
 			jQuery(".CDataTypeID"+mychild).hide(500);
 		}						
 	});
+    
+    $("#ProfileDateBirth").datepicker({dateFormat: "yy-mm-dd",changeYear:true, yearRange: "-100:+0"});
 });
