@@ -594,5 +594,8 @@ jQuery(document).ready(function(){
 		}						
 	});
     
-    $("#ProfileDateBirth").datepicker({dateFormat: "yy-mm-dd",changeYear:true, yearRange: "-100:+0"});
+    jQuery("#ProfileDateBirth").datepicker({dateFormat: "yy-mm-dd",changeYear:true, yearRange: "-100:+0"});
+    jQuery("#rb_datepicker_from_bd").datepicker({dateFormat: "yy-mm-dd",changeYear:true, yearRange: "-100:+0"});
+    jQuery("#rb_datepicker_to_bd").datepicker({dateFormat: "yy-mm-dd",changeYear:true, yearRange: "-100:+0"});
+    
 });
