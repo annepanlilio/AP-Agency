@@ -952,8 +952,11 @@ class RBAgency_Common {
 		}
         
         public static function http_build_query($query_data){
-				$query_data = http_build_query(array_filter($query_data));
+            if(is_array($query_data)){
+                $query_data = http_build_query(array_filter($query_data));
 				return $query_data;
+            }
+				
 		}
 
 }
