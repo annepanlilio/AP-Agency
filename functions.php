@@ -4036,7 +4036,7 @@ function get_social_media_links($ProfileID = "", $return = false){
 		}
 		if ($exclude_primary == true) {
 			$sql_exclude_primary_image = " AND ProfileMediaPrimary = 0";
-			$sql_exclude_primary_image = "";
+			//$sql_exclude_primary_image = "";
 		} else {
 			$sql_exclude_primary_image = "";
 		}

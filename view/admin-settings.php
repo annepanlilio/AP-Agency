@@ -503,6 +503,8 @@ elseif ($ConfigID == 1) {
 		/*
 		 * Jobs display
 		 */
+       if ( class_exists("RBAgencyCasting") ) {
+   
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Job Display Options', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
 		/** buttons **/
@@ -517,7 +519,7 @@ elseif ($ConfigID == 1) {
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_remove_link_on_job_title]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_remove_link_on_job_title'])?$rb_agency_options_arr['rb_agency_option_remove_link_on_job_title']:0, 1,false)."/> ". __("Remove Link on Job Title", RBAGENCY_TEXTDOMAIN) ."<br />\n";
 		echo "</td></tr>";
 
-		
+		}
 		/*
 		 * Profile Display
 		 */

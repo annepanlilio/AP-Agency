@@ -95,11 +95,12 @@ echo "<div id=\"profile-links\">\n";
 	}
 
 // Headshots
-	$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Headshot");
+	$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Headshot",0,true);
 	$resultsImg=  $wpdb->get_results($queryImg,ARRAY_A);
-	$countMedia = $wpdb->num_rows;
+	$countMedia = $wpdb->num_rows; 
 	if ($countMedia > 0) {javascript:;
 		foreach($resultsImg as $dataMedia ){
+		    
 			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/headshot/". $dataMedia['ProfileMediaURL']) ."  class=\"lightbox[headshot]  profile-link\">".__("View Headshot",RBAGENCY_TEXTDOMAIN)."</a>\n";
 		}
 	}
@@ -111,7 +112,7 @@ echo "<div id=\"profile-links\">\n";
 	if ($countMedia > 0) {
 		foreach($resultsImg as $dataMedia ){
 			$optionProfileMedia = get_option("voicedemo_".$dataMedia['ProfileMediaID']);
-			$voicedemo = empty($optionProfileMedia) ? "RENAME" : get_option("voicedemo_".$dataMedia['ProfileMediaID']);
+			$voicedemo = empty($optionProfileMedia) ? "Voice Demo" : get_option("voicedemo_".$dataMedia['ProfileMediaID']);
 			echo "<a ".rb_get_profilemedia_link_opentype($ProfileGallery ."/voicedemo/". $dataMedia['ProfileMediaURL']) ."  class=\"profile-link\">".$voicedemo."</a>\n";
 		}
 	}

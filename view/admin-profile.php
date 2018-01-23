@@ -1991,16 +1991,18 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$massDelete = "";
 								$private_profile_photo = get_user_meta($ProfileUserLinked,'private_profile_photo',true);
 								$private_profile_photo_arr = explode(',',$private_profile_photo);
-								
-                                								
+								$upload_dir = wp_upload_dir();
+                                
+                                $uploadir = site_url().$upload_dir['baseurl']; 			
+                                				
                                 foreach ($resultsImg as $k=>$dataImg) {
 									if ($dataImg['ProfileMediaPrimary']) {
 									
 									} 		
                                     
                                     $ProfileMediaURL = $dataImg['ProfileMediaURL'];						
-									$image_thumbpath = RBAGENCY_UPLOADDIR. $ProfileGallery . "/thumb/". $ProfileMediaURL;
-                                    $image_path = RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $ProfileMediaURL;
+									$image_thumbpath = $uploadir."/profile-media/". $ProfileGallery . "/thumb/". $ProfileMediaURL;
+                                    $image_path = $uploadir."/profile-media/" . $ProfileGallery . "/" . $ProfileMediaURL;
                                                                   
                                         
                                         $image_path = @getimagesize($image_thumbpath) ? $image_thumbpath:$image_path;
@@ -2028,6 +2030,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
                                    
                                     
 								}
+                                
                                 ?>
                                     <script>
 

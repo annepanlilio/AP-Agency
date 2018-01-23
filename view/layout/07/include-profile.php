@@ -325,7 +325,7 @@ echo '<div class="profiledescription">'.$ProfileDescription.'</div>';
 					<li><a href="javascript:;" class="showSingle2" >Experience</a></li>
 					<li><a href="javascript:;" class="showSingle3" >Videos</a></li>
 						<?php
-				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Headshot");
+				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"Headshot",0,true);
 				$countHeadshot = $wpdb->num_rows;
 
 				$queryImg = rb_agency_option_galleryorder_query($order ,$ProfileID,"VoiceDemo");
