@@ -20,7 +20,7 @@ class RBAgency_App {
 			if( !is_admin() ) {
 
 				// Add Styles to Admin Head Section 
-				add_action( 'wp_head', array('RBAgency_App', 'rbagency_head_style') );
+				add_action( 'init', array('RBAgency_App', 'rbagency_head_style') );
 
 				// Add Scripts to Admin Head Section 
 				add_action( 'wp_head', array('RBAgency_App', 'rbagency_head_scripts') );
