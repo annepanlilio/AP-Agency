@@ -1917,13 +1917,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								if(!empty($updated_ProfileImage)){
 									echo "<span class=\"marked_changed_txt\" >".__('New image/s has been uploaded!')."</span>";
 								}
-								#echo "<script type='text/javascript'>\n";
-#								echo "function confirmDelete(delMedia,mediaType) {\n";
-#								echo "  if (confirm('Are you sure you want to delete this '+mediaType+'?')) {\n";
-#								echo "  document.location= '" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=" . $ProfileID . "&actionsub=photodelete&targetid='+delMedia;";
-#								echo "  }\n";
-#								echo "}\n";
-#								echo "</script>\n";
+								echo "<script type='text/javascript'>\n";
+								echo "function confirmDelete(delMedia,mediaType) {\n";
+								echo "  if (confirm('Are you sure you want to delete this '+mediaType+'?')) {\n";
+								echo "  document.location= '" . admin_url("admin.php?page=" . $_GET['page']) . "&action=editRecord&ProfileID=" . $ProfileID . "&actionsub=photodelete&targetid='+delMedia;";
+								echo "  }\n";
+								echo "}\n";
+								echo "</script>\n";
 								// Mass delete
 								if (isset($_GET["actionsub"]) && $_GET["actionsub"] == "massphotodelete" && is_array($_GET['targetids'])) {
 									$massmediaids = '';

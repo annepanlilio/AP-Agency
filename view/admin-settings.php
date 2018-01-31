@@ -1113,6 +1113,7 @@ elseif ($ConfigID == 11) {
 	/*
 	 * Interact Settings - Casting Agent
 	 */
+     if(class_exists('RBAgencyCasting')){
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h2>". __('Login Settings (Casting Agent)', RBAGENCY_TEXTDOMAIN); echo "</h2></th>\n";
 		echo " </tr>\n";
@@ -1132,7 +1133,7 @@ elseif ($ConfigID == 11) {
 		echo "     <input type=\"radio\" name=\"rb_agencyinteract_options[rb_agencyinteract_option_switch_sidebar_agent]\" value=\"0\" ".checked(isset($rb_agencyinteract_options_arr['rb_agencyinteract_option_switch_sidebar_agent'])?(int)$rb_agencyinteract_options_arr['rb_agencyinteract_option_switch_sidebar_agent']:"", 0,false)."/> ". __("Use theme widget sidebar", RBAGENCY_interact_TEXTDOMAIN) ."<br />\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
-
+    }
 
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Registration Process (Model/ Talent)', RBAGENCY_TEXTDOMAIN); echo "</h3></th>\n";
@@ -1216,7 +1217,7 @@ elseif ($ConfigID == 11) {
 		echo " </tr>\n";
 
 
-
+        if(class_exists('RBAgencyCasting')){
 
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\" colspan=\"2\"><h3>". __('Registration Process (Casting Agent)', RBAGENCY_TEXTDOMAIN); echo "</h3></th>\n";
@@ -1230,7 +1231,7 @@ elseif ($ConfigID == 11) {
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
-
+        }
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Default State For Registered Users', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
