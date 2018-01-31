@@ -1580,17 +1580,15 @@
 						$updated_date = get_user_meta($user['ProfileUserLinked'], "updated_ProfileCustomID".$data3['ProfileCustomID'], true);
 						$getDateValue = !empty($ProfileCustomDateValue) ? $ProfileCustomDateValue : $ProfileCustomValue;
 						echo "<input type=\"text\" id=\"rb_datepicker". $data3['ProfileCustomID']."\" class=\"rb-datepicker ".(!empty($updated_date) ? "marked_changed" : "")."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."_date\" value=\"". $getDateValue ."\" /><br />\n";
-						echo "<script type=\"text/javascript\">\n\n";
-						echo "jQuery(function(){\n\n";
-						echo "jQuery(\"input[name=ProfileCustomID". $data3['ProfileCustomID'] ."_date]\").val('". (isset($_POST["ProfileCustomID". $data3['ProfileCustomID'] ."_date"])?$_POST["ProfileCustomID". $data3['ProfileCustomID'] ."_date"]:$getDateValue) ."');\n\n";
-						echo "});\n\n";
-						echo "</script>\n\n";
+						//echo "<script type=\"text/javascript\">\n\n";
+						//echo "jQuery(function(){\n\n";
+						//echo "jQuery(\"input[name=ProfileCustomID". $data3['ProfileCustomID'] ."_date]\").val('". (isset($_POST["ProfileCustomID". $data3['ProfileCustomID'] ."_date"])?$_POST["ProfileCustomID". $data3['ProfileCustomID'] ."_date"]:$getDateValue) ."');\n\n";
+						//echo "});\n\n";
+						//echo "</script>\n\n";
 						?>
 						<script type="text/javascript">
-						jQuery(document).ready(function(){
-							jQuery(".rb-datepicker").each(function(){
-								//jQuery(this).datepicker({dateFormat: "yy-mm-dd" }).val(jQuery(this).val());
-							})
+						jQuery(document).ready(function($){
+						  $(".rb-datepicker").datepicker({dateFormat: "yy-mm-dd",changeYear:true, yearRange: "-100:+0"});
 						});
 						</script>
 						<?php
@@ -4328,11 +4326,11 @@ function get_social_media_links($ProfileID = "", $return = false){
 			wp_enqueue_script( 'customfields', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js', array( 'jquery' ) );
 		}else{
 			wp_enqueue_script( 'jquery-ui', RBAGENCY_PLUGIN_URL .'assets/js/jquery-ui.js', array( 'jquery' ) );
-            wp_enqueue_script( 'script-handle2', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js', array( 'jquery' ) );
+            wp_enqueue_script( 'customfields', RBAGENCY_PLUGIN_URL .'assets/js/js-customfields.js', array( 'jquery' ) );
 		}
 		wp_enqueue_script( 'audiojs', RBAGENCY_PLUGIN_URL .'assets/audiojs/audio.min.js', array( 'jquery' ) );
 		wp_enqueue_script( 'script-handle', RBAGENCY_PLUGIN_URL .'assets/js/list_reorder.js', array( 'jquery' ) );
-		wp_localize_script( 'script-handle2', 'objectL10n', array(
+		wp_localize_script( 'customfields', 'objectL10n', array(
 			'youngest_to_oldest' => esc_html__( 'Youngest to Oldest', RBAGENCY_TEXTDOMAIN ),
 			'oldest_to_youngest' => esc_html__( 'Oldest to Youngest', RBAGENCY_TEXTDOMAIN ),
 			'ascending' => esc_html__( 'Ascending', RBAGENCY_TEXTDOMAIN ),
@@ -4346,7 +4344,7 @@ function get_social_media_links($ProfileID = "", $return = false){
 			'select_state' => esc_html__('Select State',RBAGENCY_TEXTDOMAIN)
 		) );
 	}
-	add_action( 'admin_init', 'load_admin_js' );
+	add_action( 'init', 'load_admin_js' );
     function load_admin_script(){
      $ajax_nonce = wp_create_nonce( "rb_agency_actions" );
      echo "<script type='text/javascript'> var security ='".$ajax_nonce."'</script>";    
