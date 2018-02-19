@@ -1993,7 +1993,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$private_profile_photo_arr = explode(',',$private_profile_photo);
 								$upload_dir = wp_upload_dir();
                                 
-                                $uploadir = site_url().$upload_dir['baseurl']; 			
+                                $uploadir = $upload_dir['baseurl'];
                                 				
                                 foreach ($resultsImg as $k=>$dataImg) {
 									if ($dataImg['ProfileMediaPrimary']) {
