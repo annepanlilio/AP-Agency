@@ -1231,7 +1231,7 @@ elseif ($ConfigID == 11) {
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
-        }
+        
 		echo " <tr valign=\"top\">\n";
 		echo "   <th scope=\"row\">". __('Default State For Registered Users', RBAGENCY_TEXTDOMAIN) ."</th>\n";
 		echo "   <td>\n";
@@ -1243,6 +1243,8 @@ elseif ($ConfigID == 11) {
 		echo "     </select>\n";
 		echo "   </td>\n";
 		echo " </tr>\n";
+        
+        }
 
 
 		$sample_msg = "<span style='font-size:9px;'>Hi there,<br><br>

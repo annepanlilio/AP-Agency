@@ -748,7 +748,6 @@
 		}
 		return $display;
 	}
-    
     function rb_empty_directory($dirpath)
     {
         $files = glob($dirpath.'{,.}*', GLOB_BRACE);
@@ -1210,7 +1209,7 @@
 						$types = explode(",",$types);
                         if(is_array($types)){
     						foreach($types as $t){ 
-    							if($t && strpos($ptype,$t) > -1) {$permit_type=true; break;}
+    							if($t!="" && strpos($ptype,$t) > -1) {$permit_type=true; break;}
     						}
                         }
 					} else {
@@ -1262,7 +1261,7 @@
             FROM ". table_agency_customfield_mux ." 
             WHERE ProfileCustomID = %d 
             AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
-			$row = $subresult[0];
+			$row = end($subresult);//$subresult[1]; 
 			#get profile user linked
 			$user = $wpdb->get_row("SELECT ProfileUserLinked FROM ".table_agency_profile." WHERE ProfileID = ".$ProfileID,ARRAY_A);
 			$ProfileCustomTitle = $data3['ProfileCustomTitle'];
@@ -1337,7 +1336,10 @@
 					}
 				} elseif ($ProfileCustomType == 3 || $ProfileCustomType == 9) { // Drop Down || Multi-Select
 					$updated_select = get_user_meta($user['ProfileUserLinked'], "updated_ProfileCustomID".$data3['ProfileCustomID'], true);
-					$dropdown_arr = explode(":",$data3['ProfileCustomOptions']);
+					 $dropdown_arr = explode(":",$data3['ProfileCustomOptions']);
+                    //if(strpos($data3['ProfileCustomOptions'],"|")>-1){
+                     //   $dropdown_arr = explode("|",$data3['ProfileCustomOptions']);
+                    //}
 					if(count($dropdown_arr) == 1){
 						list($option1) =  $dropdown_arr;
 						$option2 = "";
@@ -1359,8 +1361,9 @@
 					echo "<option value=\"\">--</option>";
 					$arr = array();
 					if($ProfileCustomType == 9){
-							foreach($data as $val1){
-								$arr[] = $val1;
+							foreach($data as $val1){ 
+							 if($val1 != ""){
+								$arr[] = $val1; 
 								if(in_array(trim(stripcslashes($val1),'"'),$expertiseToArray)){
 									$isSelected = "selected=\"selected\"";
 									echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
@@ -1369,10 +1372,12 @@
 								} else {
 									echo "<option value=\"".trim(stripslashes($val1),'"')."\">".stripslashes($val1)."</option>";
 								}
+                             }
 							}
 						} else {
 							$pos = 0;
 							foreach($data as $val1){
+							 if($val1 != ""){
 								$arr[] = $val1;
 								if($val1 != end($data) && $val1 != $data[0]){
 									if (trim(stripslashes($val1),'"') == trim(stripslashes($ProfileCustomValue),'"') || in_array(stripslashes($val1), explode(",",$ProfileCustomValue)) || !in_array($ProfileCustomValue,$arr)) {
@@ -1382,7 +1387,8 @@
 										echo "<option value=\"".trim(stripslashes($val1),'"')."\" >".stripslashes($val1)."</option>";
 									}
 								}
-							}
+			                  }
+                            }
 						}
 						/**$pos = 0;
 						foreach($data as $val1){
@@ -4038,13 +4044,10 @@ function get_social_media_links($ProfileID = "", $return = false){
 		} else {
 			$sql_exclude_primary_image = "";
 		}
-        
         $isPrivate = "";
         if ( current_user_can('administrator') && !is_admin() OR !current_user_can('administrator') && !is_admin()) {
            $isPrivate = " AND isPrivate=0";
         }
-        
-        
 		if($order == 1){
 			$queryImg = $wpdb->prepare("SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID =  \"%s\" AND ProfileMediaType = \"%s\" ". $sql_exclude_primary_image . $isPrivate . " GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaPrimary DESC, ProfileMediaID DESC ". $sql_count, $profileID, $ProfileMediaType);
 		} elseif($order == 0) {
@@ -4368,10 +4371,8 @@ function get_social_media_links($ProfileID = "", $return = false){
        }else{
            wp_dequeue_script('rbagency-reports'); 
        }
-       
     }
     add_action('admin_enqueue_scripts','load_admin_script');
-	
 add_action( 'widgets_init', 'rblogin_widget' );
 function rblogin_widget() {
 	register_widget( 'RBLogin_Widget' );
@@ -5944,17 +5945,14 @@ function rb_agency_upload_image()
     $profiledir = $_POST['profilegallery'];
     $profileid = $_POST['profileid'];
     $profileMediatype = $_POST['profilemediatype'];
-    
     $upload_dir = RBAGENCY_UPLOADDIR.$profiledir."/";
     $target_dir = RBAGENCY_UPLOADPATH.$profiledir."/";
-    
     if(isset($_FILES['rba_imgupload'])){
         $files = $_FILES['rba_imgupload'];
     }
     if(isset($_FILES['rba_boxcover_upload'])){
         $files = $_FILES['rba_boxcover_upload'];
     }
-    
     if(!$profileid){
         $errors = array('error'=>'Profile ID Required!-->');
         echo json_encode($errors);
@@ -5971,7 +5969,6 @@ function rb_agency_upload_image()
         //echo json_encode($errors);
         //exit;
     } 
-     
     $uploader = new Uploader();
     $data = $uploader->upload($files, array(
         'limit' => 30, //Maximum Limit of files. {null, Number}
@@ -5999,7 +5996,6 @@ function rb_agency_upload_image()
             }
             $url = $upload_dir."thumb/".$image['name'];
             $uploader->makeThumbnails($target_dir,$image);
-            
             $imgid = $wpdb->insert(table_agency_profile_media, 
             array( 
             'ProfileID' => $profileid, 
@@ -6017,8 +6013,6 @@ function rb_agency_upload_image()
     }
     exit;
 }
-
-
 add_action("wp_ajax_rb_agency_sort_image","rb_agency_update_image");
 add_action("wp_ajax_nopriv_rb_agency_sort_image","rb_agency_update_image");
 add_action("wp_ajax_rb_agency_delete_image","rb_agency_update_image");
@@ -6030,14 +6024,10 @@ add_action("wp_ajax_nopriv_rb_agency_setprimary_image","rb_agency_update_image")
 function rb_agency_update_image()
 {
     global $wpdb;
-    
-    
     $action = $_POST['action'];
     $mediaid = $_POST['mediaid'];
     $profileid = $_POST['profileid'];
-    
     check_ajax_referer( 'rb_agency_actions', 'security' );
-    
     if($action=="rb_agency_delete_image"){    
         $media = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileMediaTitle,ProfileMediaType,ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID = $mediaid" ) );
         $mediadir = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileGallery FROM ".table_agency_profile." WHERE ProfileID = $profileid" ) );
@@ -6061,7 +6051,6 @@ function rb_agency_update_image()
             $msg = array('success'=>'File deleted successfully'.$image);
         }
         echo json_encode($msg);
-        
         exit;
     }
     if($action=="rb_agency_setprivate_image"){
@@ -6087,10 +6076,7 @@ function rb_agency_update_image()
         }
         exit;
     }
-    
-    
 }
-
 add_action("wp_ajax_rb_agency_delete_profile","rb_agency_delete_profile");
 add_action("wp_ajax_nopriv_rb_agency_delete_profile","rb_agency_delete_profile");
 function rb_agency_delete_profile()
@@ -6098,18 +6084,14 @@ function rb_agency_delete_profile()
     global $wpdb;
     $action = $_POST['action'];
     $profileid = $_POST['profileid'];
-    
      check_ajax_referer( 'rb_agency_actions', 'security' );
-     
     if($action=="rb_agency_delete_profile"){
         if($profileid!=""){
                 $mediadir = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM ".table_agency_profile." WHERE ProfileID = $profileid" ) );
-            
                 $imgdir = RBAGENCY_UPLOADPATH.$mediadir->ProfileGallery;
                 delete_directory($imgdir);
                 $wpdb->delete(table_agency_profile, array( 'ProfileID' => $profileid ), array( '%d' ) );
                 $wpdb->delete(table_agency_profile_media, array( 'ProfileID' => $profileid ), array( '%d' ) );
-           
         }
         if($wpdb->last_error !== ''){
             $msg = array('error'=>$wpdb->last_error);
@@ -6120,11 +6102,9 @@ function rb_agency_delete_profile()
         exit;
     }
 }
-
 function delete_directory($target) {
     if(is_dir($target)){
         $files = glob( $target . '*', GLOB_MARK ); //GLOB_MARK adds a slash to directories returned
-        
         foreach( $files as $file )
         {
             delete_directory( $file );      

@@ -1668,19 +1668,19 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							?>
 							<?php if($_GET['action'] == 'add') { ?>
 								<script type="text/javascript">
-									jQuery(document).ready(function(){
-										jQuery.ajax({
-											type: "POST",
-											url: "<?php echo admin_url('admin-ajax.php') ?>",
-											data: {
-												action: "rb_get_customfields_load",
-												'gender': "<?php echo $_GET["ProfileGender"]; ?>"
-											},
-											success: function (results) {
-												jQuery(".tbody-table-customfields").html(results);
-												//console.log(results);
-											}
-										});
+									//jQuery(document).ready(function(){
+//										jQuery.ajax({
+//											type: "POST",
+//											url: "<?php echo admin_url('admin-ajax.php') ?>",
+//											data: {
+//												action: "rb_get_customfields_load",
+//												'gender': "<?php echo $_GET["ProfileGender"]; ?>"
+//											},
+//											success: function (results) {
+//												jQuery(".tbody-table-customfields").html(results);
+//												//console.log(results);
+//											}
+//										});
 										jQuery.ajax({
 											type: "POST",
 											url: "<?php echo admin_url('admin-ajax.php') ?>",
@@ -1833,6 +1833,18 @@ function rb_display_manage($ProfileID, $errorValidation) {
 									    </tr>
 									  </tbody>";
 								echo "  <tbody class=\"tbody-table-customfields\">\n";
+                                if ($ProfileGender) {
+									//$ProfileGender = $_GET["ProfileGender"];
+									// -1 make sure that theres no exist profile in DB
+									rb_custom_fields(0, $ProfileID, $ProfileGender, true);
+								} else { // onload for edit
+									$param = array();
+									$param['operation'] = "editProfile";
+									$param['ProfileID'] = $ProfileID;
+									//$rbagencyCustomfieldsClass = new RBAgency_Customfields();
+									//$rbagencyCustomfieldsClass->getCustomFieldsProfileManager($ProfileGender,$param);
+									rb_custom_fields(0, $ProfileID, $ProfileGender, true);
+								}
 								echo "  </tbody>\n";
 								echo " </table>\n";
 							}else{
@@ -1993,7 +2005,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 								$private_profile_photo_arr = explode(',',$private_profile_photo);
 								$upload_dir = wp_upload_dir();
                                 
-                                $uploadir = $upload_dir['baseurl'];
+                                $uploadir = $upload_dir['baseurl']; 			
                                 				
                                 foreach ($resultsImg as $k=>$dataImg) {
 									if ($dataImg['ProfileMediaPrimary']) {
