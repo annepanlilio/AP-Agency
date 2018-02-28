@@ -149,7 +149,7 @@ class RBAgency_Casting {
 				// Show Cart
 				//$query = "SELECT  profile.*,media.* FROM ". table_agency_profile ." profile, ". table_agency_profile_media ." media WHERE profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 AND profile.ProfileID IN (".$cartString.") GROUP BY profile.ProfileID ORDER BY profile.ProfileID ASC";
 
-				$query = "SELECT  profile.*,media.ProfileMediaPrimary,media.ProfileMediaType,media.ProfileMediaURL FROM ". table_agency_profile ." profile  LEFT JOIN ". table_agency_profile_media ." media ON (profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 ) WHERE profile.ProfileID IN (".(!empty($cartString)?$cartString:0).") ORDER BY profile.ProfileContactNameFirst";
+				$query = "SELECT  profile.*,media.ProfileMediaPrimary,media.ProfileMediaType,media.ProfileMediaURL FROM ". table_agency_profile ." profile  LEFT JOIN ". table_agency_profile_media ." media ON (profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1 ) WHERE profile.ProfileID IN (".(!empty($cartString)?$cartString:0).") GROUP BY profile.ProfileID ORDER BY profile.ProfileContactNameFirst";
 
 				
 				//$query = "SELECT profile.ProfileID, profile.ProfileGallery, profile.*, profile.ProfileContactDisplay, profile.ProfileDateBirth, profile.ProfileLocationState, profile.ProfileID as pID,  (SELECT media.ProfileMediaURL FROM ". table_agency_profile_media ." media WHERE profile.ProfileID IN(".$cartString.") AND profile.ProfileID = media.ProfileID AND media.ProfileMediaType = \"Image\" AND media.ProfileMediaPrimary = 1) AS ProfileMediaURL FROM ". table_agency_profile ." profile GROUP BY profile.ProfileID";
@@ -179,7 +179,7 @@ class RBAgency_Casting {
 					$arr_thumbnail = "";
 					if(isset($_SESSION["profilephotos"]))
 					$arr_thumbnail = (array)unserialize($_SESSION["profilephotos"]);
-					//print_r($results);
+				
 
 				$bfi_params = array(
 								'crop'=>true,
@@ -288,35 +288,35 @@ class RBAgency_Casting {
 				
 				?>
 				<script type="text/javascript">
-				jQuery(document).ready(function($){
-					$(".remove-agent-casting-cart").click(function(event){
-						event.preventDefault();
-						var castingid = $(this).attr('id');
-						console.log(castingid);
-						 $.ajax({
-				            type: 'POST',
-				            url: "<?php echo admin_url('admin-ajax.php') ?>",
-				            data: {
-								action: "rb_add_agent_to_castingcart",
-								agentid: castingid
-							},
-							success:function(data){
-								console.log(data);
-								if(data == 'deleted'){
-									$(".casting_agent_"+castingid).remove();
-								}
-								var numCart = $('.casting-agents .casting-agent').length;
-								console.log('total: ' + numCart);
-								
-								if(numCart <= 0){
-									$('.in-cart').html('<?php _e('There are no profiles added to the casting cart.',RBAGENCY_TEXTDOMAIN);?>');
-								}else{
-									$('.in-cart').html('<?php _e('Currently',RBAGENCY_TEXTDOMAIN);?> <strong>'+numCart+'</strong> <?php _e('in Cart' );?> ');
-								}
-							}
-				        });
-					});
-				});
+				//jQuery(document).ready(function($){
+//					$(".remove-agent-casting-cart").click(function(event){
+//						event.preventDefault();
+//						var castingid = $(this).attr('id');
+//						console.log(castingid);
+//						 $.ajax({
+//				            type: 'POST',
+//				            url: "<?php echo admin_url('admin-ajax.php') ?>",
+//				            data: {
+//								action: "rb_add_agent_to_castingcart",
+//								agentid: castingid
+//							},
+//							success:function(data){
+//								console.log(data);
+//								if(data == 'deleted'){
+//									$(".casting_agent_"+castingid).remove();
+//								}
+//								var numCart = $('.casting-agents .casting-agent').length;
+//								console.log('total: ' + numCart);
+//								
+//								if(numCart <= 0){
+//									$('.in-cart').html('<?php _e('There are no profiles added to the casting cart.',RBAGENCY_TEXTDOMAIN);?>');
+//								}else{
+//									$('.in-cart').html('<?php _e('Currently',RBAGENCY_TEXTDOMAIN);?> <strong>'+numCart+'</strong> <?php _e('in Cart' );?> ');
+//								}
+//							}
+//				        });
+//					});
+//				});
 			</script>
 				<?php
 

@@ -242,6 +242,9 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 						$queryAlter = "ALTER TABLE " . table_agency_profile ." ADD ProfileDescription TEXT NOT NULL AFTER `ProfileContactNameLast`";
 						$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
 					}
+                    
+                    $delete1 = "DELETE FROM " . table_agency_customfield_mux . " WHERE ProfileID = \"" . $ProfileID . "\"";
+					$wpdb->query($delete1);
 					// Create Record
 					$insert = "INSERT INTO " . table_agency_profile .
 						" (
@@ -355,11 +358,13 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 					add_user_meta( $ProfileID, 'ShowProfileContactLinkFlickr',$ShowProfileContactLinkFlickr);
 					// Add Custom Field Values stored in Mux
 					foreach ($_POST as $key => $value) {
-						if ((substr($key, 0, 15) == "ProfileCustomID" || substr($key, 0, 22) == "ProfileCustomID_other_") && (isset($value) && !empty($value))) {
+						if ((substr($key, 0, 15) == "ProfileCustomID" || substr($key, 0, 22) == "ProfileCustomID_other_") && (isset($value) && !empty($value) || $value == 0)) {
+						  
 							$ProfileCustomID = substr($key, 15);
 							if (is_array($value)) {
 								$value = implode(",", $value);
 							}
+                            
 							$profilecustomfield_date = explode("_",$key);
 							if(count($profilecustomfield_date) == 2){ // customfield date
 								$value = !empty($value) ? date("y-m-d h:i:s",strtotime($value)) : "";
@@ -374,6 +379,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							$results1 = $wpdb->query($insert1);
 						}
 					}
+                    
 					foreach($_SESSION['profileCustomValue'] as $k=>$v){
 						unset($_SESSION['profileCustomValue']);
 					}
@@ -1666,7 +1672,7 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							
 	                        }
 							?>
-							<?php if($_GET['action'] == 'add') { ?>
+							<?php if($_GET['action'] == 'add' && !isset($_POST['action'])) { ?>
 								<script type="text/javascript">
 									//jQuery(document).ready(function(){
 //										jQuery.ajax({
@@ -1678,22 +1684,22 @@ function rb_display_manage($ProfileID, $errorValidation) {
 //											},
 //											success: function (results) {
 //												jQuery(".tbody-table-customfields").html(results);
-//												//console.log(results);
+//												console.log(results);
 //											}
 //										});
-										jQuery.ajax({
-											type: "POST",
-											url: "<?php echo admin_url('admin-ajax.php') ?>",
-											data: {
-												action: "rb_get_customfields_load_private",
-												'gender': "<?php echo $_GET["ProfileGender"]; ?>"
-											},
-											success: function (results) {
-												jQuery(".tbody-table-customfields-private").html(results);
-												console.log(results);
-											}
-										});
-									});
+										//jQuery.ajax({
+//											type: "POST",
+//											url: "<?php echo admin_url('admin-ajax.php') ?>",
+//											data: {
+//												action: "rb_get_customfields_load_private",
+//												'gender': "<?php echo $_GET["ProfileGender"]; ?>"
+//											},
+//											success: function (results) {
+//												jQuery(".tbody-table-customfields-private").html(results);
+//												console.log(results);
+//											}
+//										});
+//									});
 								</script>
 							<?php } ?>
 							<script type="text/javascript">
@@ -1810,7 +1816,13 @@ function rb_display_manage($ProfileID, $errorValidation) {
 							<!-- This is generated via ajax call -->
 							<?php
 							if(isset($_GET['action']) && $_GET['action'] == "add") { 
-								$getGender = $ProfileGender;
+								//$getGender = $ProfileGender;
+                                $ProfileGender1 = get_user_meta(isset($ProfileUserLinked)?$ProfileUserLinked:0, "rb_agency_interact_pgender", true);
+								if($ProfileGender==""){
+									$ProfileGender = isset($_GET["ProfileGender"])?$_GET["ProfileGender"]:$ProfileGender;
+								} elseif($ProfileGender1!=""){
+									$ProfileGender =$ProfileGender;
+								}
 								echo "<table class=\"rbform-table table-customfields\">\n";
 								echo "<tbody>
 										<tr valign=\"top\">
@@ -1836,14 +1848,14 @@ function rb_display_manage($ProfileID, $errorValidation) {
                                 if ($ProfileGender) {
 									//$ProfileGender = $_GET["ProfileGender"];
 									// -1 make sure that theres no exist profile in DB
-									rb_custom_fields(0, $ProfileID, $ProfileGender, true);
+									//rb_custom_fields(0, $ProfileID, $ProfileGender, true);
 								} else { // onload for edit
 									$param = array();
 									$param['operation'] = "editProfile";
 									$param['ProfileID'] = $ProfileID;
 									//$rbagencyCustomfieldsClass = new RBAgency_Customfields();
 									//$rbagencyCustomfieldsClass->getCustomFieldsProfileManager($ProfileGender,$param);
-									rb_custom_fields(0, $ProfileID, $ProfileGender, true);
+									//rb_custom_fields(0, $ProfileID, $ProfileGender, true);
 								}
 								echo "  </tbody>\n";
 								echo " </table>\n";
@@ -3236,7 +3248,7 @@ function rb_display_list() {
 	$resultsData1 = $wpdb->get_results($queryData1,ARRAY_A);
 	$count = $wpdb->num_rows;
 	$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming'])?(int) $rb_agency_options_arr['rb_agency_option_profilenaming']:1;
-	foreach ($resultsData1 as $data) {
+	foreach ($resultsData1 as $data) { 
 		$ProfileID = $data['ProfileID'];
 		$ProfileContactDisplay = $data['ProfileContactDisplay'];
 		$ProfileGallery = stripslashes($data['ProfileGallery']);

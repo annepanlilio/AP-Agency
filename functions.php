@@ -1261,7 +1261,8 @@
             FROM ". table_agency_customfield_mux ." 
             WHERE ProfileCustomID = %d 
             AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
-			$row = end($subresult);//$subresult[1]; 
+			$row = $subresult[0]; 
+            
 			#get profile user linked
 			$user = $wpdb->get_row("SELECT ProfileUserLinked FROM ".table_agency_profile." WHERE ProfileID = ".$ProfileID,ARRAY_A);
 			$ProfileCustomTitle = $data3['ProfileCustomTitle'];
@@ -1356,6 +1357,7 @@
 						$expertiseToArrayComma = explode(",",$ProfileCustomValue);
 						$expertiseToArray = array_merge($expertiseToArrayComma,$expertiseToArrayNotComma);
 					}
+                    
 					echo "<label class=\"dropdown\">".$data[0]."</label>";
 					echo "<select id=\"".$data3['ProfileCustomID']."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".($ProfileCustomType == 9?"multiple":"")." ".(!empty($updated_select) ? "class=\"marked_changed select-dropdown\"" : "class=\"select-dropdown\"").">\n";
 					echo "<option value=\"\">--</option>";
@@ -6092,6 +6094,9 @@ function rb_agency_delete_profile()
                 delete_directory($imgdir);
                 $wpdb->delete(table_agency_profile, array( 'ProfileID' => $profileid ), array( '%d' ) );
                 $wpdb->delete(table_agency_profile_media, array( 'ProfileID' => $profileid ), array( '%d' ) );
+                if(isset($mediadir->ProfileUserLinked)){
+                    wp_delete_user($mediadir->ProfileUserLinked);
+                } 
         }
         if($wpdb->last_error !== ''){
             $msg = array('error'=>$wpdb->last_error);
