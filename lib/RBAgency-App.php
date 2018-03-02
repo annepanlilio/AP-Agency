@@ -55,6 +55,11 @@ class RBAgency_App {
 				wp_register_style( 'rbagency-print-style', RBAGENCY_PLUGIN_URL .'assets/css/print.css', array(), strtotime("now"));
 				wp_enqueue_style( 'rbagency-print-style' );
 
+				wp_dequeue_style( 'rbagency-datepicker-css');
+				
+				wp_register_style( 'rbagency-header',RBAGENCY_PLUGIN_URL .'assets/css/header.css' );
+				wp_enqueue_style( 'rbagency-header' );
+
 				// Set Default Values
 					// Open File & Get Base Style if not exists
 					if (!isset($rb_agency_value_stylesheet) || empty($rb_agency_value_stylesheet)) {
@@ -84,27 +89,7 @@ class RBAgency_App {
 					}
 
 				wp_add_inline_style( 'rbagency-print-style', $rb_agency_value_stylesheet );
-
-				wp_register_style( 'rbagency-formstyle',RBAGENCY_PLUGIN_URL .'assets/css/forms.css' );
-				wp_enqueue_style( 'rbagency-formstyle' );
-
-				wp_dequeue_style( 'rbagency-datepicker-css');
-				wp_register_style( 'rbagency-datepicker-css', RBAGENCY_PLUGIN_URL .'assets/css/jquery-ui/jquery-ui.theme.min.css');
-				wp_enqueue_style( 'rbagency-datepicker-css' );
-
-				wp_register_style( 'rbagency-datepicker', RBAGENCY_PLUGIN_URL .'assets/css/jquery-ui/jquery-ui.min.css');
-				wp_enqueue_style( 'rbagency-datepicker' );
-
-				wp_register_style( 'rbagency-fontawesome', RBAGENCY_PLUGIN_URL .'ext/fontawesome/css/font-awesome.min.css');
-				wp_enqueue_style( 'rbagency-fontawesome' );
-
-				wp_register_style( 'bootstrap-4', RBAGENCY_PLUGIN_URL .'assets/css/bootstrap.min.css');
-				wp_enqueue_style( 'bootstrap-4' );
-
-				if($rb_agency_option_layoutprofileviewmode == 1){
-					wp_register_style( 'rba-magnific-popup', RBAGENCY_PLUGIN_URL .'assets/css/magnific-popup.css');
-					wp_enqueue_style( 'rba-magnific-popup' );
-				}
+				
 			}
 		}
 
