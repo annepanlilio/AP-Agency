@@ -70,6 +70,7 @@ $siteurl = get_option('siteurl');
 
 					echo ('<div id="message" class="error"><p>Error creating record, please ensure you have filled out all required fields.</p></div>'); 
 				}
+                
 
 			break;
 
@@ -155,7 +156,8 @@ $siteurl = get_option('siteurl');
 			$queryAlter = "ALTER TABLE " . table_agency_searchsaved_mux ." ADD SearchMuxCustomThumbnail varchar(200) default NULL";
 			$wpdb->query($queryAlter);
 		}
-		$dataSearchSavedMux = $wpdb->get_row("SELECT * FROM " . table_agency_searchsaved_mux ." WHERE SearchID=".$SearchID." ", ARRAY_A ,0);
+		$dataSearchSavedMux = $wpdb->get_row("SELECT * FROM " . table_agency_searchsaved_mux ." WHERE SearchID=$SearchID", ARRAY_A);
+        
 		$query = "SELECT search.SearchTitle, search.SearchProfileID, search.SearchOptions, searchsent.SearchMuxHash, searchsent.SearchMuxCustomThumbnail FROM ". table_agency_searchsaved ." search LEFT JOIN ". table_agency_searchsaved_mux ." searchsent ON search.SearchID = searchsent.SearchID WHERE search.SearchID = \"". $_GET["SearchID"]."\"";
 		$data =  $wpdb->get_row($query);
 
@@ -211,11 +213,13 @@ $siteurl = get_option('siteurl');
 		$count = $wpdb->num_rows + (count($_SESSION['cartAgentsArray']));
 
 		$arr = array();
+        if(is_array($_SESSION['cartAgentsArray'])){
 		foreach($_SESSION['cartAgentsArray'] as $k=>$v){
 			if(!empty($v)){
 				$arr[] = "'".$v."'";
 			}
 		}
+        }
 		$implodedCastingEmail = "(".implode(",",$arr).")";
 
 		$sql = "SELECT t.*, c.CastingUserLinked,c.CastingContactNameFirst,c.CastingContactNameLast,c.CastingContactDisplay,c.CastingContactCompany FROM ".$wpdb->prefix."agency_casting as c INNER JOIN ".$wpdb->prefix."agency_casting_types as t ON t.CastingTypeID = c.CastingType WHERE c.CastingContactEmail IN $implodedCastingEmail";
@@ -473,7 +477,7 @@ $siteurl = get_option('siteurl');
 
 					$cartArray = $_SESSION['cartArray'];
 					$cartString = implode(",", array_filter(array_unique($cartArray)));
-
+                    $SearchCastingEmail = is_array($_SESSION["cartAgentsArray"]) ? implode(",",$_SESSION["cartAgentsArray"]):"";
 					?>
 					<h3 class="title">Save Search and Email</h3>
 
@@ -555,6 +559,7 @@ $siteurl = get_option('siteurl');
 								echo "  <div style=\"clear: both;\"></div>\n";
 
 								echo "  <div id=\"saved-agents\">\n";
+                                if(is_array($_SESSION["cartAgentsArray"])){
 								foreach(@$_SESSION["cartAgentsArray"] as $k=>$v){
 									if(!empty($v)){
 										$castingEmail = "'".$v."'";
@@ -592,10 +597,11 @@ $siteurl = get_option('siteurl');
 										
 									}
 								}
+                                }
 								echo "</div>";
 								?>
 							<input type="hidden" name="SearchProfileID" value="<?php echo $cartString; ?>" />
-							<input type="hidden" name="SearchCastingEmail" value="<?php echo implode(",",$_SESSION["cartAgentsArray"]); ?>" />
+							<input type="hidden" name="SearchCastingEmail" value="<?php echo $SearchCastingEmail; ?>" />
 							</div>
 						</td>
 					</tr>

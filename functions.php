@@ -1261,7 +1261,8 @@
             FROM ". table_agency_customfield_mux ." 
             WHERE ProfileCustomID = %d 
             AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
-			$row = $subresult[0]; 
+			$row = end($subresult);//$subresult[0]; 
+            //print_r($subresult);
             
 			#get profile user linked
 			$user = $wpdb->get_row("SELECT ProfileUserLinked FROM ".table_agency_profile." WHERE ProfileID = ".$ProfileID,ARRAY_A);
@@ -1494,7 +1495,7 @@
 						if(!empty($val)){
 							echo "<fieldset>";
 								echo "<label><input type=\"radio\" id=\"".$data3['ProfileCustomID']."\" value=\"". $val."\" "; 
-								if(!empty($val) && in_array($ProfileCustomValue, $array_customOptions_values)){
+								if(in_array($ProfileCustomValue, $array_customOptions_values)){
 									checked($val, $ProfileCustomValue);
 								}elseif(!in_array($ProfileCustomValue, $array_customOptions_values) && !empty($ProfileCustomValue)){
 									echo "checked";
