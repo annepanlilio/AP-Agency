@@ -245,7 +245,7 @@ label.checkbox {
 
 /* Welcome */
 #rbquick-links { padding-bottom: 15px; }
-#rbquick-links a,.inside-x a { width: 30%;text-align: center; margin: 6px;}
+#rbquick-links a, .inside-x a { text-align: center; margin: 6px;}
 
 .welcome-panel-column#welcome-video { margin-right: 15px; margin-bottom:30px; float:right; width:40% }
 
