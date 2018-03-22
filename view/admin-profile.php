@@ -937,23 +937,25 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							$profiles_count++;
 							$ProfileGallery = $dataDelete['ProfileGallery'];
 							wp_delete_user($dataDelete["ProfileUserLinked"]);
-								if (isset($ProfileGallery)) {
+								if (isset($ProfileGallery) && $ProfileGallery!="") {
 									// Remove Folder
-                                    $mediatype = strtolower($dataDelete['ProfileMediaType']);
-                                    $mediatype = $mediatype!='image' ? $mediatype:"";
-									$dir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/".$mediatype;
-									$mydir = @opendir($dir);
-									while (false !== ($file = @readdir($mydir))) {
-										if ($file != "." && $file != "..") {
-											if(@is_file($dir . $file))
-											@unlink($dir . $file);
-										}
-									}
-									// Remove Directory
-									//if (@is_dir($dir)) {
-									//	@rmdir($dir);
-									//}
-									@closedir($mydir);
+                                    //$mediatype = strtolower($dataDelete['ProfileMediaType']);
+//                                    $mediatype = $mediatype!='image' ? $mediatype:"";
+//									$dir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/".$mediatype;
+//									$mydir = @opendir($dir);
+//									while (false !== ($file = @readdir($mydir))) {
+//										if ($file != "." && $file != "..") {
+//											if(@is_file($dir . $file))
+//											@unlink($dir . $file);
+//										}
+//									}
+//									// Remove Directory
+//									//if (@is_dir($dir)) {
+//									//	@rmdir($dir);
+//									//}
+//									@closedir($mydir);
+                                    $imgdir = RBAGENCY_UPLOADPATH.$ProfileGallery;
+                                    delete_directory($imgdir);
 								} else {
 									echo ("<div id=\"message\" class=\"error\"><p>" . __("No Valid Record Found.", RBAGENCY_TEXTDOMAIN) . "</p></div>");
 								}
@@ -1006,20 +1008,22 @@ elseif (isset($_GET['action']) && $_GET['action'] == "deleteRecord") {
 		}
 		if (isset($ProfileGallery)) {
 			// Remove Folder
-            $mediatype = strtolower($dataDelete['ProfileMediaType']);
-            $mediatype = $mediatype!='image' ? $mediatype:"";
-			$dir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/".$mediatype;
-			$mydir = @opendir($dir);
-			while (false !== ($file = @readdir($mydir))) {
-				if ($file != "." && $file != "..") {
-					@unlink($dir . $file); // or DIE("couldn't delete $dir$file<br />");
-				}
-			}
-			// remove dir
-			//if (is_dir($dir)) {
-			//	rmdir($dir);// or DIE("couldn't delete $dir$file folder not exist<br />");
-			//}
-			closedir($mydir);
+            //$mediatype = strtolower($dataDelete['ProfileMediaType']);
+//            $mediatype = $mediatype!='image' ? $mediatype:"";
+//			$dir = RBAGENCY_UPLOADPATH . $ProfileGallery . "/".$mediatype;
+//			$mydir = @opendir($dir);
+//			while (false !== ($file = @readdir($mydir))) {
+//				if ($file != "." && $file != "..") {
+//					@unlink($dir . $file); // or DIE("couldn't delete $dir$file<br />");
+//				}
+//			}
+//			// remove dir
+//			//if (is_dir($dir)) {
+//			//	rmdir($dir);// or DIE("couldn't delete $dir$file folder not exist<br />");
+//			//}
+//			closedir($mydir);
+            $imgdir = RBAGENCY_UPLOADPATH.$ProfileGallery;
+            delete_directory($imgdir);
 		} else {
 			echo __("No valid record found.", RBAGENCY_TEXTDOMAIN);
 		}

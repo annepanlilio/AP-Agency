@@ -1383,7 +1383,7 @@
 							 if($val1 != ""){
 								$arr[] = $val1;
 								if($val1 != end($data) && $val1 != $data[0]){
-									if (trim(stripslashes($val1),'"') == trim(stripslashes($ProfileCustomValue),'"') || in_array(stripslashes($val1), explode(",",$ProfileCustomValue)) || !in_array($ProfileCustomValue,$arr)) {
+									if (trim(stripslashes($val1),'"') == trim(stripslashes($ProfileCustomValue),'"') || in_array(stripslashes($val1), explode(",",$ProfileCustomValue)) || in_array($ProfileCustomValue,$arr)) {
 										$isSelected = "selected=\"selected\"";
 										echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
 									} else {
@@ -6115,7 +6115,7 @@ function delete_directory($target) {
         {
             delete_directory( $file );      
         }
-        rmdir( $target );
+        if(is_dir($target))rmdir( $target );
     } elseif(is_file($target)) {
         unlink( $target );  
     }
