@@ -5,7 +5,34 @@ Model and Talent Agency CRM management and scheduling tool.
 
 ## Installation
 
-Extract the zip file and just drop the contents in the wp-content/plugins/ directory of your WordPress installation and then activate the Plugin from Plugins page. `[vimeo http://vimeo.com/27752740]`
+Here are some guidelines to install the RB Agency plugin:
+
+1. Download the zip file here in github.
+2. Unzip the file.
+3. Rename the folder to "rb-agency"
+4. Login to your ftp.
+5. Locate the /wp-content/plugins directory.
+6. Upload the entire "rb-agency" folder
+7. Login to your website.
+8. Go to Plugins > Inactive
+9. Locate the "RB Agency" plugin.
+10. Click "Activate".
+
+## Configuration
+
+1. Login to your website.
+2. Go to RB Agency » Settings » Configuration. Here you may choose the settings and edit the agency information.
+3. Go to RB Agency » Settings » Style. Click "Save Changes" button to set the style sheet for the first time. If you know CSS or have a webmaster, this is where they will customize the style for the plugin.
+4. Go to RB Agency » Settings » Gender to update the genders.
+5. Go to RB Agency » Settings » Profile Types to update the profile types desired.
+6. Next go to Settings » Data » Custom Fields. Here you can configure which fields appear for which Genders and Profile Types giving you full control.
+7. Finally, head over to "Manage Profiles" and create your first model!
+
+More detailed information:
+http://rbplugin.com/plugin/rb-agency/documentation/
+
+If you would like help on installation and configuration, you may contact any of our support team:
+http://rbplugin.com/contact-us/request-support/
 
 
 ## Change Log
