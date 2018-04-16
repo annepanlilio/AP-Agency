@@ -4,6 +4,17 @@
 			$active_page = isset( $_GET['page'] ) ? $_GET['page'] : 'display_options';
 		} // end if
 
+	/* 
+	 * Check Version
+	 */
+
+		// Find Remote Version:
+		$rb_remote_version = get_transient( 'rb_remote_version' );
+		if (false === $rb_remote_version) {
+			// Transient expired, refresh the data
+			$response = rb_get_remote_version();
+			set_transient( 'rb_remote_version', $response, DAY_IN_SECONDS );
+		}
 
 	?>
 
