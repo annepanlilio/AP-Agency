@@ -8,11 +8,11 @@
 class RBAgency_Init {
 	// *************************************************************************************************** //
 	/*
-	 * 
+	 *
 	 */
 		public static function init(){
-				// Register Settings
-				add_action('admin_init', array('RBAgency_Init', 'do_register_settings'));
+			// Register Settings
+			add_action('admin_init', array('RBAgency_Init', 'do_register_settings'));
 		}
 	// *************************************************************************************************** //
 	/*
@@ -23,6 +23,7 @@ class RBAgency_Init {
 			// Required for all WordPress database manipulations
 			global $wpdb;
 			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
 			/*
 			 * Check Permissions
 			 */
@@ -77,17 +78,7 @@ class RBAgency_Init {
 					//add_option("rb_agency_options",$rb_agency_options_arr);
 					update_option("rb_agency_options",$rb_agency_options_arr);
 				}
-			/*
-			 * License Key
-			 */
-				// Set license key via the RB_AGENCY_LICENSE constant or the $rb_agency_LICENSE variable
-				global $rb_agency_LICENSE;
-				// Set Constant
-				$license_key = defined("RB_AGENCY_LICENSE") && empty($rb_agency_LICENSE) ? RB_AGENCY_LICENSE : $rb_agency_LICENSE;
-				if(!empty($license_key)) {
-					// Store Key
-					update_option("rb_agency_license", md5($license_key));
-				}
+
 			/*
 			 * Install Schema
 			 */
@@ -228,7 +219,7 @@ class RBAgency_Init {
 					Customfield_type INT(10) NOT NULL DEFAULT '0',
 					PRIMARY KEY (ID)
 					);";
-				dbDelta($sql);				
+				dbDelta($sql);
 				// we need to drop that column so the custom preset will have default have
 				$wpdb->query("ALTER TABLE ".table_agency_customfields." DROP COLUMN ProfileCustomNotifyAdmin");
 				$wpdb->query("ALTER TABLE ".table_agency_customfields." DROP COLUMN ProfileCustomDisplayExDetails");
@@ -252,7 +243,7 @@ class RBAgency_Init {
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(14, 'Bust', 		7, '|32A|32B|32C|32D|32DD|34A|34B|34C|34D|34DD|36C|36D|36DD|', 0, 7, 2, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(15, 'Union', 		3, '|SAG/AFTRA|SAG ELIG|NON-UNION|', 0, 20, 0, 1, 1,0, 0,0, 1, 0, 0, 0, 0)");
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(16, 'Experience', 	4, '', 0, 13, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");
-						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(17, 'Language', 	1, '', 0, 14, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");						
+						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(17, 'Language', 	1, '', 0, 14, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(18, 'Booking', 	4, '', 0, 15, 0, 1, 1,0,0, 0, 1, 0, 0, 0, 0)");
 						$insert = $wpdb->query("INSERT INTO " . table_agency_customfields . " VALUES(19, 'Date', 		10, '', 0, 0, 0, 1, 1,0, 0, 1, 0, 0, 0, 0)");
 						//$results = $wpdb->query($insert);
@@ -565,7 +556,7 @@ class RBAgency_Init {
 			 * Flush rewrite rules
 			 */
 				// Flush rewrite rules
-				self::flush_rules();
+				//self::flush_rules();
 		}
 	/*
 	 * Plugin Deactivation
@@ -627,14 +618,7 @@ class RBAgency_Init {
 			register_setting('rb-agency-settings-layout-group', 'rb_agency_layout_options');
 			register_setting('rb-agency-dummy-settings-group', 'rb_agency_dummy_options'); //, setup dummy profile options
 		}
-	/*
-	 * License
-	 * Updates and License related
-	 */
-		// Get License Key
-		public static function get_key(){
-			return get_option("rb_agency_license");
-		}
+
 	// *************************************************************************************************** //
 	/*
 	 * Flush Rewrite Rules
@@ -644,34 +628,7 @@ class RBAgency_Init {
 			global $wp_rewrite;
 			$wp_rewrite->flush_rules();
 		}
-	// *************************************************************************************************** //
-	/*
-	 * Update Needed
-	 * Is this an updated version of the software and needs database upgrade?
-	 */
-		public static function update_check(){
-			// Hold the version in a seprate option
-			if(!get_option("rb_agency_version")) {
-				update_option("rb_agency_version", RBAGENCY_VERSION);
-			} else {
-				// Version Exists, but is it out of date?
-				if(get_option("rb_agency_version") <> RBAGENCY_VERSION){
-					include_once(RBAGENCY_PLUGIN_DIR .'/upgrade.php');
-				} else {
-					// Namaste, version number is correct
-				}
-			}
-		}
-	/*
-	 * Upgrade Check
-	 * Is there a newer version of the software available to upgrade to?
-	 */
-		public static function upgrade_check(){
-			// TODO:
-			//if(!class_exists("RBAgency_Update"))
-				//require_once("update.php");
-			//return RBAgency_Update::check_version($update_plugins_option, true);
-		}
+
 	// *************************************************************************************************** //
 	/*
 	 * Diagnostics

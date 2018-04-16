@@ -4,34 +4,6 @@
 	require_once(RBAGENCY_PLUGIN_DIR ."diagnostic.php");
 /*
 
-			//$remote_check_upgrade = RBAgency_Diagnostic::remote_check_upgrade();
-			$params = sprintf("of=RBAgency&key=%s&v=%s&wp=%s&php=%s&mysql=%s", urlencode(rb_agency_LICENSE), urlencode(RBAGENCY_VERSION), urlencode(get_bloginfo("version")), urlencode(phpversion()), urlencode($wpdb->db_version()));
-			$request_url = RBPLUGIN_URL . "/version-rb-agency/?" . $params;
-
-			//Getting version number
-			$options = array('method' => 'POST', 'timeout' => 20);
-			$options['headers'] = array(
-				'Content-Type' => 'application/x-www-form-urlencoded; charset=' . get_option('blog_charset'),
-				'User-Agent' => 'WordPress/' . get_bloginfo("version"),
-				'Referer' => get_bloginfo("url")
-			);
-			// Request Remote
-			$raw_response = wp_remote_request($request_url, $options);
-			// Get Body
-			$response = $raw_response["body"];
-			// Remove Line Breaks so we can pregmatch it
-			$response = preg_replace( "/\r|\n/", "", $response );
-			// Pull Versions
-			preg_match_all('/<version>(.*?)</version>/', $response, $matches);
-
-			echo "<pre>". $matches . "</pre>";
-
-			//print_r(array_map('intval',$matches[1]));
-
-			//
-
-
-
 	// Check Database
 		$database = RBAgency_Diagnostic::has_database_permission();
 		echo $database;
@@ -104,22 +76,6 @@
 				<table class="form-table" >
 
 				<tr valign="top">
-					<th scope="row"><label><?php _e("RB Agency Version", RBAGENCY_VERSION_WP_MIN); ?></label></th>
-					<td class="installation_item_cell">
-						<strong><?php echo RBAGENCY_VERSION ?></strong>
-					</td>
-					<td>
-						<?php
-							if(version_compare(RBAGENCY_VERSION, isset($version_info["version"])?$version_info["version"]:"", '>=')){
-								echo "<img src=\"". RBAGENCY_PLUGIN_URL ."assets/img/checked.png\"/>";
-							}
-							else {
-								echo sprintf(__("New version %s available. Automatic upgrade available on the %splugins page%s", RBAGENCY_TEXTDOMAIN), $version_info["version"], '<a href="plugins.php">', '</a>');
-							}
-						?>
-					</td>
-				</tr>
-				<tr valign="top">
 					<th scope="row"><label><?php _e("Folder is Writable", RBAGENCY_VERSION_WP_MIN); ?></label></th>
 					<td class="installation_item_cell">
 						<strong>Uploads Folder</strong>
@@ -168,5 +124,3 @@
 
 		</div>
 			<?php
-
-

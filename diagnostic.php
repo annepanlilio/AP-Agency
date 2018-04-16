@@ -2,47 +2,6 @@
 class RBAgency_Diagnostic {
 
 	/*
-	 * Check if most recent URL
-	 */
-
-	public static function remote_check_upgrade($cache=true){
-
-		$raw_response = get_transient("rbagency_update_info");
-		if(!$cache)
-			$raw_response = null;
-
-		if(!$raw_response){
-			//Getting version number
-			$options = array('method' => 'POST', 'timeout' => 20);
-			$options['headers'] = array(
-				'Content-Type' => 'application/x-www-form-urlencoded; charset=' . get_option('blog_charset'),
-				'User-Agent' => 'WordPress/' . get_bloginfo("version"),
-				'Referer' => get_bloginfo("url")
-			);
-			$request_url = RBPLUGIN_URL . "/version-rb-agency/?" . self::get_remote_request_params();
-			$raw_response = wp_remote_request($request_url, $options);
-echo $raw_response;
-			//caching responses.
-			set_transient("rbagency_update_info", $raw_response, 86400); //caching for 24 hours
-		}
-/*
-		if ( is_wp_error( $raw_response ) || 200 != $raw_response['response']['code']) {
-			return array("is_valid_key" => "1", "version" => "", "url" => "");
-		} else {
-
-			list($is_valid_key, $version, $url, $exp_time) = array_pad(explode("||", $raw_response['body']), 4, false);
-			$info = array("is_valid_key" => $is_valid_key, "version" => $version, "url" => $url);
-			if($exp_time)
-				$info["expiration_time"] = $exp_time;
-
-			return $info;
-
-		}
-*/
-	}
-
-
-	/*
 	 * Check Database Permissions
 	 */
 
@@ -106,9 +65,9 @@ echo $raw_response;
 			// Set Default Values
 			$rb_agency_value_stylesheet = $rb_agency_options_arr['rb_agency_value_stylesheet'];
 			if (isset($rb_agency_value_stylesheet) && !empty($rb_agency_value_stylesheet)) {
-				return true; 
+				return true;
 			} else {
-				return false; 
+				return false;
 			}
 		}
 

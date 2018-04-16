@@ -8,14 +8,13 @@ Author: Rob Bertholf
 Author URI: http://rob.bertholf.com/
 Version: 2.4.10
 */
-$RBAGENCY_VERSION = "2.4.10";
 /* If you modify the plugin set the following to TRUE */
-$RBAGENCY_CUSTOM = FALSE;
+$RBAGENCY_CUSTOM = TRUE;
 /*
 License: CF Commercial-to-GPL License
 Copyright 2007-2014 Rob Bertholf
-This License is a legal agreement between You and the Developer for the use of the Software. 
-By installing, copying, or otherwise using the Software, You agree to be bound by the terms of this License. 
+This License is a legal agreement between You and the Developer for the use of the Software.
+By installing, copying, or otherwise using the Software, You agree to be bound by the terms of this License.
 If You do not agree to the terms of this License, do not install or use the Software.
 See license.txt for full details.
 */
@@ -37,8 +36,6 @@ See license.txt for full details.
 /*
  * Declare Global Constants
  */
-	// RB Agency Version
-	define("RBAGENCY_VERSION", $RBAGENCY_VERSION); // e.g. 1.0
 	// Are there custom modifications? If so, restrict upgrades.
 	define('RBAGENCY_CUSTOM', $RBAGENCY_CUSTOM);
 	// WordPress Version
@@ -57,7 +54,7 @@ See license.txt for full details.
 		define('RBAGENCY_PLUGIN_URL', WP_PLUGIN_URL . '/' . RBAGENCY_PLUGIN_NAME . '/');
 	// Upload Directory
 	$upload_dir = wp_upload_dir();
-    
+
 	if (!defined('RBAGENCY_UPLOADREL')) // /wp-content/uploads/profile-media/
 		define("RBAGENCY_UPLOADREL", str_replace(get_bloginfo('url'), '', $upload_dir['baseurl']) ."/profile-media/" );
 	if (!defined('RBAGENCY_UPLOADDIR')) // http://domain.com/wp-content/uploads/profile-media/
@@ -66,18 +63,10 @@ See license.txt for full details.
 		define("RBAGENCY_UPLOADPATH", $upload_dir['basedir'] .DIRECTORY_SEPARATOR."profile-media".DIRECTORY_SEPARATOR );
 	// Define Text Domain
 	if (!defined('RBAGENCY_TEXTDOMAIN')) // rb-agency
-		define('RBAGENCY_TEXTDOMAIN', RBAGENCY_PLUGIN_NAME ); // 
+		define('RBAGENCY_TEXTDOMAIN', RBAGENCY_PLUGIN_NAME ); //
 	if(!defined( 'RBAGENCY_SLUG'))
 		define( 'RBAGENCY_SLUG', plugin_basename(__FILE__) );
-/*
- * License
- */
-	// If you hardcode a RB Agency License Key here, it will automatically populate on activation.
-	$RBAGENCY_LICENSE = "";
-	define('RBAGENCY_LICENSE', $RBAGENCY_LICENSE);
-	if(!defined( 'RBAGENCY_UPDATE_PATH'))
-	define( 'RBAGENCY_UPDATE_PATH', 'http://rbplugin.com/update/'. RBAGENCY_PLUGIN_NAME );
-// *************************************************************************************************** //
+
 /*
  * Set Table Names
  */
@@ -123,11 +112,6 @@ See license.txt for full details.
 		define("RBAGENCY_PROFILEDIR", get_bloginfo('wpurl') . rb_agency_getActiveLanguage() ."/profile/" ); // http://domain.com/wordpress/de/profile/
 	include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Init.php');
 		add_action( 'init', array('RBAgency_Init', 'init'), 0, 1 );
-	include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Update.php'); // Update Specific
-		add_action( 'init', 'update_check' );
-			function update_check() {
-				new RBAgency_Update (RBAGENCY_VERSION, RBAGENCY_UPDATE_PATH, RBAGENCY_SLUG);
-			}
 	// Profile Class
 	include_once(RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Profile.php');
     // Custom Fields
@@ -136,8 +120,6 @@ See license.txt for full details.
 	include_once(RBAGENCY_PLUGIN_DIR ."app/common.class.php");
 	include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Admin.php');
 		add_action( 'init', array('RBAgency_Admin', 'init'), 0, 1 );
-		add_action('init',  array('RBAgency_Init', 'update_check')); // Check if version number changed and upgrade required
-		add_action('init',  array('RBAgency_Init', 'upgrade_check')); // Check server if software is most current version
 	// Widgets & Shortcodes
 	include_once( RBAGENCY_PLUGIN_DIR .'lib/RBAgency-Extends.php');
 		add_action( 'init', array('RBAgency_Extends', 'init'), 0, 1 );
@@ -148,7 +130,7 @@ See license.txt for full details.
 	include_once(RBAGENCY_PLUGIN_DIR.'ext/ecard-create.php');
 // *************************************************************************************************** //
 /*
- * Edit posts capabilities bypass for twentytwelve themes 
+ * Edit posts capabilities bypass for twentytwelve themes
  */
 	function twentyeleven_option_page_capability( $capability ) {
 		return 'edit_posts';
