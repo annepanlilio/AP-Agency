@@ -31,6 +31,9 @@ Here are some guidelines to install the RB Agency plugin:
 More detailed information:
 http://rbplugin.com/plugin/rb-agency/documentation/
 
+Update: If you are seeing 404 error on your overview page, just apply this fix:
+https://github.com/Bertholf/RB-Agency/commit/cb09a61031a287d8ef8c77b7baa8c67ea8ccdf38
+
 If you would like help on installation and configuration, you may contact any of our support team:
 http://rbplugin.com/contact-us/
 
