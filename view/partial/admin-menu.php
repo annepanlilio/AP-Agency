@@ -7,14 +7,6 @@
 	/* 
 	 * Check Version
 	 */
-
-		// Find Remote Version:
-		$rb_remote_version = get_transient( 'rb_remote_version' );
-		if (false === $rb_remote_version) {
-			// Transient expired, refresh the data
-			$response = rb_get_remote_version();
-			set_transient( 'rb_remote_version', $response, DAY_IN_SECONDS );
-		}
     //removed the version update check to disable update notification
 	?>
 
