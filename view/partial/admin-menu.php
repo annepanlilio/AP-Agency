@@ -15,7 +15,7 @@
 			$response = rb_get_remote_version();
 			set_transient( 'rb_remote_version', $response, DAY_IN_SECONDS );
 		}
-
+    //removed the version update check to disable update notification
 	?>
 
 	<div id="rb-overview-icon" class="icon32"></div>
