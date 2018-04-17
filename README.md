@@ -32,7 +32,7 @@ More detailed information:
 http://rbplugin.com/plugin/rb-agency/documentation/
 
 If you would like help on installation and configuration, you may contact any of our support team:
-http://rbplugin.com/contact-us/request-support/
+http://rbplugin.com/contact-us/
 
 
 ## Change Log
