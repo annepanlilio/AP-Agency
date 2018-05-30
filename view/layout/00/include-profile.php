@@ -143,6 +143,11 @@ echo "					<ul>\n";
 							if(isset($rb_agency_option_showcontactpage) && $rb_agency_option_showcontactpage==1){
 								echo "<li   class=\"rel rb_contact\" id=\"rb_contact\">><strong>". __("Contact: ", RBAGENCY_TEXTDOMAIN). "<span>:</span></strong> <a href=\"". get_bloginfo("wpurl") ."/profile/".$ProfileGallery	."/contact/\">Click Here</a></li>\n";
 							}
+
+							if($ProfileResume) {
+								echo "<li><strong>". __("Resume: ", RBAGENCY_TEXTDOMAIN). "<span>:</span></strong> <span>".$ProfileResume."</span></li>\n";
+							}
+							
 echo "						</ul>\n"; // Close ul
 echo "					</div>\n"; // Close Stats
 echo "				</div>\n"; // Close .rbcol-3
