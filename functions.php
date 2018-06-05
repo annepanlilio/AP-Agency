@@ -1271,19 +1271,19 @@
 		$rb_agency_option_locationtimezone 	= isset($rb_agency_options_arr['rb_agency_option_locationtimezone'])?(int)$rb_agency_options_arr['rb_agency_option_locationtimezone']:0;
         if( (!empty($data3['ProfileCustomID']) || $data3['ProfileCustomID'] !="") ){
 			$subresult = $wpdb->get_results(
-            $wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID 
+            $wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomOtherValue,ProfileCustomDateValue,ProfileCustomID 
             FROM ". table_agency_customfield_mux ." 
             WHERE ProfileCustomID = %d 
             AND ProfileID = %d ", $data3['ProfileCustomID'],$ProfileID),ARRAY_A);
-			$row = end($subresult);//$subresult[0]; 
-            //print_r($subresult);
+			//$row = end($subresult);//$subresult[0]; 
+            $row = $subresult;
             
 			#get profile user linked
 			$user = $wpdb->get_row("SELECT ProfileUserLinked FROM ".table_agency_profile." WHERE ProfileID = ".$ProfileID,ARRAY_A);
 			$ProfileCustomTitle = $data3['ProfileCustomTitle'];
 			$ProfileCustomType  = $data3['ProfileCustomType'];
             $ProfileCustomDateValue =  ($row["ProfileCustomDateValue"]!=="1970-01-01"  && $row["ProfileCustomDateValue"]!=="0000-00-00")?$row["ProfileCustomDateValue"]:"";
-			$ProfileCustomValue = !empty($row["ProfileCustomValue"])?$row["ProfileCustomValue"]:$row["ProfileCustomValue"];
+			$ProfileCustomValue = !empty($row[1]["ProfileCustomValue"])?$row[1]["ProfileCustomValue"]:$row[0]["ProfileCustomValue"];
 			$ProfileCustomValue = !empty($ProfileCustomValue) ? $ProfileCustomValue : "";
 			$ProfileCustomDateValue = !empty($ProfileCustomDateValue) ? $ProfileCustomDateValue : "";
             $ProfileCustomOtherValue = !empty($row[1]["ProfileCustomOtherValue"])?$row[1]["ProfileCustomOtherValue"]:$row[0]["ProfileCustomOtherValue"];
@@ -1378,10 +1378,9 @@
 					echo "<select id=\"".$data3['ProfileCustomID']."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."[]\" ".($ProfileCustomType == 9?"multiple":"")." ".(!empty($updated_select) ? "class=\"marked_changed select-dropdown\"" : "class=\"select-dropdown\"").">\n";
 					echo "<option value=\"\">--</option>";
 					$arr = array();
-					if($ProfileCustomType == 9){
-							foreach($data as $val1){ 
-							 if($val1 != ""){
-								$arr[] = $val1; 
+					if($ProfileCustomType == 9){ 
+							foreach($data as $val1){
+								$arr[] = $val1;
 								if(in_array(trim(stripcslashes($val1),'"'),$expertiseToArray)){
 									$isSelected = "selected=\"selected\"";
 									echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
@@ -1390,23 +1389,24 @@
 								} else {
 									echo "<option value=\"".trim(stripslashes($val1),'"')."\">".stripslashes($val1)."</option>";
 								}
-                             }
 							}
+                            
+                            
+                            
 						} else {
 							$pos = 0;
 							foreach($data as $val1){
-							 if($val1 != ""){
 								$arr[] = $val1;
 								if($val1 != end($data) && $val1 != $data[0]){
-									if (trim(stripslashes($val1),'"') == trim(stripslashes($ProfileCustomValue),'"')) {
+									if (trim(stripslashes($val1),'"') == trim(stripslashes($ProfileCustomValue),'"') || in_array(stripslashes($val1), explode(",",$ProfileCustomValue)) || !in_array($ProfileCustomValue,$arr)) {
 										$isSelected = "selected=\"selected\"";
 										echo "<option value=\"".trim(stripslashes($val1),'"')."\"".$isSelected .">".stripslashes($val1)."</option>";
 									} else {
 										echo "<option value=\"".trim(stripslashes($val1),'"')."\" >".stripslashes($val1)."</option>";
 									}
 								}
-			                  }
-                            }
+							}
+                            
 						}
 						/**$pos = 0;
 						foreach($data as $val1){
