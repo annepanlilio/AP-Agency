@@ -1282,7 +1282,7 @@
 			$user = $wpdb->get_row("SELECT ProfileUserLinked FROM ".table_agency_profile." WHERE ProfileID = ".$ProfileID,ARRAY_A);
 			$ProfileCustomTitle = $data3['ProfileCustomTitle'];
 			$ProfileCustomType  = $data3['ProfileCustomType'];
-            $ProfileCustomDateValue =  ($row["ProfileCustomDateValue"]!=="1970-01-01"  && $row["ProfileCustomDateValue"]!=="0000-00-00")?$row["ProfileCustomDateValue"]:"";
+            $ProfileCustomDateValue =  ($row[0]["ProfileCustomDateValue"]!=="1970-01-01"  && $row[0]["ProfileCustomDateValue"]!=="0000-00-00")? $row[0]["ProfileCustomDateValue"]:"";
 			$ProfileCustomValue = !empty($row[1]["ProfileCustomValue"])?$row[1]["ProfileCustomValue"]:$row[0]["ProfileCustomValue"];
 			$ProfileCustomValue = !empty($ProfileCustomValue) ? $ProfileCustomValue : "";
 			$ProfileCustomDateValue = !empty($ProfileCustomDateValue) ? $ProfileCustomDateValue : "";
