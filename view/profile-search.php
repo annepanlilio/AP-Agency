@@ -1,5 +1,6 @@
 <?php
-$rb_agency_options_arr = get_option('rb_agency_options');
+
+    $rb_agency_options_arr = get_option('rb_agency_options');
 	$rb_agency_option_privacy = isset($rb_agency_options_arr['rb_agency_option_privacy']) ? $rb_agency_options_arr['rb_agency_option_privacy'] :0;
 	$rb_agency_option_persearch  = isset($rb_agency_options_arr['rb_agency_option_persearch']) ? (int)$rb_agency_options_arr['rb_agency_option_persearch']:1000;
 	$rb_agency_option_form_sidebar = isset($rb_agency_options_arr['rb_agency_option_form_sidebar'])?$rb_agency_options_arr['rb_agency_option_form_sidebar']:0;
@@ -55,29 +56,27 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 		/*
 		 * Set Title
 		 */
-		echo '			<header class="entry-header">';
-			if ( (isset($_REQUEST["form_action"]) && $_REQUEST["form_action"] == "search_profiles") || isset($_REQUEST["page"]))  {
-				echo "			<h1 class=\"entry-title\">". __("Search Results", RBAGENCY_TEXTDOMAIN) ."</h1>\n";
-			} else {
+		echo '<header class="entry-header">';
+			
 				if ( (get_query_var("type") == "search-basic") || (isset($_POST['form_mode']) && $_POST['form_mode'] == 0 ) ){
 						echo "	<h1 class=\"entry-title\">". __("Basic Search", RBAGENCY_TEXTDOMAIN) ."</h1>\n";
 				} elseif ( (get_query_var("type") == "search-advanced")|| (isset($_POST['form_mode']) && $_POST['form_mode'] == 1 ) ){
 						echo "	<h1 class=\"entry-title\">". __("Advanced Search", RBAGENCY_TEXTDOMAIN) ."</h1>\n";
 				}
-			}
-		echo '			</header>';
+			
+		echo '</header>';
 
 		/*
 		 * IF: Search Results
 		 */
 
-			echo "	<div id=\"profile-search-results\" class=\"entry-content\">\n";
+			echo "<div id=\"profile-search-results\" class=\"entry-content\">\n";
 
-			//if ( isset($_REQUEST["form_action"]) && $_REQUEST["form_action"] == "search_profiles" ) {
-			if ( (isset($_REQUEST["form_action"]) && $_REQUEST["form_action"] == "search_profiles") || isset($_REQUEST["page"]) ) {
+ 
+			if ( (isset($_POST["form_action"]) && $_POST["form_action"] == "search_profiles") ) {
 
 				// Filter Post
-				foreach($_REQUEST as $key=>$value) {
+				foreach($_POST as $key=>$value) {
 					if ( is_array($value) && !empty($value) ){
 						$is_array_empty = array_filter($_REQUEST[$key]);
 						if(empty($is_array_empty)){
@@ -89,41 +88,21 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 						}
 					}
 				}
-				//unset( $_REQUEST['search_profiles'] );
-				//unset( $_REQUEST['form_mode'] );
 				// Keep form_action
 				$is_paging = get_query_var("page") ? get_query_var("page"):get_query_var("paging");
 				// Check something was entered in the form
 
 				
-				if (count($_REQUEST) > 1 || $is_paging) {
+				if (count($_POST) > 1) {
 					$search_array = array();
-					$search_array = array_filter($_REQUEST);
+					$search_array = array_filter($_POST);
 					//var_dump($search_array);
 					$search_array = RBAgency_Profile::search_process();
-					$search_array["limit"] = $rb_agency_option_persearch;
-					
-					if(isset($_REQUEST['page']) && count($search_array) < 3 )
-					{
-						$search_array = $_SESSION ;
-					}
-					
-					// Return SQL string based on fields
-					$search_sql_query = RBAgency_Profile::search_generate_sqlwhere($search_array);
-
-					if(!empty($search_sql_query['custom'])){
-						unset($_SESSION['custom_search']);
-						$_SESSION['custom_search'] = $search_sql_query['custom'];
-					}else{
-						unset($_SESSION['custom_search']);
-						$_SESSION['custom_search'] = '';
-					}
-
-					$search_sql_query['custom'] = $_SESSION['custom_search'];
-					
-					// Conduct Search
-					echo RBAgency_Profile::search_results($search_sql_query, 0, false, $search_array);
-					
+                    unset($_SESSION['search_array']);
+                    
+                   
+                    $_SESSION['search_array'] = $search_array;
+					wp_redirect('/search-results');
 					
 
 				} else {
@@ -131,9 +110,7 @@ $rb_agency_options_arr = get_option('rb_agency_options');
 				}
 			
 			}
-			else {
-				echo "<strong>". _e("No search criteria selected, please initiate your search.", RBAGENCY_TEXTDOMAIN) ."</strong>";
-			}
+			
 			echo "	</div><!-- #profile-search-results -->\n"; // #profile-search-results
 
 		/*

@@ -57,7 +57,8 @@ class RBAgency_Profile {
 				// Which Target Location?
 				if ($location == 0) {
 					// Public Facing
-					$rb_agency_searchurl = get_bloginfo("wpurl") ."/search-results/";
+					//$rb_agency_searchurl = get_bloginfo("wpurl") ."/search-results/";
+                    $rb_agency_searchurl = "";
 					if ($type == 0) {
 						$search_layout = "basic";
 					} else {
@@ -1818,6 +1819,34 @@ class RBAgency_Profile {
 			}else{
 				$filter .= " GROUP BY profile.ProfileID";
 			}
+            
+            if(isset($atts['sort_by']) && $atts['sort_by']!==NULL){
+                $sortby = strtolower($atts['sort_by']);
+                $sortby = str_replace(" ","",$sortby);
+                
+                
+				    switch ($sortby){ 
+                	case 'birthdate': $atts["sort"] = "profile.ProfileDateBirth"; 
+                	break;
+                
+                	case 'firstname': $atts["sort"] = "profile.ProfileContactNameFirst"; 
+                	break;
+                
+                	case 'lastname': $atts["sort"] = "profile.ProfileContactNameLast"; 
+                	break;
+                
+                	case 'displayname': $atts["sort"] = "profile.ProfileContactDisplay"; 
+                	break;
+                    
+                    case 'dateregistered': $atts["sort"] = "profile.ProfileDateCreated";
+                	break;
+                }
+                
+                
+			}
+            if(isset($atts['order_by']) && $atts['order_by']!=NULL){
+                $atts["dir"] = $atts['order_by'];
+            }
 			// Convert Input
 			if(is_array($atts)) {
 			/*
@@ -1837,9 +1866,9 @@ class RBAgency_Profile {
 			 */
 				if (isset($sort) && !empty($sort) && !isset($_GET['page'])){
 					$filter .= " ORDER BY $sort $dir ";
-				} elseif(isset($sort) && !empty($sort) && isset($_GET['page'])){
-					$filter .= " ORDER BY profile.ProfileContactNameFirst ASC ";
-				}
+				} 
+                
+                
 			/*
 			 * LIMIT
 			 */
@@ -2077,6 +2106,7 @@ class RBAgency_Profile {
 					$wpdb->print_error();
 					echo "<hr><div style='color: red;'>". $sql ."</div>";
 				}
+
 			/*
 			 * Check if search is Admin or Public
 			 */
@@ -2532,7 +2562,7 @@ class RBAgency_Profile {
 					}
 					$type = get_query_var("type");
 					// if(!in_array($type,array("favorite","castingjobs","casting","profilecastingcart"))){
-					if(in_array($type,array("search-basic","search-advanced","search-basic","search-result"))){
+					if(in_array($type,array("search-basic","search-advanced","search-result"))){
 						
 						?>
 							<script>

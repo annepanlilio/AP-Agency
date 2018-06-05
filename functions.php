@@ -186,12 +186,15 @@
 		{
 			//echo get_query_var( 'type' );
 			if (get_query_var( 'type' ) == "search-basic" ||
-				get_query_var( 'type' ) == "search-result" ||
-				get_query_var( 'type' ) == "search-advanced" )
-			{
+				get_query_var( 'type' ) == "search-advanced" ) {
 				// Public Profile Search
 				return RBAGENCY_PLUGIN_DIR . 'view/profile-search.php';
-			} elseif(get_query_var( 'type' ) == "profilecastingcart"){
+
+			}elseif(get_query_var( 'type' ) == "search-result") {
+			// Casting cart
+				return RBAGENCY_PLUGIN_DIR . 'view/profile-search-result.php';
+
+            }elseif(get_query_var( 'type' ) == "profilecastingcart"){
 				// Casting cart
 				return RBAGENCY_PLUGIN_DIR . 'view/profile-admincart.php';
 			} elseif(get_query_var( 'type' ) == "castingjobs"){
@@ -1069,7 +1072,7 @@
 					We're actually saving the code to a variable in case we want to draw it more than once.
 				 */
 				if($lastpage > 1){
-					if($this->page){
+					if($this->page && $this->prevI!="" && $this->prevT!=""){
 						//anterior button
 						if($this->page > 1)
 								$this->pagination .= "<a href=\"".$this->get_pagenum_link($prev)."\" class=\"pagedir prev\">$p</a>";
@@ -1124,7 +1127,7 @@
 											$this->pagination .= "<a href=\"".$this->get_pagenum_link($counter)."\">$counter</a>";
 							}
 					}
-					if($this->page){
+					if($this->page && $this->nextI!="" && $this->nextT!=""){
 						//siguiente button
 						if ($this->page < $counter - 1)
 								$this->pagination .= "<a href=\"".$this->get_pagenum_link($next)."\" class=\"pagedir next\">$n</a>";
@@ -1239,6 +1242,8 @@
 	// Custom Fields TEMPLATE
 	function rb_custom_fields_template($visibility = 0, $ProfileID, $data3){
 		global $wpdb;
+        
+        
 		//check for profile custom date
 		$sql = "SELECT ProfileCustomDateValue FROM ".table_agency_customfield_mux." LIMIT 1";
 		$r = $wpdb->get_results($sql);
@@ -1247,6 +1252,15 @@
 			$queryAlter = "ALTER TABLE " . table_agency_customfield_mux ." ADD ProfileCustomDateValue DATETIME default NULL";
 			$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
 		}
+        
+        $sql = "SELECT ProfileCustomOtherValue FROM ".table_agency_customfield_mux." LIMIT 1";
+		$r = $wpdb->get_results($sql);
+		if(count($r) == 0){
+			//create column
+			$queryAlter = "ALTER TABLE " . table_agency_customfield_mux ." ADD ProfileCustomOtherValue TEXT default NULL AFTER `ProfileCustomValue`";
+			$resultsDataAlter = $wpdb->query($queryAlter,ARRAY_A);
+		}
+        
 		$p = $wpdb->get_row("SELECT ProfileUserLinked,ProfileIsActive FROM ".table_agency_profile." WHERE ProfileID = ".$ProfileID,ARRAY_A);
 		if($p["ProfileIsActive"] == 1){
 			delete_user_meta($p['ProfileUserLinked'], "updated_ProfileCustomID".$data3['ProfileCustomID']);
@@ -1272,6 +1286,7 @@
 			$ProfileCustomValue = !empty($row["ProfileCustomValue"])?$row["ProfileCustomValue"]:$row["ProfileCustomValue"];
 			$ProfileCustomValue = !empty($ProfileCustomValue) ? $ProfileCustomValue : "";
 			$ProfileCustomDateValue = !empty($ProfileCustomDateValue) ? $ProfileCustomDateValue : "";
+            $ProfileCustomOtherValue = !empty($row[1]["ProfileCustomOtherValue"])?$row[1]["ProfileCustomOtherValue"]:$row[0]["ProfileCustomOtherValue"];
 			/* Pull data from post so data will not lost @Satya 12/12/2013 */
 			if($ProfileCustomValue=="" && isset($_POST)){
 				$customindex = "ProfileCustomID".$data3['ProfileCustomID'] ;
@@ -1405,26 +1420,53 @@
 							}
 						}**/
 					echo "</select>\n";
-					if(!in_array($ProfileCustomValue, $arr) && $ProfileCustomType != 9){
-						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "")."\" ".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "style=\"display:none;\"")." style=\"display:none;\">";
-					}else{
-						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
-					}
+					//if(!in_array($ProfileCustomValue, $arr) && $ProfileCustomType != 9){
+//						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "")."\" ".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "style=\"display:none;\"")." style=\"display:none;\">";
+//					}else{
+//						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
+//					}
+                    $displayothervalue = !$ProfileCustomOtherValue ? 'style=display:none':'';
+					echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomOtherValue) ? $ProfileCustomOtherValue : "")."\"  $displayothervalue>";
+					
+					if($ProfileCustomType == 9){
 					?>
 					<script>
 						jQuery(document).ready(function($){
-							$(".select-dropdown").change(function(){
+							$("#<?php echo $data3['ProfileCustomID'];?>").on('change',function(){ 
 								var customfield_id = $(this).attr('id');
-								console.log($(this).val());
-								if($(this).val() == 'Other' || $(this).val() == 'Others' || $(this).val() == 'other' || $(this).val() == 'others'){
-									$(".ProfileCustomID_other_"+customfield_id).show();
-								}else{
-									$(".ProfileCustomID_other_"+customfield_id).hide();
-								}
+	    							$( "#<?php echo $data3['ProfileCustomID'];?> option:selected" ).each(function(){
+								        if($(this).val() == 'Other' || $(this).val() == 'Others' || $(this).val() == 'other' || $(this).val() == 'others'){
+									       $(".ProfileCustomID_other_"+customfield_id).show();
+        								}else{
+        									$(".ProfileCustomID_other_"+customfield_id).hide();
+                                            $(".ProfileCustomID_other_"+customfield_id).val(null);
+        								}
+								    });
+                                    
+                                
+								
 							});
 						});
 					</script>
 					<?php
+                    }else{
+                    ?>    
+                        <script>
+						
+                        jQuery(document).ready(function($){
+							$("#<?php echo $data3['ProfileCustomID'];?>").on('change',function(){ 
+								var customfield_id = $(this).attr('id');
+								if($(this).val() == 'Other' || $(this).val() == 'Others' || $(this).val() == 'other' || $(this).val() == 'others'){
+									$(".ProfileCustomID_other_"+customfield_id).show();
+								}else{
+									$(".ProfileCustomID_other_"+customfield_id).hide();
+                                    $(".ProfileCustomID_other_"+customfield_id).val(null);
+								}
+							});
+						});
+					  </script>
+                    <?php    
+                    }
 					if (!empty($data2) && !empty($option2)) {
 						echo "<label class=\"dropdown\">".$data2[0]."</label>";
 							$pos2 = 0;
@@ -1458,28 +1500,27 @@
 						}
 					}
 					echo "</fieldset>";
-					if(!in_array($ProfileCustomValue, $array_customOptions_values) && !empty($ProfileCustomValue)){
-						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "")."\" ".(!empty($ProfileCustomValue)? "" : "style=\"display:none;\"")." style=\"display:none;\">";
-					}else{
-						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
-					}
+					//if(!in_array($ProfileCustomValue, $array_customOptions_values) && !empty($ProfileCustomValue)){
+//						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "")."\" ".(!empty($ProfileCustomValue)? "" : "style=\"display:none;\"")." style=\"display:none;\">";
+//					}else{
+//						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
+//					}
+                    $displayothervalue = !$ProfileCustomOtherValue ? 'style=display:none':'';
+                    echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomOtherValue) ? $ProfileCustomOtherValue : "")."\"  $displayothervalue>";
+					
 					?>
 					<script>
 						jQuery(document).ready(function($){
-							$(".select-checkbox").click(function(){
+							$(".select-checkbox[value='Other'],.select-checkbox[value='Others']").click(function(){
 								var customfield_id = $(this).attr('id');
-								console.log($(this).val());
-								if($(this).val() == 'Other' || $(this).val() == 'Others' || $(this).val() == 'other' || $(this).val() == 'others'){
+								
+								
 									if($(this).is(':checked') == true){
 										$(".ProfileCustomID_other_"+customfield_id).show();
 									}else{
 										$(".ProfileCustomID_other_"+customfield_id).hide();
+                                        $(".ProfileCustomID_other_"+customfield_id).val(null);
 									}
-								}else{
-									if($(this).is(':checked') == false){
-										$(".ProfileCustomID_other_"+customfield_id).hide();
-									}
-								}
 							});
 						});
 					</script>
@@ -1505,11 +1546,14 @@
 							echo "</fieldset>";
 						}
 					}
-					if(!in_array($ProfileCustomValue, $array_customOptions_values) && !empty($ProfileCustomValue)){
-						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "")."\" ".(!empty($ProfileCustomValue) ? "" : "style=\"display:none;\"")." style=\"display:none;\">";
-					}else{
-						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
-					}
+					//if(!in_array($ProfileCustomValue, $array_customOptions_values) && !empty($ProfileCustomValue)){
+//						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomValue) ? $ProfileCustomValue : "")."\" ".(!empty($ProfileCustomValue) ? "" : "style=\"display:none;\"")." style=\"display:none;\">";
+//					}else{
+//						echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" style=\"display:none;\">";
+//					}
+                    $displayothervalue = !$ProfileCustomOtherValue ? 'style=display:none':'';
+                    echo "<input type=\"text\" class=\"ProfileCustomID_other_".$data3['ProfileCustomID']."\" name=\"ProfileCustomID_other_". $data3['ProfileCustomID']."\" value=\"".(!empty($ProfileCustomOtherValue) ? $ProfileCustomOtherValue : "")."\"  $displayothervalue>";
+					
 					?>
 					<script>
 						jQuery(document).ready(function($){
@@ -1520,6 +1564,7 @@
 									$(".ProfileCustomID_other_"+customfield_id).show();
 								}else{
 									$(".ProfileCustomID_other_"+customfield_id).hide();
+									
 								}
 							});
 						});

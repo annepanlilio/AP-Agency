@@ -305,6 +305,15 @@ class RBAgency_Admin {
 					type=$('#rb_agency_type').val();
 					if(type!='')
 					str+=' type="'+type+'"';
+                    
+                    sort=$('#rb_agency_sort').val();
+					if(sort!='')
+					str+=' sort_by="'+sort+'"';
+                    
+                    order=$('#rb_agency_order').val();
+					if(order!='')
+					str+=' order_by="'+order+'"';
+                    
 					send_to_editor('[profile_list'+str+']');
 				});
                 
@@ -353,6 +362,19 @@ class RBAgency_Admin {
 				}
             ?>
 			</select>
+			</td></tr>
+            <tr><td><?php echo __("Sort by", RBAGENCY_TEXTDOMAIN)?>:</td><td>
+            <select id="rb_agency_sort" name="rb_agency_sort">
+                <option value='displayname'>Display Name</option>
+				<option value='birthdate'>BirthDate</option>
+                <option value='firstname'>First Name</option>
+                <option value='lastname'>Last Name</option>
+                
+			</select>
+            <select id="rb_agency_order" name="rb_agency_order">
+            <option value='ASC'>ASC</option>
+            <option value='DESC'>DESC</option>
+            </select>
 			</td></tr>
 			</table>
 			<p><input type="button" id="insertProfile_btn" value="<?php echo __("Insert Profile Grid", RBAGENCY_TEXTDOMAIN)?>" /></p>
@@ -450,3 +472,120 @@ class RBAgency_Admin {
 					echo __("Need help? Check out RB Agency <a href=\"http://rbplugin.com\" target=\"_blank\" title=\"RB Agency Documentation\">Documentation</a>.<br />", RBAGENCY_TEXTDOMAIN );
 				}
 			}
+
+add_action('wp_dashboard_setup', 'rbagency_profile_dashboard_widget');
+  
+function rbagency_profile_dashboard_widget() {
+global $wp_meta_boxes;
+ 
+wp_add_dashboard_widget('rbagency_profile_widget', 'Agency Profiles', 'rbagency_profile_list');
+}
+
+add_action('wp_ajax_dashboarList','rbagency_profile_list');
+add_action('wp_nopriv_ajax_dashboarList','rbagency_profile_list');
+ 
+function rbagency_profile_list(){
+    
+    global $wpdb;
+    $dir = "ASC";
+    $filter = " " ;
+    
+    $sqldata = "SELECT * FROM " . table_agency_profile . " profile LEFT JOIN " . table_agency_data_type . " profiletype ON profile.ProfileType = profiletype.DataTypeID " . $filter . "" ;
+	$wpdb->get_results($sqldata);
+	
+    $items = $wpdb->num_rows;
+        
+    $page = isset($_POST['page'])? $_POST['page'] : 1;
+	$p = new RBAgency_Pagination;
+	$p->items($items);
+	$p->limit(50); // Limit entries per page
+    
+	$p->target("admin.php?page=" . $page);
+	if(isset($p->paging)){
+		$p->currentPage($page); // Gets and validates the current page
+	}
+	$p->calculate(); // Calculates what to show
+	$p->parameterName('paging');
+	$p->adjacents(1); //No. of page away from the current page
+	if (!isset($_POST['paging'])) {
+		$p->page = 1;
+	} else {
+		$p->page = $_POST['paging'];
+	}
+		//Query for limit paging
+    $limit = "LIMIT " . ($p->page - 1) * $p->limit . ", " . $p->limit;
+        
+    $sort = "profile.ProfileContactNameFirst,profile.ProfileContactNameLast";
+    $html = "<div id='DashboardList'>";
+    $html .= "<table><thead><tr><th>ID</th><th>Name</th><th>Image</th></tr></thead><tbody>";
+    
+    $queryData1 = "SELECT * FROM " . table_agency_profile . " profile LEFT JOIN " . table_agency_data_type . " profiletype ON profile.ProfileType = profiletype.DataTypeID " . $filter . " ORDER BY $sort $dir $limit";
+	$resultsData1 = $wpdb->get_results($queryData1,ARRAY_A);
+    
+    foreach ($resultsData1 as $data) {
+        $ProfileID = $data['ProfileID'];
+        $ProfileContactNameFirst = stripslashes($data['ProfileContactNameFirst']);
+		$ProfileContactNameLast = stripslashes($data['ProfileContactNameLast']);
+        $ProfileGallery = stripslashes($data['ProfileGallery']);
+        
+        $query = "SELECT * FROM " . table_agency_profile_media . " WHERE ProfileID='%d' AND ProfileMediaType = 'Image' GROUP BY(ProfileMediaURL) ORDER BY ProfileMediaPrimary DESC LIMIT 1";
+		$resultsImg=  $wpdb->get_row($wpdb->prepare($query,$ProfileID),ARRAY_A);
+        $image_path = RBAGENCY_UPLOADDIR . $ProfileGallery . "/" . $resultsImg['ProfileMediaURL'];
+			$params = array(
+				'width' => 55,
+				'height' => 75
+			);
+
+        $profile_image_src = bfi_thumb( $image_path, $params );
+        $html .="<tr><td style='width:50px'>$ProfileID</td>
+        <td style='width:80%;text-align:center;'>
+            $ProfileContactNameFirst $ProfileContactNameLast
+            <div class=row-actions>
+			<span class=edit><a href=". admin_url("admin.php?page=rb_agency_profiles&amp;action=editRecord&amp;ProfileID=".$ProfileID)." title=" . __("Edit this Record", RBAGENCY_TEXTDOMAIN) .">". __("Edit", RBAGENCY_TEXTDOMAIN) . "</a> | </span>
+			<span class=edit><a href=" .RBAGENCY_PROFILEDIR . $ProfileGallery . " title=". __("View", RBAGENCY_TEXTDOMAIN) ." target=_blank>". __("View", RBAGENCY_TEXTDOMAIN) . "</a></span>
+			</div>
+        </td>
+        <td style='text-align:center'><img src='$profile_image_src'/></td></tr>";
+    }
+    
+    $html .="</tbody></table>";
+    $html .= $p->show();
+    $html .="
+    <script>jQuery(document).ready(function(){
+        var Pager = function(url,sParam) {
+            var sPageURL = url;
+            var sURLVariables = sPageURL.split('&');
+        	for (var i = 0; i < sURLVariables.length; i++)
+    	    {
+    	        var sParameterName = sURLVariables[i].split('=');
+    	        if (sParameterName[0] == sParam)
+    	        {
+    	            return sParameterName[1];
+    	        }
+    	    }
+        }
+        var links = jQuery('.rbpagination').find('a');
+        
+            jQuery('.rbpagination').on('click','a',function(){
+                var url = jQuery(this).attr('href');
+                var pager = Pager(url,'paging');
+                var page = Pager(url,'page');
+                if(jQuery(this).hasClass('pagedir next')){
+                    var pager = parseInt(pager) + 1;
+                }else if(jQuery(this).hasClass('pagedir prev')){
+                    var pager = parseInt(pager) - 1;
+                }
+                jQuery.post(ajaxurl,{action:'dashboarList',page:page,paging:pager},function(response){
+                    jQuery('#DashboardList').replaceWith(response);
+                });
+                return false;
+            });    
+    });
+    </script>
+    ";
+    $html .= "</div>";
+    echo $html;
+    if(isset($_POST['action']) && $_POST['action']=="dashboarList"){
+        exit();
+    }
+}
