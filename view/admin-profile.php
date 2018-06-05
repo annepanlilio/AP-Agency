@@ -612,7 +612,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
                         
 						// Add New Custom Field Values
 						foreach ($_POST as $key => $value) {
-							if ((substr($key, 0, 15) == "ProfileCustomID" || substr($key, 0, 22) == "ProfileCustomID_other_") && (isset($value) && !empty($value) || $value == 0)) {
+						  
+							if (is_numeric(substr($key, 15)) && (isset($value) && !empty($value) || $value == 0)) { 
 								$ProfileCustomID = substr($key, 15);
 								if (is_array($value)) {
 									$value = implode(",", $value);
@@ -623,18 +624,19 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 									rb_send_notif_due_date_reached_edit($ProfileID,$ProfileCustomID,$value);
 									$value = !empty($value) ? date("y-m-d h:i:s",strtotime($value)) : "";
 									//$insert1 = $wpdb->prepare("INSERT INTO " . table_agency_customfield_mux . " (ProfileID,ProfileCustomID,ProfileCustomDateValue)" . " VALUES (%d,%d,%s)",$ProfileID,$ProfileCustomID,stripslashes($value));
+                                    
 								} else {
-									if(!is_numeric($ProfileCustomID)){
-										$ProfileCustomID = substr($key, 22);
-										$value = !empty($_POST["ProfileCustomID_other_".$ProfileCustomID]) ? $_POST["ProfileCustomID_other_".$ProfileCustomID] : "" ;
-									}
 									
-								}
-                                
-                                if($value){
-                                    $wpdb->insert( table_agency_customfield_mux, array("ProfileID"=>$ProfileID,"ProfileCustomID"=>$ProfileCustomID,"ProfileCustomValue"=>stripslashes($value)) ); 
-                                }
+									$wpdb->insert( table_agency_customfield_mux, array("ProfileID"=>$ProfileID,"ProfileCustomID"=>$ProfileCustomID,"ProfileCustomValue"=>stripslashes($value)) ); 
+								}                                
+   
 							}
+                            
+                            if (is_numeric(substr($key,22)) && $value !="") {
+
+									$ProfileCustomID = substr($key, 22);
+									$wpdb->insert( table_agency_customfield_mux, array("ProfileID"=>$ProfileID,"ProfileCustomID"=>$ProfileCustomID,"ProfileCustomOtherValue"=>stripslashes($value)) ); 
+                            }
 						}
                         
                         
