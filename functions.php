@@ -1432,18 +1432,24 @@
 					?>
 					<script>
 						jQuery(document).ready(function($){
-							$("#<?php echo $data3['ProfileCustomID'];?>").on('change',function(){ 
-								var customfield_id = $(this).attr('id');
-	    							$( "#<?php echo $data3['ProfileCustomID'];?> option:selected" ).each(function(){
-								        if($(this).val() == 'Other' || $(this).val() == 'Others' || $(this).val() == 'other' || $(this).val() == 'others'){
-									       $(".ProfileCustomID_other_"+customfield_id).show();
-        								}else{
-        									$(".ProfileCustomID_other_"+customfield_id).hide();
-                                            $(".ProfileCustomID_other_"+customfield_id).val(null);
+							$('.table-customfields').on('change',"#<?php echo $data3['ProfileCustomID'];?>",function(){ 
+								var customfield_id = $(this).attr('id'); 
+                                var selected = 0;
+	    						     $( "#<?php echo $data3['ProfileCustomID'];?> option:selected" ).each( function(i,v){ 
+								        if($(v).val() == 'Other' || $(v).val() == 'Others' || $(v).val() == 'other' || $(v).val() == 'others'){
+								            selected = 1;
         								}
+                                        
 								    });
                                     
-                                
+                                    if(selected ===1){console.log(selected);
+                                        $(".ProfileCustomID_other_<?php echo $data3['ProfileCustomID'];?>").removeAttr('style');
+                                        $(".ProfileCustomID_other_"+customfield_id).removeAttr('disabled');
+					                    $(".ProfileCustomID_other_"+customfield_id).show();
+                                    }else{
+                                        $(".ProfileCustomID_other_"+customfield_id).hide();
+                                        $(".ProfileCustomID_other_"+customfield_id).attr('disabled');
+                                    }
 								
 							});
 						});
@@ -1579,7 +1585,7 @@
 							if(!empty($row[0]['ProfileCustomValue'])){
 								$ProfileCustomValue = $row[0]['ProfileCustomValue'];
 							}
-							echo "<select id=\"". $data3['ProfileCustomID']."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" ".(!empty($updated_select) ? "class=\"marked_changed select-dropdown\"" : "class=\"select-dropdown\"").">\n";
+							echo "<select id=\"Metrics_". $data3['ProfileCustomID']."\" name=\"ProfileCustomID". $data3['ProfileCustomID'] ."\" ".(!empty($updated_select) ? "class=\"marked_changed select-dropdown\"" : "class=\"select-dropdown\"").">\n";
 							echo "  <option value=\"\">--</option>\n";
 							//
 							$i=12;
@@ -1602,9 +1608,9 @@
 							?>
 							<script>
 								jQuery(document).ready(function($){
-									$(".select-dropdown").click(function(){
+									$("#Metrics_<?php echo $data3['ProfileCustomID'];?>").click(function(){
 										var customfield_id = $(this).attr('id');
-										console.log($(this).val());
+										
 										if($(this).val() == 'Other' || $(this).val() == 'Others' || $(this).val() == 'other' || $(this).val() == 'others'){
 											$(".ProfileCustomID_other_"+customfield_id).show();
 										}else{
@@ -1836,39 +1842,18 @@
 				}
 		$title_to_exclude_arr = array();
 		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue, cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID AND c.ProfileCustomHideProfileView = 0 WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
-		
-        foreach ($resultsCustom as $resultCustom) {
-			
-            $subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomOtherValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $resultCustom->ProfileCustomID,$ProfileID),ARRAY_A);
-			$row = $subresult;
-				//if(!empty($resultCustom->ProfileCustomValue)){
-//					$resultCustom->ProfileCustomValue = $resultCustom->ProfileCustomValue;
-//				}else{
-//					for($idx=0;$idx<10;$idx++){
-//						if(!empty($row[$idx]['ProfileCustomValue'])){
-//							$resultCustom->ProfileCustomValue = $row[$idx]['ProfileCustomValue'];
-//						}					
-//					}
-//				}
-           if(empty($resultCustom->ProfileCustomValue)){	
-            if(count($row)==2){
-                $profilecustomvalue = "";
-                foreach($row as $customvalues){ 
-                    
-                    if($customvalues['ProfileCustomOtherValue']){
-                        $othervalue = $customvalues['ProfileCustomOtherValue'];
-                        $profilecustomvalue .= $othervalue .",";
-                    }else{
-                        $profilecustomvalue .= $customvalues['ProfileCustomValue'];
-                    }
-                    
-                }
-                $customvalue = str_replace(',Other','',$profilecustomvalue);
-            }else{
-                $customvalue = $row[0]['ProfileCustomValue'];
-            }
-            $resultCustom->ProfileCustomValue = $customvalue;
-            }
+		foreach ($resultsCustom as $resultCustom) {
+			$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $resultCustom->ProfileCustomID,$ProfileID),ARRAY_A);
+				$row = $subresult;
+				if(!empty($resultCustom->ProfileCustomValue)){
+					$resultCustom->ProfileCustomValue = $resultCustom->ProfileCustomValue;
+				}else{
+					for($idx=0;$idx<10;$idx++){
+						if(!empty($row[$idx]['ProfileCustomValue'])){
+							$resultCustom->ProfileCustomValue = $row[$idx]['ProfileCustomValue'];
+						}					
+					}
+				}
 			if(!in_array($resultCustom->ProfileCustomTitle, $title_to_exclude_arr)){
 				// If a value exists...
 				//if(!empty($resultCustom->ProfileCustomValue ) || (!empty($resultCustom->ProfileCustomDateValue ) && $resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00" && $resultCustom->ProfileCustomDateValue !== null)){
@@ -2157,7 +2142,7 @@
 				if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
 					continue;
 				}
-				$resultCustom->ProfileCustomDateValue = ($resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00")?$resultCustom->ProfileCustomDateValue:"";
+						$resultCustom->ProfileCustomDateValue = ($resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00")?$resultCustom->ProfileCustomDateValue:"";
 				if ($resultCustom->ProfileCustomType == 7) { //measurements field type
 					if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
 						if($resultCustom->ProfileCustomOptions == 1){
