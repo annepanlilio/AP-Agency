@@ -1836,18 +1836,39 @@
 				}
 		$title_to_exclude_arr = array();
 		$resultsCustom = $wpdb->get_results($wpdb->prepare("SELECT c.ProfileCustomID,c.ProfileCustomTitle,c.ProfileCustomType,c.ProfileCustomOptions, c.ProfileCustomOrder,c.ProfileCustomView, cx.ProfileCustomValue, cx.ProfileCustomDateValue FROM ". table_agency_customfield_mux ." cx LEFT JOIN ". table_agency_customfields ." c ON c.ProfileCustomID = cx.ProfileCustomID AND c.ProfileCustomHideProfileView = 0 WHERE c.ProfileCustomView = 0 AND c.ProfileCustomShowProfile = 1 AND cx.ProfileID = %d GROUP BY cx.ProfileCustomID ORDER BY c.ProfileCustomOrder ASC",$ProfileID));
-		foreach ($resultsCustom as $resultCustom) {
-			$subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $resultCustom->ProfileCustomID,$ProfileID),ARRAY_A);
-				$row = $subresult;
-				if(!empty($resultCustom->ProfileCustomValue)){
-					$resultCustom->ProfileCustomValue = $resultCustom->ProfileCustomValue;
-				}else{
-					for($idx=0;$idx<10;$idx++){
-						if(!empty($row[$idx]['ProfileCustomValue'])){
-							$resultCustom->ProfileCustomValue = $row[$idx]['ProfileCustomValue'];
-						}					
-					}
-				}
+		
+        foreach ($resultsCustom as $resultCustom) {
+			
+            $subresult = $wpdb->get_results($wpdb->prepare("SELECT ProfileID,ProfileCustomValue,ProfileCustomOtherValue,ProfileCustomDateValue,ProfileCustomID FROM ". table_agency_customfield_mux ." WHERE ProfileCustomID = %d AND ProfileID = %d ", $resultCustom->ProfileCustomID,$ProfileID),ARRAY_A);
+			$row = $subresult;
+				//if(!empty($resultCustom->ProfileCustomValue)){
+//					$resultCustom->ProfileCustomValue = $resultCustom->ProfileCustomValue;
+//				}else{
+//					for($idx=0;$idx<10;$idx++){
+//						if(!empty($row[$idx]['ProfileCustomValue'])){
+//							$resultCustom->ProfileCustomValue = $row[$idx]['ProfileCustomValue'];
+//						}					
+//					}
+//				}
+           if(empty($resultCustom->ProfileCustomValue)){	
+            if(count($row)==2){
+                $profilecustomvalue = "";
+                foreach($row as $customvalues){ 
+                    
+                    if($customvalues['ProfileCustomOtherValue']){
+                        $othervalue = $customvalues['ProfileCustomOtherValue'];
+                        $profilecustomvalue .= $othervalue .",";
+                    }else{
+                        $profilecustomvalue .= $customvalues['ProfileCustomValue'];
+                    }
+                    
+                }
+                $customvalue = str_replace(',Other','',$profilecustomvalue);
+            }else{
+                $customvalue = $row[0]['ProfileCustomValue'];
+            }
+            $resultCustom->ProfileCustomValue = $customvalue;
+            }
 			if(!in_array($resultCustom->ProfileCustomTitle, $title_to_exclude_arr)){
 				// If a value exists...
 				//if(!empty($resultCustom->ProfileCustomValue ) || (!empty($resultCustom->ProfileCustomDateValue ) && $resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00" && $resultCustom->ProfileCustomDateValue !== null)){
@@ -2136,7 +2157,7 @@
 				if(!ctype_alnum($_strVal) and strlen($_strVal) == 1){
 					continue;
 				}
-						$resultCustom->ProfileCustomDateValue = ($resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00")?$resultCustom->ProfileCustomDateValue:"";
+				$resultCustom->ProfileCustomDateValue = ($resultCustom->ProfileCustomDateValue!=="1970-01-01"  && $resultCustom->ProfileCustomDateValue!=="0000-00-00")?$resultCustom->ProfileCustomDateValue:"";
 				if ($resultCustom->ProfileCustomType == 7) { //measurements field type
 					if($rb_agency_option_unittype == 0){ // 0 = Metrics(ft/kg)
 						if($resultCustom->ProfileCustomOptions == 1){
