@@ -1,4 +1,4 @@
-# RB Agency
+# AP Agency
 Model and Talent Agency CRM management and scheduling tool.
 
 ### Current Version 2.4.10
@@ -9,13 +9,13 @@ Here are some guidelines to install the RB Agency plugin:
 
 1. Download the zip file here in github.
 2. Unzip the file.
-3. Rename the folder to "rb-agency"
+3. Rename the folder to "ap-agency"
 4. Login to your ftp.
 5. Locate the /wp-content/plugins directory.
-6. Upload the entire "rb-agency" folder
+6. Upload the entire "ap-agency" folder
 7. Login to your website.
 8. Go to Plugins > Inactive
-9. Locate the "RB Agency" plugin.
+9. Locate the "AP Agency" plugin.
 10. Click "Activate".
 
 ## Configuration
@@ -29,13 +29,13 @@ Here are some guidelines to install the RB Agency plugin:
 7. Finally, head over to "Manage Profiles" and create your first model!
 
 More detailed information:
-http://rbplugin.com/plugin/rb-agency/documentation/
+http://modelingagencysoftware.com/plugin/rb-agency/documentation/
 
 Update: If you are seeing 404 error on your overview page, just apply this fix:
-https://github.com/Bertholf/RB-Agency/commit/cb09a61031a287d8ef8c77b7baa8c67ea8ccdf38
+https://github.com/annepanlilio/AP-Agency/commit/cb09a61031a287d8ef8c77b7baa8c67ea8ccdf38
 
 If you would like help on installation and configuration, you may contact any of our support team:
-http://rbplugin.com/contact-us/
+http://modelingagencysoftware.com/contact-us/
 
 
 ## Change Log
