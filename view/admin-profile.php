@@ -1051,6 +1051,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 	$rb_agency_options_arr = get_option('rb_agency_options');
 	// Unit Type
 	$rb_agency_option_unittype = isset($rb_agency_options_arr['rb_agency_option_unittype'])?$rb_agency_options_arr['rb_agency_option_unittype']:0;
+	// Resume Editor
+	$rb_agency_option_resume_editor = isset($rb_agency_options_arr['rb_agency_option_viewdisplay_resume_editor'])?(int) $rb_agency_options_arr['rb_agency_option_viewdisplay_resume_editor']:0;
 	// Social
 	if (isset($rb_agency_options_arr['rb_agency_option_showsocial'])) {
 		$rb_agency_option_showsocial = $rb_agency_options_arr['rb_agency_option_showsocial'];
@@ -1508,7 +1510,8 @@ function rb_display_manage($ProfileID, $errorValidation) {
 					</div>
                     <!-- END SOCIAL MEDIA LINKS -->
                     <!-- RESUME EDITOR-->
-            			<div id="resume_edito" class="postbox ">
+            			<div id="resume_edito" class="postbox <?php echo $rb_agency_option_resume_editor == 0 ? 'hide
+            			' : ''; ?>">
     						<h3 class="hndle"><span><?php echo __("Resume Editor", RBAGENCY_TEXTDOMAIN); ?></span></h3>
     						<div class="inside">
     							<div class="main">

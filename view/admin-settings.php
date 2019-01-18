@@ -955,6 +955,7 @@ elseif ($ConfigID == 1) {
 		echo "   <td>";
 
 		echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_viewdisplay_gender]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_viewdisplay_gender'])?$rb_agency_options_arr['rb_agency_option_viewdisplay_gender']:0, 1,false)."/> ". __("Show Gender", rb_agency_TEXTDOMAIN) ."<br />\n";
+        echo "     <input type=\"checkbox\" name=\"rb_agency_options[rb_agency_option_viewdisplay_resume_editor]\" value=\"1\" ".checked(isset($rb_agency_options_arr['rb_agency_option_viewdisplay_resume_editor'])?$rb_agency_options_arr['rb_agency_option_viewdisplay_resume_editor']:0, 1,false)."/> ". __("Show Resume Editor", rb_agency_TEXTDOMAIN) ."<br />\n";
 
 		echo "   </td>\n";
 		echo " </tr>\n";
