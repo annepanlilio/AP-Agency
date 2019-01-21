@@ -514,6 +514,11 @@ if ( ! class_exists( 'BFI_Thumb_1_3' ) ) {
 	        // without performing any actual image manipulation, which will be used
 	        // to check whether a resize was previously done.
 	        if ( isset( $width ) && $crop_only === false ) {
+                //validate image dimension before cropping
+                if($orig_w <= $width || $orig_h <= $height){
+                    return $url;
+                }
+                
 	            //get image size after cropping
 	            $dims = image_resize_dimensions( $orig_w, $orig_h, $width, isset( $height ) ? $height : null, isset( $crop ) ? $crop : false );
 	            $dst_w = $dims[4];
@@ -645,8 +650,8 @@ if ( ! class_exists( 'BFI_Thumb_1_3' ) ) {
 	        $img_url = "{$upload_url}/{$dst_rel_path}-{$suffix}.{$ext}";
 
 	        // if file exists, just return it
-	        if ( @file_exists( $destfilename ) && getimagesize( $destfilename ) ) {
-	        } else {
+	        /*if ( @file_exists( $destfilename ) && getimagesize( $destfilename ) ) {
+	        } else {*/
 	            // perform resizing and other filters
 	            $editor = wp_get_image_editor( $img_path );
 
@@ -703,7 +708,7 @@ if ( ! class_exists( 'BFI_Thumb_1_3' ) ) {
 	            // save our new image
 	            $mime_type = isset( $opacity ) ? 'image/png' : null;
 	            $resized_file = $editor->save( $destfilename, $mime_type );
-	        }
+	        //}
 
 	        //return the output
 	        if ( $single ) {

@@ -1870,9 +1870,14 @@ class RBAgency_Profile {
 			/*
 			 * ORDER BY
 			 */
-				if (isset($sort) && !empty($sort) && !isset($_GET['page'])){
-					$filter .= " ORDER BY $sort $dir ";
-				} 
+                /**
+                 * @note Temporarily removed additional condition !isset($_GET['page']) to fix search results not alphabetical by default
+                 * && !isset($_GET['page']) is a bit tricky. printing the value of $_GET['page'] returns 'rb_agency_search' but when you evaluate !isset($_GET['page']) it returns false
+                 */
+
+                if (isset($sort) && $sort != NULL){
+                    $filter .= " ORDER BY $sort $dir ";
+                }
                 
                 
 			/*
