@@ -6082,9 +6082,9 @@ function rb_agency_update_image()
     $mediaid = $_POST['mediaid'];
     $profileid = $_POST['profileid'];
     check_ajax_referer( 'rb_agency_actions', 'security' );
-    if($action=="rb_agency_delete_image"){    
-        $media = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileMediaTitle,ProfileMediaType,ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID = $mediaid" ) );
-        $mediadir = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileGallery FROM ".table_agency_profile." WHERE ProfileID = $profileid" ) );
+    if($action=="rb_agency_delete_image"){
+        $media = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileMediaTitle,ProfileMediaType,ProfileMediaURL FROM ".table_agency_profile_media." WHERE ProfileMediaID = %d", $mediaid ) );
+        $mediadir = $wpdb->get_row( $wpdb->prepare( "SELECT ProfileGallery FROM ".table_agency_profile." WHERE ProfileID = %d", $profileid ) );
         $file = $media->ProfileMediaURL;
         $mediatype = strtolower($media->ProfileMediaType);
         $subdir = "";

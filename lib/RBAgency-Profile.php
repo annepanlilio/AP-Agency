@@ -61,6 +61,11 @@ class RBAgency_Profile {
                     $rb_agency_searchurl = "";
 					if ($type == 0) {
 						$search_layout = "basic";
+
+                        //Quick fix > About page - Set action attribute for the search function to work
+                        if( is_page(6) ){
+                            $rb_agency_searchurl = site_url('search-basic');
+                        }
 					} else {
 						$search_layout = "full";
 					}
@@ -336,22 +341,23 @@ class RBAgency_Profile {
         											}
         										});
         									}
-        									jQuery("#gender").on("change",function(){								
-        										jQuery.ajax({
-        												type: "POST",
-        												url: "<?php echo admin_url('admin-ajax.php') ?>",
+                                            //@note commented code below to fix issue on the /search-advanced page - selecting Gender dropdown removes custom fields below Gender
+                                            /*jQuery("#gender").on("change",function(){
+                                                jQuery.ajax({
+                                                        type: "POST",
+                                                        url: "*/<?php //echo admin_url('admin-ajax.php') ?>/*",
         												data: {
         													action: "rb_get_customfields_search_ajax",
         													profile_types: $(".DataTypeIDClassCheckbox:checked").val(),
         													gender: jQuery(this).val(),
-        													search_type: "<?php echo $atts_arr['att_type']; ?>"
+        													search_type: "*/<?php //echo $atts_arr['att_type']; ?>/*"
         												},
         												success: function (results) {
         													jQuery(".customfields-onload").html(results);
         													console.log(results);
         												}
-        											});	
-        									});
+        											});
+        									});*/
         								});
         							</script>
                                     
@@ -697,8 +703,8 @@ class RBAgency_Profile {
 					?>
 					<script type="text/javascript">
 						jQuery(document).ready(function($){
-							
-						 	jQuery(".DataTypeIDClassCheckbox").on('click',function(){
+                            //@note commented code below to fix issue on the /search-advanced page - selecting Type checkboxes removes custom fields below Gender
+						 	/*jQuery(".DataTypeIDClassCheckbox").on('click',function(){
 						 	    console.log(this);
 								var ProfileTypeIDArr = [];
                                 $(".DataTypeIDClassCheckbox").each(function(){
@@ -709,11 +715,11 @@ class RBAgency_Profile {
                                 
 								jQuery.ajax({
 									type: "POST",
-									url: "<?php echo admin_url('admin-ajax.php') ?>",
+									url: "*/<?php //echo admin_url('admin-ajax.php') ?>/*",
 									data: {
 										action: "rb_get_customfields_search_ajax",
 										profile_types: ProfileTypeIDArr,
-										search_type: "<?php echo $atts_arr['att_type']; ?>",
+										search_type: "*/<?php //echo $atts_arr['att_type']; ?>/*",
                                         gender:$("#gender").val()
 									},
 									success: function (results) {
@@ -721,7 +727,7 @@ class RBAgency_Profile {
 										jQuery(".customfields-onload").html(results);
 									}
 								});	
-							});
+							});*/
 							
 						});
 						</script>
