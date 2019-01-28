@@ -326,7 +326,9 @@ $siteurl = get_option('siteurl');
 		// Save Search title
 		if(isset($_POST["SearchTitle"])){
 			if(!empty($_POST["SearchTitle"])){
-				$wpdb->query($wpdb->prepare("UPDATE ".table_agency_searchsaved." SET SearchTitle = %s WHERE SearchID = %d ",$_POST["SearchTitle"],$_GET["SearchID"]));
+                //Used stripslashes_deep function to remove slashes when string contains apostrophe char.
+                //@see https://stackoverflow.com/a/7342562
+                $wpdb->query($wpdb->prepare("UPDATE ".table_agency_searchsaved." SET SearchTitle = %s WHERE SearchID = %d ",stripslashes_deep($_POST["SearchTitle"]),$_GET["SearchID"]));
 				echo "Updated successfully!";
 			} else {
 				echo "Title field is required.";
@@ -371,7 +373,7 @@ $siteurl = get_option('siteurl');
 		?>
 		<form method="post" action="">
 		Title: <input type="text" name="SearchTitle" value="<?php echo $data->SearchTitle;?>" style="width:50%" />
-		<input type="button" class="button button-primary" value="Save"/>
+		<input type="submit" class="button button-primary" value="Save"/>
 		</form>
 		<hr/>
 		<div style="padding:10px;">

@@ -18,6 +18,9 @@
 		$type = 1;
 	} else {
 		$type = 0;
+
+        //Pre privacy filter
+        rb_casting_agent_redirect_if_pending_approval();
 	}
 	
 	if( get_query_var( 'type' ) == "search-basic" || get_query_var( 'type' ) == "search-results" || get_query_var( 'type' ) == "search-advanced" )

@@ -20,6 +20,9 @@
 
 		//echo $profileURL;
 
+		//Pre privacy filter
+		rb_casting_agent_redirect_if_pending_approval();
+
 
 		global $wpdb;
 		$query = "SELECT * FROM " . table_agency_profile . " WHERE ProfileGallery='%s'";

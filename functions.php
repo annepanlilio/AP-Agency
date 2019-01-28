@@ -6171,3 +6171,24 @@ function delete_directory($target) {
         unlink( $target );  
     }
 }
+//Check user if casting agent and status is pending, then redirect to casting pending page
+function rb_casting_agent_redirect_if_pending_approval(){
+    global $user_ID, $wpdb;
+    $casting_is_active = $wpdb->get_row($wpdb->prepare("SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = %d  ",$user_ID));
+    $is_casting_agent  = $wpdb->num_rows;
+
+    if($is_casting_agent > 0) {
+        $casting_status = "";
+        $q = "SELECT * FROM ".table_agency_casting." WHERE CastingUserLinked = ".$user_ID;
+        $result = $wpdb->get_results($q);
+        foreach($result as $r){
+            $casting_status = $r->CastingIsActive;
+        }
+
+        if($casting_status == 3){
+            //header("Location:".get_bloginfo("wpurl").'/casting-pending?status=pending');
+            wp_redirect(get_bloginfo("wpurl").'/casting-pending?status=pending');
+            exit();
+        }
+    }
+}

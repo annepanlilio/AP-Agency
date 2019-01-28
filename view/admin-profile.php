@@ -477,7 +477,7 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 							//echo $ProfileData['ProfileContactDisplay']."=".$_POST['ProfileContactDisplay'];
 							$rb_agency_option_profilenaming = isset($rb_agency_options_arr['rb_agency_option_profilenaming']) ?$rb_agency_options_arr['rb_agency_option_profilenaming']:0;
 							#check and generate the right gallery folder
-							if($ProfileData['ProfileContactDisplay'] != $_POST['ProfileContactDisplay']){
+							if($ProfileData['ProfileContactDisplay'] != stripslashes_deep($_POST['ProfileContactDisplay'])){
 								if ($rb_agency_option_profilenaming == 0) {
 									$ProfileGalleryFixed = $ProfileContactNameFirst . " ". $ProfileContactNameLast;
 								} elseif ($rb_agency_option_profilenaming == 1) {
@@ -491,6 +491,8 @@ if (empty($ProfileContactDisplay)) { // Probably a new record...
 								} elseif ($rb_agency_option_profilenaming == 5) {
 									$ProfileGalleryFixed = $ProfileContactNameLast;
 								}
+								//Remove non-alphanumberic characters like apostrophe
+								$ProfileGalleryFixed = preg_replace("/[^A-Za-z0-9 ]/", '', $ProfileGalleryFixed);
 								$ProfileGalleryFixed = str_replace(' ', '-', strtolower($ProfileGalleryFixed));
 								$ProfileGalleryFixed = str_replace(' ', '-', strtolower($ProfileGalleryFixed));
 								$ProfileGalleryFixed = rb_agency_createdir($ProfileGalleryFixed);	
@@ -2957,7 +2959,8 @@ function rb_display_list() {
 		$filter = "WHERE ";
 		if ((isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])) || isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
 			if (isset($_GET['ProfileContactNameFirst']) && !empty($_GET['ProfileContactNameFirst'])){
-			$selectedNameFirst = $_GET['ProfileContactNameFirst'];
+			$selectedNameFirst = stripcslashes($_GET['ProfileContactNameFirst']) ;
+			$selectedNameFirst = preg_replace("/[^A-Za-z0-9 ]/", '%', $selectedNameFirst);
 			$query .= "&ProfileContactNameFirst=". $selectedNameFirst ."";
 				if(strpos($filter,'profile') > 0){
 					$filter .= " AND profile.ProfileContactNameFirst LIKE '". $selectedNameFirst ."%'";
@@ -2966,7 +2969,8 @@ function rb_display_list() {
 				}
 			}
 			if (isset($_GET['ProfileContactNameLast']) && !empty($_GET['ProfileContactNameLast'])){
-			$selectedNameLast = $_GET['ProfileContactNameLast'];
+			$selectedNameLast = stripcslashes($_GET['ProfileContactNameLast']);
+            $selectedNameLast = preg_replace("/[^A-Za-z0-9 ]/", '%', $selectedNameLast);
 			$query .= "&ProfileContactNameLast=". $selectedNameLast ."";
 				if(strpos($filter,'profile') > 0){
 						$filter .= " AND profile.ProfileContactNameLast LIKE '". $selectedNameLast ."%'";
