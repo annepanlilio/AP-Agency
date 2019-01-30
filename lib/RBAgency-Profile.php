@@ -2129,7 +2129,11 @@ class RBAgency_Profile {
 						$q = $sql;
 						$_SESSION['session_admin_sql'] = $q;
 					}elseif(isset($_GET['limit'])){
-					   $q = substr($_SESSION['session_admin_sql'], 0,-8);  
+                        //Need to remove the LIMIT keyword
+                        //TODO: FUTURE: Use preg_replace PHP function to find the last match of LIMIT keyword and then remove it
+                        $rb_agency_options_arr = get_option('rb_agency_options');
+                        $rb_agency_option_persearch = (int)$rb_agency_options_arr['rb_agency_option_persearch'];
+                        $q = str_replace(sprintf('LIMIT %s', $rb_agency_option_persearch), '', $_SESSION['session_admin_sql']);
 						//$q = str_replace('LIMIT 50','',$_SESSION['session_admin_sql']); 
 						//unset($_SESSION['session_admin_sql']);
 					}else{
