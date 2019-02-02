@@ -167,47 +167,47 @@ class RBAgency_Profile {
 				$profile_cat_slug = str_replace("/", "", $profile_cat_slug);
 				echo "			<input type=\"hidden\" name=\"profile_cat\" value=\"". (isset($profile_cat_slug)?$profile_cat_slug:"") ."\" />\n";
 				// Show Profile Name
-						if(isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
-							$hide_name = $atts_arr["att_show_name"] == "false" ? "style='display:none;'" : "";
-							echo "				<div class=\"rbfield rbtext rbsingle rb_firstname\" id=\"rb_firstname\" ".$hide_name.">\n";
-							echo "					<label for=\"namefirst\">". __("First Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
-							echo "					<div><input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"".(isset($_REQUEST["namefirst"])?$_REQUEST["namefirst"]:"")."\" /></div>\n";
-							echo "				</div>\n";
-							if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
-								$hide_surname = $atts_arr["att_show_surname"] == "false" ? "style='display:none;'" : "";
-							}else{
-								$hide_surname = "";
-							}
-							echo "				<div class=\"rbfield rbtext rbsingle rb_lastname\" id=\"rb_lastname\" ".$hide_surname.">\n";
-							echo "					<label for=\"namelast\">". __("Last Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
-							echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"".(isset($_REQUEST["namelast"])?$_REQUEST["namelast"]:"")."\" /></div>\n";
-							echo "				</div>\n";
-						}else{
-							if ( ($rb_agency_option_formshow_name > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_name > 1) ) {
-								echo "				<div class=\"rbfield rbtext rbsingle rb_firstname\" id=\"rb_firstname\" >\n";
-								echo "					<label for=\"namefirst\">". __("First Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
-								echo "					<div><input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"".(isset($_REQUEST["namefirst"])?$_REQUEST["namefirst"]:"")."\" /></div>\n";
-								echo "				</div>\n";
-								echo "				<div class=\"rbfield rbtext rbsingle rb_lastname\" id=\"rb_lastname\" >\n";
-								echo "					<label for=\"namelast\">". __("Last Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
-								echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"".(isset($_REQUEST["namelast"])?$_REQUEST["namelast"]:"")."\" /></div>\n";
-								echo "				</div>\n";
-							}
-						}
-						if(isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){ 
-							$hide_display_name = $atts_arr["att_show_display_name"] == "false" ? "style='display:none;'" : "";
-							echo "				<div class=\"rbfield rbtext rbsingle rb_displayname\" id=\"rb_displayname\" ".$hide_display_name.">\n";
-							echo "					<label for=\"displayname\">". __("Display Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
-							echo "					<div><input type=\"text\" id=\"displayname\" name=\"displayname\" value=\"".(isset($_REQUEST["displayname"])?$_REQUEST["displayname"]:"")."\" /></div>\n";
-							echo "				</div>\n";
-						}else{
-							if ( ($rb_agency_option_formshow_displayname > 0) || (isset($search_layout) && $search_layout == "admin") || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_displayname > 1) ) {
-								echo "				<div class=\"rbfield rbtext rbsingle rb_displayname\" id=\"rb_displayname\" >\n";
-								echo "					<label for=\"displayname\">". __("Display Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
-								echo "					<div><input type=\"text\" id=\"displayname\" name=\"displayname\" value=\"".(isset($_REQUEST["displayname"])?$_REQUEST["displayname"]:"")."\" /></div>\n";
-								echo "				</div>\n";
-							}
-						}
+                        if(isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){
+                            $hide_name = $atts_arr["att_show_name"] == "false" ? "style='display:none;'" : "";
+                            echo "				<div class=\"rbfield rbtext rbsingle rb_firstname\" id=\"rb_firstname\" ".$hide_name.">\n";
+                            echo "					<label for=\"namefirst\">". __("First Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+                            echo "					<div><input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"".(isset($_REQUEST["namefirst"])?stripslashes($_REQUEST["namefirst"]):"")."\" /></div>\n";
+                            echo "				</div>\n";
+                            if($atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){
+                                $hide_surname = $atts_arr["att_show_surname"] == "false" ? "style='display:none;'" : "";
+                            }else{
+                                $hide_surname = "";
+                            }
+                            echo "				<div class=\"rbfield rbtext rbsingle rb_lastname\" id=\"rb_lastname\" ".$hide_surname.">\n";
+                            echo "					<label for=\"namelast\">". __("Last Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+                            echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"".(isset($_REQUEST["namelast"])?stripslashes($_REQUEST["namelast"]):"")."\" /></div>\n";
+                            echo "				</div>\n";
+                        }else{
+                            if ( ($rb_agency_option_formshow_name > 0) || $search_layout == "admin" || ($search_layout == "full" && $rb_agency_option_formshow_name > 1) ) {
+                                echo "				<div class=\"rbfield rbtext rbsingle rb_firstname\" id=\"rb_firstname\" >\n";
+                                echo "					<label for=\"namefirst\">". __("First Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+                                echo "					<div><input type=\"text\" id=\"namefirst\" name=\"namefirst\" value=\"".(isset($_REQUEST["namefirst"])?stripslashes($_REQUEST["namefirst"]):"")."\" /></div>\n";
+                                echo "				</div>\n";
+                                echo "				<div class=\"rbfield rbtext rbsingle rb_lastname\" id=\"rb_lastname\" >\n";
+                                echo "					<label for=\"namelast\">". __("Last Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+                                echo "					<div><input type=\"text\" id=\"namelast\" name=\"namelast\" value=\"".(isset($_REQUEST["namelast"])?stripslashes($_REQUEST["namelast"]):"")."\" /></div>\n";
+                                echo "				</div>\n";
+                            }
+                        }
+                        if(isset($atts_arr['att_mode']) && $atts_arr['att_mode'] == 'ajax' && ($atts_arr['att_type'] == 'advanced' || $atts_arr['att_type'] == 'basic') ){
+                            $hide_display_name = $atts_arr["att_show_display_name"] == "false" ? "style='display:none;'" : "";
+                            echo "				<div class=\"rbfield rbtext rbsingle rb_displayname\" id=\"rb_displayname\" ".$hide_display_name.">\n";
+                            echo "					<label for=\"displayname\">". __("Display Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+                            echo "					<div><input type=\"text\" id=\"displayname\" name=\"displayname\" value=\"".(isset($_REQUEST["displayname"])?stripslashes($_REQUEST["displayname"]):"")."\" /></div>\n";
+                            echo "				</div>\n";
+                        }else{
+                            if ( ($rb_agency_option_formshow_displayname > 0) || (isset($search_layout) && $search_layout == "admin") || (isset($search_layout) && $search_layout == "full" && $rb_agency_option_formshow_displayname > 1) ) {
+                                echo "				<div class=\"rbfield rbtext rbsingle rb_displayname\" id=\"rb_displayname\" >\n";
+                                echo "					<label for=\"displayname\">". __("Display Name", RBAGENCY_TEXTDOMAIN) ."</label>\n";
+                                echo "					<div><input type=\"text\" id=\"displayname\" name=\"displayname\" value=\"".(isset($_REQUEST["displayname"])?stripslashes($_REQUEST["displayname"]):"")."\" /></div>\n";
+                                echo "				</div>\n";
+                            }
+                        }
 						if ( isset($_GET['page']) && $_GET['page'] == 'rb_agency_search' ) {
 								echo "				<div class=\"rbfield rbtext rbsingle rb_email\" id=\"rb_email\" >\n";
 								echo "					<label for=\"displayname\">". __("Email", RBAGENCY_TEXTDOMAIN) ."</label>\n";
@@ -1441,18 +1441,28 @@ class RBAgency_Profile {
 							$filter = "profile.ProfileIsActive = 1 ";
 						}
 					}
-					// First Name
-					if (isset($namefirst) && !empty($namefirst)){
-						$filter .=  $wpdb->prepare(" AND profile.ProfileContactNameFirst LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($namefirst)))) ."%");
-					}
-					// Last Name
-					if (isset($namelast) && !empty($namelast)){
-						$filter .= $wpdb->prepare(" AND profile.ProfileContactNameLast LIKE %s ", '%'.str_replace('"','\"',(str_replace("'","\'",($namelast)))) ."%");
-					}
-					// Display Name
-					if (isset($displayname) && !empty($displayname)){
-						$filter .= $wpdb->prepare(" AND profile.ProfileContactDisplay LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($displayname)))) ."%");
-					}
+                    // First Name
+                    if (isset($namefirst) && !empty($namefirst)){
+                        //$filter .=  $wpdb->prepare(" AND profile.ProfileContactNameFirst LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($namefirst)))) ."%");
+                        //Replace special characters since it's html encoded in the db
+                        $post_namefirst = preg_replace("/[^A-Za-z0-9 ]/", '%', stripslashes($namefirst));
+                        $namefirst = addslashes($post_namefirst);
+                        $filter .= sprintf(" AND profile.ProfileContactNameFirst LIKE '%s'", "%". $namefirst ."%");
+                    }
+                    // Last Name
+                    if (isset($namelast) && !empty($namelast)){
+                        //$filter .= $wpdb->prepare(" AND profile.ProfileContactNameLast LIKE %s ", '%'.str_replace('"','\"',(str_replace("'","\'",($namelast)))) ."%");
+                        $post_namelast = preg_replace("/[^A-Za-z0-9 ]/", '%', stripslashes($namelast));
+                        $namelast = addslashes($post_namelast);
+                        $filter .= sprintf(" AND profile.ProfileContactNameLast LIKE '%s'", "%". $namelast ."%");
+                    }
+                    // Display Name
+                    if (isset($displayname) && !empty($displayname)){
+                        //$filter .= $wpdb->prepare(" AND profile.ProfileContactDisplay LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($displayname)))) ."%");
+                        $post_displayname = preg_replace("/[^A-Za-z0-9 ]/", '%', stripslashes($displayname));
+                        $displayname = addslashes($post_displayname);
+                        $filter .= sprintf(" AND profile.ProfileContactDisplay LIKE '%s'", "%". $displayname ."%");
+                    }
 					// Email
 					if (isset($email) && !empty($email)){
 						$filter .= $wpdb->prepare(" AND profile.ProfileContactEmail LIKE %s ",'%'.str_replace('"','\"',(str_replace("'","\'",($email)))) ."%");
