@@ -2949,13 +2949,13 @@ class RBAgency_Profile {
 					$displayGridHtml .= "   <div class=\"profile-item\">\n";
 					$displayGridHtml .= "   	<div class=\"profile-image\">\n";
 					if($primary_image){
-						$displayGridHtml .= "			<img src=\"".$imageSource."&w=180&h=250\" alt=\"\" >\n ";
+						$displayGridHtml .= "			<a href='". str_replace('%7E', '~', $_SERVER['SCRIPT_NAME']) . "?page=rb_agency_profiles&amp;action=editRecord&amp;ProfileID=". $data["ProfileID"] ."'><img src=\"".$imageSource."&w=180&h=250\" alt=\"\" ></a>\n ";
 					}else{
 						$displayGridHtml .=  "				<div class=\"image no-image\" style=\"padding: 52px;height: 135px;background: #ffffff;\">NO IMAGE</div>\n";
 					}
 					$displayGridHtml .= "		</div>\n";
 					$displayGridHtml .= "			<div class=\"profile-info\">\n";
-					$displayGridHtml .= "				<h3 class=\"profile-fullname\"><input type=\"checkbox\" value=\"".$data['ProfileID']."\" class=\"administrator select-profile select-profile-grid\" id=\"ProfileID".$data['ProfileID']."\" name=\"ProfileID[]\">".$profileFullName."</h3>\n";
+					$displayGridHtml .= "				<h3 class=\"profile-fullname\"><input type=\"checkbox\" value=\"".$data['ProfileID']."\" class=\"administrator select-profile select-profile-grid\" id=\"ProfileID".$data['ProfileID']."\" name=\"ProfileID[]\"><a href='".str_replace('%7E', '~', $_SERVER['SCRIPT_NAME']) . "?page=rb_agency_profiles&amp;action=editRecord&amp;ProfileID=". $data['ProfileID']."'>".$profileFullName."</a></h3>\n";
 					$displayGridHtml .= "				<p>".$profileAge."<br><span>".$profileContactPhoneCell."</span><br><a href=\"mailto:".$profileContactEmail."\"> ".$profileContactEmail."</a></p>";
 					// $displayGridHtml .= "				<p>".$profileContactPhoneCell."</p>";
 					// $displayGridHtml .= "				<p><a href=\"mailto:".$profileContactEmail."\"> ".$profileContactEmail."</a></p>";
