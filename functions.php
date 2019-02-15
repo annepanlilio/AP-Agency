@@ -5686,7 +5686,7 @@ function rb_load_customfields_search($visibility = 0,$result){
            if($result['ProfileCustomOptions']==3 && $rb_agency_option_unittype == 1){
 					echo "<div>";	
                     echo "<div><label for=\"ProfileCustomLabel_min\">". __("Min", RBAGENCY_TEXTDOMAIN) . ":</label>\n";
-							echo "<select name=\"ProfileCustomID". $result['ProfileCustomID'] ."\">\n";
+							echo "<select name=\"ProfileCustomID". $result['ProfileCustomID'] ."[]\">\n";
 								if (empty($ProfileCustomValue)) {
 							     echo "<option value=\"\">--</option>\n";
 								}
@@ -5704,7 +5704,7 @@ function rb_load_customfields_search($visibility = 0,$result){
 							echo " </select>\n";
                        echo "</div>"; 
                        echo "<div><label for=\"ProfileCustomLabel_min\">". __("Max", RBAGENCY_TEXTDOMAIN) . ":</label>\n";
-							echo "<select name=\"ProfileCustomID". $result['ProfileCustomID'] ."\">\n";
+							echo "<select name=\"ProfileCustomID". $result['ProfileCustomID'] ."[]\">\n";
 								if (empty($ProfileCustomValue)) {
 							     echo "<option value=\"\">--</option>\n";
 								}
@@ -5732,17 +5732,21 @@ function rb_load_customfields_search($visibility = 0,$result){
 		$ProfileCustomOptions_String = str_replace(",",":",strtok(strtok($result['ProfileCustomOptions'],"}"),"{"));
 		list($ProfileCustomOptions_Min_label,$ProfileCustomOptions_Min_value,$ProfileCustomOptions_Max_label,$ProfileCustomOptions_Max_value) = explode(":",$ProfileCustomOptions_String);
 		echo "		<div>";
-		if(!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)){
-				echo "<div><label for=\"ProfileCustomLabel_min\">". __("Min", RBAGENCY_TEXTDOMAIN) . ":</label>\n";
-				echo "<input class='stubby' type=\"text\" name=\"ProfileCustomID". $result['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Min_value ."\" />\n";
-				echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", RBAGENCY_TEXTDOMAIN) . ":</label>\n";
-				echo "<input class='stubby' type=\"text\" name=\"ProfileCustomID". $result['ProfileCustomID'] ."\" value=\"". $ProfileCustomOptions_Max_value ."\" /></div>\n";
-		} else {
-				echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", RBAGENCY_TEXTDOMAIN) . ":</label>\n";
-				echo "<input class='stubby' type=\"text\" name=\"ProfileCustomID". $result['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $result['ProfileCustomID']]."\" /></div>\n";
-				echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", RBAGENCY_TEXTDOMAIN) . ":</label>\n";
-				echo "<input class='stubby' type=\"text\" name=\"ProfileCustomID". $result['ProfileCustomID'] ."\" value=\"".$_SESSION["ProfileCustomID". $result['ProfileCustomID']]."\" /></div>\n";
-		}
+       if(!empty($ProfileCustomOptions_Min_value) && !empty($ProfileCustomOptions_Max_value)){
+           echo "<div><label for=\"ProfileCustomLabel_min\">". __("Min", RBAGENCY_TEXTDOMAIN) . ":</label>\n";
+           echo "<input class='stubby' type=\"text\" name=\"ProfileCustomID". $result['ProfileCustomID'] ."[]\" value=\"". $ProfileCustomOptions_Min_value ."\" />\n";
+           echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", RBAGENCY_TEXTDOMAIN) . ":</label>\n";
+           echo "<input class='stubby' type=\"text\" name=\"ProfileCustomID". $result['ProfileCustomID'] ."[]\" value=\"". $ProfileCustomOptions_Max_value ."\" /></div>\n";
+       } else {
+           if(!empty($_SESSION["ProfileCustomID". $result['ProfileCustomID']])){
+               list($ProfileCustomOptions_Min_value, $ProfileCustomOptions_Max_value) = explode(",",$_SESSION["ProfileCustomID". $result['ProfileCustomID']]);
+           }
+
+           echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Min", RBAGENCY_TEXTDOMAIN) . ":</label>\n";
+           echo "<input class='stubby' type=\"text\" name=\"ProfileCustomID". $result['ProfileCustomID'] ."[]\" value=\"".$ProfileCustomOptions_Min_value."\" /></div>\n";
+           echo "<div><label for=\"ProfileCustomLabel_min\" style=\"text-align:right;\">". __("Max", RBAGENCY_TEXTDOMAIN) . ":</label>\n";
+           echo "<input class='stubby' type=\"text\" name=\"ProfileCustomID". $result['ProfileCustomID'] ."[]\" value=\"".$ProfileCustomOptions_Max_value."\" /></div>\n";
+       }
 		echo "		</div>\n";
 	}
         echo "	</div>\n";

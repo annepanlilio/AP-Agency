@@ -684,7 +684,7 @@ class RBAgency_Casting {
 			$SearchMuxToName		= isset($_POST['SearchMuxToName'])?$_POST['SearchMuxToName']:"";
 			$SearchMuxToEmail		= isset($_POST['SearchMuxToEmail'])?$_POST['SearchMuxToEmail']:"";
 			$SearchMuxBccEmail		= isset($_POST['SearchMuxBccEmail'])?$_POST['SearchMuxBccEmail']:"";
-			$SearchMuxSubject		= isset($_POST['SearchMuxSubject'])?$_POST['SearchMuxSubject']:"";
+			$SearchMuxSubject		= isset($_POST['SearchMuxSubject'])?stripslashes($_POST['SearchMuxSubject']):"";
 			$SearchMuxMessage		= isset($_POST['SearchMuxMessage'])?preg_replace('/[^A-Za-z0-9 !@#$%^&*().\[\]\/\- \s\t\n\r\0\x0B]/u','',$_POST['SearchMuxMessage']):"";
 			$SearchMuxMessage 		= preg_replace('/\n(\s*\n)+/', '</p><p>', $SearchMuxMessage);
 			$SearchMuxCustomValue	='';

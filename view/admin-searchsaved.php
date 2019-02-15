@@ -175,7 +175,7 @@ $siteurl = get_option('siteurl');
 
 			<div class="rbfield"><label for="SearchMuxBccEmail"><strong>Bcc:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxBccEmail" name="SearchMuxBccEmail" value="" /></div>
 
-			<div class="rbfield"><label for="SearchMuxSubject"><strong>Subject:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart - <?php echo $data->SearchTitle;?>" /></div>
+			<div class="rbfield"><label for="SearchMuxSubject"><strong>Subject:</strong></label><br/><input  style="width:300px;" type="text" id="SearchMuxSubject" name="SearchMuxSubject" value="<?php echo $rb_agency_option_agencyname; ?> Casting Cart - <?php echo stripslashes($data->SearchTitle);?>" /></div>
 			<div class="rbfield"><label for="SearchMuxMessage"><strong>Message: (copy/paste: [link-place-holder] for casting cart link and [thumbnail-place-holder] for profile thumbnail)</strong></label><br/>
 			<textarea id="SearchMuxMessage" name="SearchMuxMessage" style="width: 500px; height: 300px; "><?php if(!isset($_GET["SearchMuxHash"])){echo @$dataSearchSavedMux["SearchMuxMessage"];} else {echo __("Click the following link (or copy and paste it into your browser)",RBAGENCY_TEXTDOMAIN).": [link-place-holder]";}?></textarea>
 			</div>
@@ -372,7 +372,7 @@ $siteurl = get_option('siteurl');
 		$arr_thumbnail = (array)unserialize($data->SearchMuxCustomThumbnail);
 		?>
 		<form method="post" action="">
-		Title: <input type="text" name="SearchTitle" value="<?php echo $data->SearchTitle;?>" style="width:50%" />
+		Title: <input type="text" name="SearchTitle" value="<?php echo stripslashes($data->SearchTitle);?>" style="width:50%" />
 		<input type="submit" class="button button-primary" value="Save"/>
 		</form>
 		<hr/>
