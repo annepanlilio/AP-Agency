@@ -47,10 +47,14 @@ global $wpdb;
 			//$search_sql_query = RBAgency_Profile::search_generate_sqlwhere(array_filter(array_unique($search_array)));
 			$search_sql_query['standard'] = " profile.ProfileID IN(".(!empty($castingcart_id)?$castingcart_id:0).") ";
 
-			$implodedCastingEmail = "(".implode(",",$searchCastingArr).")";
+            $resultsCasting = "";
 
-			$sql = "SELECT t.*,c.CastingUserLinked,c.CastingContactNameFirst,c.CastingContactNameLast,c.CastingContactDisplay,c.CastingContactCompany FROM ".$wpdb->prefix."agency_casting as c INNER JOIN ".$wpdb->prefix."agency_casting_types as t ON t.CastingTypeID = c.CastingType WHERE c.CastingContactEmail IN $implodedCastingEmail";
-			$resultsCasting = $wpdb->get_results($sql, ARRAY_A);
+            if(!empty($searchCastingArr)){
+                $implodedCastingEmail = "(".implode(",",$searchCastingArr).")";
+
+                $sql = "SELECT t.*,c.CastingUserLinked,c.CastingContactNameFirst,c.CastingContactNameLast,c.CastingContactDisplay,c.CastingContactCompany FROM ".$wpdb->prefix."agency_casting as c INNER JOIN ".$wpdb->prefix."agency_casting_types as t ON t.CastingTypeID = c.CastingType WHERE c.CastingContactEmail IN $implodedCastingEmail";
+                $resultsCasting = $wpdb->get_results($sql, ARRAY_A);
+            }
 
 			// Process Form Submission
 			$search_results = RBAgency_Profile::search_results($search_sql_query, 3);

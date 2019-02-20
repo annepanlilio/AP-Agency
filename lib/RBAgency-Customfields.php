@@ -164,7 +164,7 @@ class RBAgency_Customfields{
 
 function rb_get_customfields_load(){
 	global $wpdb;
-	$profileGenderID = $_POST['gender'];
+	$profileGenderID = isset($_POST['gender'])?$_POST['gender']:'';
 	$rbagencyCustomfieldsClass = new RBAgency_Customfields();
 	echo $rbagencyCustomfieldsClass->getCustomFieldsProfileManager($profileGenderID,$param);
 	die();
@@ -175,7 +175,7 @@ add_action('wp_ajax_nopriv_rb_get_customfields_load','rb_get_customfields_load')
 
 function rb_get_customfields_add_profile(){
 	global $wpdb;
-	$profileGenderID = $_POST['gender'];
+	$profileGenderID = isset($_POST['gender'])?$_POST['gender']:'';
 	$param["operation"] = "addProfile";
 	$rbagencyCustomfieldsClass = new RBAgency_Customfields();
 	echo $rbagencyCustomfieldsClass->getCustomFieldsProfileManager($profileGenderID,$param);
@@ -201,7 +201,7 @@ add_action('wp_ajax_nopriv_rb_get_customfields_add_profile_onchanged_profiletype
 
 function rb_get_customfields_edit_profile(){
 	global $wpdb;
-	$profileGenderID = $_POST['gender'];
+	$profileGenderID = isset($_POST['gender'])?$_POST['gender']:'';
 	$param["operation"] = "editProfile";
 	$param["ProfileID"] = !empty($_POST['profileID']) ? $_POST['profileID'] : "";
 	$param["profileTypes"] = !empty($_POST["profile_types"]) ? $_POST["profile_types"] : "";
@@ -229,7 +229,7 @@ add_action('wp_ajax_nopriv_rb_get_customfields_edit_profile_onchanged_profiletyp
 //PRIVATE
 function rb_get_customfields_load_private(){
 	global $wpdb;
-	$profileGenderID = $_POST['gender'];
+	$profileGenderID = isset($_POST['gender'])?$_POST['gender']:'';
 	$rbagencyCustomfieldsClass = new RBAgency_Customfields();
 	echo $rbagencyCustomfieldsClass->getCustomFieldsProfileManagerPrivate($profileGenderID,$param);
 	die();
@@ -240,7 +240,7 @@ add_action('wp_ajax_nopriv_rb_get_customfields_load_private','rb_get_customfield
 
 function rb_get_customfields_add_profile_private(){
 	global $wpdb;
-	$profileGenderID = $_POST['gender'];
+	$profileGenderID = isset($_POST['gender'])?$_POST['gender']:'';
 	$param["operation"] = "addProfile";
 	$rbagencyCustomfieldsClass = new RBAgency_Customfields();
 	echo $rbagencyCustomfieldsClass->getCustomFieldsProfileManagerPrivate($profileGenderID,$param);
@@ -266,7 +266,7 @@ add_action('wp_ajax_nopriv_rb_get_customfields_add_profile_onchanged_profiletype
 
 function rb_get_customfields_edit_profile_private(){
 	global $wpdb; 
-	$profileGenderID = $_POST['gender'];
+	$profileGenderID = isset($_POST['gender'])?$_POST['gender']:'';
 	$param["operation"] = "editProfile";
 	$param["ProfileID"] = !empty($_POST['profileID']) ? $_POST['profileID'] : "";
 	$param["profileTypes"] = !empty($_POST["profile_types"]) ? $_POST["profile_types"] : "";
